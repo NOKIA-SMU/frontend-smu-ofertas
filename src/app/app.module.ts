@@ -17,6 +17,12 @@ import { AdminModule } from './admin/admin.module';
 import { MaterialModule } from './material.module';
 import { AppService } from './app.service';
 
+//Apollo
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpClientModule } from "@angular/common/http";
+
 @NgModule({
   declarations: [
     AppComponent
@@ -30,10 +36,25 @@ import { AppService } from './app.service';
     AuthModule,
     DashboardModule,
     AdminModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+    ApolloModule
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    HttpLink
+  ],
   bootstrap: [AppComponent]
 })
 
-export class AppModule {}
+export class AppModule {
+  constructor(
+    apollo: Apollo,
+    httpLink: HttpLink
+  ) {
+    apollo.create({
+      link: httpLink.create({ uri: 'https://test-django-flex.appspot.com/graphql' }),
+      cache: new InMemoryCache()
+    });
+  }
+}
