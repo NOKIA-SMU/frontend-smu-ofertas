@@ -48,6 +48,10 @@ body {
     background-color: #124191;
 }
 
+mat-sidenav {
+	width: 250px;
+	transition: .4s;
+}
 
 .auth {
 	ul {

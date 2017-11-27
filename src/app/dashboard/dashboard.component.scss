@@ -14,6 +14,17 @@
 	}
 }
 
+.mat-toolbar {
+	h2 {
+		color: white;
+	}
+}
+
+.mat-mini-fab {
+	background-color: #2941ff;
+	color: white;
+}
+
 .loading {
   position: fixed; /* or absolute */
   top: 50%;
@@ -32,3 +43,24 @@ mat-sidenav {
   background-color: #FF9800;
 }
  */
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}

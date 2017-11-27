@@ -10,23 +10,71 @@
       <mat-divider></mat-divider>
       <mat-list-item routerLink="/admin">Admin</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-nav-list>
-        <mat-list-item routerLink="/admin/permissions">Admin/permissions</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item routerLink="/admin/roles">Admin/roles</mat-list-item>
-        <mat-divider></mat-divider>
-      </mat-nav-list>
     </mat-nav-list>
   </mat-sidenav>
 
   <div class="base-sidenav-content">
     <mat-toolbar>
+      <h2>NOKIA SMU Dashboard</h2>
       <button mat-mini-fab type="button" (click)="sidenav.open()">
         <i class="material-icons">view_list</i>
       </button>
     </mat-toolbar>
 
-    <img width="100" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+    <div class="container">
+      <br>
+      <br>
+      <br>
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
 
+      <!-- <div *ngFor="let item of displayedColumns">
+        {{item}}
+        <ng-container  matColumnDef="item">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row}} </mat-cell>
+            </ng-container>
+      </div> -->
+
+      <div class="example-container mat-elevation-z8">
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- <ng-container *ngFor="let item of displayedColumns"  matColumnDef="item">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row}} </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="progress">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="color">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+    </div>
   </div>
 </mat-sidenav-container>
