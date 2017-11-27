@@ -43,29 +43,9 @@
 
         <mat-table [dataSource]="dataSource" matSort>
 
-          <!-- <ng-container *ngFor="let item of displayedColumns"  matColumnDef="item">
+          <ng-container *ngFor="let item of displayedColumns"  matColumnDef="{{item}}">
             <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row}} </mat-cell>
-          </ng-container> -->
-
-          <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="progress">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="color">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.color}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -73,7 +53,7 @@
           </mat-row>
         </mat-table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
       </div>
     </div>
   </div>
