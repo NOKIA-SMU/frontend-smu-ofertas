@@ -16,6 +16,7 @@ export class ProfilesComponent implements OnInit {
   profileToEdit: Profile;
   isShowEditRole: boolean = false;
   profileToAssignRole: Profile;
+  showMoreProfile: boolean = false;
 
   constructor(private adminService: AdminService) { }
 
@@ -35,6 +36,11 @@ export class ProfilesComponent implements OnInit {
 
   editProfile(event, profile: Profile) {
     this.editState = !this.editState;
+    this.profileToEdit = profile;
+  }
+
+  showMore(event, profile: Profile) {
+    this.showMoreProfile = !this.showMoreProfile;
     this.profileToEdit = profile;
   }
 

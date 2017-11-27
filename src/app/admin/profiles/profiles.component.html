@@ -1,10 +1,19 @@
 <ul *ngIf="profiles?.length > 0" class="listItems">
   <li *ngFor="let profile of profiles" class="listItems__item">
     <div class="data">
-      {{ profile.firstName }} - {{ profile.lastName }} - {{ profile.email }} - {{ profile.phoneNumber }}
+      {{ profile.firstName }} - {{ profile.lastName }}
     </div>
     <div class="actions">
       <a (click)="editProfile($event, profile)" class="material-icons">mode_edit</a>
+      <a (click)="showMore($event, profile)" class="material-icons">expand_more</a>
+      <a (click)="showEditRole($event, profile)" class="material-icons">assignment</a>
+    </div>
+    <div *ngIf="showMoreProfile && profileToEdit.userId == profile.userId" class="editProfile">
+    <mat-list>
+      <mat-list-item>{{ profile.email }}</mat-list-item>
+      <mat-list-item>{{ profile.phoneNumber }}</mat-list-item>
+      <mat-list-item>Item 3</mat-list-item>
+    </mat-list>
     </div>
     <div *ngIf="editState && profileToEdit.userId == profile.userId" class="editProfile">
       <hr>
@@ -28,12 +37,11 @@
         <button type="submit" class="btn btn-success">Actualizar</button>
       </form>
       <br>
-      <a (click)="showEditRole($event, profile)">Assign Role</a>
     </div>
     <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId" class="assignRole">
       <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)">
         <div class="form-group">
-          <label for="email">rol</label>
+          <label for="email">Asignación de rol</label>
           <select class="form-control" id="role" name="role" [(ngModel)]="roleSelected" required>
             <option *ngFor="let role of roles" [ngValue]="role">
               {{role.name}}
