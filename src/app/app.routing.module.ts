@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-
 const appRoutes: Routes = [
   {
     path: 'auth',
@@ -10,7 +8,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
   },
   {
     path: 'admin',

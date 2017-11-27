@@ -22,39 +22,28 @@
     </mat-toolbar>
 
     <div class="container">
-      <br>
-      <br>
-      <br>
-      <div class="example-header">
-        <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
-      </div>
+      <div>
+        <div class="example-header">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+        </div>
 
-      <!-- <div *ngFor="let item of displayedColumns">
-        {{item}}
-        <ng-container  matColumnDef="item">
+        <div class="example-container mat-elevation-z8">
+          <mat-table [dataSource]="dataSource" matSort>
+            <ng-container *ngFor="let item of displayedColumns"  matColumnDef="{{item}}">
               <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row}} </mat-cell>
+              <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
             </ng-container>
-      </div> -->
-
-      <div class="example-container mat-elevation-z8">
-
-        <mat-table [dataSource]="dataSource" matSort>
-
-          <ng-container *ngFor="let item of displayedColumns"  matColumnDef="{{item}}">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;">
-          </mat-row>
-        </mat-table>
-
-        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+        </div>
       </div>
+
+      <router-outlet></router-outlet>
     </div>
   </div>
 </mat-sidenav-container>
