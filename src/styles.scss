@@ -7,6 +7,21 @@ body {
 	font-size: 16px;
 }
 
+.mat-toolbar {
+	background: #124191;
+	border-bottom: 1px solid #bbb5b5;
+	color: white;
+	button {
+		margin-left: 20px;
+	}
+	li {
+		list-style: none;
+	}
+	h2 {
+		font-weight: bold;
+	}
+}
+
 .u {
 	&__center {
 		display: flex;
@@ -27,4 +42,50 @@ body {
 }
 .container {
   padding: 0 5%;
+}
+
+.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
+    background-color: #124191;
+}
+
+
+.auth {
+	ul {
+		list-style: none;
+		li {
+			list-style: none;
+		}
+	}
+	&__bar {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.footer-buttom {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		button {
+			margin: 15px 40px;
+		}
+	}
+	.mat-form-field {
+		display: block;
+	}
+	.mat-form-field {
+		display: block;
+	}
+	form {
+		width: 380px;
+		margin: 25px auto 0;
+		border: 1px solid #d4d6d8;
+		padding: 28px 35px;
+		margin-top: 5px;
+	}
+	h1 {
+		text-align: center;
+		color: #585858;
+		margin: 40px 0 0;
+	}
 }

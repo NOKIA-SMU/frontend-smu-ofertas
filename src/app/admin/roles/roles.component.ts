@@ -76,9 +76,11 @@ export class RolesComponent implements OnInit {
     })
   }
 
-  createRole(role: Role, permissions: Permission[]) {
-    this.adminService.createRole(role)
+  createRole(permissions: Permission[]) {
+    if (permissions == undefined) permissions = [];
+    this.adminService.createRole(this.role)
       .then(res => {
+        debugger
         this.adminService.assignPermissionToRole(res.id, permissions)
           .then(res => {
             this.appService.showSwal('success-message')

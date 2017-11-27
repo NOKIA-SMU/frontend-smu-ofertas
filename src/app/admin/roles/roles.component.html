@@ -1,7 +1,8 @@
 <br>
+<br>
 <mat-tab-group>
   <mat-tab label="Roles">
-    <h1>Roles</h1>
+    <h2>Roles</h2>
     <ul class="listItems">
       <li *ngFor="let role of roles" class="listItems__item">
         <div class="data">
@@ -48,8 +49,8 @@
     </ul>
   </mat-tab>
   <mat-tab label="Crear Roles">
-    <h1>Crear Roles</h1>
-    <form #createRoleForm="ngForm" (ngSubmit)="createRole(role, permissionsSelected)" class="u__form">
+    <h2>Crear Roles</h2>
+    <form #createRoleForm="ngForm" (ngSubmit)="createRole(permissionsSelected)" class="u__form">
       <div class="form-group">
         <label for="nameRole">Nombre</label>
         <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>

@@ -1,17 +1,12 @@
-<div class="container">
-  <div class="col-sm-6 col-sm-offset-3">
-    <h1>Login</h1>
-    <hr>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">@</span>
-      <input type="email" class="form-control" placeholder="email" aria-describedby="basic-addon1" [(ngModel)]="user.email">
-    </div>
-    <br>
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">***</span>
-      <input type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1" [(ngModel)]="user.password">
-    </div>
-    <br>
-    <button (click)="loginUser()" class="btn btn-info">Entrar</button>
+<h1>Acceso</h1>
+<form #signinForm="ngForm" (ngSubmit)="loginUser()">
+  <mat-form-field>
+    <input type="email" matInput placeholder="Correo" name="email" [(ngModel)]="user.email" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="password" matInput placeholder="Contraseña" name="password" [(ngModel)]="user.password" required>
+  </mat-form-field>
+  <div class="footer-buttom">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!signinForm.form.valid">Registrarme</button>
   </div>
-</div>
+</form>

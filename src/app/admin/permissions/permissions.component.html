@@ -1,6 +1,8 @@
+<br>
+<br>
 <mat-tab-group>
   <mat-tab label="Permisos">
-    <h1>Permisos</h1>
+    <h2>Permisos</h2>
     <ul *ngIf="listPermissions?.length > 0" class="listItems">
       <li *ngFor="let permission of listPermissions" class="listItems__item">
         <div class="data">
@@ -27,7 +29,7 @@
     </ul>
   </mat-tab>
   <mat-tab label="Crear permisos">
-    <h1>Crear permisos</h1>
+    <h2>Crear permisos</h2>
     <br>
     <div>
       <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)" class="u__form">

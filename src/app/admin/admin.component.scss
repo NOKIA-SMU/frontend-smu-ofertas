@@ -18,11 +18,14 @@
 }
 
 .mat-toolbar {
-	background: #ffd740;
-	border-bottom: 1px solid #bbb5b5;
-	button {
-		margin-left: 20px;
+	h2 {
+		color: white;
 	}
+}
+
+.mat-mini-fab {
+	background-color: #2941ff;
+	color: white;
 }
 
 .base-container {
@@ -95,6 +98,10 @@ mat-sidenav {
 			}
 		}
 	}
+}
+
+h2 {
+	color: #124191;
 }
 
 mat-grid-tile {

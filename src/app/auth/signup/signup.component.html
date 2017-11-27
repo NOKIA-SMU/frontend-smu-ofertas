@@ -1,29 +1,21 @@
-<div class="container">
-  <div class="col-sm-6 col-sm-offset-3">
-    <h1>SignUp</h1>
-    <form #signupForm="ngForm" (ngSubmit)="onSubmit(user)">
-      <div class="form-group">
-        <label for="firstName">Nombre</label>
-        <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName" required>
-      </div>
-      <div class="form-group">
-        <label for="lastName">Apellido</label>
-        <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName" required>
-      </div>
-      <div class="form-group">
-        <label for="phoneNumber">Celular</label>
-        <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" required>
-      </div>
-      <div class="form-group">
-        <label for="email">email</label>
-        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" required>
-      </div>
-      <button type="submit" class="btn btn-success" [disabled]="!signupForm.form.valid">Guardar</button>
-    </form>
+<h1>Registro</h1>
+<form #signupForm="ngForm" (ngSubmit)="onSubmit(user)">
+  <mat-form-field>
+    <input type="text" matInput placeholder="Nombre" name="firstName" [(ngModel)]="user.firstName" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="Apellidos" name="lastName" [(ngModel)]="user.lastName" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="number" matInput placeholder="Telefono" name="phoneNumber" [(ngModel)]="user.phoneNumber" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="email" matInput placeholder="Correo" name="email" [(ngModel)]="user.email" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="password" matInput placeholder="Contraseña" name="password" [(ngModel)]="user.password" required>
+  </mat-form-field>
+  <div class="footer-buttom">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!signupForm.form.valid">Registrarse</button>
   </div>
-  <hr>
-</div>
+</form>

@@ -1,5 +1,22 @@
-<p>
-  auth module
-</p>
-<!-- <app-signup></app-signup> -->
-<router-outlet></router-outlet>
+<mat-toolbar>
+  <div class="auth__bar">
+    <h2>NOKIA SMU</h2>
+    <ul>
+      <li>
+        <!-- <button routerLink="auth/signin" mat-raised-button color="primary">Acceder</button> -->
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>
+<div class="container" class="auth">
+  <mat-tab-group>
+    <mat-tab label="Registarse">
+      <app-signup></app-signup>
+    </mat-tab>
+    <mat-tab label="Acceder">
+      <app-signin></app-signin>
+    </mat-tab>
+  </mat-tab-group>
+
+  <router-outlet></router-outlet>
+</div>
