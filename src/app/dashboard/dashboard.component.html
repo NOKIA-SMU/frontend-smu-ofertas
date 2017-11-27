@@ -1,0 +1,32 @@
+<mat-sidenav-container class="base-container">
+  <mat-sidenav #sidenav class="base-sidenav">
+    <!-- <button mat-mini-fab type="button" (click)="sidenav.close()">
+      <i class="material-icons">view_list</i>
+    </button> -->
+    <mat-nav-list>
+      <mat-list-item routerLink="/">Home</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLink="/admin">Admin</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-nav-list>
+        <mat-list-item routerLink="/admin/permissions">Admin/permissions</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="/admin/roles">Admin/roles</mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-nav-list>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="base-sidenav-content">
+    <mat-toolbar>
+      <button mat-mini-fab type="button" (click)="sidenav.open()">
+        <i class="material-icons">view_list</i>
+      </button>
+    </mat-toolbar>
+
+    <img width="100" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+
+  </div>
+</mat-sidenav-container>

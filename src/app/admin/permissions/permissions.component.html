@@ -1,0 +1,48 @@
+<mat-tab-group>
+  <mat-tab label="Permisos">
+    <h1>Permisos</h1>
+    <ul *ngIf="listPermissions?.length > 0" class="listItems">
+      <li *ngFor="let permission of listPermissions" class="listItems__item">
+        <div class="data">
+          {{permission.name}} - {{permission.model}}
+        </div>
+        <div class="actions">
+          <a (click)="toggleFormUpdatePermission($event, permission)" class="material-icons">mode_edit</a>
+          <a (click)="deletePermission(permission)" class="material-icons">delete</a>
+        </div>
+        <div *ngIf="isShowFormUpdatePermission && permissionToEdit.id == permission.id" class="editProfile">
+          <form #permissionForm="ngForm" (ngSubmit)="updatePermission(permission)" class="u__form">
+            <div class="form-group">
+              <label for="namePermission">Nombre</label>
+              <input type="text" class="form-control" id="namePermission" name="namePermission" [(ngModel)]="permission.name" required>
+            </div>
+            <div class="form-group">
+              <label for="model">Modelo</label>
+              <input type="text" class="form-control" id="model" name="model" [(ngModel)]="permission.model" required>
+            </div>
+            <button type="submit" class="btn btn-success">Actualizar permiso</button>
+          </form>
+        </div>
+      </li>
+    </ul>
+  </mat-tab>
+  <mat-tab label="Crear permisos">
+    <h1>Crear permisos</h1>
+    <br>
+    <div>
+      <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)" class="u__form">
+        <div class="form-group">
+          <label for="namePermission">Nombre</label>
+          <input type="text" class="form-control" id="namePermission" name="namePermission" [(ngModel)]="permission.name" required>
+        </div>
+        <div class="form-group">
+          <label for="model">Modelo</label>
+          <input type="text" class="form-control" id="model" name="model" [(ngModel)]="permission.model" required>
+        </div>
+        <button type="submit" class="btn btn-success">Create permisse</button>
+      </form>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+

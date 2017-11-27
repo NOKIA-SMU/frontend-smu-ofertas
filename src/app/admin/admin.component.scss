@@ -1,0 +1,106 @@
+.u {
+	&__center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&__form {
+		input, select, button {
+			border-radius: 8px;
+			padding: 8px;
+			margin-bottom: 8px;
+			outline: none;
+		}
+		button {
+			margin: 15px 0;
+		}
+	}
+}
+
+.mat-toolbar {
+	background: #ffd740;
+	border-bottom: 1px solid #bbb5b5;
+	button {
+		margin-left: 20px;
+	}
+}
+
+.base-container {
+	margin: 0;
+  width: 100%;
+	min-height: 100vh;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	&-sidenav {
+		padding: 20px;
+		&-content {
+			display: flex;
+			height: 100%;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
+
+.loading {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+  transform: translate(-50%, -50%);
+}
+
+mat-sidenav {
+	width: 250px;
+	transition: .4s;
+}
+
+.listItems {
+	padding: 10px 25px;
+	border: 1px solid #bbb5b5;
+	margin: 3% 0;
+	&__item {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		.data {
+			width: 80%;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			font-weight: bold;
+			color: #6b6767;
+		}
+		.actions {
+			display: flex;
+			align-items: center;
+			a {
+				display: inline-block;
+				border: 1px solid #bbb5b5;
+				padding: 10px;
+				cursor: pointer;
+			}
+		}
+		.editProfile {
+			width: 100%;
+			form {
+				@extend .u__form
+			}
+		}
+		.assignRole {
+			width: 100%;
+			form {
+				@extend .u__form
+			}
+		}
+	}
+}
+
+mat-grid-tile {
+	background: #fb9c1d;
+	color: white;
+	font-size: 2em;
+	cursor: pointer;
+}
+

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="col-sm-6 col-sm-offset-3">
+    <h1>SignUp</h1>
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit(user)">
+      <div class="form-group">
+        <label for="firstName">Nombre</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="user.firstName" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Apellido</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName" required>
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Celular</label>
+        <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" required>
+      </div>
+      <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" required>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!signupForm.form.valid">Guardar</button>
+    </form>
+  </div>
+  <hr>
+</div>

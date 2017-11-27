@@ -1,0 +1,47 @@
+<ul *ngIf="profiles?.length > 0" class="listItems">
+  <li *ngFor="let profile of profiles" class="listItems__item">
+    <div class="data">
+      {{ profile.firstName }} - {{ profile.lastName }} - {{ profile.email }} - {{ profile.phoneNumber }}
+    </div>
+    <div class="actions">
+      <a (click)="editProfile($event, profile)" class="material-icons">mode_edit</a>
+    </div>
+    <div *ngIf="editState && profileToEdit.userId == profile.userId" class="editProfile">
+      <hr>
+      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
+        <div class="form-group">
+          <label for="firstName">Nombre</label>
+          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Apellido</label>
+          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="profile.lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Celular</label>
+          <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="profile.email" required>
+        </div>
+        <button type="submit" class="btn btn-success">Actualizar</button>
+      </form>
+      <br>
+      <a (click)="showEditRole($event, profile)">Assign Role</a>
+    </div>
+    <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId" class="assignRole">
+      <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)">
+        <div class="form-group">
+          <label for="email">rol</label>
+          <select class="form-control" id="role" name="role" [(ngModel)]="roleSelected" required>
+            <option *ngFor="let role of roles" [ngValue]="role">
+              {{role.name}}
+            </option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success">Assign Role</button>
+      </form>
+    </div>
+  </li>
+</ul>

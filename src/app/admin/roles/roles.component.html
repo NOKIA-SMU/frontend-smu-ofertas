@@ -1,0 +1,72 @@
+<br>
+<mat-tab-group>
+  <mat-tab label="Roles">
+    <h1>Roles</h1>
+    <ul class="listItems">
+      <li *ngFor="let role of roles" class="listItems__item">
+        <div class="data">
+          {{role.name}}
+        </div>
+        <div class="actions">
+          <a (click)="showEditRole($event, role)" class="material-icons">mode_edit</a>
+          <a (click)="showEditPermissionsToRole($event, role)" class="material-icons">assignment_ind</a>
+          <a (click)="deleteRole(role)" class="material-icons">delete</a>
+        </div>
+        <div *ngIf="isShowEditRole && rolToEdit.id == role.id">
+          <form #createRoleForm="ngForm" (ngSubmit)="updateRole(role)" class="u__form">
+            <div class="form-group">
+              <label for="nameRole">Nombre</label>
+              <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success">Update Role</button>
+          </form>
+        </div>
+        <div *ngIf="isShowEditPermissionsToRole && rolToEditPermissions.id == role.id">
+          <form #createRoleForm="ngForm" (ngSubmit)="updatePermissionsToRole(role)" class="u__form">
+            <div class="form-group">
+              <label for="nameRole">Nombrelala</label>
+              <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
+            </div>
+            <!-- <ss-multiselect-dropdown [options]="permissions" name="permission" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown> -->
+            <!-- <mat-form-field>
+            <mat-select placeholder="Permiso" [(ngModel)]="permissionsSelected" name="permission" multiple>
+              <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{permission.checked}} {{permission.name}} - {{permission.model}}</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+            <br>
+            <mat-selection-list>
+              <mat-list-option *ngFor="let permission of permissions" [selected]="permission.checked" (click)="selectPermission(permission)">
+                {{permission.name}} - {{permission.model}}
+              </mat-list-option>
+            </mat-selection-list>
+            <br>
+            <button type="submit" class="btn btn-success">Update Role</button>
+          </form>
+        </div>
+      </li>
+    </ul>
+  </mat-tab>
+  <mat-tab label="Crear Roles">
+    <h1>Crear Roles</h1>
+    <form #createRoleForm="ngForm" (ngSubmit)="createRole(role, permissionsSelected)" class="u__form">
+      <div class="form-group">
+        <label for="nameRole">Nombre</label>
+        <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
+      </div>
+      <br>
+      <mat-form-field>
+        <mat-select placeholder="Permiso" [(ngModel)]="permissionsSelected" name="permission" multiple>
+          <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission.name}} - {{permission.model}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button type="submit" class="btn btn-success">Create permisse</button>
+    </form>
+  </mat-tab>
+</mat-tab-group>
+
+
+  <!-- <button class="mat-primary" mat-raised-button (click)="appService.showSwal('auto-close')">Auto close!</button>
+  <button class="mat-primary" mat-raised-button (click)="appService.showSwal('custom-html')">sustom html</button>
+  <button class="mat-primary" mat-raised-button (click)="appService.showSwal('basic')">basic</button>
+  <button class="mat-primary" mat-raised-button (click)="appService.showSwal('input-field')">input filed</button> -->
