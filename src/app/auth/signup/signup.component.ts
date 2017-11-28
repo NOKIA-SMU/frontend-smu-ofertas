@@ -5,7 +5,7 @@ import { Profile } from '../../models/auth.models';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['../auth.component.scss']
 })
 
 export class SignupComponent implements OnInit {

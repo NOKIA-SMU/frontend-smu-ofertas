@@ -10,9 +10,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthComponent } from './auth.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 import { AuthService } from './auth.service';
-
 
 // Material
 import { MaterialModule } from '../material.module';
@@ -32,7 +32,8 @@ import { environment } from '../../environments/environment';
   declarations: [
     AuthComponent,
     SignupComponent,
-    SigninComponent
+    SigninComponent,
+    WelcomeComponent
   ],
   providers: [
     AuthService
