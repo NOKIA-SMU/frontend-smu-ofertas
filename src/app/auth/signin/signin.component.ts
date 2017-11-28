@@ -20,9 +20,8 @@ export class SigninComponent implements OnInit {
   loginUser() {
     this.authService.login(this.user).then(res => {
       this.user.email = this.user.password = '';
-      this.router.navigate(['admin']);
+      this.router.navigate(['dashboard']);
     }, error => {
-
       debugger
     })
   }

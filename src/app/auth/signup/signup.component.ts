@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Profile } from '../../models/auth.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +13,7 @@ export class SignupComponent implements OnInit {
 
   user: any = {};
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
   }
@@ -23,13 +24,11 @@ export class SignupComponent implements OnInit {
         user.userId = res.uid;
         this.authService.createUser(user)
           .then(res => {
-            // debugger;
-          },
-          error => {
+            this.router.navigate(['dashboard']);
+          }, error => {
             // debugger;
           });
-      },
-      error => {
+      }, error => {
         // debugger;
       }
     );
