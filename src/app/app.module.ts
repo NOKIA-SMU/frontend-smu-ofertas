@@ -53,7 +53,7 @@ export class AppModule {
     httpLink: HttpLink
   ) {
     apollo.create({
-      link: httpLink.create({ uri: 'https://test-django-flex.appspot.com/graphql' }),
+      link: httpLink.create({ uri: 'https://smu-ofertas-api.appspot.com/graphql' }),
       cache: new InMemoryCache()
     });
   }

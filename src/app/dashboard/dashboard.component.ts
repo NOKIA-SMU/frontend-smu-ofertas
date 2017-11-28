@@ -17,14 +17,36 @@ export interface Station {
   categoria: string
 }
 
+const queryStations = gql`
+  query queryStations {
+    estaciones {
+      id
+      nombre
+      ubicacion
+      region
+      departamento
+      ciudad
+      direccion
+      latitud
+      longitud
+      estructura
+      categoria
+      estado
+      subestado
+      creado
+      actualizado
+    }
+  }
+`;
+
 const queryProducts = gql`
   query queryProducts {
     categories {
       id
-    name
-    typeCategory
-    created
-    updated
+      name
+      typeCategory
+      created
+      updated
     }
   }
 `;
@@ -36,54 +58,41 @@ const queryProducts = gql`
 })
 export class DashboardComponent implements OnInit {
 
-  displayedColumns = ['id', 'name', 'progress', 'color'];
+  displayedColumns = [
+    'id',
+    'nombre',
+    'ubicacion',
+    'region',
+    'departamento',
+    'ciudad',
+    'direccion',
+    'latitud',
+    'longitud',
+    'estructura',
+    'categoria'
+    ];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  loading: boolean;
-  currentUser: any;
-
   constructor(private apollo: Apollo) {
-    const users: any[] = [];
-    for (let i = 1; i <= 100; i++) { users.push(this.createNewUser(i)); }
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-  }
-
-  ngOnInit() {
     this.apollo.watchQuery<any>({
-      query: queryProducts
+      query: queryStations
     })
       .valueChanges
       .subscribe(({ data }) => {
-        // debugger
-        this.loading = data.loading;
-        this.currentUser = data.currentUser;
+        this.dataSource = new MatTableDataSource(data.estaciones);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  ngOnInit() { }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-  }
-
-  /** Builds and returns a new User. */
-  createNewUser(id: number) {
-    const name = 'pepito';
-    return {
-      id: id.toString(),
-      name: name,
-      progress: Math.round(Math.random() * 100).toString(),
-      color: 'red'
-    };
   }
 }
