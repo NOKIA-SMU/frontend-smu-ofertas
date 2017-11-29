@@ -1,5 +1,5 @@
 <mat-sidenav-container class="base-container">
-  <mat-sidenav #sidenav class="base-sidenav">
+  <mat-sidenav #sidenav opened="true" mode="side" class="base-sidenav">
     <mat-nav-list>
       <mat-list-item routerLink="/">Home</mat-list-item>
       <mat-divider></mat-divider>
@@ -12,32 +12,20 @@
 
   <div class="base-sidenav-content">
     <mat-toolbar>
-      <button mat-mini-fab type="button" (click)="sidenav.open()">
+      <button mat-mini-fab type="button" (click)="sidenav.toggle()">
         <i class="material-icons">view_list</i>
       </button>
       <h2>NOKIA SMU Dashboard</h2>
     </mat-toolbar>
 
     <div class="container">
-      <div>
-        <div class="example-header">
-          <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-          </mat-form-field>
-        </div>
-
-        <div class="example-container mat-elevation-z8">
-          <mat-table [dataSource]="dataSource" matSort>
-            <ng-container *ngFor="let item of displayedColumns"  matColumnDef="{{item}}">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
-          </mat-table>
-          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
-        </div>
-      </div>
+      <br>
+      <mat-grid-list cols="2" rowHeight="2:1" gutterSize="14">
+        <mat-grid-tile>Estaciones</mat-grid-tile>
+        <mat-grid-tile>Ofertas</mat-grid-tile>
+        <mat-grid-tile>Servicios</mat-grid-tile>
+        <mat-grid-tile>Productos</mat-grid-tile>
+      </mat-grid-list>
 
       <router-outlet></router-outlet>
     </div>

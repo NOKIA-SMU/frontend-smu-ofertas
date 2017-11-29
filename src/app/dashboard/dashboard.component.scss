@@ -14,6 +14,19 @@
 	}
 }
 
+mat-grid-tile {
+  background:#2974ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.2em;
+  text-transform: uppercase;
+}
+
+mat-sidenav {
+  background: #f3eded;
+}
+
 .mat-toolbar {
 	h2 {
 		color: white;
@@ -35,10 +48,6 @@
   transform: translate(-50%, -50%);
 }
 
-mat-sidenav {
-  width: 300px;
-}
-
 .example-container {
   display: flex;
   flex-direction: column;
@@ -55,10 +64,6 @@ mat-sidenav {
   width: 100%;
 }
 
-.mat-table {
-  // max-height: 500px;
-}
-
 .example-container {
   overflow: auto;
 }
@@ -69,10 +74,12 @@ mat-sidenav {
     display: flex;
     padding: 0;
     border: none;
+    cursor: pointer;
     &:hover {
       background: rgb(88, 127, 233);
       color: white !important;
       .mat-header-cell, .mat-cell {
+        background: rgb(88, 127, 233);
         color: white !important;
       }
     }

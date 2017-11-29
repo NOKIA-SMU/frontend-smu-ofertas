@@ -5,7 +5,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 // Material
 import { MaterialModule } from '../material.module';
 import { DashboardComponent } from './dashboard.component';
-import { DataTableComponent } from './data-table/data-table.component';
 import { StationsComponent } from './stations/stations.component';
 
 @NgModule({
@@ -15,6 +14,6 @@ import { StationsComponent } from './stations/stations.component';
     NgxDatatableModule,
     MaterialModule
   ],
-  declarations: [DashboardComponent, DataTableComponent, StationsComponent]
+  declarations: [DashboardComponent, StationsComponent]
 })
 export class DashboardModule { }
