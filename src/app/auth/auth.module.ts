@@ -18,6 +18,7 @@ import { AuthService } from './auth.service';
 import { MaterialModule } from '../material.module';
 
 import { environment } from '../../environments/environment';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { environment } from '../../environments/environment';
     WelcomeComponent
   ],
   providers: [
-    AuthService
+    AuthService,
+    AuthGuard
   ]
 })
 

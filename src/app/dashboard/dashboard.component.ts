@@ -9,9 +9,8 @@ import { Router } from '@angular/router';
 
 export class DashboardComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(public router: Router) { }
 
   ngOnInit() { }
-
 
 }
