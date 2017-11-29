@@ -6,6 +6,9 @@
   </div>
 
   <div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner></mat-spinner>
+    </div>
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
         <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
@@ -15,6 +18,6 @@
 
       <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
     </mat-table>
-    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[15, 50, 100]"></mat-paginator>
   </div>
 </div>

@@ -5,8 +5,6 @@
       <mat-divider></mat-divider>
       <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item routerLink="/dashboard/estaciones">Estaciones</mat-list-item>
-      <mat-divider></mat-divider>
       <mat-list-item routerLink="/admin">Admin</mat-list-item>
       <mat-divider></mat-divider>
     </mat-nav-list>
@@ -22,8 +20,8 @@
 
     <div class="container">
       <br>
-      <mat-grid-list cols="2" rowHeight="2:1" gutterSize="14">
-        <mat-grid-tile>Estaciones</mat-grid-tile>
+      <mat-grid-list cols="2" rowHeight="2:1" gutterSize="14" *ngIf="router.url === '/dashboard'">
+        <mat-grid-tile routerLink="/dashboard/estaciones">Estaciones</mat-grid-tile>
         <mat-grid-tile>Ofertas</mat-grid-tile>
         <mat-grid-tile>Servicios</mat-grid-tile>
         <mat-grid-tile>Productos</mat-grid-tile>

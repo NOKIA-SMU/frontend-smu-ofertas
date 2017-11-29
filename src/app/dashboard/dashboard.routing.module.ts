@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
-import { DataTableComponent } from './data-table/data-table.component';
 import { StationsComponent } from "./stations/stations.component";
 
 const dashboardRoutes: Routes = [

@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { DashboardService } from "../dashboard.service";
 
 declare var $: any;
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-stations',
   templateUrl: './stations.component.html',
   styleUrls: ['../dashboard.component.scss']
@@ -25,7 +26,9 @@ export class StationsComponent implements OnInit {
     'estructura',
     'categoria'
   ];
-  dataSource: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource();
+
+  isLoadingResults = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -40,6 +43,9 @@ export class StationsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(data.estaciones);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoadingResults = false;
+      }, error => {
+        this.isLoadingResults = false;
       });
   }
 
