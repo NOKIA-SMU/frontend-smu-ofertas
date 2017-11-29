@@ -1,31 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-
-
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { DashboardService } from "../dashboard.service";
 
-const queryStations = gql`
-  query queryStations {
-    estaciones {
-      id
-      nombre
-      ubicacion
-      region
-      departamento
-      ciudad
-      direccion
-      latitud
-      longitud
-      estructura
-      categoria
-      estado
-      subestado
-      creado
-      actualizado
-    }
-  }
-`;
+declare var $: any;
 
 @Component({
   selector: 'app-stations',
@@ -53,19 +30,17 @@ export class StationsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private apollo: Apollo) {
-    this.apollo.watchQuery<any>({
-      query: queryStations
-    })
-      .valueChanges
+  constructor(private dashboardService: DashboardService) { }
+
+  ngOnInit() { }
+
+  ngAfterViewInit() {
+    this.dashboardService.getStations()
       .subscribe(({ data }) => {
         this.dataSource = new MatTableDataSource(data.estaciones);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
-  }
-
-  ngOnInit() {
   }
 
   applyFilter(filterValue: string) {

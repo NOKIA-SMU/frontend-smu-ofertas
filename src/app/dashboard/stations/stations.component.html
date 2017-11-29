@@ -12,6 +12,7 @@
         <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
       <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
     </mat-table>
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>

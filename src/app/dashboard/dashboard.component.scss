@@ -84,15 +84,22 @@ mat-sidenav {
       }
     }
     > .mat-header-cell, > .mat-cell {
-      flex: 0 0 160px;
+      flex: 0 0 150px;
       display: flex;
       justify-content: center;
-      height: 88px;
+      height: 44px;
+      font-size: .8em;
       align-items: center;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       &:hover {
         background: rgb(88, 127, 233);
         color: white;
+      }
+      &:nth-child(1) {
+        flex: 0 0 70px;
+      }
+      &:nth-child(7) {
+        flex: 0 0 400px;
       }
     }
   }
