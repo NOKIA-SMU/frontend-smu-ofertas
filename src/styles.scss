@@ -20,8 +20,27 @@ body {
 			margin-bottom: 8px;
 			outline: none;
 		}
+		label {
+			font-size: .9em;
+			min-width: 60px;
+			color: #124191;
+			font-weight: bold;
+			display: inline-block;
+		}
 		button {
 			margin: 15px 0;
+			box-shadow: 0 4px #124191;
+			position: relative;
+			border: 0;
+			outline: none;
+			padding: 11px 17px;
+			background: #2974ff;
+			color: white;
+			cursor: pointer;
+			&:hover {
+				box-shadow: 0 2px #124191;
+				top: 2px;
+			}
 		}
 	}
 }
@@ -44,14 +63,22 @@ body {
 	}
 }
 
+.mat-mini-fab {
+	background-color: #2974ff !important;
+  color: white !important;
+  margin-right: 18px !important;
+}
+
 .mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
 	background-color: #124191;
 }
 
 mat-sidenav {
 	width: 210px;
+	background: #f3eded !important;
 	transition: .4s;
 }
+
 
 .auth {
 	// .mat-form-field-underline {
@@ -63,4 +90,18 @@ mat-sidenav {
 	.mat-form-field {
 		display: block;
 	}
+}
+
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

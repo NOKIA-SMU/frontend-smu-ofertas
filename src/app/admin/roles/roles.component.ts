@@ -11,6 +11,7 @@ import { AppService } from "../../app.service";
 
 export class RolesComponent implements OnInit {
 
+  loadingRoles = true;
   roles: Role[];
   permissions: Permission[];
   role: any = {};
@@ -28,6 +29,7 @@ export class RolesComponent implements OnInit {
   ngOnInit() {
     this.adminService.getRoles().subscribe(roles => {
       this.roles = roles;
+      this.loadingRoles = false;
     }, error => {
 
     });
@@ -41,11 +43,13 @@ export class RolesComponent implements OnInit {
 
   // Logic GUI
   showEditRole(event, role: Role) {
+    this.isShowEditPermissionsToRole = false;
     this.isShowEditRole = !this.isShowEditRole;
     this.rolToEdit = role;
   }
 
   showEditPermissionsToRole(event, role: Role, permission: Permission) {
+    this.isShowEditRole = false;
     this.isShowEditPermissionsToRole = !this.isShowEditPermissionsToRole
     this.rolToEditPermissions = role;
     for (let i = 0; i < this.permissions.length; i++) this.permissions[i].checked = false;
@@ -80,7 +84,6 @@ export class RolesComponent implements OnInit {
     if (permissions == undefined) permissions = [];
     this.adminService.createRole(this.role)
       .then(res => {
-        debugger
         this.adminService.assignPermissionToRole(res.id, permissions)
           .then(res => {
             this.appService.showSwal('success-message')

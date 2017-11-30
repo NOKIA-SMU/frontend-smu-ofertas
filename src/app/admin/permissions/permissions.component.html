@@ -1,16 +1,15 @@
 <br>
-<br>
+<h2 class="title">Permisos</h2>
 <mat-tab-group>
   <mat-tab label="Permisos">
-    <h2>Permisos</h2>
     <ul *ngIf="listPermissions?.length > 0" class="listItems">
       <li *ngFor="let permission of listPermissions" class="listItems__item">
         <div class="data">
           {{permission.name}} - {{permission.model}}
         </div>
         <div class="actions">
-          <a (click)="toggleFormUpdatePermission($event, permission)" class="material-icons">mode_edit</a>
-          <a (click)="deletePermission(permission)" class="material-icons">delete</a>
+          <a (click)="toggleFormUpdatePermission($event, permission)" class="material-icons blue">mode_edit</a>
+          <a (click)="deletePermission(permission)" class="material-icons red">delete</a>
         </div>
         <div *ngIf="isShowFormUpdatePermission && permissionToEdit.id == permission.id" class="editProfile">
           <form #permissionForm="ngForm" (ngSubmit)="updatePermission(permission)" class="u__form">
@@ -29,7 +28,6 @@
     </ul>
   </mat-tab>
   <mat-tab label="Crear permisos">
-    <h2>Crear permisos</h2>
     <br>
     <div>
       <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)" class="u__form">

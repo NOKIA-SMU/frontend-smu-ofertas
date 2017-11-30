@@ -1,12 +1,15 @@
 <ul *ngIf="profiles?.length > 0" class="listItems">
+  <div class="example-loading-shade" *ngIf="loadingProfiles">
+    <mat-spinner></mat-spinner>
+  </div>
   <li *ngFor="let profile of profiles" class="listItems__item">
     <div class="data">
       {{ profile.firstName }} - {{ profile.lastName }}
     </div>
     <div class="actions">
-      <a (click)="editProfile($event, profile)" class="material-icons">mode_edit</a>
-      <a (click)="showMore($event, profile)" class="material-icons">expand_more</a>
-      <a (click)="showEditRole($event, profile)" class="material-icons">assignment</a>
+      <a (click)="editProfile($event, profile)" class="material-icons blue">mode_edit</a>
+      <a (click)="showEditRole($event, profile)" class="material-icons green">assignment</a>
+      <a (click)="showMore($event, profile)" class="material-icons semi">expand_more</a>
     </div>
     <div *ngIf="showMoreProfile && profileToEdit.userId == profile.userId" class="editProfile">
     <mat-list>
@@ -17,7 +20,7 @@
     </div>
     <div *ngIf="editState && profileToEdit.userId == profile.userId" class="editProfile">
       <hr>
-      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
+      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)" class="u__form">
         <div class="form-group">
           <label for="firstName">Nombre</label>
           <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
@@ -39,7 +42,7 @@
       <br>
     </div>
     <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId" class="assignRole">
-      <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)">
+      <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)" class="u__form">
         <div class="form-group">
           <label for="email">Asignación de rol</label>
           <select class="form-control" id="role" name="role" [(ngModel)]="roleSelected" required>

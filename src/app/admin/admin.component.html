@@ -1,49 +1,29 @@
 <mat-sidenav-container class="base-container">
-  <mat-sidenav #sidenav class="base-sidenav">
-    <!-- <button mat-mini-fab type="button" (click)="sidenav.close()">
-        <i class="material-icons">view_list</i>
-      </button> -->
+  <mat-sidenav #sidenav opened="true" mode="side" class="base-sidenav">
     <mat-nav-list>
-      <mat-list-item routerLink="/">Home</mat-list-item>
-      <mat-divider></mat-divider>
       <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item routerLink="/admin">Admin</mat-list-item>
+      <mat-list-item routerLink="/admin">Administrador</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-nav-list>
-        <mat-list-item routerLink="/admin/permissions">Admin/permissions</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item routerLink="/admin/roles">Admin/roles</mat-list-item>
-        <mat-divider></mat-divider>
-      </mat-nav-list>
     </mat-nav-list>
   </mat-sidenav>
 
   <div class="base-sidenav-content">
     <mat-toolbar>
-      <h2>NOKIA SMU ADMIN</h2>
-      <button mat-mini-fab type="button" (click)="sidenav.open()">
+      <button mat-mini-fab type="button" (click)="sidenav.toggle()">
         <i class="material-icons">view_list</i>
       </button>
+      <h2>NOKIA SMU ADMIN</h2>
     </mat-toolbar>
-
 
     <div class="container">
       <br>
-      <br>
-      <mat-chip-list>
-        <mat-chip routerLink="/admin/profiles">Usuarios</mat-chip>
-        <mat-chip color="accent" routerLink="/admin/roles">Roles</mat-chip>
-        <mat-chip color="primary"  routerLink="/admin/permissions">Permisos</mat-chip>
-      </mat-chip-list>
-
-      <!-- <admin-profiles></admin-profiles> -->
-
-      <ng-template #noProfiles>
-        <h5>Loading</h5>
-      </ng-template>
+      <mat-grid-list cols="3" gutterSize="14" rowHeight="180px" *ngIf="router.url === '/admin'">
+        <mat-grid-tile routerLink="/admin/profiles">Perfiles</mat-grid-tile>
+        <mat-grid-tile routerLink="/admin/roles">Roles</mat-grid-tile>
+        <mat-grid-tile routerLink="/admin/permissions">Permisos</mat-grid-tile>
+      </mat-grid-list>
       <router-outlet></router-outlet>
     </div>
   </div>
 </mat-sidenav-container>
-

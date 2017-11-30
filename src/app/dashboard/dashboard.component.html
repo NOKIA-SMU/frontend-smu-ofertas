@@ -1,11 +1,9 @@
 <mat-sidenav-container class="base-container">
   <mat-sidenav #sidenav opened="true" mode="side" class="base-sidenav">
     <mat-nav-list>
-      <mat-list-item routerLink="/">Home</mat-list-item>
-      <mat-divider></mat-divider>
       <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item routerLink="/admin">Admin</mat-list-item>
+      <mat-list-item routerLink="/admin">Administrador</mat-list-item>
       <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>
@@ -27,7 +25,6 @@
         <mat-grid-tile routerLink="/dashboard/servicios">Servicios</mat-grid-tile>
         <mat-grid-tile routerLink="/dashboard/ofertas" [colspan]="4">Ofertas</mat-grid-tile>
       </mat-grid-list>
-
       <router-outlet></router-outlet>
     </div>
   </div>

@@ -36,6 +36,7 @@ ul {
 .card {
 	position: relative;
 	background: url('/assets/bg3.jpg') center no-repeat;
+	background-size: cover;
 	color: #124191;
 	min-height: 90vh;
 	h1 {

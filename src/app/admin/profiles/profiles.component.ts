@@ -10,6 +10,7 @@ import { Profile, Role, Permission } from '../../models/auth.models';
 })
 export class ProfilesComponent implements OnInit {
 
+  loadingProfiles = true;
   profiles: Profile[];
   roles: Role[];
   editState: boolean = false;
@@ -22,6 +23,7 @@ export class ProfilesComponent implements OnInit {
 
   ngOnInit() {
     this.adminService.getProfiles().subscribe(profiles => {
+      this.loadingProfiles = false;
       this.profiles = profiles;
     }, error => {
 
