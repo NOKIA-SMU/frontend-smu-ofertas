@@ -20,11 +20,12 @@
 
     <div class="container">
       <br>
-      <mat-grid-list cols="2" rowHeight="2:1" gutterSize="14" *ngIf="router.url === '/dashboard'">
+      <mat-grid-list cols="4" gutterSize="14" rowHeight="180px" *ngIf="router.url === '/dashboard'">
         <mat-grid-tile routerLink="/dashboard/estaciones">Estaciones</mat-grid-tile>
-        <mat-grid-tile>Ofertas</mat-grid-tile>
-        <mat-grid-tile>Servicios</mat-grid-tile>
-        <mat-grid-tile>Productos</mat-grid-tile>
+        <mat-grid-tile routerLink="/dashboard/subsistemas">Subsistemas</mat-grid-tile>
+        <mat-grid-tile routerLink="/dashboard/suministros">Suministros</mat-grid-tile>
+        <mat-grid-tile routerLink="/dashboard/servicios">Servicios</mat-grid-tile>
+        <mat-grid-tile routerLink="/dashboard/ofertas" [colspan]="4">Ofertas</mat-grid-tile>
       </mat-grid-list>
 
       <router-outlet></router-outlet>

@@ -20,6 +20,7 @@ export class SigninComponent implements OnInit {
   loginUser() {
     this.authService.login(this.user).then(res => {
       this.user.email = this.user.password = '';
+      localStorage.setItem('ums', 'true');
       this.router.navigate(['dashboard']);
     }, error => {
       debugger

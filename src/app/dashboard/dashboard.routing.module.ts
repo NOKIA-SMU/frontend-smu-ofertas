@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
 import { StationsComponent } from "./stations/stations.component";
+import { SubsystemsComponent } from './subsystems/subsystems.component';
+import { SuppliesComponent } from './supplies/supplies.component';
+import { ServicesComponent } from './services/services.component';
+import { OffersComponent } from './offers/offers.component';
 
 const dashboardRoutes: Routes = [
 	{
@@ -12,7 +16,11 @@ const dashboardRoutes: Routes = [
 			{
 				path: '',
 				children: [
-					{ path: 'estaciones', component: StationsComponent }
+					{ path: 'estaciones', component: StationsComponent },
+					{ path: 'subsistemas', component: SubsystemsComponent },
+					{ path: 'suministros', component: SuppliesComponent },
+					{ path: 'servicios', component: ServicesComponent },
+					{ path: 'ofertas', component: OffersComponent }
 				]
 			}
 		]
