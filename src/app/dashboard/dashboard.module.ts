@@ -7,6 +7,7 @@ import { MaterialModule } from '../material.module';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardService } from './dashboard.service';
 import { StationsComponent } from './stations/stations.component';
+import { StationsDetailComponent } from './stations/stations-detail/stations-detail.component';
 import { SubsystemsComponent } from './subsystems/subsystems.component';
 import { SuppliesComponent } from './supplies/supplies.component';
 import { ServicesComponent } from './services/services.component';
@@ -19,7 +20,14 @@ import { OffersComponent } from './offers/offers.component';
     NgxDatatableModule,
     MaterialModule
   ],
-  declarations: [DashboardComponent, StationsComponent, SubsystemsComponent, SuppliesComponent, ServicesComponent, OffersComponent],
+  declarations: [
+    DashboardComponent,
+    StationsComponent,
+    SubsystemsComponent,
+    SuppliesComponent,
+    ServicesComponent,
+    OffersComponent,
+    StationsDetailComponent],
   providers: [DashboardService]
 })
 

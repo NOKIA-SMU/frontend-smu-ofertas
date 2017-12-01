@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { DashboardService } from "../dashboard.service";
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -33,7 +34,7 @@ export class StationsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private router: Router) { }
 
   ngOnInit() { }
 
@@ -55,8 +56,9 @@ export class StationsComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  selectRow() {
-    debugger
+  goToDetail(data) {
+    // debugger
+    this.router.navigate(['dashboard/estaciones/23'], { queryParams: data, skipLocationChange: true});
   }
 
 }

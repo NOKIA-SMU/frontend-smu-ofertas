@@ -17,7 +17,7 @@
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToDetail(row)"></mat-row>
     </mat-table>
     <mat-paginator [pageSizeOptions]="[15, 50, 100]"></mat-paginator>
   </div>
