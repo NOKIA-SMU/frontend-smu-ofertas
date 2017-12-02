@@ -9,7 +9,7 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardService } from './dashboard.service';
 
 import { StationsComponent } from './stations/stations.component';
-import { StationsDetailComponent } from './stations/stations-detail/stations-detail.component';
+import { StationUpdateComponent } from './stations/station-update/station-update.component';
 import { StationsService } from './stations/stations.service';
 
 import { SubsystemsComponent } from './subsystems/subsystems.component';
@@ -28,11 +28,11 @@ import { OffersComponent } from './offers/offers.component';
   declarations: [
     DashboardComponent,
     StationsComponent,
+    StationUpdateComponent,
     SubsystemsComponent,
     SuppliesComponent,
     ServicesComponent,
-    OffersComponent,
-    StationsDetailComponent],
+    OffersComponent],
   providers: [DashboardService, StationsService]
 })
 

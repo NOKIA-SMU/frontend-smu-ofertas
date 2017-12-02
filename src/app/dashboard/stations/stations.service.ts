@@ -36,6 +36,39 @@ export class StationsService {
       .valueChanges
   }
 
+  public createStation(station) {
+    const createEstacion = gql`
+      mutation {
+        createEstacion(
+          nombre: " ",
+          ubicacion: " ",
+          region: " ",
+          departamento: " ",
+          ciudad: " ",
+          direccion: " ",
+          latitud: 0.0,
+          longitud: 0.0,
+          estructura: " ",
+          categoria: " ",
+        ) {
+          estacion {
+            id
+            nombre
+            ubicacion
+            region
+            departamento
+            ciudad
+            direccion
+            latitud
+            longitud
+            estructura
+            categoria
+          }
+        }
+      }
+    `
+  }
+
   public updateStation(station) {
     let id = parseInt(station.id)
     let latitud = parseFloat(station.latitud)
