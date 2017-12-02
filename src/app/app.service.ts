@@ -8,37 +8,37 @@ export class AppService {
 
   constructor() { }
 
-  public showSwal(type) {
-    if (type === 'basic') {
+  public showSwal(mod, type, title, text) {
+    if (mod === 'basic') {
       swal({
-        title: 'Here is a message!',
+        title,
         buttonsStyling: false,
         confirmButtonClass: 'mat-primary'
       });
-    } else if (type === 'title-and-text') {
+    } else if (mod === 'title-and-text') {
       swal({
-        title: 'Here is a message!',
-        text: 'It is pretty, is not it?',
+        title,
+        text,
         buttonsStyling: false,
         confirmButtonClass: 'btn btn-info'
       });
-    } else if (type === 'success-message') {
+    } else if (mod === 'success-message') {
       swal({
-        type: 'success',
-        title: 'Operación Exitosa',
+        type,
+        title,
+        text,
+        buttonsStyling: false,
+        confirmButtonClass: 'mat-primary'
+      });
+    } else if (mod === 'cancel') {
+      swal({
+        type,
+        title,
         text: '',
         buttonsStyling: false,
         confirmButtonClass: 'mat-primary'
       });
-    } else if (type === 'cancel') {
-      swal({
-        type: 'error',
-        title: 'Operación Fallida',
-        text: '',
-        buttonsStyling: false,
-        confirmButtonClass: 'mat-primary'
-      });
-    } else if (type === 'custom-html') {
+    } else if (mod === 'custom-html') {
       swal({
         title: 'HTML example',
         buttonsStyling: false,
@@ -48,14 +48,14 @@ export class AppService {
         '<a href="http://github.com">links</a> ' +
         'and other HTML tags'
       });
-    } else if (type === 'auto-close') {
+    } else if (mod === 'auto-close') {
       swal({
         title: 'Auto close alert!',
         text: 'I will close in 2 seconds.',
         timer: 2000,
         showConfirmButton: false
       });
-    } else if (type === 'input-field') {
+    } else if (mod === 'input-field') {
       swal({
         title: 'Input something',
         html: '<div class="form-group">' +

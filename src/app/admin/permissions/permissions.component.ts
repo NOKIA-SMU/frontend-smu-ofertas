@@ -34,27 +34,27 @@ export class PermissionsComponent implements OnInit {
   createPermission(permission: Permission) {
     this.adminService.createPermission(permission)
       .then(res => {
-        this.appService.showSwal('success-message')
+        this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permiso creado')
       }, error => {
-        this.appService.showSwal('cancel')
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
       });
-  }
+    }
 
-  deletePermission(permission: Permission) {
-    this.adminService.deletePermission(permission)
+    deletePermission(permission: Permission) {
+      this.adminService.deletePermission(permission)
       .then(res => {
-        this.appService.showSwal('success-message')
+        this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permiso eliminado')
       }, error => {
-        this.appService.showSwal('cancel')
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
       });
-  }
+    }
 
-  updatePermission(permission: Permission) {
-    this.adminService.updatePermission(permission)
+    updatePermission(permission: Permission) {
+      this.adminService.updatePermission(permission)
       .then(res => {
-        this.appService.showSwal('success-message')
+        this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permiso actualizado')
       }, error => {
-        this.appService.showSwal('cancel')
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
       });
   }
 }

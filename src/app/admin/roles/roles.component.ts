@@ -76,7 +76,8 @@ export class RolesComponent implements OnInit {
         }
       })
     }, error => {
-      this.appService.showSwal('cancel')
+      this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
+
     })
   }
 
@@ -86,45 +87,45 @@ export class RolesComponent implements OnInit {
       .then(res => {
         this.adminService.assignPermissionToRole(res.id, permissions)
           .then(res => {
-            this.appService.showSwal('success-message')
+            this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos asignados a rol')
           }, error => {
-            this.appService.showSwal('cancel')
+            this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
           })
-      }, error => {
-        debugger;
-      });
-  }
-
-  updateRole(role: Role) {
-    this.adminService.updateRole(role)
-      .then(res => {
-        this.appService.showSwal('success-message')
-      }, error => {
-        this.appService.showSwal('cancel')
-      });
-  }
-
-  deleteRole(role: Role) {
-    this.adminService.deleteRole(role)
-      .then(res => {
-        this.appService.showSwal('success-message')
-      }, error => {
-        this.appService.showSwal('cancel')
-      });
-  }
-
-  updatePermissionsToRole(role: Role) {
-    let permissions = []
-    for (let i = 0; i < this.permissions.length; i++) {
-      if (this.permissions[i].checked) {
-        permissions.push(this.permissions[i])
+        }, error => {
+          debugger;
+        });
       }
-    }
-    this.adminService.updatePermissionsToRole(role.id, this.actualColPermissions, permissions)
-      .then(res => {
-        this.appService.showSwal('success-message')
-      }, error => {
-        this.appService.showSwal('cancel')
+
+      updateRole(role: Role) {
+        this.adminService.updateRole(role)
+        .then(res => {
+          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Rol actualizado')
+        }, error => {
+          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
+        });
+      }
+
+      deleteRole(role: Role) {
+        this.adminService.deleteRole(role)
+        .then(res => {
+          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Rol eliminado')
+        }, error => {
+          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
+        });
+      }
+
+      updatePermissionsToRole(role: Role) {
+        let permissions = []
+        for (let i = 0; i < this.permissions.length; i++) {
+          if (this.permissions[i].checked) {
+            permissions.push(this.permissions[i])
+          }
+        }
+        this.adminService.updatePermissionsToRole(role.id, this.actualColPermissions, permissions)
+        .then(res => {
+          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos del rol actualizados')
+        }, error => {
+          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
       });
   }
 

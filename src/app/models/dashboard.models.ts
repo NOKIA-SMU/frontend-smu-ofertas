@@ -1,4 +1,5 @@
 export interface Station {
+	id?: string,
 	nombre: string,
 	ubicacion: string,
 	region: string,
@@ -11,6 +12,6 @@ export interface Station {
 	categoria: string,
 	estado?: any,
 	subestado?: any,
-	creado?: any,
+	creado?: string,
 	actualizado?: any
 }
