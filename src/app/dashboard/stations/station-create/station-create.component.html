@@ -1,0 +1,36 @@
+<h1>Crear Estación</h1>
+<form #createStationForm="ngForm" (ngSubmit)="createStation(station)">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="station.nombre" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Ubicación" name="ubicacion" [(ngModel)]="station.ubicacion" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Region" name="region" [(ngModel)]="station.region" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Departamento" name="departamento" [(ngModel)]="station.departamento" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Ciudad" name="ciudad" [(ngModel)]="station.ciudad" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Dirección" name="direccion" [(ngModel)]="station.direccion" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Latitud" name="latitud" [(ngModel)]="station.latitud" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Longitud" name="longitud" [(ngModel)]="station.longitud" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Estructura" name="estructura" [(ngModel)]="station.estructura" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Categoria" name="categoria" [(ngModel)]="station.categoria" required>
+  </mat-form-field>
+  <div class="footer-buttom">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!createStationForm.form.valid">Actualizar estación</button>
+  </div>
+</form>

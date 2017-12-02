@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard.component';
 
 import { StationsComponent } from "./stations/stations.component";
 import { StationUpdateComponent } from "./stations/station-update/station-update.component";
+import { StationCreateComponent } from "./stations/station-create/station-create.component";
 
 import { SubsystemsComponent } from './subsystems/subsystems.component';
 import { SuppliesComponent } from './supplies/supplies.component';
@@ -21,6 +22,7 @@ const dashboardRoutes: Routes = [
 				children: [
 					{ path: 'estaciones', component: StationsComponent },
 					{ path: 'estaciones/:id', component: StationUpdateComponent },
+					{ path: 'estaciones/crear', component: StationCreateComponent },
 					{ path: 'subsistemas', component: SubsystemsComponent },
 					{ path: 'suministros', component: SuppliesComponent },
 					{ path: 'servicios', component: ServicesComponent },

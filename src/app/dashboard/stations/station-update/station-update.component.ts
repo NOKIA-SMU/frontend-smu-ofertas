@@ -22,6 +22,8 @@ export class StationUpdateComponent implements OnInit {
     private router: Router,
     private stationsService: StationsService,
     private appService: AppService) {
+      debugger
+
       this.data = this.route.snapshot.queryParams;
       this.station = {
         id: this.data.id,

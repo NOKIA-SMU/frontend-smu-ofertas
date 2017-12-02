@@ -67,25 +67,29 @@ mat-grid-tile {
     padding: 0;
     border: none;
     cursor: pointer;
-    &:hover {
-      background: rgb(88, 127, 233);
-      color: white !important;
+    &.active {
+      background: #2974ff !important;
       .mat-header-cell, .mat-cell {
-        background: rgb(88, 127, 233);
+        background: #2974ff !important;
         color: white !important;
+      }
+    }
+    &:hover {
+      background: #efefef;
+      .mat-header-cell, .mat-cell {
+        background: #efefef;
       }
     }
     > .mat-header-cell, > .mat-cell {
       flex: 0 0 150px;
       display: flex;
       justify-content: center;
-      height: 44px;
+      height: 48px;
       font-size: .8em;
       align-items: center;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       &:hover {
-        background: rgb(88, 127, 233);
-        color: white;
+        background: #efefef;
       }
       &:nth-child(1) {
         flex: 0 0 70px;
@@ -95,6 +99,14 @@ mat-grid-tile {
       }
     }
   }
+}
+
+.navBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
 }
 
 .example-loading-shade {
@@ -112,4 +124,5 @@ mat-grid-tile {
 
 h2.title {
   color: #124191;
+  margin-top: 150px;
 }

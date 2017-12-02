@@ -1,6 +1,17 @@
+<nav class="navBar">
+  <mat-toolbar>
+    <button mat-mini-fab type="button" (click)="sidenav.toggle()">
+      <i class="material-icons">view_list</i>
+    </button>
+    <h2>NOKIA SMU Dashboard</h2>
+  </mat-toolbar>
+</nav>
 <mat-sidenav-container class="base-container">
   <mat-sidenav #sidenav opened="false" mode="side" class="base-sidenav">
     <mat-nav-list>
+      <br>
+      <br>
+      <br>
       <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item routerLink="/admin">Administrador</mat-list-item>
@@ -9,15 +20,7 @@
   </mat-sidenav>
 
   <div class="base-sidenav-content">
-    <mat-toolbar>
-      <button mat-mini-fab type="button" (click)="sidenav.toggle()">
-        <i class="material-icons">view_list</i>
-      </button>
-      <h2>NOKIA SMU Dashboard</h2>
-    </mat-toolbar>
-
     <div class="container">
-      <br>
       <mat-grid-list cols="4" gutterSize="14" rowHeight="180px" *ngIf="router.url === '/dashboard'">
         <mat-grid-tile routerLink="/dashboard/estaciones">Estaciones</mat-grid-tile>
         <mat-grid-tile routerLink="/dashboard/subsistemas">Subsistemas</mat-grid-tile>

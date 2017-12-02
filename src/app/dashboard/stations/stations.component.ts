@@ -7,7 +7,7 @@ import { StationsService } from "./stations.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-stations',
   templateUrl: './stations.component.html',
-  styleUrls: ['../dashboard.component.scss']
+  styleUrls: ['../dashboard.component.scss', './stations.component.scss']
 })
 
 export class StationsComponent implements OnInit {
@@ -28,11 +28,13 @@ export class StationsComponent implements OnInit {
   dataSource = new MatTableDataSource();
 
   isLoadingResults = true;
+  currentRowSelect: any;
+  currentRowSelectData: any = {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private stationsService: StationsService, private router: Router) { }
+  constructor(private stationsService: StationsService, private router: Router) { debugger}
 
   ngOnInit() { }
 
@@ -54,8 +56,23 @@ export class StationsComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  goToDetail(data) {
-    this.router.navigate([`dashboard/estaciones/${data.id}`], { queryParams: data, skipLocationChange: true});
+  selecRow(index, data) {
+    this.currentRowSelect = index;
+    this.currentRowSelectData = data;
   }
+
+  goToEdit() {
+    this.router.navigate([`dashboard/estaciones/${this.currentRowSelectData.id}`], { queryParams: this.currentRowSelectData, skipLocationChange: true});
+  }
+
+  goToCreate() {
+    this.router.navigate([`dashboard/estaciones/${this.currentRowSelectData.id}`], { queryParams: this.currentRowSelectData, skipLocationChange: true});
+  }
+
+  delete() {
+
+  }
+
+
 
 }
