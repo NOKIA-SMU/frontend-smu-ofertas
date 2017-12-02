@@ -40,16 +40,16 @@ export class StationsService {
     const createEstacion = gql`
       mutation {
         createEstacion(
-          nombre: " ",
-          ubicacion: " ",
-          region: " ",
-          departamento: " ",
-          ciudad: " ",
-          direccion: " ",
-          latitud: 0.0,
-          longitud: 0.0,
-          estructura: " ",
-          categoria: " ",
+          nombre: "${station.nombre}",
+          ubicacion: "${station.ubicacion}",
+          region: "${station.region}",
+          departamento: "${station.departamento}",
+          ciudad: "${station.ciudad}",
+          direccion: "${station.direccion}",
+          latitud: ${station.latitud},
+          longitud: ${station.longitud},
+          estructura: "${station.estructura}",
+          categoria: "${station.categoria}",
         ) {
           estacion {
             id
@@ -67,13 +67,14 @@ export class StationsService {
         }
       }
     `
+    return this.apollo.mutate({ mutation: createEstacion })
   }
 
   public updateStation(station) {
     let id = parseInt(station.id)
     let latitud = parseFloat(station.latitud)
     let longitud = parseFloat(station.longitud)
-    let updateEstacion = gql`
+    const updateEstacion = gql`
       mutation {
         updateEstacion(
           id: ${id},
@@ -106,6 +107,20 @@ export class StationsService {
       }
     `
     return this.apollo.mutate({ mutation: updateEstacion })
+  }
+
+  public deleteStation(stationId) {
+    let id = parseInt(stationId)
+    const deleteEstacion = gql`
+    mutation {
+      deleteEstacion(id: ${id}) {
+        estacion {
+          id
+        }
+      }
+    }
+    `
+    return this.apollo.mutate({ mutation: deleteEstacion })
   }
 
 }

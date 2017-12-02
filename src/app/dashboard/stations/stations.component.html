@@ -1,8 +1,8 @@
 <div class="wrapper">
-  <nav class="wrapper__nav" *ngIf="currentRowSelect">
+  <nav class="wrapper__nav">
     <i (click)="goToCreate()"class="material-icons">add_circle_outline</i>
-    <i (click)="goToEdit()" class="material-icons">mode_edit</i>
-    <i (click)="delete()" class="material-icons">delete</i>
+    <i (click)="goToEdit()" *ngIf="currentRowSelect >= 0" class="material-icons">mode_edit</i>
+    <i (click)="deleteStation()" *ngIf="currentRowSelect >= 0" class="material-icons">delete</i>
   </nav>
   <h2 class="title">Estaciones</h2>
   <div class="example-header">

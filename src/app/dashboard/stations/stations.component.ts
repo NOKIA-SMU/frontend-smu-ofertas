@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { StationsService } from "./stations.service";
+import { AppService } from "../../app.service";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +35,7 @@ export class StationsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private stationsService: StationsService, private router: Router) { debugger}
+  constructor(private stationsService: StationsService, private router: Router, private appService: AppService) { }
 
   ngOnInit() { }
 
@@ -56,7 +57,7 @@ export class StationsComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  selecRow(index, data) {
+  selectRow(index, data) {
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
   }
@@ -66,11 +67,20 @@ export class StationsComponent implements OnInit {
   }
 
   goToCreate() {
-    this.router.navigate([`dashboard/estaciones/${this.currentRowSelectData.id}`], { queryParams: this.currentRowSelectData, skipLocationChange: true});
+    this.router.navigate([`dashboard/estaciones/crear`]);
   }
 
-  delete() {
 
+  deleteStation() {
+    this.stationsService.deleteStation(this.currentRowSelectData.id)
+      .subscribe(res => {
+        // if (res.data.updateEstacion.status) {
+        // this.router.navigate(['/estaciones']);
+        // }
+        debugger
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+      })
   }
 
 
