@@ -7,7 +7,8 @@ import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-subsystem-operate',
-  templateUrl: './subsystem-operate.component.html'
+  templateUrl: './subsystem-operate.component.html',
+  styleUrls: ['./subsystems.component.scss']
 })
 
 export class SubsystemOperateComponent implements OnInit {

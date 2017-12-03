@@ -82,6 +82,18 @@ mat-sidenav {
 	left: 0;
 }
 
+.navBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+}
+
+.mat-drawer {
+	margin-top: 56px;
+}
+
 
 .auth {
 	// .mat-form-field-underline {

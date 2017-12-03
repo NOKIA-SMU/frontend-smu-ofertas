@@ -7,7 +7,8 @@ import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-station-operate',
-  templateUrl: './station-operate.component.html'
+  templateUrl: './station-operate.component.html',
+  styleUrls: ['./stations.component.scss']
 })
 
 export class StationOperateComponent implements OnInit {

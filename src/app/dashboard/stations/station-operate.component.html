@@ -1,5 +1,5 @@
 <div *ngIf="!isNew">
-  <h1>Actualizar Estación</h1>
+  <h2 class="title">Actualizar Estación</h2>
   <form *ngIf="!isNew" #updateStationForm="ngForm" (ngSubmit)="updateStation()">
     <mat-form-field>
       <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="station.nombre" required>
@@ -33,12 +33,13 @@
     </mat-form-field>
     <div class="footer-buttom">
       <button *ngIf="!isNew" mat-raised-button color="primary" type="submit" [disabled]="!updateStationForm.form.valid">Actualizar estación</button>
+      <button mat-raised-button color="danger" routerLink="/estaciones">Cancelar</button>
     </div>
   </form>
 </div>
 
 <div *ngIf="isNew">
-  <h1>Crear Estación</h1>
+  <h2 class="title">Crear Estación</h2>
   <form #createStationForm="ngForm" (ngSubmit)="createStation()">
     <mat-form-field>
       <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="station.nombre" required>
@@ -72,6 +73,7 @@
     </mat-form-field>
     <div class="footer-buttom">
       <button mat-raised-button color="primary" type="submit" [disabled]="!createStationForm.form.valid">Crear estación</button>
+      <button mat-raised-button color="danger" routerLink="/estaciones">Cancelar</button>
     </div>
   </form>
 </div>

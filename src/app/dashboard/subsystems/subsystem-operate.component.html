@@ -1,5 +1,5 @@
 <div *ngIf="!isNew">
-  <h1>Actualizar Subsistema</h1>
+  <h2 class="title">Actualizar Subsistema</h2>
   <form *ngIf="!isNew" #updateSubsystemForm="ngForm" (ngSubmit)="updateSubsystem()">
     <mat-form-field>
       <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="subsystem.nombre" required>
@@ -11,7 +11,7 @@
 </div>
 
 <div *ngIf="isNew">
-  <h1>Crear Subsistema</h1>
+  <h2 class="title">Crear Subsistema</h2>
   <form #createSubsystemForm="ngForm" (ngSubmit)="createSubsystem()">
     <mat-form-field>
       <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="subsystem.nombre" required>
