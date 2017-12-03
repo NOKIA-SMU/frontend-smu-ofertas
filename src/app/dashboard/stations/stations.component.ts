@@ -26,8 +26,8 @@ export class StationsComponent implements OnInit {
     'estructura',
     'categoria'
   ];
-  dataSource = new MatTableDataSource();
 
+  dataSource = new MatTableDataSource();
   isLoadingResults = true;
   currentRowSelect: any;
   currentRowSelectData: any = {}
@@ -69,7 +69,6 @@ export class StationsComponent implements OnInit {
   goToCreate() {
     this.router.navigate([`dashboard/estaciones/crear`]);
   }
-
 
   deleteStation() {
     this.stationsService.deleteStation(this.currentRowSelectData.id)

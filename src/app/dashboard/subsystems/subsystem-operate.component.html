@@ -1,0 +1,23 @@
+<div *ngIf="!isNew">
+  <h1>Actualizar Subsistema</h1>
+  <form *ngIf="!isNew" #updateSubsystemForm="ngForm" (ngSubmit)="updateSubsystem()">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="subsystem.nombre" required>
+    </mat-form-field>
+    <div class="footer-buttom">
+      <button *ngIf="!isNew" mat-raised-button color="primary" type="submit" [disabled]="!updateSubsystemForm.form.valid">Actualizar estación</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="isNew">
+  <h1>Crear Subsistema</h1>
+  <form #createSubsystemForm="ngForm" (ngSubmit)="createSubsystem()">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="subsystem.nombre" required>
+    </mat-form-field>
+    <div class="footer-buttom">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!createSubsystemForm.form.valid">Crear estación</button>
+    </div>
+  </form>
+</div>

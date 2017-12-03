@@ -34,7 +34,7 @@ export class AppService {
       swal({
         type,
         title,
-        text: '',
+        text,
         buttonsStyling: false,
         confirmButtonClass: 'mat-primary'
       });

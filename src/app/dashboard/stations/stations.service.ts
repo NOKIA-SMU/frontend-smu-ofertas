@@ -67,7 +67,12 @@ export class StationsService {
         }
       }
     `
-    return this.apollo.mutate({ mutation: createEstacion })
+    return this.apollo.mutate({
+      mutation: createEstacion,
+      refetchQueries: [{
+        query: queryStations
+      }]
+    })
   }
 
   public updateStation(station) {

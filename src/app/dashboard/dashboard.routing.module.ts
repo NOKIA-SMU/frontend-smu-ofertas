@@ -7,6 +7,8 @@ import { StationsComponent } from "./stations/stations.component";
 import { StationOperateComponent } from "./stations/station-operate.component";
 
 import { SubsystemsComponent } from './subsystems/subsystems.component';
+import { SubsystemOperateComponent } from "./subsystems/subsystem-operate.component";
+
 import { SuppliesComponent } from './supplies/supplies.component';
 import { ServicesComponent } from './services/services.component';
 import { OffersComponent } from './offers/offers.component';
@@ -22,6 +24,7 @@ const dashboardRoutes: Routes = [
 					{ path: 'estaciones', component: StationsComponent},
 					{ path: 'estaciones/:id', component: StationOperateComponent },
 					{ path: 'subsistemas', component: SubsystemsComponent },
+					{ path: 'subsistemas/:id', component: SubsystemOperateComponent },
 					{ path: 'suministros', component: SuppliesComponent },
 					{ path: 'servicios', component: ServicesComponent },
 					{ path: 'ofertas', component: OffersComponent }

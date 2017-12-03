@@ -126,3 +126,29 @@ h2.title {
   color: #124191;
   margin-top: 150px;
 }
+
+.wrapper {
+	position: relative;
+	&__nav {
+		position: fixed;
+		left: 0;
+		right: 0;
+		padding: 6px 4%;
+		background: #e1e2e4;
+		top: 64px;
+		z-index: 2;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		i {
+			padding: 8px 10px;
+			font-size: 1.8em;
+			color: #484747;
+			margin: 0 0 0 5px;
+			&:hover {
+				color: #2974ff;
+				cursor: pointer;
+			}
+		}
+	}
+}

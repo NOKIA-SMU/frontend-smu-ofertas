@@ -7,8 +7,7 @@ import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-station-operate',
-  templateUrl: './station-operate.component.html',
-  styleUrls: ['./station-operate.component.scss']
+  templateUrl: './station-operate.component.html'
 })
 
 export class StationOperateComponent implements OnInit {
@@ -80,6 +79,6 @@ export class StationOperateComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
       })
-    }
+  }
 
 }

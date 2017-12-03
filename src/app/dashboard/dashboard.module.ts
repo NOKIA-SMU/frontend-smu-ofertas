@@ -13,6 +13,9 @@ import { StationOperateComponent } from './stations/station-operate.component';
 import { StationsService } from './stations/stations.service';
 
 import { SubsystemsComponent } from './subsystems/subsystems.component';
+import { SubsystemOperateComponent } from './subsystems/subsystem-operate.component';
+import { SubsystemsService } from './subsystems/subsystems.service';
+
 import { SuppliesComponent } from './supplies/supplies.component';
 import { ServicesComponent } from './services/services.component';
 import { OffersComponent } from './offers/offers.component';
@@ -30,10 +33,15 @@ import { OffersComponent } from './offers/offers.component';
     StationsComponent,
     StationOperateComponent,
     SubsystemsComponent,
+    SubsystemOperateComponent,
     SuppliesComponent,
     ServicesComponent,
     OffersComponent],
-  providers: [DashboardService, StationsService]
+  providers: [
+    DashboardService,
+    StationsService,
+    SubsystemsService
+  ]
 })
 
 export class DashboardModule { }

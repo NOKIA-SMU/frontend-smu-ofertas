@@ -15,3 +15,8 @@ export interface Station {
 	creado?: string,
 	actualizado?: any
 }
+
+export interface Subsystem {
+	id?: number,
+	nombre: string
+}
