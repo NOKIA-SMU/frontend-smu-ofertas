@@ -22,6 +22,8 @@ export class SignupComponent implements OnInit {
     this.authService.signIn(this.user).then(
       res => {
         user.userId = res.uid;
+        user.uid = res.uid;
+        user.ID = res.uid;
         this.authService.createUser(user)
           .then(res => {
             this.router.navigate(['dashboard']);

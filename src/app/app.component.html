@@ -1,31 +1,25 @@
-<!-- <ul>
-  <li>
-    <a routerLink="/">Home</a>
-  </li>
-  <li>
-    <a routerLink="/auth">Auth</a>
-  </li>
-  <li>
-    <a routerLink="/auth/signin">SignIn</a>
-  </li>
-  <li>
-    <a routerLink="/auth/signup">SignUp</a>
-  </li>
-  <li>
-    <a routerLink="/dashboard">Dashboard</a>
-  </li>
-  <li>
-    <a routerLink="/admin">Admin</a>
-    <ul>
-      <li>
-        <a routerLink="/admin/permissions">Admin/permissions</a>
-      </li>
-      <li>
-        <a routerLink="/admin/roles">Admin/roles</a>
-      </li>
-    </ul>
-  </li>
-</ul> -->
+<!-- <div *ngIf="auth.user | async; then authenticated else guest">
+  <h1>User: </h1>
+</div>
+
+<ng-template #guest>
+  <h3>Howdy, GUEST</h3>
+  <p>Login to get started...</p>
+
+  <button (click)="auth.googleLogin()">
+        <i class="fa fa-google"></i> Connect Google
+    </button>
+</ng-template>
+
+<ng-template #authenticated>
+  <div *ngIf="auth.user | async as user">
+    <h3>Howdy, {{ user.displayName }}</h3>
+    <img [src]="user.photoURL">
+    <p>UID: {{ user.uid }}</p>
+    <p>Favorite Color: {{ user?.favoriteColor }} </p>
+    <button (click)="auth.signOut()">Logout</button>
+  </div>
+</ng-template> -->
 <router-outlet></router-outlet>
 
 
