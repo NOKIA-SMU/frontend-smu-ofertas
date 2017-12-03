@@ -29,7 +29,7 @@ export class AuthService {
     private afs: AngularFirestore,
     public router: Router
   ) {
-    this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
     this.profilesCollection = afs.collection<Profile>('profiles'); // reference
     this.profiles = this.profilesCollection.valueChanges(); // observable of notes data
     this.user = this.afAuth.authState
@@ -50,18 +50,8 @@ export class AuthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
 
-  public createUser(user: Profile) {
-    return this.profilesCollection.add(user)
-  }
-
-  public isUserAuthenticated() {
-
-    return this.afAuth.auth.currentUser;
-    // return this.isAuth =  firebase.auth().onAuthStateChanged(res => {
-    //   debugger
-    // }, error => {
-    //   debugger
-    // })
+  public createUser(user: Profile, id: string) {
+    return this.profilesCollection.doc(id).set(user)
   }
 
 }

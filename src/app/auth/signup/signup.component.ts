@@ -21,10 +21,7 @@ export class SignupComponent implements OnInit {
   onSubmit(user: Profile) {
     this.authService.signIn(this.user).then(
       res => {
-        user.userId = res.uid;
-        user.uid = res.uid;
-        user.ID = res.uid;
-        this.authService.createUser(user)
+        this.authService.createUser(user, res.uid)
           .then(res => {
             this.router.navigate(['dashboard']);
           }, error => {
