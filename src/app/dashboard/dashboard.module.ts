@@ -16,6 +16,10 @@ import { SubsystemsComponent } from './subsystems/subsystems.component';
 import { SubsystemOperateComponent } from './subsystems/subsystem-operate.component';
 import { SubsystemsService } from './subsystems/subsystems.service';
 
+import { RequestsComponent } from './requests/requests.component';
+import { RequestOperateComponent } from './requests/request-operate.component';
+import { RequestsService } from './requests/requests.service';
+
 import { SuppliesComponent } from './supplies/supplies.component';
 import { ServicesComponent } from './services/services.component';
 import { OffersComponent } from './offers/offers.component';
@@ -34,13 +38,16 @@ import { OffersComponent } from './offers/offers.component';
     StationOperateComponent,
     SubsystemsComponent,
     SubsystemOperateComponent,
+    RequestsComponent,
+    RequestOperateComponent,
     SuppliesComponent,
     ServicesComponent,
     OffersComponent],
   providers: [
     DashboardService,
     StationsService,
-    SubsystemsService
+    SubsystemsService,
+    RequestsService
   ]
 })
 

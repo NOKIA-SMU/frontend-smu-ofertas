@@ -20,3 +20,16 @@ export interface Subsystem {
 	id?: number,
 	nombre: string
 }
+
+export interface Request {
+	id?: number,
+	supervisor: string,
+	analista: string,
+	tas: string
+	estacion: number,
+	subsistema: string,
+	suministros: number[],
+	servicios: number[],
+	prioridad: string
+	estadoSolicitud: boolean
+}

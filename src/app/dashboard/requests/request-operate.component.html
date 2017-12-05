@@ -1,0 +1,73 @@
+<div *ngIf="!isNew">
+  <h2 class="title">Actualizar Solicitud</h2>
+  <form *ngIf="!isNew" #updateRequestForm="ngForm" (ngSubmit)="updateRequest()">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Supervisor" name="supervisor" [(ngModel)]="request.supervisor" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Analista" name="analista" [(ngModel)]="request.analista" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Tas" name="tas" [(ngModel)]="request.tas" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Tas" name="tas" [(ngModel)]="request.tas" required>
+    </mat-form-field>
+    <div class="footer-buttom">
+      <button *ngIf="!isNew" mat-raised-button color="primary" type="submit" [disabled]="!updateRequestForm.form.valid">Actualizar estación</button>
+      <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="isNew">
+  <h2 class="title">Crear Solicitud</h2>
+  <form #createRequestForm="ngForm" (ngSubmit)="createRequest()">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Supervisor" name="supervisor" [(ngModel)]="request.supervisor" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Analista" name="analista" [(ngModel)]="request.analista" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Tas" name="tas" [(ngModel)]="request.tas" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Estación" name="estacion" [(ngModel)]="request.estacion" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="request.subsistema" required>
+        <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
+          {{subsystem.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>{{selectedSubsystem}}</p>
+    <mat-form-field>
+      <mat-select placeholder="Suministros" name="supplies" [(ngModel)]="request.suministros" multiple required>
+        <mat-option *ngFor="let supplie of supplies" [value]="supplie.id">
+          {{supplie.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Servicios" name="services" [(ngModel)]="request.servicios" multiple required>
+        <mat-option *ngFor="let service of services" [value]="service.id">
+          {{service.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Prioridad" name="priority" [(ngModel)]="request.prioridad" required>
+        <mat-option *ngFor="let priority of priorities" [value]="priority.id">
+          {{priority.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slide-toggle [color]="color" [checked]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
+    <div class="footer-buttom">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!createRequestForm.form.valid">Crear estación</button>
+      <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
+    </div>
+  </form>
+</div>
