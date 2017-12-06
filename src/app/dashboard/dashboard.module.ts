@@ -22,7 +22,10 @@ import { RequestsService } from './requests/requests.service';
 
 import { SuppliesComponent } from './supplies/supplies.component';
 import { ServicesComponent } from './services/services.component';
+
 import { OffersComponent } from './offers/offers.component';
+import { OfferOperateComponent } from './offers/offer-operate.component';
+import { OffersService } from './offers/offers.service';
 
 @NgModule({
   imports: [
@@ -42,12 +45,14 @@ import { OffersComponent } from './offers/offers.component';
     RequestOperateComponent,
     SuppliesComponent,
     ServicesComponent,
-    OffersComponent],
+    OffersComponent,
+    OfferOperateComponent],
   providers: [
     DashboardService,
     StationsService,
     SubsystemsService,
-    RequestsService
+    RequestsService,
+    OffersService
   ]
 })
 
