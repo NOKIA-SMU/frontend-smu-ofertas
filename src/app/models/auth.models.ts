@@ -7,6 +7,7 @@ export interface Profile {
 	phoneNumber: number;
 	email: string;
 	userId: string;
+	region?: string;
 }
 
 export interface Role {

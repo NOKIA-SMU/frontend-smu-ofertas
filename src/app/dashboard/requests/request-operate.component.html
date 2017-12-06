@@ -1,4 +1,4 @@
-<div *ngIf="!isNew">
+<ng-container *ngIf="!isNew">
   <h2 class="title">Actualizar Solicitud</h2>
   <form *ngIf="!isNew" #updateRequestForm="ngForm" (ngSubmit)="updateRequest()">
     <mat-form-field>
@@ -18,9 +18,9 @@
       <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
     </div>
   </form>
-</div>
+</ng-container>
 
-<div *ngIf="isNew">
+<ng-container *ngIf="isNew">
   <h2 class="title">Crear Solicitud</h2>
   <form #createRequestForm="ngForm" (ngSubmit)="createRequest()">
     <mat-form-field>
@@ -70,4 +70,4 @@
       <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
     </div>
   </form>
-</div>
+</ng-container>

@@ -14,6 +14,26 @@
 	}
 }
 
+form {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	// border: 1px solid #c7c5c5;
+	padding: 40px;
+	.mat-form-field {
+		width: 47%;
+		min-width: 250px;
+	}
+	.footer-buttom {
+		width: 100%;
+	}
+}
+
+
+input {
+  color: #555358;
+}
+
 h2.title {
 	color: #124191;
 	margin-top: 0;
@@ -40,7 +60,7 @@ mat-grid-tile {
 		flex-wrap: wrap;
 		justify-content: space-between;
 		.data {
-			width: 80%;
+			width: 60%;
 			height: 50px;
 			display: flex;
 			align-items: center;

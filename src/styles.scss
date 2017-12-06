@@ -29,18 +29,14 @@ body {
 		}
 		button {
 			margin: 15px 0;
-			box-shadow: 0 4px #124191;
-			position: relative;
-			border: 0;
-			outline: none;
+			// box-shadow: 0 4px #124191;
+			// position: relative;
+			// border: 0;
+			// outline: none;
 			padding: 11px 17px;
 			background: #2974ff;
 			color: white;
 			cursor: pointer;
-			&:hover {
-				box-shadow: 0 2px #124191;
-				top: 2px;
-			}
 		}
 	}
 }

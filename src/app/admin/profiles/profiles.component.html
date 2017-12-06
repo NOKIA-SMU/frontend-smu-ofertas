@@ -11,48 +11,52 @@
       <a (click)="showEditRole($event, profile)" class="material-icons green">assignment</a>
       <a (click)="showMore($event, profile)" class="material-icons semi">expand_more</a>
     </div>
-    <div *ngIf="showMoreProfile && profileToEdit.userId == profile.userId" class="editProfile">
-    <mat-list>
-      <mat-list-item>{{ profile.email }}</mat-list-item>
-      <mat-list-item>{{ profile.phoneNumber }}</mat-list-item>
-      <mat-list-item>Item 3</mat-list-item>
-    </mat-list>
-    </div>
-    <div *ngIf="editState && profileToEdit.userId == profile.userId" class="editProfile">
-      <hr>
-      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)" class="u__form">
-        <div class="form-group">
-          <label for="firstName">Nombre</label>
-          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="profile.firstName" required>
+    <ng-container *ngIf="showMoreProfile && profileToEdit.id == profile.id" class="editProfile">
+      <mat-list>
+        <mat-list-item>{{ profile.email }}</mat-list-item>
+        <mat-list-item>{{ profile.phoneNumber }}</mat-list-item>
+        <mat-list-item>Item 3</mat-list-item>
+      </mat-list>
+    </ng-container>
+    <ng-container *ngIf="editState && profileToEdit.id == profile.id" class="editProfile">
+      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Nombre" name="firstname" [(ngModel)]="profile.firstName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" placeholder="Apellido" name="lastName" [(ngModel)]="profile.lastName" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="number" placeholder="Celular" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" placeholder="Email" name="email" [(ngModel)]="profile.email" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Region" name="region" [(ngModel)]="profile.region" required>
+            <mat-option *ngFor="let region of regions" [value]="region">
+              {{region}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="footer-buttom">
+          <button type="submit" mat-raised-button color="primary">Actualizar</button>
         </div>
-        <div class="form-group">
-          <label for="lastName">Apellido</label>
-          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="profile.lastName" required>
-        </div>
-        <div class="form-group">
-          <label for="phoneNumber">Celular</label>
-          <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
-        </div>
-        <div class="form-group">
-          <label for="email">email</label>
-          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="profile.email" required>
-        </div>
-        <button type="submit" class="btn btn-success">Actualizar</button>
       </form>
-      <br>
-    </div>
-    <div *ngIf="isShowEditRole && profileToAssignRole.userId == profile.userId" class="assignRole">
-      <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)" class="u__form">
-        <div class="form-group">
-          <label for="email">Asignación de rol</label>
-          <select class="form-control" id="role" name="role" [(ngModel)]="roleSelected" required>
-            <option *ngFor="let role of roles" [ngValue]="role">
+    </ng-container>
+    <ng-container *ngIf="isShowEditRole && profileToAssignRole.id == profile.id" class="assignRole">
+      <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)">
+        <mat-form-field>
+          <mat-select placeholder="Rol" name="role" [(ngModel)]="roleSelected" required>
+            <mat-option *ngFor="let role of roles" [value]="role">
               {{role.name}}
-            </option>
-          </select>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="footer-buttom">
+          <button type="submit" mat-raised-button color="primary">Asignar rol</button>
         </div>
-        <button type="submit" class="btn btn-success">Assign Role</button>
       </form>
-    </div>
+    </ng-container>
   </li>
 </ul>

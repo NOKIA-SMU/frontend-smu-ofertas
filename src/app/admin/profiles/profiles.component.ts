@@ -18,6 +18,11 @@ export class ProfilesComponent implements OnInit {
   isShowEditRole: boolean = false;
   profileToAssignRole: Profile;
   showMoreProfile: boolean = false;
+  regions = [
+    'NOROCCIDENTE',
+    'SUROCCIDENTE',
+    'COSTA'
+  ]
 
   constructor(private adminService: AdminService) { }
 
@@ -47,11 +52,13 @@ export class ProfilesComponent implements OnInit {
   }
 
   showEditRole(event, profile: Profile) {
+    // debugger
     this.isShowEditRole = !this.isShowEditRole;
     this.profileToAssignRole = profile;
   }
 
   assignRoleToProfile(role: Role, profile: Profile) {
+    debugger
     this.adminService.assignRoleToProfile(role, profile)
       .then(res => {
         debugger
