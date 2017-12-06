@@ -31,7 +31,7 @@ export class AdminService {
 
   role: Observable<any[]>;
 
-  constructor(private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore) { }
 
   public createPermission(permission: Permission) {
     return this.permissionsCol.add(permission)
@@ -87,6 +87,26 @@ export class AdminService {
           return { id, ...data };
         });
       });
+  }
+
+  getProfilesByRol() {
+    firebase.firestore().collection('profiles')
+      .where('roles.name', '==', 'Analista')
+      .get()
+      .then(res => {
+        res.forEach(doc => {
+          debugger
+        })
+      })
+    // return this.profilesCol.snapshotChanges()
+    //   .map(actions => {
+    //     return actions.map(res => {
+    //       const data = res.payload.doc.data() as Profile;
+    //       debugger
+    //       const id = res.payload.doc.id;
+    //       return { id, ...data };
+    //     });
+    //   });
   }
 
   public getRoles() {

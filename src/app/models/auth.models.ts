@@ -8,6 +8,10 @@ export interface Profile {
 	email: string;
 	userId: string;
 	region?: string;
+	roles?: [{
+		id: string;
+		name: string;
+	}]
 }
 
 export interface Role {

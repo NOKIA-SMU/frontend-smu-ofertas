@@ -24,9 +24,6 @@
   <h2 class="title">Crear Solicitud</h2>
   <form #createRequestForm="ngForm" (ngSubmit)="createRequest()">
     <mat-form-field>
-      <input matInput type="text" placeholder="Supervisor" name="supervisor" [(ngModel)]="request.supervisor" required>
-    </mat-form-field>
-    <mat-form-field>
       <input matInput type="text" placeholder="Analista" name="analista" [(ngModel)]="request.analista" required>
     </mat-form-field>
     <mat-form-field>

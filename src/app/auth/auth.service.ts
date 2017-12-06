@@ -22,7 +22,7 @@ export class AuthService {
   profilesCollection: AngularFirestoreCollection<Profile>;
   profiles: Observable<Profile[]>;
   user: Observable<Profile>;
-  currentUser: any;
+  // currentUser: any;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -52,6 +52,10 @@ export class AuthService {
 
   public createUser(user: Profile, id: string) {
     return this.profilesCollection.doc(id).set(user)
+  }
+
+  public currentUser() {
+    return this.user
   }
 
 }

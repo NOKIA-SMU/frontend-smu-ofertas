@@ -5,6 +5,9 @@ import { RequestsService } from "./requests.service";
 import { SubsystemsService } from "../subsystems/subsystems.service";
 import { AppService } from "../../app.service";
 import { Observable } from "rxjs/Observable";
+import { AuthService } from '../../auth/auth.service';
+import { Profile } from '../../models/auth.models';
+import { AdminService } from '../../admin/admin.service';
 
 @Component({
   selector: 'app-request-operate',
@@ -24,12 +27,15 @@ export class RequestOperateComponent implements OnInit {
   priorities: any[];
   color = 'accent';
   checkedRequestState = false;
+  currentUser: Profile;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private requestsService: RequestsService,
     private subsystemService: SubsystemsService,
+    private authService: AuthService,
+    private admnService: AdminService,
     private appService: AppService
   ) {
     this.subsystemService.getSubsystems()
@@ -38,6 +44,16 @@ export class RequestOperateComponent implements OnInit {
       }, error => {
         debugger
       })
+
+    this.authService.currentUser()
+      .subscribe(res => {
+        this.currentUser = res
+      })
+
+    // this.admnService.getProfilesByRol()
+    //   .subscribe(res => {
+    //     debugger
+    //   })
 
     this.supplies = [
       {id: 1 , name: "suministro 1"},
@@ -95,14 +111,16 @@ export class RequestOperateComponent implements OnInit {
   ngOnInit() { }
 
   createRequest() {
-    this.requestsService.createRequest(this.request)
-      .subscribe(res => {
-        // if (res.data.updateEstacion.status) {
-        this.router.navigate(['/solicitudes']);
-        // }
-      }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
-      })
+    debugger
+    this.request.supervisor = this.currentUser.id;
+    // this.requestsService.createRequest(this.request)
+    //   .subscribe(res => {
+    //     // if (res.data.updateEstacion.status) {
+    //     this.router.navigate(['/solicitudes']);
+    //     // }
+    //   }, error => {
+    //     this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+    //   })
   }
 
   updateRequest() {

@@ -19,7 +19,7 @@
       </mat-list>
     </ng-container>
     <ng-container *ngIf="editState && profileToEdit.id == profile.id" class="editProfile">
-      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile)">
+      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile, roleSelected)">
         <mat-form-field>
           <input matInput type="text" placeholder="Nombre" name="firstname" [(ngModel)]="profile.firstName" required>
         </mat-form-field>
@@ -36,6 +36,13 @@
           <mat-select placeholder="Region" name="region" [(ngModel)]="profile.region" required>
             <mat-option *ngFor="let region of regions" [value]="region">
               {{region}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Rol" name="role" [(ngModel)]="roleSelected" multiple required>
+            <mat-option *ngFor="let role of roles" [value]="role">
+              {{role.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>

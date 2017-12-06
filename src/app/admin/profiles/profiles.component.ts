@@ -57,18 +57,20 @@ export class ProfilesComponent implements OnInit {
     this.profileToAssignRole = profile;
   }
 
+  ///////////
   assignRoleToProfile(role: Role, profile: Profile) {
     debugger
     this.adminService.assignRoleToProfile(role, profile)
-      .then(res => {
-        debugger
-      },
-      error => {
-        debugger
-      })
+    .then(res => {
+      debugger
+    },
+    error => {
+      debugger
+    })
   }
 
-  updateProfile(event, profile) {
+  updateProfile(event, profile: Profile, roleSelected) {
+    profile.roles = roleSelected
     this.adminService.updateProfile(profile)
   }
 
