@@ -67,11 +67,13 @@ export class AuthService {
     return this.afAuth.auth.currentUser.getIdToken()
   }
 
-  public sendToken(uid: string, token: string) {
-    debugger
+  public sendToken(uid: string, token: String) {
     const postToken = gql`
       mutation {
-        createToken(uid: "${uid}", credential: "${token}") {
+        createToken(
+          uid: "${uid}",
+          credential: "${token}",
+        ) {
           token {
             id
             uid

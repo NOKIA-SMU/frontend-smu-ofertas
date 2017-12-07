@@ -4,6 +4,8 @@
       <i class="material-icons">view_list</i>
     </button>
     <h2>NOKIA SMU ADMIN</h2>
+    <span class="navBar__spacer"></span>
+    <p *ngIf="currentUser" class="navBar__username">{{currentUser.firstName}} {{currentUser.lastName}}</p>
   </mat-toolbar>
 </nav>
 <mat-sidenav-container class="base-container">

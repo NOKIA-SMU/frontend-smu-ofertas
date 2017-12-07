@@ -52,7 +52,6 @@ export class RequestOperateComponent implements OnInit {
         debugger
       })
 
-
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res

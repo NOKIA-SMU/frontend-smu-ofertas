@@ -48,6 +48,7 @@ export class StationsComponent implements OnInit {
         this.isLoadingResults = false;
       }, error => {
         this.isLoadingResults = false;
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
       });
   }
 
