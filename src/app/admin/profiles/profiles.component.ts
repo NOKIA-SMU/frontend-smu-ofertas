@@ -42,11 +42,13 @@ export class ProfilesComponent implements OnInit {
   }
 
   editProfile(event, profile: Profile) {
+    this.showMoreProfile = false;
     this.editState = !this.editState;
     this.profileToEdit = profile;
   }
 
   showMore(event, profile: Profile) {
+    this.editState = false;
     this.showMoreProfile = !this.showMoreProfile;
     this.profileToEdit = profile;
   }

@@ -8,12 +8,36 @@
 </nav>
 <mat-sidenav-container class="base-container">
   <mat-sidenav #sidenav opened="true" mode="side" class="base-sidenav">
-    <mat-nav-list>
-      <mat-list-item routerLink="/dashboard">Dashboard</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item routerLink="/admin">Administrador</mat-list-item>
-      <mat-divider></mat-divider>
-    </mat-nav-list>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Admin
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item routerLink="/admin">Perfiles</mat-list-item>
+          <mat-list-item routerLink="/admin">Roles</mat-list-item>
+          <mat-list-item routerLink="/admin">Permisos</mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Dashboard
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item routerLink="/dashboard/estaciones">Estaciones</mat-list-item>
+          <mat-list-item routerLink="/dashboard/subsistemas">Subsistemas</mat-list-item>
+          <mat-list-item routerLink="/dashboard/suministros">Suministros</mat-list-item>
+          <mat-list-item routerLink="/dashboard/servicios">Servicios</mat-list-item>
+          <mat-list-item routerLink="/dashboard/solicitudes">Solicitudes</mat-list-item>
+          <mat-list-item routerLink="/dashboard/ofertas">Ofertas</mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav>
 
   <div class="base-sidenav-content">

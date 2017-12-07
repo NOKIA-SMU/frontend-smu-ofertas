@@ -41,12 +41,14 @@ export class RequestsComponent implements OnInit {
   ngAfterViewInit() {
     this.requestsService.getRequests()
       .subscribe(({ data }) => {
+        debugger
         this.dataSource = new MatTableDataSource(data.solicitudes);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.isLoadingResults = false;
       }, error => {
         this.isLoadingResults = false;
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes')
       });
   }
 

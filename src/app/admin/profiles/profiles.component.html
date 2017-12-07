@@ -10,15 +10,15 @@
       <a (click)="editProfile($event, profile)" class="material-icons blue">mode_edit</a>
       <a (click)="showMore($event, profile)" class="material-icons semi">expand_more</a>
     </div>
-    <ng-container *ngIf="showMoreProfile && profileToEdit.id == profile.id" class="editProfile">
-      <mat-list>
+    <ng-container *ngIf="showMoreProfile && profileToEdit.id == profile.id" >
+      <mat-list class="editProfile">
         <mat-list-item>{{ profile.email }}</mat-list-item>
         <mat-list-item>{{ profile.phoneNumber }}</mat-list-item>
         <mat-list-item>Item 3</mat-list-item>
       </mat-list>
     </ng-container>
-    <ng-container *ngIf="editState && profileToEdit.id == profile.id" class="editProfile">
-      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile, roleSelected)">
+    <ng-container *ngIf="editState && profileToEdit.id == profile.id">
+      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile, roleSelected)" class="editProfile">
         <mat-form-field>
           <input matInput type="text" placeholder="Nombre" name="firstname" [(ngModel)]="profile.firstName" required>
         </mat-form-field>

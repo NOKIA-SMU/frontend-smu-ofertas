@@ -45,6 +45,15 @@ body {
 	margin-top: 115px;
 }
 
+.latAccordion {
+	.mat-expansion-panel {
+		background: none;
+	}
+	mat-expansion-panel-body {
+		padding: 0 !important;
+	}
+}
+
 .mat-toolbar {
 	background: #124191;
 	border-bottom: 1px solid #bbb5b5;
@@ -87,14 +96,11 @@ mat-sidenav {
 }
 
 .mat-drawer {
-	margin-top: 56px;
+	margin-top: 63px;
 }
 
 
 .auth {
-	// .mat-form-field-underline {
-  //   background-color: white;
-	// }
 	.mat-form-field {
 		display: block;
 	}

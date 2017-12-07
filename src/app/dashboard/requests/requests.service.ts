@@ -11,20 +11,21 @@ const queryRequests = gql`
       analista
       tas
       estacion {
-          id
+        id
       }
       subsistema {
-          id
+        id
       }
       suministros {
-          id
+        id
       }
       servicios {
-          id
+        id
       }
       prioridad
       estadoSolicitud
     }
+    status
   }
 `;
 

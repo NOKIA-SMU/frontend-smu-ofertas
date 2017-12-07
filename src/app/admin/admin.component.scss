@@ -48,6 +48,8 @@ mat-grid-tile {
   text-transform: uppercase;
 }
 
+
+
 .listItems {
 	padding: 10px 25px;
 	border: 1px solid #bbb5b5;
@@ -79,6 +81,12 @@ mat-grid-tile {
 		}
 		.editProfile {
 			width: 100%;
+			mat-list-item {
+				background: #e2e2e2;
+				border-radius: 8px;
+				margin: 8px 0;
+				color: #818181;
+			}
 		}
 		.assignRole {
 			width: 100%;
@@ -101,4 +109,6 @@ mat-grid-tile {
 .semi {
 	color: #a07575;
 }
+
+
 
