@@ -45,6 +45,14 @@ export class RequestOperateComponent implements OnInit {
         debugger
       })
 
+    this.authService.getToken()
+      .then(res => {
+        debugger
+      }, error => {
+        debugger
+      })
+
+
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res
@@ -111,6 +119,11 @@ export class RequestOperateComponent implements OnInit {
   ngOnInit() { }
 
   createRequest() {
+    let reqAnalyst = {
+      id: `${this.request.analista.id}`,
+      fullName: `${this.request.analista.firstName} ${this.request.analista.lastName}`
+    }
+    this.request.analista = reqAnalyst;
     this.request.supervisor = this.currentUser.id;
     this.requestsService.createRequest(this.request)
       .subscribe(res => {

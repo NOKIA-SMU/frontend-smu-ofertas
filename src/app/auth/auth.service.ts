@@ -9,11 +9,15 @@ import {
   AngularFirestoreDocument
 } from 'angularfire2/firestore';
 
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 
 import { Profile } from '../models/auth.models';
+
 
 @Injectable()
 
@@ -27,7 +31,8 @@ export class AuthService {
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    public router: Router
+    public router: Router,
+    private apollo: Apollo
   ) {
     this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
     this.profilesCollection = afs.collection<Profile>('profiles'); // reference
@@ -56,6 +61,29 @@ export class AuthService {
 
   public currentUser() {
     return this.user
+  }
+
+  public getToken() {
+    return this.afAuth.auth.currentUser.getIdToken()
+  }
+
+  public sendToken(uid: string, token: string) {
+    debugger
+    const postToken = gql`
+      mutation {
+        createToken(uid: "${uid}", credential: "${token}") {
+          token {
+            id
+            uid
+            credential
+          }
+          status
+        }
+      }
+    `;
+    return this.apollo.mutate({
+      mutation: postToken
+    })
   }
 
 }

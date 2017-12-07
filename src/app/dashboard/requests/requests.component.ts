@@ -14,8 +14,8 @@ export class RequestsComponent implements OnInit {
 
   displayedColumns = [
     'id',
-    'nombre',
-    'ubicacion',
+    'supervisor',
+    'analista',
     'region',
     'departamento',
     'ciudad',
