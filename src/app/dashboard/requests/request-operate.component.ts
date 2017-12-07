@@ -25,9 +25,9 @@ export class RequestOperateComponent implements OnInit {
   supplies: any[];
   services: any[];
   priorities: any[];
-  color = 'accent';
-  checkedRequestState = false;
+  checkedRequestState: boolean = false;
   currentUser: Profile;
+  analysts: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,10 +50,10 @@ export class RequestOperateComponent implements OnInit {
         this.currentUser = res
       })
 
-    // this.admnService.getProfilesByRol()
-    //   .subscribe(res => {
-    //     debugger
-    //   })
+    this.admnService.getProfilesAnalysts()
+      .subscribe(res => {
+        this.analysts = res;
+      })
 
     this.supplies = [
       {id: 1 , name: "suministro 1"},
@@ -111,16 +111,15 @@ export class RequestOperateComponent implements OnInit {
   ngOnInit() { }
 
   createRequest() {
-    debugger
     this.request.supervisor = this.currentUser.id;
-    // this.requestsService.createRequest(this.request)
-    //   .subscribe(res => {
-    //     // if (res.data.updateEstacion.status) {
-    //     this.router.navigate(['/solicitudes']);
-    //     // }
-    //   }, error => {
-    //     this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
-    //   })
+    this.requestsService.createRequest(this.request)
+      .subscribe(res => {
+        // if (res.data.updateEstacion.status) {
+        this.router.navigate(['/solicitudes']);
+        // }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+      })
   }
 
   updateRequest() {

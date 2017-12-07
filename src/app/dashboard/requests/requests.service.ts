@@ -41,7 +41,6 @@ export class RequestsService {
 
   public createRequest(request) {
     request.subsistema = parseInt(request.subsistema)
-    debugger
     const createSolicitud = gql`
       mutation {
         createSolicitud(
@@ -50,8 +49,8 @@ export class RequestsService {
           tas: "${request.tas}",
           estacion: ${request.estacion},
           subsistema: ${request.subsistema},
-          suministros: [],
-          servicios: [],
+          suministros: [${request.suministros}],
+          servicios: [${request.servicios}],
           prioridad: "${request.prioridad}",
           estadoSolicitud: ${request.estadoSolicitud},
         ) {

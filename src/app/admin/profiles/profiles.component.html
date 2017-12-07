@@ -8,7 +8,6 @@
     </div>
     <div class="actions">
       <a (click)="editProfile($event, profile)" class="material-icons blue">mode_edit</a>
-      <a (click)="showEditRole($event, profile)" class="material-icons green">assignment</a>
       <a (click)="showMore($event, profile)" class="material-icons semi">expand_more</a>
     </div>
     <ng-container *ngIf="showMoreProfile && profileToEdit.id == profile.id" class="editProfile">
@@ -48,20 +47,6 @@
         </mat-form-field>
         <div class="footer-buttom">
           <button type="submit" mat-raised-button color="primary">Actualizar</button>
-        </div>
-      </form>
-    </ng-container>
-    <ng-container *ngIf="isShowEditRole && profileToAssignRole.id == profile.id" class="assignRole">
-      <form (ngSubmit)="assignRoleToProfile(roleSelected, profile)">
-        <mat-form-field>
-          <mat-select placeholder="Rol" name="role" [(ngModel)]="roleSelected" required>
-            <mat-option *ngFor="let role of roles" [value]="role">
-              {{role.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div class="footer-buttom">
-          <button type="submit" mat-raised-button color="primary">Asignar rol</button>
         </div>
       </form>
     </ng-container>

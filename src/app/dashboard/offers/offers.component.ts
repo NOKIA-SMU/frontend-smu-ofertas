@@ -15,7 +15,6 @@ export class OffersComponent implements OnInit {
   displayedColumns = [
     'id',
     'creado'
-
   ];
 
   dataSource = new MatTableDataSource();

@@ -33,6 +33,7 @@ export class AdminService {
 
   constructor(private afs: AngularFirestore) { }
 
+
   public createPermission(permission: Permission) {
     return this.permissionsCol.add(permission)
   }
@@ -80,6 +81,18 @@ export class AdminService {
   public getProfiles() {
     this.profilesCol = this.afs.collection<Profile>('profiles');
     return this.profilesCol.snapshotChanges()
+    .map(actions => {
+      return actions.map(res => {
+        const data = res.payload.doc.data() as Profile;
+        const id = res.payload.doc.id;
+        return { id, ...data };
+      });
+    });
+  }
+
+  getProfilesAnalysts() {
+    this.profilesCol = this.afs.collection<Profile>('profiles', ref => ref.where('roles.Analista', '==', true) );
+    return this.profilesCol.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
           const data = res.payload.doc.data() as Profile;
@@ -87,26 +100,12 @@ export class AdminService {
           return { id, ...data };
         });
       });
-  }
-
-  getProfilesByRol() {
-    firebase.firestore().collection('profiles')
-      .where('roles.name', '==', 'Analista')
-      .get()
-      .then(res => {
-        res.forEach(doc => {
-          debugger
-        })
-      })
-    // return this.profilesCol.snapshotChanges()
-    //   .map(actions => {
-    //     return actions.map(res => {
-    //       const data = res.payload.doc.data() as Profile;
-    //       debugger
-    //       const id = res.payload.doc.id;
-    //       return { id, ...data };
-    //     });
-    //   });
+    // firebase.firestore().collection('profiles')
+    //   .where('roles.Analista', '==', true)
+    //   .get()
+    //   .then(res => {
+    //     debugger
+    //   })
   }
 
   public getRoles() {
@@ -138,7 +137,4 @@ export class AdminService {
     return this.profilesCol.doc(profile.id).update(profile)
   }
 
-  public assignRoleToProfile(role: Role, profile: Profile) {
-    return this.profilesCol.doc(profile.id).collection('roles').add(role)
-  }
 }

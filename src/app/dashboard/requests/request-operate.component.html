@@ -24,7 +24,11 @@
   <h2 class="title">Crear Solicitud</h2>
   <form #createRequestForm="ngForm" (ngSubmit)="createRequest()">
     <mat-form-field>
-      <input matInput type="text" placeholder="Analista" name="analista" [(ngModel)]="request.analista" required>
+      <mat-select placeholder="Analista" name="analista" [(ngModel)]="request.analista" required>
+        <mat-option *ngFor="let analyst of analysts" [value]="analyst.id">
+          {{analyst.firstName}} {{analyst.lastName}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field>
       <input matInput type="text" placeholder="Tas" name="tas" [(ngModel)]="request.tas" required>
@@ -61,7 +65,8 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-slide-toggle [color]="color" [checked]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
+    <p>estado: {{request.estadoSolicitud}}</p>
+    <mat-slide-toggle [color]="color" name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
     <div class="footer-buttom">
       <button mat-raised-button color="primary" type="submit" [disabled]="!createRequestForm.form.valid">Crear estación</button>
       <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>

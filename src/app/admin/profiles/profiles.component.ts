@@ -15,7 +15,6 @@ export class ProfilesComponent implements OnInit {
   roles: Role[];
   editState: boolean = false;
   profileToEdit: Profile;
-  isShowEditRole: boolean = false;
   profileToAssignRole: Profile;
   showMoreProfile: boolean = false;
   regions = [
@@ -23,6 +22,7 @@ export class ProfilesComponent implements OnInit {
     'SUROCCIDENTE',
     'COSTA'
   ]
+
 
   constructor(private adminService: AdminService) { }
 
@@ -51,26 +51,12 @@ export class ProfilesComponent implements OnInit {
     this.profileToEdit = profile;
   }
 
-  showEditRole(event, profile: Profile) {
-    // debugger
-    this.isShowEditRole = !this.isShowEditRole;
-    this.profileToAssignRole = profile;
-  }
-
-  ///////////
-  assignRoleToProfile(role: Role, profile: Profile) {
-    debugger
-    this.adminService.assignRoleToProfile(role, profile)
-    .then(res => {
-      debugger
-    },
-    error => {
-      debugger
-    })
-  }
-
   updateProfile(event, profile: Profile, roleSelected) {
-    profile.roles = roleSelected
+    let actualRoles = {}
+    for (let i = 0; i < roleSelected.length; i++) {
+      actualRoles[roleSelected[i].name] = true;
+    }
+    profile.roles = actualRoles;
     this.adminService.updateProfile(profile)
   }
 
