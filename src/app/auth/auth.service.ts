@@ -18,7 +18,6 @@ import 'rxjs/add/operator/switchMap';
 
 import { Profile } from '../models/auth.models';
 
-
 @Injectable()
 
 export class AuthService {

@@ -18,8 +18,7 @@ export class SigninComponent implements OnInit {
     private router: Router,
     private appService: AppService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   loginUser() {
     this.authService.login(this.user).then(res => {
@@ -32,7 +31,8 @@ export class SigninComponent implements OnInit {
         })
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Usuario o contraseña incorrecta')
-    })
+      }
+    )
   }
 
 }

@@ -1,21 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Request, Subsystem } from "../../models/dashboard.models";
 import { RequestsService } from "./requests.service";
 import { SubsystemsService } from "../subsystems/subsystems.service";
 import { AppService } from "../../app.service";
 import { Observable } from "rxjs/Observable";
-import { AuthService } from '../../auth/auth.service';
+
 import { Profile } from '../../models/auth.models';
+import { AuthService } from '../../auth/auth.service';
 import { AdminService } from '../../admin/admin.service';
+import { StationsService } from "../stations/stations.service";
 
 @Component({
   selector: 'app-request-operate',
   templateUrl: './request-operate.component.html',
-  styleUrls: ['./requests.component.scss']
+  styleUrls: ['../dashboard.component.scss', './requests.component.scss']
 })
 
 export class RequestOperateComponent implements OnInit {
+
+  displayedColumns = [
+    'id',
+    'nombre',
+    'ubicacion',
+    'region',
+    'departamento',
+    'ciudad',
+    'direccion',
+    'latitud',
+    'longitud',
+    'estructura',
+    'categoria'
+  ];
 
   id: number;
   data: any;
@@ -27,7 +44,16 @@ export class RequestOperateComponent implements OnInit {
   priorities: any[];
   checkedRequestState: boolean = false;
   currentUser: Profile;
+  selectedAnalyst: any = {};
   analysts: any;
+
+  dataSource = new MatTableDataSource();
+  isLoadingResults = true;
+  currentRowSelect: any;
+  currentRowSelectData: any = {}
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +61,8 @@ export class RequestOperateComponent implements OnInit {
     private requestsService: RequestsService,
     private subsystemService: SubsystemsService,
     private authService: AuthService,
-    private admnService: AdminService,
+    private adminService: AdminService,
+    private stationService: StationsService,
     private appService: AppService
   ) {
     this.subsystemService.getSubsystems()
@@ -47,17 +74,11 @@ export class RequestOperateComponent implements OnInit {
 
     this.authService.getToken()
       .then(res => {
-        debugger
       }, error => {
         debugger
       })
 
-    this.authService.currentUser()
-      .subscribe(res => {
-        this.currentUser = res
-      })
-
-    this.admnService.getProfilesAnalysts()
+    this.adminService.getProfilesAnalysts()
       .subscribe(res => {
         this.analysts = res;
       })
@@ -89,8 +110,10 @@ export class RequestOperateComponent implements OnInit {
       this.data = this.route.snapshot.queryParams;
       this.request = {
         id: this.data.id,
-        supervisor: this.data.supervisor,
-        analista: this.data.analista,
+        supervisorId: this.data.supervisor.id,
+        supervisor: this.data.supervisor.fullName,
+        analistaId: this.data.analista.id,
+        analista: this.data.analista.fullName,
         tas: this.data.tas,
         estacion: this.data.estacion,
         subsistema: this.data.subsistema,
@@ -101,7 +124,9 @@ export class RequestOperateComponent implements OnInit {
       }
     } else {
       this.request = {
+        supervisorId: null,
         supervisor: null,
+        analistaId: null,
         analista: null,
         tas: null,
         estacion: null,
@@ -117,18 +142,47 @@ export class RequestOperateComponent implements OnInit {
 
   ngOnInit() { }
 
+  ngAfterViewInit() {
+    this.authService.currentUser()
+      .subscribe(res => {
+        this.currentUser = res
+        this.stationService.getStations(this.currentUser.region)
+          .subscribe(res => {
+            this.dataSource = new MatTableDataSource(res.data.estaciones);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.isLoadingResults = false;
+          }, res => {
+            debugger
+            this.isLoadingResults = false;
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
+          })
+        })
+
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  selectRow(index, data) {
+    this.request.estacion = data.id
+    this.currentRowSelect = index;
+    this.currentRowSelectData = data;
+  }
+
   createRequest() {
-    let reqAnalyst = {
-      id: `${this.request.analista.id}`,
-      fullName: `${this.request.analista.firstName} ${this.request.analista.lastName}`
-    }
-    this.request.analista = reqAnalyst;
-    this.request.supervisor = this.currentUser.id;
+    this.request.analistaId = this.selectedAnalyst.id;
+    this.request.analista = `${this.selectedAnalyst.firstName} ${this.selectedAnalyst.lastName}`;
+    this.request.supervisorId = this.currentUser.id;
+    this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
     this.requestsService.createRequest(this.request)
       .subscribe(res => {
-        // if (res.data.updateEstacion.status) {
-        this.router.navigate(['/solicitudes']);
-        // }
+        if (res.data.createSolicitud.status == 200) {
+          this.router.navigate(['/solicitudes']);
+        }
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
       })

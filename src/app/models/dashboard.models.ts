@@ -23,16 +23,13 @@ export interface Subsystem {
 
 export interface Request {
 	id?: number,
+	supervisorId: string,
 	supervisor: string,
-	analista: {
-		id: string,
-		firstName?: string,
-		lastName?: string,
-		fullName?: string
-	},
+	analistaId: string,
+	analista: string,
 	tas: string
 	estacion: number,
-	subsistema: string,
+	subsistema: number,
 	suministros: number[],
 	servicios: number[],
 	prioridad: string

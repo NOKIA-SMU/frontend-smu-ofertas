@@ -7,7 +7,9 @@ const queryRequests = gql`
   query {
     solicitudes {
       id
+      supervisorId
       supervisor
+      analistaId
       analista
       tas
       estacion {
@@ -48,7 +50,9 @@ export class RequestsService {
     const createSolicitud = gql`
       mutation {
         createSolicitud(
+          supervisorId: "${request.supervisorId}",
           supervisor: "${request.supervisor}",
+          analistaId: "${request.analistaId}",
           analista: "${request.analista}",
           tas: "${request.tas}",
           estacion: ${request.estacion},
@@ -60,7 +64,9 @@ export class RequestsService {
         ) {
           solicitud {
             id
+            supervisorId
             supervisor
+            analistaId
             analista
             tas
             estacion {

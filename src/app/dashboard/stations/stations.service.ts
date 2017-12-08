@@ -3,37 +3,35 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
-const queryStations = gql`
-  query queryStations {
-    estaciones {
-      id
-      nombre
-      ubicacion
-      region
-      departamento
-      ciudad
-      direccion
-      latitud
-      longitud
-      estructura
-      categoria
-      estado
-      subestado
-      creado
-      actualizado
-    }
-  }
-`;
-
 @Injectable()
 
 export class StationsService {
 
   constructor(private apollo: Apollo) { }
 
-  public getStations() {
-    return this.apollo.watchQuery<any>({ query: queryStations })
-      .valueChanges
+  public getStations(filter) {
+    const queryStations = gql`
+      query {
+        estaciones(query: "${filter}") {
+          id
+          nombre
+          ubicacion
+          region
+          departamento
+          ciudad
+          direccion
+          latitud
+          longitud
+          estructura
+          categoria
+          estado
+          subestado
+          creado
+          actualizado
+        }
+      }
+    `;
+    return this.apollo.watchQuery<any>({ query: queryStations }).valueChanges
   }
 
   public createStation(station) {

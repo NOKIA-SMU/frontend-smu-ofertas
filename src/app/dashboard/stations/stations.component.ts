@@ -40,7 +40,7 @@ export class StationsComponent implements OnInit {
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.stationsService.getStations()
+    this.stationsService.getStations('')
       .subscribe(({ data }) => {
         this.dataSource = new MatTableDataSource(data.estaciones);
         this.dataSource.paginator = this.paginator;

@@ -54,11 +54,13 @@ export class ProfilesComponent implements OnInit {
   }
 
   updateProfile(event, profile: Profile, roleSelected) {
-    let actualRoles = {}
-    for (let i = 0; i < roleSelected.length; i++) {
-      actualRoles[roleSelected[i].name] = true;
+    if (roleSelected) {
+      let actualRoles = {}
+      for (let i = 0; i < roleSelected.length; i++) {
+        actualRoles[roleSelected[i].name] = true;
+      }
+      profile.roles = actualRoles;
     }
-    profile.roles = actualRoles;
     this.adminService.updateProfile(profile)
   }
 

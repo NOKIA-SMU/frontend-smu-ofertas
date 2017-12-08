@@ -17,3 +17,21 @@ h2.title {
 input {
   color: #555358;
 }
+
+.mat-table {
+  > .mat-header-row, > .mat-row {
+    > .mat-header-cell, > .mat-cell {
+      flex: 0 0 150px;
+      &:nth-child(1) {
+        flex: 0 0 70px;
+      }
+      &:nth-child(7) {
+        flex: 0 0 400px;
+      }
+    }
+	}
+}
+
+.example-container {
+  min-height: 30vh;
+}
