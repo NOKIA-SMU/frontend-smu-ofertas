@@ -4,13 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Request, Subsystem } from "../../models/dashboard.models";
 import { RequestsService } from "./requests.service";
 import { SubsystemsService } from "../subsystems/subsystems.service";
+import { StationsService } from "../stations/stations.service";
+import { ServicesService } from "../services/services.service";
+import { SuppliesService } from "../supplies/supplies.service";
 import { AppService } from "../../app.service";
 import { Observable } from "rxjs/Observable";
 
 import { Profile } from '../../models/auth.models';
 import { AuthService } from '../../auth/auth.service';
 import { AdminService } from '../../admin/admin.service';
-import { StationsService } from "../stations/stations.service";
 
 @Component({
   selector: 'app-request-operate',
@@ -39,8 +41,8 @@ export class RequestOperateComponent implements OnInit {
   request: Request;
   isNew: boolean;
   subsystems: Subsystem[];
-  supplies: any[];
-  services: any[];
+  supplies: any;
+  services: any;
   priorities: any[];
   checkedRequestState: boolean = false;
   currentUser: Profile;
@@ -63,6 +65,8 @@ export class RequestOperateComponent implements OnInit {
     private authService: AuthService,
     private adminService: AdminService,
     private stationService: StationsService,
+    private servicesService: ServicesService,
+    private suppliesService: SuppliesService,
     private appService: AppService
   ) {
     this.subsystemService.getSubsystems()
@@ -81,23 +85,9 @@ export class RequestOperateComponent implements OnInit {
     this.adminService.getProfilesAnalysts()
       .subscribe(res => {
         this.analysts = res;
+      }, error => {
+        debugger
       })
-
-    this.supplies = [
-      {id: 1 , name: "suministro 1"},
-      {id: 2 , name: "suministro 2"},
-      {id: 3 , name: "suministro 3"},
-      {id: 4 , name: "suministro 4"},
-      {id: 5 , name: "suministro 5"}
-    ]
-
-    this.services = [
-      {id: 1 , name: "servicio 1"},
-      {id: 2 , name: "servicio 2"},
-      {id: 3 , name: "servicio 3"},
-      {id: 4 , name: "servicio 4"},
-      {id: 5 , name: "servicio 5"}
-    ]
 
     this.priorities = [
       {id: 1 , name: "Alta"},
@@ -124,16 +114,16 @@ export class RequestOperateComponent implements OnInit {
       }
     } else {
       this.request = {
-        supervisorId: null,
-        supervisor: null,
-        analistaId: null,
-        analista: null,
-        tas: null,
-        estacion: null,
-        subsistema: null,
-        suministros: null,
-        servicios: null,
-        prioridad: null,
+        supervisorId: '',
+        supervisor: '',
+        analistaId: '',
+        analista: '',
+        tas: '',
+        estacion: 0,
+        subsistema: 0,
+        suministros: [],
+        servicios: [],
+        prioridad: '',
         estadoSolicitud: false
       }
       this.isNew = true;
@@ -158,7 +148,6 @@ export class RequestOperateComponent implements OnInit {
             this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
           })
         })
-
   }
 
   applyFilter(filterValue: string) {
@@ -171,6 +160,22 @@ export class RequestOperateComponent implements OnInit {
     this.request.estacion = data.id
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
+  }
+
+  selectSubsystem(event, subsystemId) {
+    this.servicesService.getServices(subsystemId)
+      .subscribe(res => {
+        this.services = res.data.servicios;
+      }, error => {
+        debugger
+      })
+
+    this.suppliesService.getSupplies(subsystemId)
+      .subscribe(res => {
+        this.supplies = res.data.suministros;
+      }, error => {
+        debugger
+      })
   }
 
   createRequest() {

@@ -47,6 +47,7 @@ export class RequestsService {
 
   public createRequest(request) {
     request.subsistema = parseInt(request.subsistema)
+    let userAuth = JSON.parse(localStorage.getItem('userAuth'))
     const createSolicitud = gql`
       mutation {
         createSolicitud(
@@ -61,6 +62,8 @@ export class RequestsService {
           servicios: [${request.servicios}],
           prioridad: "${request.prioridad}",
           estadoSolicitud: ${request.estadoSolicitud},
+          uid: "${userAuth.uid}",
+          credential: "${userAuth.token}"
         ) {
           solicitud {
             id

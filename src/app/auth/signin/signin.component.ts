@@ -22,6 +22,8 @@ export class SigninComponent implements OnInit {
 
   loginUser() {
     this.authService.login(this.user).then(res => {
+      let userAuth = { uid: res.uid, token: res.pa };
+      localStorage.setItem('userAuth', JSON.stringify(userAuth));
       this.authService.updateToken(res.uid, res.pa)
         .subscribe(res => {
           this.user.email = this.user.password = '';

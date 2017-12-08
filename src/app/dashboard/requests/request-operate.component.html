@@ -59,24 +59,23 @@
       <input matInput type="number" placeholder="Estación" name="estacion" [(ngModel)]="request.estacion" disabled required>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="request.subsistema" required>
+      <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="request.subsistema" (selectionChange)="selectSubsystem($event, request.subsistema)" required>
         <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
           {{subsystem.nombre}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <p>{{selectedSubsystem}}</p>
-    <mat-form-field>
-      <mat-select placeholder="Suministros" name="supplies" [(ngModel)]="request.suministros" multiple required>
+    <mat-form-field *ngIf="supplies">
+      <mat-select placeholder="Suministros" name="supplies" [(ngModel)]="request.suministros" multiple>
         <mat-option *ngFor="let supplie of supplies" [value]="supplie.id">
-          {{supplie.name}}
+          {{supplie.nombre}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Servicios" name="services" [(ngModel)]="request.servicios" multiple required>
+    <mat-form-field *ngIf="services">
+      <mat-select placeholder="Servicios" name="services" [(ngModel)]="request.servicios" multiple>
         <mat-option *ngFor="let service of services" [value]="service.id">
-          {{service.name}}
+          {{service.nombre}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -87,7 +86,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <p>estado: {{request.estadoSolicitud}}</p>
     <mat-slide-toggle [color]="color" name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
     <div class="footer-buttom">
       <button mat-raised-button color="primary" type="submit" [disabled]="!createRequestForm.form.valid">Crear estación</button>

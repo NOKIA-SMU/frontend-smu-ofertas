@@ -3,6 +3,28 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
+const queryStations = gql`
+  query {
+    estaciones {
+      id
+      nombre
+      ubicacion
+      region
+      departamento
+      ciudad
+      direccion
+      latitud
+      longitud
+      estructura
+      categoria
+      estado
+      subestado
+      creado
+      actualizado
+    }
+  }
+`;
+
 @Injectable()
 
 export class StationsService {

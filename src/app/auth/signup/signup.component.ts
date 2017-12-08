@@ -30,13 +30,11 @@ export class SignupComponent implements OnInit {
         this.user.id = res.uid;
         this.authService.createUser(user, res.uid)
           .then(res => {
-            let userAuth = JSON.parse(localStorage.getItem('userAuth'))
+            let userAuth = JSON.parse(localStorage.getItem('userAuth'));
             this.authService.sendToken(userAuth.uid, userAuth.token)
               .subscribe(res => {
-                localStorage.removeItem('userAuth')
                 this.router.navigate(['dashboard']);
               }, error => {
-                localStorage.removeItem('userAuth')
                 this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Credenciales no recibidas')
               })
           }, error => {

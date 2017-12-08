@@ -21,7 +21,10 @@ import { RequestOperateComponent } from './requests/request-operate.component';
 import { RequestsService } from './requests/requests.service';
 
 import { SuppliesComponent } from './supplies/supplies.component';
+import { SuppliesService } from './supplies/supplies.service';
+
 import { ServicesComponent } from './services/services.component';
+import { ServicesService } from './services/services.service';
 
 import { OffersComponent } from './offers/offers.component';
 import { OfferOperateComponent } from './offers/offer-operate.component';
@@ -52,7 +55,9 @@ import { OffersService } from './offers/offers.service';
     StationsService,
     SubsystemsService,
     RequestsService,
-    OffersService
+    OffersService,
+    ServicesService,
+    SuppliesService
   ]
 })
 
