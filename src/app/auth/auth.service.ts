@@ -63,11 +63,15 @@ export class AuthService {
     return this.user
   }
 
+  public logout() {
+    return this.afAuth.auth.signOut()
+  }
+
   public getToken() {
     return this.afAuth.auth.currentUser.getIdToken()
   }
 
-  public sendToken(uid: string, token: String) {
+  public sendToken(uid: string, token: string) {
     const postToken = gql`
       mutation {
         createToken(
@@ -85,6 +89,42 @@ export class AuthService {
     `;
     return this.apollo.mutate({
       mutation: postToken
+    })
+  }
+
+  public updateToken(uid: string, token: string) {
+    const actualizarToken = gql`
+      mutation {
+        updateToken(
+          uid: "${uid}",
+          credential: "${token}",
+        ) {
+          token {
+            uid
+            credential
+          }
+          status
+        }
+      }
+    `;
+    return this.apollo.mutate({
+      mutation: actualizarToken
+    })
+  }
+
+  public deleteToken(uid: string) {
+    const removeToken = gql`
+      mutation {
+        deleteToken(uid: "${uid}") {
+          token {
+            uid
+          }
+          status
+        }
+      }
+    `;
+    return this.apollo.mutate({
+      mutation: removeToken
     })
   }
 

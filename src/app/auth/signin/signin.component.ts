@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth.service";
 import { Router } from '@angular/router';
+import { AppService } from "../../app.service";
 
 @Component({
   selector: 'app-signin',
@@ -12,24 +13,25 @@ export class SigninComponent implements OnInit {
 
   user: any = {};
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private appService: AppService) { }
 
   ngOnInit() {
   }
 
   loginUser() {
     this.authService.login(this.user).then(res => {
-      debugger
-      this.authService.sendToken(res.uid, res.pa)
+      this.authService.updateToken(res.uid, res.pa)
         .subscribe(res => {
-          debugger
           this.user.email = this.user.password = '';
           this.router.navigate(['dashboard']);
         }, error => {
-          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Credenciales no actualizadas')
         })
-    }, error => {
-      debugger
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Usuario o contraseña incorrecta')
     })
   }
 

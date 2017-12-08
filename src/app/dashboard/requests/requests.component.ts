@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { RequestsService } from "./requests.service";
 import { AppService } from "../../app.service";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-requests',
   templateUrl: './requests.component.html',
   styleUrls: ['../dashboard.component.scss', './requests.component.scss']
@@ -16,14 +17,13 @@ export class RequestsComponent implements OnInit {
     'id',
     'supervisor',
     'analista',
-    'region',
-    'departamento',
-    'ciudad',
-    'direccion',
-    'latitud',
-    'longitud',
-    'estructura',
-    'categoria'
+    'tas',
+    'estacion',
+    'subsistema',
+    'suministros',
+    'servicios',
+    'prioridad',
+    'estadoSolicitud'
   ];
 
   dataSource = new MatTableDataSource();

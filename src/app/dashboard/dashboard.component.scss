@@ -91,12 +91,6 @@ mat-grid-tile {
       &:hover {
         background: #efefef;
       }
-      &:nth-child(1) {
-        flex: 0 0 70px;
-      }
-      &:nth-child(7) {
-        flex: 0 0 400px;
-      }
     }
   }
 }

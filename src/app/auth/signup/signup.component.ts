@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Profile } from '../../models/auth.models';
 import { Router } from '@angular/router';
+import { AppService } from "../../app.service";
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +14,10 @@ export class SignupComponent implements OnInit {
 
   user: any = {};
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private appService: AppService) { }
 
   ngOnInit() {
   }
@@ -21,15 +25,25 @@ export class SignupComponent implements OnInit {
   onSubmit(user: Profile) {
     this.authService.signIn(this.user).then(
       res => {
+        let userAuth = { uid: res.uid, token: res.pa };
+        localStorage.setItem('userAuth', JSON.stringify(userAuth));
         this.user.id = res.uid;
         this.authService.createUser(user, res.uid)
           .then(res => {
-            this.router.navigate(['dashboard']);
+            let userAuth = JSON.parse(localStorage.getItem('userAuth'))
+            this.authService.sendToken(userAuth.uid, userAuth.token)
+              .subscribe(res => {
+                localStorage.removeItem('userAuth')
+                this.router.navigate(['dashboard']);
+              }, error => {
+                localStorage.removeItem('userAuth')
+                this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Credenciales no recibidas')
+              })
           }, error => {
-            // debugger;
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Perfil no fue creado')
           });
       }, error => {
-        // debugger;
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Usuario no fue creado')
       }
     );
   }
