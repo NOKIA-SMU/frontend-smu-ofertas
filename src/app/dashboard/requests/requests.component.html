@@ -18,7 +18,16 @@
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
         <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row[item].nombre ? row[item].nombre : row[item] }} </mat-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngIf="isArray(row[item])">
+            <ng-container *ngFor="let subitem of row[item]">
+              {{subitem.nombre}} <br>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!isArray(row[item])">
+            {{row[item].nombre ? row[item].nombre : row[item] }}
+          </ng-container>
+        </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>

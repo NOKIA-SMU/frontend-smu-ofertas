@@ -123,7 +123,7 @@ export class RequestOperateComponent implements OnInit {
         subsistema: 0,
         suministros: [],
         servicios: [],
-        prioridad: '',
+        prioridad: null,
         estadoSolicitud: false
       }
       this.isNew = true;

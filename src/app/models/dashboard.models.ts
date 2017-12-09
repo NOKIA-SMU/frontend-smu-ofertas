@@ -32,6 +32,6 @@ export interface Request {
 	subsistema: number,
 	suministros: number[],
 	servicios: number[],
-	prioridad: string
+	prioridad: any,
 	estadoSolicitud: boolean
 }

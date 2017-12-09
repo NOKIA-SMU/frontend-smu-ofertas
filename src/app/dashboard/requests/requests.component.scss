@@ -25,8 +25,11 @@ input {
       &:nth-child(1) {
         flex: 0 0 70px;
       }
-      &:nth-child(7) {
-        flex: 0 0 400px;
+      &:nth-child(9),{
+        flex: 0 0 70px;
+      }
+      &:nth-child(10),{
+        flex: 0 0 100px;
       }
     }
 	}
