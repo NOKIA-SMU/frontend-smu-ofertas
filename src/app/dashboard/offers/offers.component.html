@@ -18,7 +18,25 @@
 		<mat-table [dataSource]="dataSource" matSort>
 			<ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
 				<mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
+				<mat-cell *matCellDef="let row" (click)="imprimir(row)">
+					<!-- <ng-container *ngIf="isArray(row[item])">
+						<ng-container *ngFor="let subitem of row[item]">
+							{{subitem}} <br>
+						</ng-container>
+					</ng-container> -->
+					<ng-container *ngIf="isString(row[item])">
+						{{row[item]}}
+					</ng-container>
+					<ng-container *ngIf="isObject(row[item])">
+						<ng-container *ngIf="item == 'solicitud'">
+							{{row[item].id}}
+						</ng-container>
+						<ng-container *ngIf="item == 'suministro' || item == 'servicio'">
+							{{row[item]?.nombre}}
+						</ng-container>
+					</ng-container>
+
+				</mat-cell>
 			</ng-container>
 			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 

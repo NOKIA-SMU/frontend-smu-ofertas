@@ -1,0 +1,19 @@
+.mat-table {
+  > .mat-header-row, > .mat-row {
+    > .mat-header-cell, > .mat-cell {
+      flex: 0 0 150px;
+      &:nth-child(1) {
+        flex: 0 0 70px;
+      }
+      &:nth-child(2) {
+        flex: 0 0 70px;
+      }
+      &:nth-child(5) {
+        flex: 0 0 80px;
+      }
+      &:nth-child(6) {
+        flex: 0 0 100px;
+      }
+    }
+	}
+}

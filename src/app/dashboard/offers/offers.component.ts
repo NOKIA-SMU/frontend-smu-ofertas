@@ -1,20 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { OffersService } from "./offers.service";
 import { AppService } from "../../app.service";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-offers',
   templateUrl: './offers.component.html',
-  styleUrls: ['../dashboard.component.scss']
+  styleUrls: ['../dashboard.component.scss', 'offers.component.scss']
 })
 
 export class OffersComponent implements OnInit {
 
   displayedColumns = [
     'id',
-    'creado'
+    'solicitud',
+    'suministro',
+    'servicio',
+    'estadoOferta',
+    'subestadoOferta'
   ];
 
   dataSource = new MatTableDataSource();
@@ -32,7 +37,6 @@ export class OffersComponent implements OnInit {
   ngAfterViewInit() {
     this.offersService.getOffers()
       .subscribe(({ data }) => {
-        debugger
         this.dataSource = new MatTableDataSource(data.ofertas);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -51,6 +55,22 @@ export class OffersComponent implements OnInit {
   selectRow(index, data) {
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
+  }
+
+  isArray(obj: any) {
+    return Array.isArray(obj);
+  }
+
+  isObject(val: any) {
+    return (typeof val === 'object');
+  }
+
+  isString(val: any) {
+    return (typeof val === 'string');
+  }
+
+  imprimir(row) {
+    console.log(row)
   }
 
 }

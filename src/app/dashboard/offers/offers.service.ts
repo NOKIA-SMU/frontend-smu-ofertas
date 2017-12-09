@@ -5,22 +5,22 @@ import gql from 'graphql-tag';
 
 const queryOfertas = gql`
   {
-    estaciones {
+    ofertas {
       id
-      nombre
-      ubicacion
-      region
-      departamento
-      ciudad
-      direccion
-      latitud
-      longitud
-      estructura
-      categoria
-      estado
-      subestado
-      creado
-      actualizado
+      solicitud {
+        id
+        analista
+      }
+      suministro {
+        id
+        nombre
+      }
+      servicio {
+        id
+        nombre
+      }
+      estadoOferta
+      subestadoOferta
     }
   }
 `;
