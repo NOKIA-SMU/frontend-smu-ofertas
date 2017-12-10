@@ -22,29 +22,29 @@
 
 <ng-container *ngIf="isNew">
   <h2 class="title">Crear Solicitud</h2>
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
-
-  <div class="example-container mat-elevation-z8">
-    <div class="example-loading-shade" *ngIf="isLoadingResults">
-      <mat-spinner></mat-spinner>
-    </div>
-    <mat-table [dataSource]="dataSource" matSort>
-      <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
-    </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
-  </div>
-  <br>
   <form #createRequestForm="ngForm" (ngSubmit)="createRequest()">
+    <h4>Estaciones</h4>
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+    <div class="tableContainer mat-elevation-z8 stations">
+      <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner></mat-spinner>
+      </div>
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
+    </div>
+
     <mat-form-field>
       <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" required>
         <mat-option *ngFor="let analyst of analysts" [value]="analyst">
@@ -65,20 +65,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field *ngIf="supplies">
-      <mat-select placeholder="Suministros" name="supplies" [(ngModel)]="request.suministros" multiple>
-        <mat-option *ngFor="let supplie of supplies" [value]="supplie.id">
-          {{supplie.nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field *ngIf="services">
-      <mat-select placeholder="Servicios" name="services" [(ngModel)]="request.servicios" multiple>
-        <mat-option *ngFor="let service of services" [value]="service.id">
-          {{service.nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
     <mat-form-field>
       <mat-select placeholder="Prioridad" name="priority" [(ngModel)]="request.prioridad" required>
         <mat-option *ngFor="let priority of priorities" [value]="priority.name">
@@ -87,6 +73,66 @@
       </mat-select>
     </mat-form-field>
     <mat-slide-toggle [color]="color" name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
+
+    <ng-container *ngIf="supplies?.length > 0">
+      <h4>Suministros</h4>
+      <div class="tableContainer mat-elevation-z8 supplies">
+        <div class="example-loading-shade" *ngIf="isLoadingResultsSupplies">
+          <mat-spinner></mat-spinner>
+        </div>
+        <mat-table [dataSource]="dataSourceSupplies" matSort>
+          <ng-container *ngFor="let item of suppliesColumns; let i = index;" matColumnDef="{{item}}">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <ng-container *ngIf="item == 'activo'">
+                <mat-checkbox (change)="selectRowSupplies(row)" [disabled]="!row.qty > 0"></mat-checkbox>
+              </ng-container>
+              <ng-container *ngIf="item !== 'cantidad' || item !== 'activo'">
+                {{row[item]}}
+              </ng-container>
+              <ng-container *ngIf="item == 'cantidad'">
+                <input type="number" name="qty" class="inputNumber" [value]="row.qty" [(ngModel)]="row.qty">
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
+
+          <mat-row *matRowDef="let row; columns: suppliesColumns; let i = index" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
+      </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="services?.length > 0">
+      <h4>Servicios</h4>
+      <div class="tableContainer mat-elevation-z8 services">
+        <div class="example-loading-shade" *ngIf="isLoadingResultsServices">
+          <mat-spinner></mat-spinner>
+        </div>
+        <mat-table [dataSource]="dataSourceServices" matSort>
+          <ng-container *ngFor="let item of servicesColumns; let i = index;" matColumnDef="{{item}}">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <ng-container *ngIf="item == 'activo'">
+                <mat-checkbox (change)="selectRowServices(row)" [disabled]="!row.qty > 0"></mat-checkbox>
+              </ng-container>
+              <ng-container *ngIf="item !== 'cantidad' || item !== 'activo'">
+                {{row[item]}}
+              </ng-container>
+              <ng-container *ngIf="item == 'cantidad'">
+                <input type="number" name="qty" class="inputNumber" [value]="row.qty" [(ngModel)]="row.qty">
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="servicesColumns"></mat-header-row>
+
+          <mat-row *matRowDef="let row; columns: servicesColumns; let i = index" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
+      </div>
+    </ng-container>
+
     <div class="footer-buttom">
       <button mat-raised-button color="primary" type="submit" [disabled]="!createRequestForm.form.valid">Crear estación</button>
       <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>

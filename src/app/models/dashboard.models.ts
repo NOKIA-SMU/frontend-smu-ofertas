@@ -30,8 +30,8 @@ export interface Request {
 	tas: string
 	estacion: number,
 	subsistema: number,
-	suministros: number[],
-	servicios: number[],
+	suministros: any[],
+	servicios: any[],
 	prioridad: any,
 	estadoSolicitud: boolean
 }

@@ -36,23 +36,46 @@ export class RequestOperateComponent implements OnInit {
     'categoria'
   ];
 
+  suppliesColumns = [
+    'activo',
+    'id',
+    'nombre',
+    'cantidad'
+  ];
+
+  servicesColumns = [
+    'activo',
+    'id',
+    'nombre',
+    'cantidad'
+  ];
+
   id: number;
   data: any;
   request: Request;
   isNew: boolean;
   subsystems: Subsystem[];
-  supplies: any;
-  services: any;
   priorities: any[];
   checkedRequestState: boolean = false;
   currentUser: Profile;
   selectedAnalyst: any = {};
   analysts: any;
 
+  // Tables
   dataSource = new MatTableDataSource();
   isLoadingResults = true;
   currentRowSelect: any;
-  currentRowSelectData: any = {}
+  currentRowSelectData: any = {};
+
+  supplies: any[] = [];
+  dataSourceSupplies = new MatTableDataSource();
+  currentRowSelectDataSupplies: any[] = [];
+  isLoadingResultsSupplies = false;
+
+  services: any[] = [];
+  dataSourceServices = new MatTableDataSource();
+  currentRowSelectDataServices: any[] = [];
+  isLoadingResultsServices = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -69,19 +92,22 @@ export class RequestOperateComponent implements OnInit {
     private suppliesService: SuppliesService,
     private appService: AppService
   ) {
+    // Get subsystems
     this.subsystemService.getSubsystems()
-      .subscribe(({ data }) => {
-        this.subsystems = data.subsistemas
-      }, error => {
-        debugger
-      })
+    .subscribe(({ data }) => {
+      this.subsystems = data.subsistemas
+    }, error => {
+      debugger
+    })
 
+    // Get actual token session
     this.authService.getToken()
       .then(res => {
       }, error => {
         debugger
       })
 
+    // Get profiles filter by analysts
     this.adminService.getProfilesAnalysts()
       .subscribe(res => {
         this.analysts = res;
@@ -121,8 +147,8 @@ export class RequestOperateComponent implements OnInit {
         tas: '',
         estacion: 0,
         subsistema: 0,
-        suministros: [],
-        servicios: [],
+        suministros: [{ suministroId: 0, suministroQty: 0 }],
+        servicios: [{ servicioId: 0, servicioQty: 0 }],
         prioridad: null,
         estadoSolicitud: false
       }
@@ -162,23 +188,78 @@ export class RequestOperateComponent implements OnInit {
     this.currentRowSelectData = data;
   }
 
+  selectRowSupplies(row) {
+    let actualItem = this.filterExistById(row, this.currentRowSelectDataSupplies)
+    if (!actualItem) {
+      this.currentRowSelectDataSupplies.push(row)
+    } else {
+      this.currentRowSelectDataSupplies.splice(this.filterByIndex(row, this.currentRowSelectDataSupplies), 1)
+    }
+    console.log(this.currentRowSelectDataSupplies)
+  }
+
+  filterExistById(row, collection) {
+    for (let i = 0; i < collection.length; i++) {
+      if (collection[i].id === row.id) {
+        return collection[i]
+      }
+    }
+    return null
+  }
+
+  filterByIndex(row, collection) {
+    for (let i = 0; i < collection.length; i++)
+      if (collection[i].id === row.id)
+        return i
+  }
+
+  selectRowServices(row) {
+    let actualItem = this.filterExistById(row, this.currentRowSelectDataServices)
+    if (!actualItem) {
+      this.currentRowSelectDataServices.push(row)
+    } else {
+      this.currentRowSelectDataServices.splice(this.filterByIndex(row, this.currentRowSelectDataServices), 1)
+    }
+    console.log(this.currentRowSelectDataServices)
+  }
+
   selectSubsystem(event, subsystemId) {
+    this.isLoadingResultsSupplies = true;
+
+    // Get all services
     this.servicesService.getServices(subsystemId)
       .subscribe(res => {
-        this.services = res.data.servicios;
+        for (let i = 0; i < res.data.servicios.length; i++) {
+          this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
+        }
+        this.dataSourceServices = new MatTableDataSource(this.services);
+        this.dataSourceServices.paginator = this.paginator;
+        this.dataSourceServices.sort = this.sort;
+        this.isLoadingResultsServices = false;
       }, error => {
-        debugger
+        this.isLoadingResultsServices = false;
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de servicios')
       })
 
+    // Get all supplies
     this.suppliesService.getSupplies(subsystemId)
       .subscribe(res => {
-        this.supplies = res.data.suministros;
-      }, error => {
-        debugger
+        for (let i = 0; i < res.data.suministros.length; i++) {
+          this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+        }
+        this.dataSourceSupplies = new MatTableDataSource(this.supplies);
+        this.dataSourceSupplies.paginator = this.paginator;
+        this.dataSourceSupplies.sort = this.sort;
+        this.isLoadingResultsSupplies = false;
+      }, res => {
+        this.isLoadingResultsSupplies = false;
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de suministros')
       })
   }
 
   createRequest() {
+    this.request.suministros = this.currentRowSelectDataSupplies;
+    this.request.servicios = this.currentRowSelectDataServices;
     this.request.analistaId = this.selectedAnalyst.id;
     this.request.analista = `${this.selectedAnalyst.firstName} ${this.selectedAnalyst.lastName}`;
     this.request.supervisorId = this.currentUser.id;
@@ -189,7 +270,8 @@ export class RequestOperateComponent implements OnInit {
           this.router.navigate(['/solicitudes']);
         }
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+        debugger
+        // this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
       })
   }
 

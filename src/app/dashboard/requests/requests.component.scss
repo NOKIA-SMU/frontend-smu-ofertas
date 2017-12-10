@@ -7,7 +7,92 @@ form {
 	.mat-form-field {
 		width: 47%;
 		min-width: 250px;
-	}
+  }
+  h4 {
+    width: 100%;
+  }
+  .listItems {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border: 1px solid greenyellow;
+    &__left {
+      width: 50%;
+    }
+    &__right {
+      width: 50%;
+      .mat-form-field {
+        width: 100%;
+      }
+    }
+    .mat-selection-list .mat-list-item, .mat-selection-list .mat-list-option {
+      height: 56px;
+    }
+  }
+  .footer-buttom {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .inputNumber {
+    border-radius: 3px;
+    padding: 8px;
+    width: 80%;
+  }
+  .tableContainer {
+    width: 100%;
+    min-height: 200px;
+    &.stations {
+      min-height: 40vh;
+      margin-bottom: 30px;
+      .mat-table {
+        > .mat-header-row, > .mat-row {
+          > .mat-header-cell, > .mat-cell {
+            flex: 0 0 150px;
+            &:nth-child(1) {
+              flex: 0 0 70px;
+            }
+            &:nth-child(7) {
+              flex: 0 0 400px;
+            }
+            &:nth-child(8) {
+              flex: 0 0 110px;
+            }
+            &:nth-child(9) {
+              flex: 0 0 110px;
+            }
+            &:nth-child(11) {
+              flex: 0 0 90px;
+            }
+
+          }
+        }
+      }
+    }
+    &.supplies, &.services {
+      .mat-table {
+        > .mat-header-row, > .mat-row {
+          > .mat-header-cell, > .mat-cell {
+            flex: 0 0 150px;
+            &:nth-child(1) {
+              // flex: 0 0 70px;
+              max-width: 70px;
+            }
+            &:nth-child(2),{
+              flex: 0 0 100px;
+            }
+            &:nth-child(3),{
+              min-width: 300px;
+              flex: 0 0 calc(100% - 310px);
+            }
+            &:nth-child(4),{
+              max-width: 140px;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 h2.title {
@@ -18,22 +103,22 @@ input {
   color: #555358;
 }
 
-.mat-table {
-  > .mat-header-row, > .mat-row {
-    > .mat-header-cell, > .mat-cell {
-      flex: 0 0 150px;
-      &:nth-child(1) {
-        flex: 0 0 70px;
-      }
-      &:nth-child(9),{
-        flex: 0 0 70px;
-      }
-      &:nth-child(10),{
-        flex: 0 0 100px;
-      }
-    }
-	}
-}
+// .mat-table {
+//   > .mat-header-row, > .mat-row {
+//     > .mat-header-cell, > .mat-cell {
+//       flex: 0 0 150px;
+//       &:nth-child(1) {
+//         flex: 0 0 70px;
+//       }
+//       &:nth-child(9),{
+//         flex: 0 0 70px;
+//       }
+//       &:nth-child(10),{
+//         flex: 0 0 100px;
+//       }
+//     }
+// 	}
+// }
 
 .example-container {
   min-height: 30vh;
