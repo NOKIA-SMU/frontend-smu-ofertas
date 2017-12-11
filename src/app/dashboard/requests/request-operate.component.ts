@@ -55,7 +55,7 @@ export class RequestOperateComponent implements OnInit {
   request: Request;
   isNew: boolean;
   subsystems: Subsystem[];
-  priorities: any[];
+  priorities: string[];
   checkedRequestState: boolean = false;
   currentUser: Profile;
   selectedAnalyst: any = {};
@@ -94,11 +94,11 @@ export class RequestOperateComponent implements OnInit {
   ) {
     // Get subsystems
     this.subsystemService.getSubsystems()
-    .subscribe(({ data }) => {
-      this.subsystems = data.subsistemas
-    }, error => {
-      debugger
-    })
+      .subscribe(({ data }) => {
+        this.subsystems = data.subsistemas
+      }, error => {
+        debugger
+      })
 
     // Get actual token session
     this.authService.getToken()
@@ -115,15 +115,18 @@ export class RequestOperateComponent implements OnInit {
         debugger
       })
 
-    this.priorities = [
-      {id: 1 , name: "Alta"},
-      {id: 2 , name: "Media"},
-      {id: 3 , name: "Baja"}
-    ]
+    this.requestsService.getPriorities()
+      .subscribe(res => {
+        debugger
+        this.priorities = res.data.prioridades;
+      })
 
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
-      this.data = this.route.snapshot.queryParams;
+      this.data = JSON.parse(localStorage.getItem('actualRequest'));
+      // localStorage.removeItem('actualRequest')
+      this.selectSubsystem(null, this.data.subsistema.id)
+      this.selectedAnalyst = { id: this.data.analista.id, firstName: this.data.supervisor.fullName}
       this.request = {
         id: this.data.id,
         supervisorId: this.data.supervisor.id,
@@ -131,8 +134,8 @@ export class RequestOperateComponent implements OnInit {
         analistaId: this.data.analista.id,
         analista: this.data.analista.fullName,
         tas: this.data.tas,
-        estacion: this.data.estacion,
-        subsistema: this.data.subsistema,
+        estacion: this.data.estacion.id,
+        subsistema: this.data.subsistema.id,
         suministros: this.data.suministros,
         servicios: this.data.servicios,
         prioridad: this.data.prioridad,
@@ -147,8 +150,8 @@ export class RequestOperateComponent implements OnInit {
         tas: '',
         estacion: 0,
         subsistema: 0,
-        suministros: [{ suministroId: 0, suministroQty: 0 }],
-        servicios: [{ servicioId: 0, servicioQty: 0 }],
+        suministros: [],
+        servicios: [],
         prioridad: null,
         estadoSolicitud: false
       }
@@ -156,7 +159,9 @@ export class RequestOperateComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    debugger
+  }
 
   ngAfterViewInit() {
     this.authService.currentUser()
@@ -200,17 +205,14 @@ export class RequestOperateComponent implements OnInit {
 
   filterExistById(row, collection) {
     for (let i = 0; i < collection.length; i++) {
-      if (collection[i].id === row.id) {
-        return collection[i]
-      }
+      if (collection[i].id === row.id) return collection[i]
     }
     return null
   }
 
   filterByIndex(row, collection) {
     for (let i = 0; i < collection.length; i++)
-      if (collection[i].id === row.id)
-        return i
+      if (collection[i].id === row.id) return i
   }
 
   selectRowServices(row) {
@@ -224,11 +226,14 @@ export class RequestOperateComponent implements OnInit {
   }
 
   selectSubsystem(event, subsystemId) {
+    this.supplies = []
+    this.services = []
     this.isLoadingResultsSupplies = true;
-
+    var self = this;
     // Get all services
     this.servicesService.getServices(subsystemId)
       .subscribe(res => {
+        debugger
         for (let i = 0; i < res.data.servicios.length; i++) {
           this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
         }
@@ -244,6 +249,7 @@ export class RequestOperateComponent implements OnInit {
     // Get all supplies
     this.suppliesService.getSupplies(subsystemId)
       .subscribe(res => {
+        debugger
         for (let i = 0; i < res.data.suministros.length; i++) {
           this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
         }
@@ -257,11 +263,23 @@ export class RequestOperateComponent implements OnInit {
       })
   }
 
+  selectAnalyst(event, analyst) {
+    this.request.analistaId = analyst.id;
+    this.request.analista = `${analyst.firstName} ${analyst.lastName}`;
+  }
+
+  normalizeList(collection) {
+    const tmpArray = []
+    for (let i = 0; i < collection.length; i++) {
+      collection[i].id = parseInt(collection[i].id);
+      tmpArray.push({ pk: collection[i].id, qty: collection[i].qty })
+    }
+    return tmpArray
+  }
+
   createRequest() {
-    this.request.suministros = this.currentRowSelectDataSupplies;
-    this.request.servicios = this.currentRowSelectDataServices;
-    this.request.analistaId = this.selectedAnalyst.id;
-    this.request.analista = `${this.selectedAnalyst.firstName} ${this.selectedAnalyst.lastName}`;
+    if (this.currentRowSelectDataSupplies.length > 0) this.request.suministros = this.normalizeList(this.currentRowSelectDataSupplies);
+    if (this.currentRowSelectDataServices.length > 0) this.request.servicios = this.normalizeList(this.currentRowSelectDataServices);
     this.request.supervisorId = this.currentUser.id;
     this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
     this.requestsService.createRequest(this.request)
@@ -271,7 +289,7 @@ export class RequestOperateComponent implements OnInit {
         }
       }, error => {
         debugger
-        // this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
       })
   }
 

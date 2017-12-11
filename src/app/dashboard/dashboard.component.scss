@@ -60,20 +60,49 @@ mat-grid-tile {
   min-height: 80vh;
 }
 
+.tableContainer {
+  &.stations, &.requests {
+    min-height: 40vh;
+    margin-bottom: 30px;
+    .mat-table {
+      > .mat-header-row, > .mat-row {
+        cursor: pointer;
+        &.active {
+          background: #2974ff !important;
+          .mat-header-cell, .mat-cell {
+            background: #2974ff !important;
+            color: white !important;
+          }
+        }
+        > .mat-header-cell, > .mat-cell {
+          flex: 0 0 150px;
+          &:nth-child(1) {
+            flex: 0 0 70px;
+          }
+          &:nth-child(7) {
+            flex: 0 0 400px;
+          }
+          &:nth-child(8) {
+            flex: 0 0 110px;
+          }
+          &:nth-child(9) {
+            flex: 0 0 110px;
+          }
+          &:nth-child(11) {
+            flex: 0 0 90px;
+          }
+
+        }
+      }
+    }
+  }
+}
 .mat-table {
   width: 100%;
   > .mat-header-row, > .mat-row {
     display: flex;
     padding: 0;
     border: none;
-    cursor: pointer;
-    &.active {
-      background: #2974ff !important;
-      .mat-header-cell, .mat-cell {
-        background: #2974ff !important;
-        color: white !important;
-      }
-    }
     &:hover {
       background: #efefef;
       .mat-header-cell, .mat-cell {

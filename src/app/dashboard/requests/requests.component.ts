@@ -63,7 +63,8 @@ export class RequestsComponent implements OnInit {
   }
 
   goToEdit() {
-    this.router.navigate([`dashboard/solicitudes/${this.currentRowSelectData.id}`], { queryParams: this.currentRowSelectData, skipLocationChange: true });
+    localStorage.setItem('actualRequest', JSON.stringify(this.currentRowSelectData));
+    this.router.navigate([`dashboard/solicitudes/${this.currentRowSelectData.id}`], { queryParams: {}, skipLocationChange: true });
   }
 
   goToCreate() {
@@ -84,6 +85,10 @@ export class RequestsComponent implements OnInit {
 
   isArray(obj: any) {
     return Array.isArray(obj);
+  }
+
+  imprimir() {
+    debugger
   }
 
 }

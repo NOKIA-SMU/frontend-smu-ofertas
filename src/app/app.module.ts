@@ -18,10 +18,12 @@ import { MaterialModule } from './material.module';
 import { AppService } from './app.service';
 
 //Apollo
+// import { HttpHeaders } from '@angular/common/http';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpClientModule } from "@angular/common/http";
+import { setContext } from 'apollo-link-context';
 
 @NgModule({
   declarations: [
@@ -52,9 +54,32 @@ export class AppModule {
     apollo: Apollo,
     httpLink: HttpLink
   ) {
+    const http = httpLink.create({ uri: 'https://smu-ofertas-api.appspot.com/graphql' });
+
+    // const auth = setContext((_, { headers }) => {
+    //   // get the authentication token from local storage if it exists
+    //   // const token = localStorage.getItem('token');
+    //   const token = "Bearer 5151155sdfgh"
+    //   // return the headers to the context so httpLink can read them
+    //   // in this example we assume headers property exists
+    //   // and it is an instance of HttpHeaders
+    //   if (!token) {
+    //     return {};
+    //   } else {
+    //     return {
+    //       headers: headers.append('Authorization', `Bearer ${token}`)
+    //     };
+    //   }
+    // });
+
     apollo.create({
       link: httpLink.create({ uri: 'https://smu-ofertas-api.appspot.com/graphql' }),
       cache: new InMemoryCache()
     });
+
+    // apollo.create({
+    //   link: auth.concat(http),
+    //   cache: new InMemoryCache()
+    // });
   }
 }
