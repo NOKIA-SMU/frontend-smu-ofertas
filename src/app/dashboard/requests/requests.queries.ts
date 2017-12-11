@@ -43,6 +43,47 @@ export const queryRequests = gql`
   }
 `;
 
+export const queryRequestById = gql`
+  query (
+    $pk: ID,
+    $uid: String,
+    $credential: String
+  ) {
+    solicitud(
+      pk: $pk,
+      uid: $uid,
+      credential: $credential
+    ){
+      id
+      supervisorId
+      supervisor
+      analistaId
+      analista
+      tas
+      estacion {
+        id
+        nombre
+      }
+      subsistema {
+        id
+        nombre
+      }
+      suministros {
+        id
+        nombre
+        cantidad
+      }
+      servicios {
+        id
+        nombre
+        cantidad
+      }
+      prioridad
+      estadoSolicitud
+    }
+  }
+`;
+
 export const createSolicitud = gql`
   mutation (
     $supervisorId: String,

@@ -13,6 +13,7 @@ import { Observable } from "rxjs/Observable";
 import { Profile } from '../../models/auth.models';
 import { AuthService } from '../../auth/auth.service';
 import { AdminService } from '../../admin/admin.service';
+import { request } from 'https';
 
 @Component({
   selector: 'app-request-operate',
@@ -117,30 +118,35 @@ export class RequestOperateComponent implements OnInit {
 
     this.requestsService.getPriorities()
       .subscribe(res => {
-        debugger
         this.priorities = res.data.prioridades;
       })
 
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
-      this.data = JSON.parse(localStorage.getItem('actualRequest'));
+      this.requestsService.getRequestById(this.route.snapshot.params.id)
+        .subscribe(res => {
+          this.request = {
+            id: res.data.solicitud.id,
+            supervisorId: res.data.solicitud.supervisorId,
+            supervisor: res.data.solicitud.supervisor,
+            analistaId: res.data.solicitud.analistaId,
+            analista: res.data.solicitud.analista,
+            tas: res.data.solicitud.tas,
+            estacion: res.data.solicitud.estacion.id,
+            subsistema: res.data.solicitud.subsistema.id,
+            suministros: res.data.solicitud.suministros,
+            servicios: res.data.solicitud.servicios,
+            prioridad: res.data.solicitud.prioridad,
+            estadoSolicitud: res.data.solicitud.estadoSolicitud
+          }
+          this.selectedAnalyst = { id: res.data.solicitud.analistaId, firstName: res.data.solicitud.analista };
+          this.selectSubsystem(null, res.data.solicitud.subsistema.id, res.data.solicitud.suministros, res.data.solicitud.servicios);
+        }, error => {
+
+        })
+      // this.data = JSON.parse(localStorage.getItem('actualRequest'));
       // localStorage.removeItem('actualRequest')
-      this.selectSubsystem(null, this.data.subsistema.id)
-      this.selectedAnalyst = { id: this.data.analista.id, firstName: this.data.supervisor.fullName}
-      this.request = {
-        id: this.data.id,
-        supervisorId: this.data.supervisor.id,
-        supervisor: this.data.supervisor.fullName,
-        analistaId: this.data.analista.id,
-        analista: this.data.analista.fullName,
-        tas: this.data.tas,
-        estacion: this.data.estacion.id,
-        subsistema: this.data.subsistema.id,
-        suministros: this.data.suministros,
-        servicios: this.data.servicios,
-        prioridad: this.data.prioridad,
-        estadoSolicitud: this.data.estadoSolicitud
-      }
+      // this.selectSubsystem(null, this.data.subsistema.id)
     } else {
       this.request = {
         supervisorId: '',
@@ -159,9 +165,7 @@ export class RequestOperateComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    debugger
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.authService.currentUser()
@@ -225,17 +229,20 @@ export class RequestOperateComponent implements OnInit {
     console.log(this.currentRowSelectDataServices)
   }
 
-  selectSubsystem(event, subsystemId) {
+  selectSubsystem(event, subsystemId, requestSupplies?, requestServices?) {
     this.supplies = []
     this.services = []
+    this.isLoadingResultsServices = true;
     this.isLoadingResultsSupplies = true;
-    var self = this;
     // Get all services
     this.servicesService.getServices(subsystemId)
       .subscribe(res => {
-        debugger
-        for (let i = 0; i < res.data.servicios.length; i++) {
-          this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
+        if (this.isNew) {
+          for (let i = 0; i < res.data.servicios.length; i++) {
+            this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
+          }
+        } else {
+          // debugger
         }
         this.dataSourceServices = new MatTableDataSource(this.services);
         this.dataSourceServices.paginator = this.paginator;
@@ -249,9 +256,26 @@ export class RequestOperateComponent implements OnInit {
     // Get all supplies
     this.suppliesService.getSupplies(subsystemId)
       .subscribe(res => {
-        debugger
-        for (let i = 0; i < res.data.suministros.length; i++) {
-          this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+        if (this.isNew) {
+          for (let i = 0; i < res.data.suministros.length; i++) {
+            this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+          }
+        } else {
+          for (let i = 0; i < res.data.suministros.length; i++) {
+            this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+          }
+
+          for (let i = 0; i < this.supplies.length; i++) {
+            for (let j = 0; j < requestSupplies.length; j++) {
+              if (this.supplies[i].id === requestSupplies[j].id) {
+                this.supplies[i].qty = requestSupplies[j].cantidad;
+                this.supplies[i].checked = true;
+              }
+            }
+            // this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+          }
+          console.log(this.supplies)
+          // debugger
         }
         this.dataSourceSupplies = new MatTableDataSource(this.supplies);
         this.dataSourceSupplies.paginator = this.paginator;
@@ -302,6 +326,11 @@ export class RequestOperateComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
       })
+  }
+
+  imprimir(row) {
+    debugger
+    console.log(row)
   }
 
 }

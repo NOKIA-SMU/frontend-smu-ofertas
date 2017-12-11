@@ -64,7 +64,7 @@ export class RequestsComponent implements OnInit {
 
   goToEdit() {
     localStorage.setItem('actualRequest', JSON.stringify(this.currentRowSelectData));
-    this.router.navigate([`dashboard/solicitudes/${this.currentRowSelectData.id}`], { queryParams: {}, skipLocationChange: true });
+    this.router.navigate([`dashboard/solicitudes/${this.currentRowSelectData.id}`]);
   }
 
   goToCreate() {

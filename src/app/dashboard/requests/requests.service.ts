@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
-import { createSolicitud, queryRequests, deleteSolicitud, updateSolicitud, queryPriorities } from './requests.queries';
+import { createSolicitud, queryRequests, deleteSolicitud, updateSolicitud, queryPriorities, queryRequestById } from './requests.queries';
 
 @Injectable()
 export class RequestsService {
@@ -28,6 +28,17 @@ export class RequestsService {
     return this.apollo.watchQuery<any>({
       query: queryRequests,
       variables: {
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    }).valueChanges
+  }
+
+  public getRequestById(id: string) {
+    return this.apollo.watchQuery<any>({
+      query: queryRequestById,
+      variables: {
+        pk: id,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
       }
