@@ -37,12 +37,7 @@ export class RequestOperateComponent implements OnInit {
     'categoria'
   ];
 
-  suppliesColumns = [
-    'activo',
-    'id',
-    'nombre',
-    'cantidad'
-  ];
+
 
   id: number;
   data: any;
@@ -61,19 +56,17 @@ export class RequestOperateComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
-  // dataSourceSupplies = new MatTableDataSource();
-  // currentRowSelectDataSupplies: any[] = [];
-
   supplies: any[] = [];
-  servicesColumns = ['activo', 'id', 'nombre', 'cantidad'];
+  suppliesColumns = ['activo', 'id', 'nombre', 'cantidad'];
   dataSourceSupplies = new MatTableDataSource();
   isLoadingResultsSupplies = false;
   selectionSupplies = new SelectionModel(true, []);
 
   services: any[] = [];
+  servicesColumns = ['activo', 'id', 'nombre', 'cantidad'];
   dataSourceServices = new MatTableDataSource();
-  currentRowSelectDataServices: any[] = [];
   isLoadingResultsServices = false;
+  selectionServices = new SelectionModel(true, []);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -141,9 +134,6 @@ export class RequestOperateComponent implements OnInit {
         }, error => {
 
         })
-      // this.data = JSON.parse(localStorage.getItem('actualRequest'));
-      // localStorage.removeItem('actualRequest')
-      // this.selectSubsystem(null, this.data.subsistema.id)
     } else {
       this.request = {
         supervisorId: '',
@@ -171,6 +161,7 @@ export class RequestOperateComponent implements OnInit {
         this.stationService.getStations(this.currentUser.region)
           .subscribe(res => {
             this.dataSource = new MatTableDataSource(res.data.estaciones);
+            debugger
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.isLoadingResults = false;
@@ -192,38 +183,6 @@ export class RequestOperateComponent implements OnInit {
     this.request.estacion = data.id
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
-  }
-
-  // selectRowSupplies(row) {
-  //   let actualItem = this.filterExistById(row, this.currentRowSelectDataSupplies)
-  //   if (!actualItem) {
-  //     this.currentRowSelectDataSupplies.push(row)
-  //   } else {
-  //     this.currentRowSelectDataSupplies.splice(this.filterByIndex(row, this.currentRowSelectDataSupplies), 1)
-  //   }
-  //   console.log(this.currentRowSelectDataSupplies)
-  // }
-
-  filterExistById(row, collection) {
-    for (let i = 0; i < collection.length; i++) {
-      if (collection[i].id === row.id) return collection[i]
-    }
-    return null
-  }
-
-  filterByIndex(row, collection) {
-    for (let i = 0; i < collection.length; i++)
-      if (collection[i].id === row.id) return i
-  }
-
-  selectRowServices(row) {
-    let actualItem = this.filterExistById(row, this.currentRowSelectDataServices)
-    if (!actualItem) {
-      this.currentRowSelectDataServices.push(row)
-    } else {
-      this.currentRowSelectDataServices.splice(this.filterByIndex(row, this.currentRowSelectDataServices), 1)
-    }
-    console.log(this.currentRowSelectDataServices)
   }
 
   selectSubsystem(event, subsystemId, requestSupplies?, requestServices?) {
@@ -301,8 +260,7 @@ export class RequestOperateComponent implements OnInit {
 
   createRequest() {
     if (this.selectionSupplies.selected.length > 0) this.request.suministros = this.normalizeList(this.selectionSupplies.selected);
-    // if (this.currentRowSelectDataSupplies.length > 0) this.request.suministros = this.normalizeList(this.currentRowSelectDataSupplies);
-    // if (this.currentRowSelectDataServices.length > 0) this.request.servicios = this.normalizeList(this.currentRowSelectDataServices);
+    if (this.selectionServices.selected.length > 0) this.request.servicios = this.normalizeList(this.selectionServices.selected);
     this.request.supervisorId = this.currentUser.id;
     this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
     this.requestsService.createRequest(this.request)

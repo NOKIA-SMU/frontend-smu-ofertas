@@ -7,14 +7,8 @@ export const queryPriorities = gql`
 `;
 
 export const queryRequests = gql`
-  query (
-    $uid: String,
-    $credential: String
-  ) {
-    solicitudes(
-      uid: $uid,
-      credential: $credential
-    ){
+  query ($uid: String, $credential: String) {
+    solicitudes(uid: $uid, credential: $credential) {
       id
       supervisorId
       supervisor
