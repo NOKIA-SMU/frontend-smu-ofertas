@@ -25,11 +25,12 @@ export class RequestsService {
   }
 
   public getRequests() {
+    var userAuth = JSON.parse(localStorage.getItem('userAuth'))
     return this.apollo.watchQuery<any>({
       query: queryRequests,
       variables: {
-        uid: this.userAuth.uid,
-        credential: this.userAuth.token
+        uid: userAuth.uid,
+        credential: userAuth.token
       }
     }).valueChanges
   }
@@ -47,7 +48,6 @@ export class RequestsService {
 
   public createRequest(request) {
     request.subsistema = parseInt(request.subsistema)
-    let userAuth = JSON.parse(localStorage.getItem('userAuth'))
 
     return this.apollo.mutate({
       mutation: createSolicitud,
@@ -63,8 +63,8 @@ export class RequestsService {
         servicios: request.servicios,
         prioridad: request.prioridad,
         estadoSolicitud: request.estadoSolicitud,
-        uid: userAuth.uid,
-        credential: userAuth.token
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       },
       refetchQueries: [{
         query: queryRequests
@@ -73,7 +73,6 @@ export class RequestsService {
   }
 
   public updateRequest(request) {
-    let userAuth = JSON.parse(localStorage.getItem('userAuth'))
     return this.apollo.mutate({
       mutation: updateSolicitud,
       variables: {
@@ -88,8 +87,8 @@ export class RequestsService {
         servicios: request.servicios,
         prioridad: request.prioridad,
         estadoSolicitud: request.estadoSolicitud,
-        uid: userAuth.uid,
-        credential: userAuth.token
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
     })
   }

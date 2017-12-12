@@ -8,12 +8,12 @@ import { StationsService } from "../stations/stations.service";
 import { ServicesService } from "../services/services.service";
 import { SuppliesService } from "../supplies/supplies.service";
 import { AppService } from "../../app.service";
+import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from "rxjs/Observable";
 
 import { Profile } from '../../models/auth.models';
 import { AuthService } from '../../auth/auth.service';
 import { AdminService } from '../../admin/admin.service';
-import { request } from 'https';
 
 @Component({
   selector: 'app-request-operate',
@@ -44,13 +44,6 @@ export class RequestOperateComponent implements OnInit {
     'cantidad'
   ];
 
-  servicesColumns = [
-    'activo',
-    'id',
-    'nombre',
-    'cantidad'
-  ];
-
   id: number;
   data: any;
   request: Request;
@@ -68,10 +61,14 @@ export class RequestOperateComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
+  // dataSourceSupplies = new MatTableDataSource();
+  // currentRowSelectDataSupplies: any[] = [];
+
   supplies: any[] = [];
+  servicesColumns = ['activo', 'id', 'nombre', 'cantidad'];
   dataSourceSupplies = new MatTableDataSource();
-  currentRowSelectDataSupplies: any[] = [];
   isLoadingResultsSupplies = false;
+  selectionSupplies = new SelectionModel(true, []);
 
   services: any[] = [];
   dataSourceServices = new MatTableDataSource();
@@ -197,15 +194,15 @@ export class RequestOperateComponent implements OnInit {
     this.currentRowSelectData = data;
   }
 
-  selectRowSupplies(row) {
-    let actualItem = this.filterExistById(row, this.currentRowSelectDataSupplies)
-    if (!actualItem) {
-      this.currentRowSelectDataSupplies.push(row)
-    } else {
-      this.currentRowSelectDataSupplies.splice(this.filterByIndex(row, this.currentRowSelectDataSupplies), 1)
-    }
-    console.log(this.currentRowSelectDataSupplies)
-  }
+  // selectRowSupplies(row) {
+  //   let actualItem = this.filterExistById(row, this.currentRowSelectDataSupplies)
+  //   if (!actualItem) {
+  //     this.currentRowSelectDataSupplies.push(row)
+  //   } else {
+  //     this.currentRowSelectDataSupplies.splice(this.filterByIndex(row, this.currentRowSelectDataSupplies), 1)
+  //   }
+  //   console.log(this.currentRowSelectDataSupplies)
+  // }
 
   filterExistById(row, collection) {
     for (let i = 0; i < collection.length; i++) {
@@ -256,27 +253,28 @@ export class RequestOperateComponent implements OnInit {
     // Get all supplies
     this.suppliesService.getSupplies(subsystemId)
       .subscribe(res => {
-        if (this.isNew) {
+        debugger
+        // if (this.isNew) {
           for (let i = 0; i < res.data.suministros.length; i++) {
             this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
           }
-        } else {
-          for (let i = 0; i < res.data.suministros.length; i++) {
-            this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
-          }
+        // } else {
+        //   for (let i = 0; i < res.data.suministros.length; i++) {
+        //     this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+        //   }
 
-          for (let i = 0; i < this.supplies.length; i++) {
-            for (let j = 0; j < requestSupplies.length; j++) {
-              if (this.supplies[i].id === requestSupplies[j].id) {
-                this.supplies[i].qty = requestSupplies[j].cantidad;
-                this.supplies[i].checked = true;
-              }
-            }
-            // this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
-          }
-          console.log(this.supplies)
-          // debugger
-        }
+        //   for (let i = 0; i < this.supplies.length; i++) {
+        //     for (let j = 0; j < requestSupplies.length; j++) {
+        //       if (this.supplies[i].id === requestSupplies[j].id) {
+        //         this.supplies[i].qty = requestSupplies[j].cantidad;
+        //         this.supplies[i].checked = true;
+        //       }
+        //     }
+        //     // this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+        //   }
+        //   console.log(this.supplies)
+        //   // debugger
+        // }
         this.dataSourceSupplies = new MatTableDataSource(this.supplies);
         this.dataSourceSupplies.paginator = this.paginator;
         this.dataSourceSupplies.sort = this.sort;
@@ -302,8 +300,9 @@ export class RequestOperateComponent implements OnInit {
   }
 
   createRequest() {
-    if (this.currentRowSelectDataSupplies.length > 0) this.request.suministros = this.normalizeList(this.currentRowSelectDataSupplies);
-    if (this.currentRowSelectDataServices.length > 0) this.request.servicios = this.normalizeList(this.currentRowSelectDataServices);
+    if (this.selectionSupplies.selected.length > 0) this.request.suministros = this.normalizeList(this.selectionSupplies.selected);
+    // if (this.currentRowSelectDataSupplies.length > 0) this.request.suministros = this.normalizeList(this.currentRowSelectDataSupplies);
+    // if (this.currentRowSelectDataServices.length > 0) this.request.servicios = this.normalizeList(this.currentRowSelectDataServices);
     this.request.supervisorId = this.currentUser.id;
     this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
     this.requestsService.createRequest(this.request)
@@ -331,6 +330,11 @@ export class RequestOperateComponent implements OnInit {
   imprimir(row) {
     debugger
     console.log(row)
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.dataSource.data.forEach(row => this.selectionSupplies.select(row));
   }
 
 }

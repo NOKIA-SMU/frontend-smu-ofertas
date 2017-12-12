@@ -24,7 +24,7 @@
     </div>
 
     <mat-form-field>
-      <mat-select placeholder="Analista" name="analyst" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
+      <mat-select placeholder="Analista" name="analyst" [(ngModel)]="selectedAnalyst" (selectionSuppliesChange)="selectAnalyst($event, selectedAnalyst)" required>
         <mat-option *ngFor="let analyst of analysts" [value]="selectedAnalyst">
           {{analyst.firstName}} {{analyst.lastName}}
         </mat-option>
@@ -44,7 +44,7 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="request.subsistema" (selectionChange)="selectSubsystem($event, request.subsistema)" required>
+      <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="request.subsistema" (selectionSuppliesChange)="selectSubsystem($event, request.subsistema)" required>
         <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
           {{subsystem.nombre}}
         </mat-option>
@@ -141,7 +141,7 @@
     </div>
 
     <mat-form-field>
-      <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
+      <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionSuppliesChange)="selectAnalyst($event, selectedAnalyst)" required>
         <mat-option *ngFor="let analyst of analysts" [value]="analyst">
           {{analyst.firstName}} {{analyst.lastName}}
         </mat-option>
@@ -172,7 +172,7 @@
 
     <ng-container *ngIf="supplies?.length > 0">
       <h4>Suministros</h4>
-      <div class="tableContainer mat-elevation-z8 supplies">
+      <!-- <div class="tableContainer mat-elevation-z8 supplies">
         <div class="example-loading-shade" *ngIf="isLoadingResultsSupplies">
           <mat-spinner></mat-spinner>
         </div>
@@ -195,7 +195,50 @@
           <mat-row *matRowDef="let row; columns: suppliesColumns; let i = index"></mat-row>
         </mat-table>
         <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
+      </div> -->
+      <div class="tableContainer mat-elevation-z8 supplies">
+        <mat-table #table [dataSource]="dataSourceSupplies">
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="activo">
+            <mat-header-cell *matHeaderCellDef>
+              Selección
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" (click)="selectionSupplies.toggle(row)">
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionSupplies.toggle(row) : null" [checked]="selectionSupplies.isSelected(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="cantidad">
+            <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{element.cantidad}}
+              <input type="number" name="qty" class="inputNumber" [value]="element.qty" [(ngModel)]="element.qty">
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: suppliesColumns;">
+          </mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
       </div>
+      <h5>{{selectionSupplies.selected | json}}</h5>
+
+
     </ng-container>
     <ng-container *ngIf="services?.length > 0">
       <h4>Servicios</h4>
