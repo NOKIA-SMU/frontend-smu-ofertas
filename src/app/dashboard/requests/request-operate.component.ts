@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Request, Subsystem } from "../../models/dashboard.models";
@@ -37,9 +37,7 @@ export class RequestOperateComponent implements OnInit {
     'categoria'
   ];
 
-
-
-  id: number;
+  // id: number;
   data: any;
   request: Request;
   isNew: boolean;
@@ -91,13 +89,6 @@ export class RequestOperateComponent implements OnInit {
         debugger
       })
 
-    // Get actual token session
-    this.authService.getToken()
-      .then(res => {
-      }, error => {
-        debugger
-      })
-
     // Get profiles filter by analysts
     this.adminService.getProfilesAnalysts()
       .subscribe(res => {
@@ -109,6 +100,25 @@ export class RequestOperateComponent implements OnInit {
     this.requestsService.getPriorities()
       .subscribe(res => {
         this.priorities = res.data.prioridades;
+      })
+  }
+
+  ngOnInit() {
+
+    this.authService.currentUser()
+      .subscribe(res => {
+        this.currentUser = res
+        this.stationService.getStations(this.currentUser.region)
+          .subscribe(res => {
+            this.dataSource = new MatTableDataSource(res.data.estaciones);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.isLoadingResults = false;
+          }, res => {
+            debugger
+            this.isLoadingResults = false;
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
+          })
       })
 
     if (this.route.snapshot.params.id != 'crear') {
@@ -130,11 +140,66 @@ export class RequestOperateComponent implements OnInit {
             estadoSolicitud: res.data.solicitud.estadoSolicitud
           }
           this.selectedAnalyst = { id: res.data.solicitud.analistaId, firstName: res.data.solicitud.analista };
-          this.selectSubsystem(null, res.data.solicitud.subsistema.id, res.data.solicitud.suministros, res.data.solicitud.servicios);
-        }, error => {
 
+          // Get supplies
+          this.supplies = [];
+          this.suppliesService.getSupplies(this.request.subsistema)
+            .subscribe(res => {
+              // Clone response
+              for (let i = 0; i < res.data.suministros.length; i++) {
+                this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: null })
+              }
+              // Update and change data by request data
+              for (let i = 0; i < this.supplies.length; i++) {
+                for (let j = 0; j < this.request.suministros.length; j++) {
+                  if (this.supplies[i].id === this.request.suministros[j].id) {
+                    this.supplies[i].qty = this.request.suministros[j].cantidad;
+                    this.selectionSupplies.toggle(this.supplies[i]);
+                  }
+                }
+              }
+              // Inicialize supplies table
+              this.dataSourceSupplies = new MatTableDataSource(this.supplies);
+              this.dataSourceSupplies.paginator = this.paginator;
+              this.dataSourceSupplies.sort = this.sort;
+              this.isLoadingResultsSupplies = false;
+            }, error => {
+              debugger
+            })
+
+          // Get services
+          this.services = [];
+          this.servicesService.getServices(this.request.subsistema)
+            .subscribe(res => {
+              // Clone response
+              for (let i = 0; i < res.data.servicios.length; i++) {
+                this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
+              }
+              // Update and change data by request data
+              for (let i = 0; i < this.services.length; i++) {
+                for (let j = 0; j < this.request.servicios.length; j++) {
+                  if (this.services[i].id === this.request.servicios[j].id) {
+                    this.services[i].qty = parseInt(this.request.servicios[j].cantidad);
+                    this.selectionServices.toggle(this.services[i]);
+                  }
+                }
+              }
+              // Inicialize services table
+              this.dataSourceServices = new MatTableDataSource(this.services);
+              this.dataSourceServices.paginator = this.paginator;
+              this.dataSourceServices.sort = this.sort;
+              this.isLoadingResultsServices = false;
+            }, error => {
+              debugger
+            })
+
+
+        }, error => {
+          debugger
         })
-    } else {
+    }
+    if (this.route.snapshot.params.id == 'crear') {
+      this.selectedAnalyst = { };
       this.request = {
         supervisorId: '',
         supervisor: '',
@@ -150,28 +215,10 @@ export class RequestOperateComponent implements OnInit {
       }
       this.isNew = true;
     }
+
   }
 
-  ngOnInit() { }
-
-  ngAfterViewInit() {
-    this.authService.currentUser()
-      .subscribe(res => {
-        this.currentUser = res
-        this.stationService.getStations(this.currentUser.region)
-          .subscribe(res => {
-            this.dataSource = new MatTableDataSource(res.data.estaciones);
-            debugger
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.isLoadingResults = false;
-          }, res => {
-            debugger
-            this.isLoadingResults = false;
-            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
-          })
-        })
-  }
+  ngAfterViewInit() {  }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -185,7 +232,7 @@ export class RequestOperateComponent implements OnInit {
     this.currentRowSelectData = data;
   }
 
-  selectSubsystem(event, subsystemId, requestSupplies?, requestServices?) {
+  selectSubsystem(event, subsystemId) {
     this.supplies = []
     this.services = []
     this.isLoadingResultsServices = true;
@@ -212,28 +259,11 @@ export class RequestOperateComponent implements OnInit {
     // Get all supplies
     this.suppliesService.getSupplies(subsystemId)
       .subscribe(res => {
-        debugger
-        // if (this.isNew) {
-          for (let i = 0; i < res.data.suministros.length; i++) {
-            this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
-          }
-        // } else {
-        //   for (let i = 0; i < res.data.suministros.length; i++) {
-        //     this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
-        //   }
-
-        //   for (let i = 0; i < this.supplies.length; i++) {
-        //     for (let j = 0; j < requestSupplies.length; j++) {
-        //       if (this.supplies[i].id === requestSupplies[j].id) {
-        //         this.supplies[i].qty = requestSupplies[j].cantidad;
-        //         this.supplies[i].checked = true;
-        //       }
-        //     }
-        //     // this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
-        //   }
-        //   console.log(this.supplies)
-        //   // debugger
-        // }
+        // Clone response
+        for (let i = 0; i < res.data.suministros.length; i++) {
+          this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+        }
+        // Inicialize supplies table
         this.dataSourceSupplies = new MatTableDataSource(this.supplies);
         this.dataSourceSupplies.paginator = this.paginator;
         this.dataSourceSupplies.sort = this.sort;
@@ -245,8 +275,11 @@ export class RequestOperateComponent implements OnInit {
   }
 
   selectAnalyst(event, analyst) {
+    if (this.isNew)
+      this.request.analista = `${analyst.firstName} ${analyst.lastName}`;
+    else
+      this.request.analista = analyst.firstName;
     this.request.analistaId = analyst.id;
-    this.request.analista = `${analyst.firstName} ${analyst.lastName}`;
   }
 
   normalizeList(collection) {
@@ -258,31 +291,32 @@ export class RequestOperateComponent implements OnInit {
     return tmpArray
   }
 
-  createRequest() {
+  saveRequest() {
     if (this.selectionSupplies.selected.length > 0) this.request.suministros = this.normalizeList(this.selectionSupplies.selected);
     if (this.selectionServices.selected.length > 0) this.request.servicios = this.normalizeList(this.selectionServices.selected);
     this.request.supervisorId = this.currentUser.id;
     this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
-    this.requestsService.createRequest(this.request)
-      .subscribe(res => {
-        if (res.data.createSolicitud.status == 200) {
-          this.router.navigate(['/solicitudes']);
-        }
-      }, error => {
-        debugger
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
-      })
-  }
-
-  updateRequest() {
-    this.requestsService.updateRequest(this.request)
-      .subscribe(res => {
-        if (res.data.updateEstacion.status) {
-          this.router.navigate(['/solicitudes']);
-        }
-      }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
-      })
+    if (this.isNew) {
+      this.requestsService.createRequest(this.request)
+        .subscribe(res => {
+          if (res.data.createSolicitud.status == 200) {
+            this.router.navigate(['/solicitudes']);
+          }
+        }, error => {
+          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+        })
+    } else {
+      this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
+        .subscribe(res => {
+          if (res.data.updateSolicitud.status == 200) {
+            this.router.navigate(['/solicitudes']);
+          }
+        }, error => {
+          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+        })
+    }
   }
 
   imprimir(row) {

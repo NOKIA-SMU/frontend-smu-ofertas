@@ -72,10 +72,11 @@ export class RequestsService {
     })
   }
 
-  public updateRequest(request) {
+  public updateRequest(id, request) {
     return this.apollo.mutate({
       mutation: updateSolicitud,
       variables: {
+        pk: id,
         supervisorId: request.supervisorId,
         supervisor: request.supervisor,
         analistaId: request.analistaId,

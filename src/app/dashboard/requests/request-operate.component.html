@@ -1,149 +1,45 @@
-<ng-container *ngIf="!isNew && request">
-  <h2 class="title">Actualizar Solicitud</h2>
-  <form *ngIf="!isNew" #updateRequestForm="ngForm" (ngSubmit)="updateRequest()">
-    <h4>Estaciones</h4>
-    <div class="example-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-    </div>
-    <div class="tableContainer mat-elevation-z8 stations">
-      <div class="example-loading-shade" *ngIf="isLoadingResults">
-        <mat-spinner></mat-spinner>
-      </div>
-      <mat-table [dataSource]="dataSource" matSort>
-        <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<!-- <ng-container *ngIf="!isNew && request"> -->
 
-        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
-      </mat-table>
-      <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
-    </div>
+<!-- </ng-container> -->
 
+
+
+
+<h2 class="title">Solicitud</h2>
+<form #requestForm="ngForm" (ngSubmit)="saveRequest()">
+  <h4>Estaciones</h4>
+  <div class="example-header">
     <mat-form-field>
-      <mat-select placeholder="Analista" name="analyst" [(ngModel)]="selectedAnalyst" (selectionSuppliesChange)="selectAnalyst($event, selectedAnalyst)" required>
-        <mat-option *ngFor="let analyst of analysts" [value]="selectedAnalyst">
-          {{analyst.firstName}} {{analyst.lastName}}
-        </mat-option>
-      </mat-select>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Tas" name="tas" [(ngModel)]="request.tas" required>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" placeholder="Estación" name="estacion" [(ngModel)]="request.estacion" disabled required>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Prioridad" name="priority" [(ngModel)]="request.prioridad" required>
-        <mat-option *ngFor="let priority of priorities" [value]="priority">
-          {{priority}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="request.subsistema" (selectionSuppliesChange)="selectSubsystem($event, request.subsistema)" required>
-        <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
-          {{subsystem.nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-slide-toggle [color]="color" name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
-
-    <ng-container *ngIf="supplies?.length > 0">
-      <h4>Suministros</h4>
-      <div class="tableContainer mat-elevation-z8 supplies">
-        <div class="example-loading-shade" *ngIf="isLoadingResultsSupplies">
-          <mat-spinner></mat-spinner>
-        </div>
-        <mat-table [dataSource]="dataSourceSupplies" matSort>
-          <ng-container *ngFor="let item of suppliesColumns; let i = index;" matColumnDef="{{item}}">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <ng-container *ngIf="item == 'activo'">
-                <mat-checkbox (change)="selectRowSupplies(row)" name="selected" [(ngModel)]="row.checked" [disabled]="!row.qty > 0"></mat-checkbox>
-              </ng-container>
-              <ng-container *ngIf="item !== 'cantidad' || item !== 'activo'">
-                {{row[item]}}
-              </ng-container>
-              <ng-container *ngIf="item == 'cantidad'">
-                <input type="number" name="qty" class="inputNumber" [value]="row.qty" [(ngModel)]="row.qty">
-              </ng-container>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: suppliesColumns; let i = index" (click)="imprimir(row)"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="services?.length > 0">
-      <h4>Servicios</h4>
-      <div class="tableContainer mat-elevation-z8 services">
-        <div class="example-loading-shade" *ngIf="isLoadingResultsServices">
-          <mat-spinner></mat-spinner>
-        </div>
-        <mat-table [dataSource]="dataSourceServices" matSort>
-          <ng-container *ngFor="let item of servicesColumns; let i = index;" matColumnDef="{{item}}">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <ng-container *ngIf="item == 'activo'">
-                <mat-checkbox (change)="selectRowServices(row)" [disabled]="!row.qty > 0"></mat-checkbox>
-              </ng-container>
-              <ng-container *ngIf="item !== 'cantidad' || item !== 'activo'">
-                {{row[item]}}
-              </ng-container>
-              <ng-container *ngIf="item == 'cantidad'">
-                <input type="number" name="qty" class="inputNumber" [value]="row.qty" [(ngModel)]="row.qty">
-              </ng-container>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="servicesColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: servicesColumns; let i = index"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
-      </div>
-    </ng-container>
-    <div class="footer-buttom">
-      <button *ngIf="!isNew" mat-raised-button color="primary" type="submit" [disabled]="!updateRequestForm.form.valid">Actualizar estación</button>
-      <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
+  </div>
+  <div class="tableContainer mat-elevation-z8 stations">
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner></mat-spinner>
     </div>
-  </form>
-</ng-container>
-
-
-
-<ng-container *ngIf="isNew">
-  <h2 class="title">Crear Solicitud</h2>
-  <form #createRequestForm="ngForm" (ngSubmit)="createRequest()">
-    <h4>Estaciones</h4>
-    <div class="example-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-    </div>
-    <div class="tableContainer mat-elevation-z8 stations">
-      <div class="example-loading-shade" *ngIf="isLoadingResults">
-        <mat-spinner></mat-spinner>
-      </div>
-      <mat-table [dataSource]="dataSource" matSort>
-        <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
-      </mat-table>
-      <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
-    </div>
-
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+    </mat-table>
+    <mat-paginator #PagStations [pageSizeOptions]="[5, 50]"></mat-paginator>
+  </div>
+  <ng-container *ngIf="request">
     <mat-form-field>
       <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
-        <mat-option *ngFor="let analyst of analysts" [value]="analyst">
-          {{analyst.firstName}} {{analyst.lastName}}
-        </mat-option>
+        <ng-container *ngIf="isNew">
+          <mat-option *ngFor="let analyst of analysts" [value]="analyst">
+            {{analyst.firstName}} {{analyst.lastName}}
+          </mat-option>
+        </ng-container>
+        <ng-container *ngIf="!isNew">
+          <mat-option *ngFor="let analyst of analysts" [value]="selectedAnalyst">
+            {{analyst.firstName}} {{analyst.lastName}}
+          </mat-option>
+        </ng-container>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
@@ -168,93 +64,93 @@
       </mat-select>
     </mat-form-field>
     <mat-slide-toggle [color]="color" name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
+  </ng-container>
 
-    <ng-container *ngIf="supplies?.length > 0">
-      <h4>Suministros</h4>
-      <div class="tableContainer mat-elevation-z8 supplies">
-        <mat-table #table [dataSource]="dataSourceSupplies">
-          <ng-container matColumnDef="activo">
-            <mat-header-cell *matHeaderCellDef>
-              Selección
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" (click)="selectionSupplies.toggle(row)">
-              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionSupplies.toggle(row) : null" [checked]="selectionSupplies.isSelected(row)">
-              </mat-checkbox>
-            </mat-cell>
-          </ng-container>
+  <ng-container *ngIf="supplies?.length > 0">
+    <h4>Suministros</h4>
+    <div class="tableContainer mat-elevation-z8 supplies">
+      <mat-table #table [dataSource]="dataSourceSupplies">
+        <ng-container matColumnDef="activo">
+          <mat-header-cell *matHeaderCellDef>
+            Selección
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" (click)="selectionSupplies.toggle(row)">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionSupplies.toggle(row) : null" [checked]="selectionSupplies.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
 
-          <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-          </ng-container>
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
 
-          <ng-container matColumnDef="nombre">
-            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-          </ng-container>
+        <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        </ng-container>
 
-          <ng-container matColumnDef="cantidad">
-            <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              {{element.cantidad}}
-              <input type="number" name="qty" class="inputNumber" [value]="element.qty" [(ngModel)]="element.qty">
-            </mat-cell>
-          </ng-container>
+        <ng-container matColumnDef="cantidad">
+          <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span>{{element.qty}}</span>
+            <input matInput type="number" name="qty" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+          </mat-cell>
+        </ng-container>
 
-          <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: suppliesColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
-      </div>
-      <h5>{{selectionSupplies.selected | json}}</h5>
-    </ng-container>
-
-
-    <ng-container *ngIf="services?.length > 0">
-      <h4>Servicios</h4>
-      <div class="tableContainer mat-elevation-z8 services">
-        <div class="example-loading-shade" *ngIf="isLoadingResultsServices">
-          <mat-spinner></mat-spinner>
-        </div>
-        <mat-table #table [dataSource]="dataSourceServices">
-          <ng-container matColumnDef="activo">
-            <mat-header-cell *matHeaderCellDef>
-              Selección
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" (click)="selectionServices.toggle(row)">
-              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionServices.toggle(row) : null" [checked]="selectionServices.isSelected(row)">
-              </mat-checkbox>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="nombre">
-            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="cantidad">
-            <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              {{element.cantidad}}
-              <input type="number" name="qty" class="inputNumber" [value]="element.qty" [(ngModel)]="element.qty">
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="servicesColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: servicesColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSizeOptions]="[5, 50]"></mat-paginator>
-      </div>
-    </ng-container>
-
-    <div class="footer-buttom">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!createRequestForm.form.valid">Crear estación</button>
-      <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
+        <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: suppliesColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator #PagSupplies [pageSizeOptions]="[5, 50]"></mat-paginator>
     </div>
-  </form>
-</ng-container>
+    <h5>{{selectionSupplies.selected | json}}</h5>
+  </ng-container>
+
+
+  <ng-container *ngIf="services?.length > 0">
+    <h4>Servicios</h4>
+    <div class="tableContainer mat-elevation-z8 services">
+      <div class="example-loading-shade" *ngIf="isLoadingResultsServices">
+        <mat-spinner></mat-spinner>
+      </div>
+      <mat-table #table [dataSource]="dataSourceServices">
+        <ng-container matColumnDef="activo">
+          <mat-header-cell *matHeaderCellDef>
+            Selección
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" (click)="selectionServices.toggle(row)">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionServices.toggle(row) : null" [checked]="selectionServices.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span>{{element.qty}}</span>
+            <input matInput type="number" name="qty" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="servicesColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: servicesColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator #PagServices [pageSizeOptions]="[5, 50]"></mat-paginator>
+    </div>
+  </ng-container>
+
+  <div class="footer-buttom">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!requestForm.form.valid">Guardar</button>
+    <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
+  </div>
+</form>

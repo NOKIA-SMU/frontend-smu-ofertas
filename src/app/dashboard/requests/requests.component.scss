@@ -18,7 +18,15 @@ form {
   .inputNumber {
     border-radius: 3px;
     padding: 8px;
-    width: 80%;
+    width: 40px;
+  }
+  .qty {
+    span {
+      display: inline-block;
+      padding: 4px;
+      margin: 0 6px;
+      font-size: 1.3rem;
+    }
   }
   .tableContainer {
     width: 100%;
