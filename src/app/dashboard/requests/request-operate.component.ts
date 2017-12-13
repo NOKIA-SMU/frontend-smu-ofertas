@@ -108,17 +108,22 @@ export class RequestOperateComponent implements OnInit {
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res
-        this.stationService.getStations(this.currentUser.region)
-          .subscribe(res => {
-            this.dataSource = new MatTableDataSource(res.data.estaciones);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.isLoadingResults = false;
-          }, res => {
-            debugger
-            this.isLoadingResults = false;
-            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
-          })
+        if (this.currentUser.region) {
+          this.stationService.getStations(this.currentUser.region)
+            .subscribe(res => {
+              this.dataSource = new MatTableDataSource(res.data.estaciones);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+              this.isLoadingResults = false;
+            }, res => {
+              debugger
+              this.isLoadingResults = false;
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
+            })
+        }
+        else {
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Este usuario no tiene asignada una región')
+        }
       })
 
     if (this.route.snapshot.params.id != 'crear') {
@@ -147,7 +152,7 @@ export class RequestOperateComponent implements OnInit {
             .subscribe(res => {
               // Clone response
               for (let i = 0; i < res.data.suministros.length; i++) {
-                this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: null })
+                this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre })
               }
               // Update and change data by request data
               for (let i = 0; i < this.supplies.length; i++) {
@@ -173,7 +178,7 @@ export class RequestOperateComponent implements OnInit {
             .subscribe(res => {
               // Clone response
               for (let i = 0; i < res.data.servicios.length; i++) {
-                this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
+                this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre })
               }
               // Update and change data by request data
               for (let i = 0; i < this.services.length; i++) {
@@ -275,6 +280,7 @@ export class RequestOperateComponent implements OnInit {
   }
 
   selectAnalyst(event, analyst) {
+    debugger
     if (this.isNew)
       this.request.analista = `${analyst.firstName} ${analyst.lastName}`;
     else
@@ -296,27 +302,28 @@ export class RequestOperateComponent implements OnInit {
     if (this.selectionServices.selected.length > 0) this.request.servicios = this.normalizeList(this.selectionServices.selected);
     this.request.supervisorId = this.currentUser.id;
     this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
-    if (this.isNew) {
-      this.requestsService.createRequest(this.request)
-        .subscribe(res => {
-          if (res.data.createSolicitud.status == 200) {
-            this.router.navigate(['/solicitudes']);
-          }
-        }, error => {
-          debugger
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
-        })
-    } else {
-      this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
-        .subscribe(res => {
-          if (res.data.updateSolicitud.status == 200) {
-            this.router.navigate(['/solicitudes']);
-          }
-        }, error => {
-          debugger
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
-        })
-    }
+    debugger
+    // if (this.isNew) {
+    //   this.requestsService.createRequest(this.request)
+    //     .subscribe(res => {
+    //       if (res.data.createSolicitud.status == 200) {
+    //         this.router.navigate(['/solicitudes']);
+    //       }
+    //     }, error => {
+    //       debugger
+    //       this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+    //     })
+    // } else {
+    //   this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
+    //     .subscribe(res => {
+    //       if (res.data.updateSolicitud.status == 200) {
+    //         this.router.navigate(['/solicitudes']);
+    //       }
+    //     }, error => {
+    //       debugger
+    //       this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+    //     })
+    // }
   }
 
   imprimir(row) {

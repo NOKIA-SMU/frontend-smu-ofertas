@@ -28,26 +28,32 @@
     <mat-paginator #PagStations [pageSizeOptions]="[5, 50]"></mat-paginator>
   </div>
   <ng-container *ngIf="request">
+    <!-- ANALYST -->
     <mat-form-field>
-      <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
-        <ng-container *ngIf="isNew">
+      <ng-container>
+        <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
           <mat-option *ngFor="let analyst of analysts" [value]="analyst">
             {{analyst.firstName}} {{analyst.lastName}}
           </mat-option>
-        </ng-container>
-        <ng-container *ngIf="!isNew">
+        </mat-select>
+      </ng-container>
+      <!-- <ng-container *ngIf="!isNew">
+        <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
           <mat-option *ngFor="let analyst of analysts" [value]="selectedAnalyst">
             {{analyst.firstName}} {{analyst.lastName}}
           </mat-option>
-        </ng-container>
-      </mat-select>
+        </mat-select> -->
+      </ng-container>
     </mat-form-field>
+    <!-- TAS -->
     <mat-form-field>
       <input matInput type="text" placeholder="Tas" name="tas" [(ngModel)]="request.tas" required>
     </mat-form-field>
+    <!-- STATION -->
     <mat-form-field>
       <input matInput type="number" placeholder="Estación" name="estacion" [(ngModel)]="request.estacion" disabled required>
     </mat-form-field>
+    <!-- PRIORITY -->
     <mat-form-field>
       <mat-select placeholder="Prioridad" name="priority" [(ngModel)]="request.prioridad" required>
         <mat-option *ngFor="let priority of priorities" [value]="priority">
@@ -55,6 +61,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <!-- SUBSYSTEM -->
     <mat-form-field>
       <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="request.subsistema" (selectionChange)="selectSubsystem($event, request.subsistema)"
         required>
@@ -63,9 +70,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <!-- REQUEST STATE -->
     <mat-slide-toggle [color]="color" name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
   </ng-container>
-
+  <!-- SUPPLIES -->
   <ng-container *ngIf="supplies?.length > 0">
     <h4>Suministros</h4>
     <div class="tableContainer mat-elevation-z8 supplies">
@@ -93,8 +101,7 @@
         <ng-container matColumnDef="cantidad">
           <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <span>{{element.qty}}</span>
-            <input matInput type="number" name="qty" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+            <input type="number" name="qty-{{element.nombre}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
           </mat-cell>
         </ng-container>
 
@@ -103,10 +110,9 @@
       </mat-table>
       <mat-paginator #PagSupplies [pageSizeOptions]="[5, 50]"></mat-paginator>
     </div>
-    <h5>{{selectionSupplies.selected | json}}</h5>
+    <!-- <h5>{{selectionSupplies.selected | json}}</h5> -->
   </ng-container>
-
-
+  <!-- SERVICES -->
   <ng-container *ngIf="services?.length > 0">
     <h4>Servicios</h4>
     <div class="tableContainer mat-elevation-z8 services">
@@ -137,8 +143,7 @@
         <ng-container matColumnDef="cantidad">
           <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <span>{{element.qty}}</span>
-            <input matInput type="number" name="qty" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+            <input type="number" name="qtys-{{element.nombre}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
           </mat-cell>
         </ng-container>
 
@@ -147,6 +152,7 @@
       </mat-table>
       <mat-paginator #PagServices [pageSizeOptions]="[5, 50]"></mat-paginator>
     </div>
+    <!-- <h5>{{selectionServices.selected | json}}</h5> -->
   </ng-container>
 
   <div class="footer-buttom">

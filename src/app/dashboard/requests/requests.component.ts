@@ -86,4 +86,8 @@ export class RequestsComponent implements OnInit {
     return Array.isArray(obj);
   }
 
+  imprimir(row) {
+    debugger
+  }
+
 }
