@@ -37,7 +37,6 @@ export class RequestOperateComponent implements OnInit {
     'categoria'
   ];
 
-  // id: number;
   data: any;
   request: Request;
   isNew: boolean;
@@ -47,6 +46,7 @@ export class RequestOperateComponent implements OnInit {
   currentUser: Profile;
   selectedAnalyst: any = {};
   analysts: any;
+  isSelectionSubsystem: boolean = false;
 
   // Tables
   dataSource = new MatTableDataSource();
@@ -130,6 +130,7 @@ export class RequestOperateComponent implements OnInit {
 
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
+      this.isSelectionSubsystem = true;
       this.requestsService.getRequestById(this.route.snapshot.params.id)
         .subscribe(res => {
           this.request = {
@@ -147,9 +148,9 @@ export class RequestOperateComponent implements OnInit {
             estadoSolicitud: res.data.solicitud.estadoSolicitud
           }
           this.selectedAnalyst = { id: res.data.solicitud.analistaId, firstName: res.data.solicitud.analista };
-
           // Get supplies
           this.supplies = [];
+          this.isLoadingResultsSupplies = true;
           this.suppliesService.getSupplies(this.request.subsistema)
             .subscribe(res => {
               // Clone response
@@ -176,6 +177,7 @@ export class RequestOperateComponent implements OnInit {
 
           // Get services
           this.services = [];
+          this.isLoadingResultsServices = true;
           this.servicesService.getServices(this.request.subsistema)
             .subscribe(res => {
               // Clone response
@@ -227,12 +229,6 @@ export class RequestOperateComponent implements OnInit {
 
   ngAfterViewInit() {  }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-
   selectRow(index, data) {
     this.request.estacion = data.id
     this.currentRowSelect = index;
@@ -240,20 +236,21 @@ export class RequestOperateComponent implements OnInit {
   }
 
   selectSubsystem(event, subsystemId) {
+    if (this.selectionSupplies.selected.length > 0) this.selectionSupplies.clear();
+    if (this.selectionServices.selected.length > 0) this.selectionServices.clear();
     this.supplies = []
     this.services = []
+    this.isSelectionSubsystem = true;
     this.isLoadingResultsServices = true;
     this.isLoadingResultsSupplies = true;
     // Get all services
     this.servicesService.getServices(subsystemId)
+      // Clone response
       .subscribe(res => {
-        if (this.isNew) {
-          for (let i = 0; i < res.data.servicios.length; i++) {
-            this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
-          }
-        } else {
-          // debugger
+        for (let i = 0; i < res.data.servicios.length; i++) {
+          this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0 })
         }
+        // Initialize services table
         this.dataSourceServices = new MatTableDataSource(this.services);
         this.dataSourceServices.paginator = this.paginator;
         this.dataSourceServices.sort = this.sort;
@@ -329,6 +326,25 @@ export class RequestOperateComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.dataSource.data.forEach(row => this.selectionSupplies.select(row));
+  }
+
+  // Filters Tables
+  filterStations(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  filterSupplies(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSourceSupplies.filter = filterValue;
+  }
+
+  filterServices(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSourceServices.filter = filterValue;
   }
 
 }

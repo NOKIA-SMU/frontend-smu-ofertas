@@ -1,3 +1,8 @@
+.divider {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
 form {
 	display: flex;
 	justify-content: space-between;
@@ -83,30 +88,13 @@ form {
   }
 }
 
-h2.title {
+h2.title, h4 {
   color: #124191;
 }
 
 input {
   color: #555358;
 }
-
-// .mat-table {
-//   > .mat-header-row, > .mat-row {
-//     > .mat-header-cell, > .mat-cell {
-//       flex: 0 0 150px;
-//       &:nth-child(1) {
-//         flex: 0 0 70px;
-//       }
-//       &:nth-child(9),{
-//         flex: 0 0 70px;
-//       }
-//       &:nth-child(10),{
-//         flex: 0 0 100px;
-//       }
-//     }
-// 	}
-// }
 
 .example-container {
   min-height: 30vh;
