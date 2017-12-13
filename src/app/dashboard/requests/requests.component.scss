@@ -28,49 +28,54 @@ form {
       font-size: 1.3rem;
     }
   }
-  .tableContainer {
-    width: 100%;
-    min-height: 366px;
-    &.requests {
-      .mat-table {
-        > .mat-header-row, > .mat-row {
-          > .mat-header-cell, > .mat-cell {
-            flex: 0 0 150px;
-            &:nth-child(1) {
-              flex: 0 0 70px;
-            }
-            &:nth-child(7) {
-              flex: 0 0 150px;
-            }
-            &:nth-child(9),{
-              flex: 0 0 70px;
-            }
-            &:nth-child(10),{
-              flex: 0 0 100px;
-            }
+}
+
+.tableContainer {
+  width: 100%;
+  min-height: 366px;
+  &.requests {
+    .mat-table {
+      > .mat-header-row, > .mat-row {
+        &.active {
+          background: #2974ff !important;
+          .mat-header-cell, .mat-cell {
+            background: #2974ff !important;
+            color: white !important;
+          }
+        }
+        > .mat-header-cell, > .mat-cell {
+          flex: 0 0 150px;
+          &:nth-child(1) {
+            flex: 0 0 70px;
+          }
+          &:nth-child(9),{
+            flex: 0 0 70px;
+          }
+          &:nth-child(10),{
+            flex: 0 0 100px;
           }
         }
       }
     }
-    &.supplies, &.services {
-      .mat-table {
-        > .mat-header-row, > .mat-row {
-          > .mat-header-cell, > .mat-cell {
-            flex: 0 0 150px;
-            &:nth-child(1) {
-              // flex: 0 0 70px;
-              max-width: 70px;
-            }
-            &:nth-child(2),{
-              flex: 0 0 100px;
-            }
-            &:nth-child(3),{
-              min-width: 300px;
-              flex: 0 0 calc(100% - 310px);
-            }
-            &:nth-child(4),{
-              max-width: 140px;
-            }
+  }
+  &.supplies, &.services {
+    .mat-table {
+      > .mat-header-row, > .mat-row {
+        > .mat-header-cell, > .mat-cell {
+          flex: 0 0 150px;
+          &:nth-child(1) {
+            // flex: 0 0 70px;
+            max-width: 70px;
+          }
+          &:nth-child(2),{
+            flex: 0 0 100px;
+          }
+          &:nth-child(3),{
+            min-width: 300px;
+            flex: 0 0 calc(100% - 310px);
+          }
+          &:nth-child(4),{
+            max-width: 140px;
           }
         }
       }

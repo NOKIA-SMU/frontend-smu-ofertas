@@ -282,8 +282,7 @@ export class RequestOperateComponent implements OnInit {
   }
 
   selectAnalyst(event, analyst) {
-    debugger
-    if (this.isNew)
+    if (analyst.lastName)
       this.request.analista = `${analyst.firstName} ${analyst.lastName}`;
     else
       this.request.analista = analyst.firstName;

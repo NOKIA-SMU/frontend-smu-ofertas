@@ -1,11 +1,13 @@
 <h2 class="title">Solicitud</h2>
 <form #requestForm="ngForm" (ngSubmit)="saveRequest()">
   <h4>Estaciones</h4>
+  <!-- FILTER STATIONS -->
   <div class="example-header">
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
+  <!-- TABLE STATIONS -->
   <div class="tableContainer mat-elevation-z8 stations">
     <div class="example-loading-shade" *ngIf="isLoadingResults">
       <mat-spinner></mat-spinner>
