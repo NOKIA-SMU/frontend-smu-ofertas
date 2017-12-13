@@ -100,6 +100,8 @@ export class RequestOperateComponent implements OnInit {
     this.requestsService.getPriorities()
       .subscribe(res => {
         this.priorities = res.data.prioridades;
+      }, error => {
+        debugger
       })
   }
 
@@ -200,7 +202,7 @@ export class RequestOperateComponent implements OnInit {
 
 
         }, error => {
-          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo', error);
         })
     }
     if (this.route.snapshot.params.id == 'crear') {
@@ -302,33 +304,27 @@ export class RequestOperateComponent implements OnInit {
     if (this.selectionServices.selected.length > 0) this.request.servicios = this.normalizeList(this.selectionServices.selected);
     this.request.supervisorId = this.currentUser.id;
     this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
-    debugger
-    // if (this.isNew) {
-    //   this.requestsService.createRequest(this.request)
-    //     .subscribe(res => {
-    //       if (res.data.createSolicitud.status == 200) {
-    //         this.router.navigate(['/solicitudes']);
-    //       }
-    //     }, error => {
-    //       debugger
-    //       this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
-    //     })
-    // } else {
-    //   this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
-    //     .subscribe(res => {
-    //       if (res.data.updateSolicitud.status == 200) {
-    //         this.router.navigate(['/solicitudes']);
-    //       }
-    //     }, error => {
-    //       debugger
-    //       this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
-    //     })
-    // }
-  }
-
-  imprimir(row) {
-    debugger
-    console.log(row)
+    if (this.isNew) {
+      this.requestsService.createRequest(this.request)
+        .subscribe(res => {
+          if (res.data.createSolicitud.status == 200) {
+            this.router.navigate(['/solicitudes']);
+          }
+        }, error => {
+          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+        })
+      } else {
+        this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
+        .subscribe(res => {
+          if (res.data.updateSolicitud.status == 200) {
+            this.router.navigate(['/solicitudes']);
+          }
+        }, error => {
+          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+        })
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */

@@ -1,10 +1,3 @@
-<!-- <ng-container *ngIf="!isNew && request"> -->
-
-<!-- </ng-container> -->
-
-
-
-
 <h2 class="title">Solicitud</h2>
 <form #requestForm="ngForm" (ngSubmit)="saveRequest()">
   <h4>Estaciones</h4>
@@ -42,8 +35,8 @@
           <mat-option *ngFor="let analyst of analysts" [value]="selectedAnalyst">
             {{analyst.firstName}} {{analyst.lastName}}
           </mat-option>
-        </mat-select> -->
-      </ng-container>
+        </mat-select>
+      </ng-container> -->
     </mat-form-field>
     <!-- TAS -->
     <mat-form-field>

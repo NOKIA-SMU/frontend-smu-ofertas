@@ -46,6 +46,7 @@ export class RequestsComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.isLoadingResults = false;
       }, error => {
+        debugger
         this.isLoadingResults = false;
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes')
       });
@@ -73,21 +74,15 @@ export class RequestsComponent implements OnInit {
   deleteRequest() {
     this.requestsService.deleteRequest(this.currentRowSelectData.id)
       .subscribe(res => {
-        // if (res.data.updateEstacion.status) {
-        // this.router.navigate(['/solicitudes']);
-        // }
-        debugger
+        if (res.data.deleteSolicitud.status == 200)
+          this.router.navigate(['/solicitudes']);
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar solicitud', error)
       })
   }
 
   isArray(obj: any) {
     return Array.isArray(obj);
-  }
-
-  imprimir(row) {
-    debugger
   }
 
 }

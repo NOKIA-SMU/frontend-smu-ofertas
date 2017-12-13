@@ -197,11 +197,8 @@ export const updateSolicitud = gql`
 `;
 
 export const deleteSolicitud = gql`
-  mutation($pk: ID){
-    deleteSolicitud(id: $pk) {
-      estacion {
-        id
-      }
+  mutation($pk: ID, $uid: String, $credential: String){
+    deleteSolicitud(pk: $pk, uid: $uid, credential: $credential) {
       status
     }
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare var $: any;
 declare var swal: any;
@@ -6,9 +7,11 @@ declare var swal: any;
 @Injectable()
 export class AppService {
 
-  constructor() { }
+  toAction: any;
 
-  public showSwal(mod, type, title, text) {
+  constructor(private router: Router) { }
+
+  public showSwal(mod, type, title, text, error?) {
     if (mod === 'basic') {
       swal({
         title,
@@ -31,13 +34,23 @@ export class AppService {
         confirmButtonClass: 'mat-primary'
       });
     } else if (mod === 'cancel') {
+      debugger
+      if (error) {
+        if (error.message == "GraphQL error: credential invalid") {
+          title = "Credenciales invalidas";
+          text = "Por favor vuelva a ingresar al sistema";
+          this.toAction = "login"
+        }
+      }
       swal({
         type,
         title,
         text,
         buttonsStyling: false,
         confirmButtonClass: 'mat-primary'
-      });
+      }).then(res => {
+        if (this.toAction == "login") this.router.navigate(['/']);
+      })
     } else if (mod === 'custom-html') {
       swal({
         title: 'HTML example',

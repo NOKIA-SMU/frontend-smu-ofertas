@@ -67,7 +67,11 @@ export class RequestsService {
         credential: this.userAuth.token
       },
       refetchQueries: [{
-        query: queryRequests
+        query: queryRequests,
+        variables: {
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
       }]
     })
   }
@@ -96,7 +100,21 @@ export class RequestsService {
 
   public deleteRequest(requestId) {
     let id = parseInt(requestId)
-    return this.apollo.mutate({ mutation: deleteSolicitud })
+    return this.apollo.mutate({
+      mutation: deleteSolicitud,
+      variables: {
+        pk: id,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      },
+      refetchQueries: [{
+        query: queryRequests,
+        variables: {
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
+      }]
+    })
   }
 
 }
