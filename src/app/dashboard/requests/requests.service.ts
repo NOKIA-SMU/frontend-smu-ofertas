@@ -11,7 +11,7 @@ export class RequestsService {
   userAuth: any;
 
   constructor(private apollo: Apollo) {
-    this.userAuth = JSON.parse(localStorage.getItem('userAuth'))
+    this.userAuth = JSON.parse(localStorage.getItem('userAuth'));
   }
 
   public getPriorities() {

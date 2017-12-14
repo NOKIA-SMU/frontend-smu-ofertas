@@ -41,6 +41,7 @@ form {
   &.requests {
     .mat-table {
       > .mat-header-row, > .mat-row {
+        cursor: pointer;
         &.active {
           background: #2974ff !important;
           .mat-header-cell, .mat-cell {

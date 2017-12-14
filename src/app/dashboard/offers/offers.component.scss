@@ -1,19 +1,25 @@
-.mat-table {
-  > .mat-header-row, > .mat-row {
-    > .mat-header-cell, > .mat-cell {
-      flex: 0 0 150px;
-      &:nth-child(1) {
-        flex: 0 0 70px;
+.offerts {
+
+  .mat-table {
+    > .mat-header-row, > .mat-row {
+      cursor: pointer;
+      &.active {
+        background: #2974ff !important;
+        .mat-header-cell, .mat-cell {
+          background: #2974ff !important;
+          color: white !important;
+        }
       }
-      &:nth-child(2) {
-        flex: 0 0 70px;
-      }
-      &:nth-child(5) {
-        flex: 0 0 80px;
-      }
-      &:nth-child(6) {
-        flex: 0 0 100px;
+      > .mat-header-cell, > .mat-cell {
+        flex: 0 0 150px;
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(8),
+        &:nth-child(10),
+        &:nth-child(12){
+          flex: 0 0 70px;
+        }
       }
     }
-	}
+  }
 }

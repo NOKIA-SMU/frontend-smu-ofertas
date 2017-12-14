@@ -3,36 +3,25 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
-const queryOfertas = gql`
-  {
-    ofertas {
-      id
-      solicitud {
-        id
-        analista
-      }
-      suministro {
-        id
-        nombre
-      }
-      servicio {
-        id
-        nombre
-      }
-      estadoOferta
-      subestadoOferta
-    }
-  }
-`;
+import { queryOfferts } from './offers.queries';
 
 @Injectable()
 export class OffersService {
 
-  constructor(private apollo: Apollo) { }
+  userAuth: any;
+
+  constructor(private apollo: Apollo) {
+    this.userAuth = JSON.parse(localStorage.getItem('userAuth'));
+  }
 
   public getOffers() {
-    return this.apollo.watchQuery<any>({ query: queryOfertas })
-      .valueChanges
+    return this.apollo.watchQuery<any>({
+      query: queryOfferts,
+      variables: {
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    }).valueChanges
   }
 
 }

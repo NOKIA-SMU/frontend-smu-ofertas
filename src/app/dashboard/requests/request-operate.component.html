@@ -6,7 +6,7 @@
     <input matInput (keyup)="filterStations($event.target.value)" placeholder="Filtro estaciones">
   </mat-form-field>
   <!-- TABLE STATIONS -->
-  <div class="tableContainer mat-elevation-z8 stations">
+  <div class="tableContainer mat-elevation-z3 stations">
     <div class="example-loading-shade" *ngIf="isLoadingResults">
       <mat-spinner></mat-spinner>
     </div>
@@ -73,7 +73,7 @@
     <mat-form-field>
       <input matInput (keyup)="filterSupplies($event.target.value)" placeholder="Filtro suministros">
     </mat-form-field>
-    <div class="tableContainer mat-elevation-z8 supplies">
+    <div class="tableContainer mat-elevation-z3 supplies">
       <div class="example-loading-shade" *ngIf="isLoadingResultsSupplies">
         <mat-spinner></mat-spinner>
       </div>
@@ -116,7 +116,7 @@
     <mat-form-field>
       <input matInput (keyup)="filterServices($event.target.value)" placeholder="Filtro servicios">
     </mat-form-field>
-    <div class="tableContainer mat-elevation-z8 services">
+    <div class="tableContainer mat-elevation-z3 services">
       <div class="example-loading-shade" *ngIf="isLoadingResultsServices">
         <mat-spinner></mat-spinner>
       </div>

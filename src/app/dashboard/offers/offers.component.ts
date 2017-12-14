@@ -13,43 +13,146 @@ import { AppService } from "../../app.service";
 
 export class OffersComponent implements OnInit {
 
-  displayedColumns = [
+  offertsColumns = [
     'id',
-    'solicitud',
-    'suministro',
-    'servicio',
-    'estadoOferta',
-    'subestadoOferta'
+    'solicitudId',
+    'solicitudSupervisor',
+    'solicitudEstacionNombre',
+    'solicitudEstacionRegion',
+    'solicitudEstacionDepartamento',
+    'solicitudEstacionCiudad',
+    'suministroId',
+    'suministroNombre',
+    'servicioId',
+    'servicioNombre',
   ];
 
-  dataSource = new MatTableDataSource();
-  isLoadingResults = true;
+  offertsColumnsDynamics = [
+    'cantidad',
+    'tipoOferta',
+    'tarea',
+    'descripcionTarea',
+    'encargadoCliente',
+    'fechaEjecucion',
+    'confirmacionRecibido',
+    'comentarioSupervisor',
+    'subestadoOferta',
+    'estadoOferta',
+    'usuario',
+    'numeroOferta',
+    'modalidad',
+    'percioUnidadProveedor',
+    'percioTotalProveedor',
+    'percioUnidadVenta',
+    'percioTotalVenta',
+    'percioUnidadCliente',
+    'percioTotalCliente',
+    'margen',
+    'tipoAdquisicion',
+    'fechaRecibidoCliente',
+    'fechaDespachoSupervisor',
+    'fechaDespachoCompras',
+    'fechaRespuestaCompras',
+    'fechaEnvioCliente',
+    'fechaRespuestaCliente',
+    'tipoRespuestaCliente',
+    'po',
+    'fechaPo',
+    'comentarioAnalista',
+    'fechaEntrgaAlmacen',
+    'comentarioAlmacenista',
+    'comentarioCoordinador',
+    'valorConciliadoCliente',
+    'fechaConciliadoCliente',
+    'comentarioFacturador',
+    'fechaEnvioActaSmu',
+    'comentarioActa',
+    'fechaFirmaActaSmu',
+    'fechaGrSmu',
+  ]
+
+  offertsAllColumns = [
+    'id',
+    'solicitudId',
+    'solicitudSupervisor',
+    'solicitudEstacionNombre',
+    'solicitudEstacionRegion',
+    'solicitudEstacionDepartamento',
+    'solicitudEstacionCiudad',
+    'suministroId',
+    'suministroNombre',
+    'servicioId',
+    'servicioNombre',
+    'cantidad',
+    'tipoOferta',
+    'tarea',
+    'descripcionTarea',
+    'encargadoCliente',
+    'fechaEjecucion',
+    'confirmacionRecibido',
+    'comentarioSupervisor',
+    'subestadoOferta',
+    'estadoOferta',
+    'usuario',
+    'numeroOferta',
+    'modalidad',
+    'percioUnidadProveedor',
+    'percioTotalProveedor',
+    'percioUnidadVenta',
+    'percioTotalVenta',
+    'percioUnidadCliente',
+    'percioTotalCliente',
+    'margen',
+    'tipoAdquisicion',
+    'fechaRecibidoCliente',
+    'fechaDespachoSupervisor',
+    'fechaDespachoCompras',
+    'fechaRespuestaCompras',
+    'fechaEnvioCliente',
+    'fechaRespuestaCliente',
+    'tipoRespuestaCliente',
+    'po',
+    'fechaPo',
+    'comentarioAnalista',
+    'fechaEntrgaAlmacen',
+    'comentarioAlmacenista',
+    'comentarioCoordinador',
+    'valorConciliadoCliente',
+    'fechaConciliadoCliente',
+    'comentarioFacturador',
+    'fechaEnvioActaSmu',
+    'comentarioActa',
+    'fechaFirmaActaSmu',
+    'fechaGrSmu',
+  ]
+
+  dataSourceOfferts = new MatTableDataSource();
+  isLoadingResultsOfferts = true;
   currentRowSelect: any;
-  currentRowSelectData: any = {}
+  currentRowSelectData: any = {};
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private offersService: OffersService, private router: Router, private appService: AppService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
   ngAfterViewInit() {
     this.offersService.getOffers()
       .subscribe(({ data }) => {
-        this.dataSource = new MatTableDataSource(data.ofertas);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.isLoadingResults = false;
+        this.dataSourceOfferts = new MatTableDataSource(data.ofertas);
+        this.dataSourceOfferts.paginator = this.paginator;
+        this.dataSourceOfferts.sort = this.sort;
+        this.isLoadingResultsOfferts = false;
       }, error => {
-        this.isLoadingResults = false;
+        this.isLoadingResultsOfferts = false;
       });
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.dataSourceOfferts.filter = filterValue;
   }
 
   selectRow(index, data) {
@@ -70,6 +173,7 @@ export class OffersComponent implements OnInit {
   }
 
   imprimir(row) {
+    debugger
     console.log(row)
   }
 
