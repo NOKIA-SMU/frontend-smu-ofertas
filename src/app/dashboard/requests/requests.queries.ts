@@ -33,6 +33,7 @@ export const queryRequests = gql`
       }
       prioridad
       estadoSolicitud
+      __typename
     }
   }
 `;
@@ -74,6 +75,7 @@ export const queryRequestById = gql`
       }
       prioridad
       estadoSolicitud
+      __typename
     }
   }
 `;
@@ -190,6 +192,7 @@ export const updateSolicitud = gql`
         }
         prioridad
         estadoSolicitud
+        __typename
       }
       status
     }

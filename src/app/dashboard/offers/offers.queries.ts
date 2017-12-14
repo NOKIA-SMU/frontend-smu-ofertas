@@ -8,19 +8,24 @@ export const queryOfferts = gql`
 				id
 				supervisor
 				estacion {
+					id
 					nombre
 					region
 					departamento
 					ciudad
+					__typename
 				}
+				__typename
 			}
 			suministro {
 				id
 				nombre
+				__typename
 			}
 			servicio {
 				id
 				nombre
+				__typename
 			}
 			cantidad
 			tipoOferta
@@ -63,6 +68,7 @@ export const queryOfferts = gql`
 			comentarioActa
 			fechaFirmaActaSmu
 			fechaGrSmu
+			__typename
 		}
 	}
 `;

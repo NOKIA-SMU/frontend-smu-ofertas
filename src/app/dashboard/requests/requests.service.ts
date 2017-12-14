@@ -4,6 +4,7 @@ import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
 import { createSolicitud, queryRequests, deleteSolicitud, updateSolicitud, queryPriorities, queryRequestById } from './requests.queries';
+import { queryOfferts } from "../offers/offers.queries";
 
 @Injectable()
 export class RequestsService {
@@ -66,13 +67,22 @@ export class RequestsService {
         uid: this.userAuth.uid,
         credential: this.userAuth.token
       },
-      refetchQueries: [{
-        query: queryRequests,
-        variables: {
-          uid: this.userAuth.uid,
-          credential: this.userAuth.token
+      refetchQueries: [
+        {
+          query: queryRequests,
+          variables: {
+            uid: this.userAuth.uid,
+            credential: this.userAuth.token
+          }
+        },
+        {
+          query: queryOfferts,
+          variables: {
+            uid: this.userAuth.uid,
+            credential: this.userAuth.token
+          }
         }
-      }]
+      ]
     })
   }
 
