@@ -46,15 +46,14 @@ export class RequestsComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.isLoadingResults = false;
       }, error => {
-        debugger
         this.isLoadingResults = false;
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);
       });
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
@@ -77,7 +76,7 @@ export class RequestsComponent implements OnInit {
         if (res.data.deleteSolicitud.status == 200)
           this.router.navigate(['/solicitudes']);
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar solicitud', error)
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar solicitud', error);
       })
   }
 

@@ -13,7 +13,7 @@ import { AppService } from "../../app.service";
 
 export class OffersComponent implements OnInit {
 
-  offertsColumns = [
+  offersColumns = [
     'id',
     'solicitudId',
     'solicitudSupervisor',
@@ -27,7 +27,7 @@ export class OffersComponent implements OnInit {
     'servicioNombre',
   ];
 
-  offertsColumnsDynamics = [
+  offersColumnsDynamics = [
     'cantidad',
     'tipoOferta',
     'tarea',
@@ -69,9 +69,9 @@ export class OffersComponent implements OnInit {
     'comentarioActa',
     'fechaFirmaActaSmu',
     'fechaGrSmu',
-  ]
+  ];
 
-  offertsAllColumns = [
+  offersAllColumns = [
     'id',
     'solicitudId',
     'solicitudSupervisor',
@@ -124,10 +124,10 @@ export class OffersComponent implements OnInit {
     'comentarioActa',
     'fechaFirmaActaSmu',
     'fechaGrSmu',
-  ]
+  ];
 
-  dataSourceOfferts = new MatTableDataSource();
-  isLoadingResultsOfferts = true;
+  dataSourceOffers = new MatTableDataSource();
+  isLoadingResultsOffers = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
@@ -141,24 +141,29 @@ export class OffersComponent implements OnInit {
   ngAfterViewInit() {
     this.offersService.getOffers()
       .subscribe(({ data }) => {
-        this.dataSourceOfferts = new MatTableDataSource(data.ofertas);
-        this.dataSourceOfferts.paginator = this.paginator;
-        this.dataSourceOfferts.sort = this.sort;
-        this.isLoadingResultsOfferts = false;
+        this.dataSourceOffers = new MatTableDataSource(data.ofertas);
+        this.dataSourceOffers.paginator = this.paginator;
+        this.dataSourceOffers.sort = this.sort;
+        this.isLoadingResultsOffers = false;
       }, error => {
-        this.isLoadingResultsOfferts = false;
+        this.isLoadingResultsOffers = false;
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
       });
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSourceOfferts.filter = filterValue;
+    this.dataSourceOffers.filter = filterValue;
   }
 
   selectRow(index, data) {
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
+  }
+
+  goToEdit() {
+    this.router.navigate([`dashboard/ofertas/${this.currentRowSelectData.id}`]);
   }
 
   isArray(obj: any) {

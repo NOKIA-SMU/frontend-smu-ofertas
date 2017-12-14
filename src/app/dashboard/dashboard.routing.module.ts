@@ -14,7 +14,9 @@ import { RequestOperateComponent } from './requests/request-operate.component';
 
 import { SuppliesComponent } from './supplies/supplies.component';
 import { ServicesComponent } from './services/services.component';
+
 import { OffersComponent } from './offers/offers.component';
+import { OfferOperateComponent } from './offers/offer-operate.component';
 
 const dashboardRoutes: Routes = [
 	{
@@ -32,7 +34,8 @@ const dashboardRoutes: Routes = [
 					{ path: 'solicitudes/:id', component: RequestOperateComponent},
 					{ path: 'suministros', component: SuppliesComponent },
 					{ path: 'servicios', component: ServicesComponent },
-					{ path: 'ofertas', component: OffersComponent }
+					{ path: 'ofertas', component: OffersComponent },
+					{ path: 'ofertas/:id', component: OfferOperateComponent },
 				]
 			}
 		]

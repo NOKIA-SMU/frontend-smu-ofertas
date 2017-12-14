@@ -53,8 +53,8 @@ export class StationsComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
@@ -75,14 +75,11 @@ export class StationsComponent implements OnInit {
     this.stationsService.deleteStation(this.currentRowSelectData.id)
       .subscribe(res => {
         // if (res.data.updateEstacion.status) {
-        // this.router.navigate(['/estaciones']);
+          this.router.navigate(['/estaciones']);
         // }
-        debugger
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo', error);
       })
   }
-
-
 
 }

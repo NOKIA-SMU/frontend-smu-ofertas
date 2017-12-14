@@ -1,3 +1,219 @@
-<p>
-  offer-operate works!
-</p>
+<h2 class="title">Oferta</h2>
+<form #offerForm="ngForm" (ngSubmit)="saveOffert()" *ngIf="offer">
+  <!-- OFFER TYPE -->
+  <mat-form-field>
+    <mat-select placeholder="Tipo de oferta" name="tipoOferta" [(ngModel)]="offer.tipoOferta" required>
+      <mat-option *ngFor="let item of typeOffers" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- TASK -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Tarea" name="tarea" [(ngModel)]="offer.tarea" required>
+  </mat-form-field>
+  <!-- DESCRIPTION TASK -->
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción tarea" name="descripcionTarea" [(ngModel)]="offer.descripcionTarea" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- CUSTOMER MANAGER -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Encargado cliente" name="encargadoCliente" [(ngModel)]="offer.encargadoCliente" required>
+  </mat-form-field>
+  <!-- DATE -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" name="fechaEjecucion" placeholder="Fecha ejecución" [(ngModel)]="offer.fechaEjecucion">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <!-- CONFIRMATION RECEIVED -->
+  <mat-form-field>
+    <mat-select placeholder="Confirmación recibido" name="confirmacionRecibido" [(ngModel)]="offer.confirmacionRecibido" required>
+      <mat-option *ngFor="let item of confirmationsReceived" [value]="itemy">
+        {{item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- SUPERVISOR  COMMENTS -->
+  <mat-form-field>
+    <textarea matInput placeholder="Comentario supervisor" name="comentarioSupervisor" [(ngModel)]="offer.comentarioSupervisor" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+   <!-- SUBSTATE OFFER -->
+  <mat-form-field>
+    <mat-select placeholder="Subestado oferta" name="subestadoOferta" [(ngModel)]="offer.subestadoOferta" required>
+      <mat-option *ngFor="let item of  substatesOffer" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- STATE OFFER -->
+  <mat-form-field>
+    <mat-select placeholder="Estado oferta" name="estadoOferta" [(ngModel)]="offer.estadoOferta" required>
+      <mat-option *ngFor="let item of  statesOffer" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- USER -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Usuario" name="usuario" [(ngModel)]="offer.usuario" required>
+  </mat-form-field>
+  <!-- NUMBER OFFER -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Numero oferta" name="numeroOferta" [(ngModel)]="offer.numeroOferta" required>
+  </mat-form-field>
+  <!-- MODALITY -->
+  <mat-form-field>
+    <mat-select placeholder="Modalidad" name="modalidad" [(ngModel)]="offer.modalidad" required>
+      <mat-option *ngFor="let item of modalities" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- UNIT PRICE SUPPLIER -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Precio unidad proveedor" name="percioUnidadProveedor" [(ngModel)]="offer.percioUnidadProveedor" required>
+  </mat-form-field>
+  <!-- TOTAL PRICE SUPPLIER -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Precio total proveedor" name="percioTotalProveedor" [(ngModel)]="offer.percioTotalProveedor" required>
+  </mat-form-field>
+  <!-- UNIT PRICE SALE -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Precio unidad venta" name="percioUnidadVenta" [(ngModel)]="offer.percioUnidadVenta" required>
+  </mat-form-field>
+  <!-- TOTAL PRICE SALE -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Precio total venta" name="percioTotalVenta" [(ngModel)]="offer.percioTotalVenta" required>
+  </mat-form-field>
+  <!-- UNIT PRICE CLIENT -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Precio unidad cliente" name="percioUnidadCliente" [(ngModel)]="offer.percioUnidadCliente" required>
+  </mat-form-field>
+  <!-- TOTAL PRICE CLIENT -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Precio total cliente" name="percioTotalCliente" [(ngModel)]="offer.percioTotalCliente" required>
+  </mat-form-field>
+  <!-- MARGIN -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Margen" name="margen" [(ngModel)]="offer.margen" required>
+  </mat-form-field>
+  <!-- ACQUISITION TYPE -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Tipo adquisición" name="tipoAdquisicion" [(ngModel)]="offer.tipoAdquisicion" required>
+  </mat-form-field>
+  <!-- DATE RECEIVED CLIENT -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaRecibidoCliente" name="fechaRecibidoCliente" placeholder="Fecha recibido cliente" [(ngModel)]="offer.fechaRecibidoCliente">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaRecibidoCliente"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaRecibidoCliente></mat-datepicker>
+  </mat-form-field>
+  <!-- DATE SUPERVISOR OFFICE -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaDespachoSupervisor" name="fechaDespachoSupervisor" placeholder="Fecha despacho supervisor" [(ngModel)]="offer.fechaDespachoSupervisor">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaDespachoSupervisor"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaDespachoSupervisor></mat-datepicker>
+  </mat-form-field>
+  <!-- DATE SHOP OFFICE -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaDespachoCompras" name="fechaDespachoCompras" placeholder="Fecha despacho compras" [(ngModel)]="offer.fechaDespachoCompras">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaDespachoCompras"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaDespachoCompras></mat-datepicker>
+  </mat-form-field>
+  <!-- DATE RESPONSE SHOP -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaRespuestaCompras" name="fechaRespuestaCompras" placeholder="Fecha respuesta compras" [(ngModel)]="offer.fechaRespuestaCompras">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaRespuestaCompras"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaRespuestaCompras></mat-datepicker>
+  </mat-form-field>
+  <!-- DATE SEND CLIENT -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaEnvioCliente" name="fechaEnvioCliente" placeholder="Fecha envio cliente" [(ngModel)]="offer.fechaEnvioCliente">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaEnvioCliente"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaEnvioCliente></mat-datepicker>
+  </mat-form-field>
+  <!-- DATE RESPONSE CLIENT -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaRespuestaCliente" name="fechaRespuestaCliente" placeholder="Fecha respuesta cliente" [(ngModel)]="offer.fechaRespuestaCliente">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaRespuestaCliente"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaRespuestaCliente></mat-datepicker>
+  </mat-form-field>
+  <!-- TYPE CLIENT RESPONSE -->
+  <mat-form-field>
+    <mat-select placeholder="Tipo respuesta cliente" name="tipoRespuestaCliente" [(ngModel)]="offer.tipoRespuestaCliente" required>
+      <mat-option *ngFor="let item of typesClientResponse" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- PO -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="PO" name="po" [(ngModel)]="offer.po" required>
+  </mat-form-field>
+  <!-- DATE PO -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaPo" name="fechaPo" placeholder="Fecha PO" [(ngModel)]="offer.fechaPo">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaPo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaPo></mat-datepicker>
+  </mat-form-field>
+  <!-- COMMENT ANALYST -->
+  <mat-form-field>
+    <textarea matInput placeholder="Comentario analista" name="comentarioAnalista" [(ngModel)]="offer.comentarioAnalista" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- DATE DELIVERY STORE -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaEntrgaAlmacen" name="fechaEntrgaAlmacen" placeholder="Fecha entrega almacen" [(ngModel)]="offer.fechaEntrgaAlmacen">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaEntrgaAlmacen"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaEntrgaAlmacen></mat-datepicker>
+  </mat-form-field>
+  <!-- COMMENT ALMACENISTA -->
+  <mat-form-field>
+    <textarea matInput placeholder="Comentario almacenista" name="comentarioAlmacenista" [(ngModel)]="offer.comentarioAlmacenista" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- COMMENT COORDINATOR -->
+  <mat-form-field>
+    <textarea matInput placeholder="Comentario coordinador" name="comentarioCoordinador" [(ngModel)]="offer.comentarioCoordinador" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- RECONCILED VALUE CLIENT-->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Valor conciliado cliente" name="valorConciliadoCliente" [(ngModel)]="offer.valorConciliadoCliente" required>
+  </mat-form-field>
+  <!-- DATE RECONCILED CLIENTE -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaConciliadoCliente" name="fechaConciliadoCliente" placeholder="Fecha conciliado cliente" [(ngModel)]="offer.fechaConciliadoCliente">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaConciliadoCliente"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaConciliadoCliente></mat-datepicker>
+  </mat-form-field>
+  <!-- COMMENT BILLING -->
+  <mat-form-field>
+    <textarea matInput placeholder="Comentario facturador" name="comentarioFacturador" [(ngModel)]="offer.comentarioFacturador" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- DATE SEND SMU ACTA -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaEnvioActaSmu" name="fechaEnvioActaSmu" placeholder="Fecha envio acta smu" [(ngModel)]="offer.fechaEnvioActaSmu">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaEnvioActaSmu"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaEnvioActaSmu></mat-datepicker>
+  </mat-form-field>
+  <!-- COMMENT ACTA -->
+  <mat-form-field>
+    <textarea matInput placeholder="Comentario acta" name="comentarioActa" [(ngModel)]="offer.comentarioActa" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- DATE FIRM SMU ACTA -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaFirmaActaSmu" name="fechaFirmaActaSmu" placeholder="Fecha firma acta smu" [(ngModel)]="offer.fechaFirmaActaSmu">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaFirmaActaSmu"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaFirmaActaSmu></mat-datepicker>
+  </mat-form-field>
+  <!-- DATE GR SMU -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="pickerfechaGrSmu" name="fechaGrSmu" placeholder="Fecha Grs smu" [(ngModel)]="offer.fechaGrSmu">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaGrSmu"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaGrSmu></mat-datepicker>
+  </mat-form-field>
+
+
+  <div class="footer-buttom">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!offerForm.form.valid">Guardar</button>
+    <button mat-raised-button color="danger" routerLink="/ofertas">Cancelar</button>
+  </div>
+</form>

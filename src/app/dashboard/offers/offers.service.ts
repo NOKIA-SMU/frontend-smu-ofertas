@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
-import { queryOfferts } from './offers.queries';
+import { queryOfferts, queryOfferById } from './offers.queries';
 
 @Injectable()
 export class OffersService {
@@ -18,6 +18,17 @@ export class OffersService {
     return this.apollo.watchQuery<any>({
       query: queryOfferts,
       variables: {
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    }).valueChanges
+  }
+
+  public getOfferById(id: string) {
+    return this.apollo.watchQuery<any>({
+      query: queryOfferById,
+      variables: {
+        pk: id,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
       }

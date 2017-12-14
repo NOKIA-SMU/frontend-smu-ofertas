@@ -67,7 +67,7 @@ export class StationOperateComponent implements OnInit {
           this.router.navigate(['/estaciones']);
         // }
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Crear estación', error);
       })
   }
 
@@ -78,7 +78,7 @@ export class StationOperateComponent implements OnInit {
           this.router.navigate(['/estaciones']);
         }
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualizar estación', error);
       })
   }
 

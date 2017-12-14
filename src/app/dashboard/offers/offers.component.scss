@@ -1,4 +1,17 @@
-.offerts {
+form {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	border: 1px solid #c7c5c5;
+	padding: 40px;
+	.mat-form-field {
+		width: 47%;
+		min-width: 250px;
+	}
+}
+
+.offers {
+
 
   .mat-table {
     > .mat-header-row, > .mat-row {

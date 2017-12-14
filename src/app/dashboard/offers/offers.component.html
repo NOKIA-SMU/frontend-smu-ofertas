@@ -11,12 +11,12 @@
 		</mat-form-field>
 	</div>
 
-	<div class="example-container mat-elevation-z3 offerts">
-		<div class="example-loading-shade" *ngIf="isLoadingResults">
+	<div class="tableContainer mat-elevation-z3 offers">
+		<div class="example-loading-shade" *ngIf="isLoadingResultsOffers">
 			<mat-spinner></mat-spinner>
 		</div>
 
-		<mat-table #table [dataSource]="dataSourceOfferts">
+		<mat-table #table [dataSource]="dataSourceOffers">
 			<!-- ID -->
 			<ng-container matColumnDef="id">
 				<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
@@ -73,7 +73,7 @@
 				<mat-cell *matCellDef="let row"> {{row.servicio?.nombre}} </mat-cell>
 			</ng-container>
 			<!-- DYNAMICS ROWS -->
-			<ng-container *ngFor="let item of offertsColumnsDynamics" matColumnDef="{{item}}">
+			<ng-container *ngFor="let item of offersColumnsDynamics" matColumnDef="{{item}}">
 				<mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
 				<mat-cell *matCellDef="let row">
 					<ng-container>
@@ -81,8 +81,8 @@
 					</ng-container>
 				</mat-cell>
 			</ng-container>
-			<mat-header-row *matHeaderRowDef="offertsAllColumns"></mat-header-row>
-			<mat-row *matRowDef="let row; columns: offertsAllColumns; let i = index"
+			<mat-header-row *matHeaderRowDef="offersAllColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: offersAllColumns; let i = index"
 							(click)="selectRow(i, row)"
 							[ngClass]="{ active : i == currentRowSelect}">
 			</mat-row>

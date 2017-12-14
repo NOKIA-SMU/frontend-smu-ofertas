@@ -86,7 +86,7 @@ export class RequestOperateComponent implements OnInit {
       .subscribe(({ data }) => {
         this.subsystems = data.subsistemas
       }, error => {
-        debugger
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de subsistemas', error)
       })
 
     // Get profiles filter by analysts
@@ -94,14 +94,14 @@ export class RequestOperateComponent implements OnInit {
       .subscribe(res => {
         this.analysts = res;
       }, error => {
-        debugger
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de analistas', error)
       })
 
     this.requestsService.getPriorities()
       .subscribe(res => {
         this.priorities = res.data.prioridades;
       }, error => {
-        debugger
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de prioridades', error)
       })
   }
 
@@ -117,10 +117,10 @@ export class RequestOperateComponent implements OnInit {
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
               this.isLoadingResults = false;
-            }, res => {
+            }, error => {
               debugger
               this.isLoadingResults = false;
-              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones')
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones', error)
             })
         }
         else {
@@ -172,7 +172,7 @@ export class RequestOperateComponent implements OnInit {
               this.dataSourceSupplies.sort = this.sort;
               this.isLoadingResultsSupplies = false;
             }, error => {
-              debugger
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de sumnistros', error)
             })
 
           // Get services
@@ -199,12 +199,10 @@ export class RequestOperateComponent implements OnInit {
               this.dataSourceServices.sort = this.sort;
               this.isLoadingResultsServices = false;
             }, error => {
-              debugger
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de servicios', error)
             })
-
-
         }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo', error);
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Solicitud por Id', error);
         })
     }
     if (this.route.snapshot.params.id == 'crear') {
@@ -257,7 +255,7 @@ export class RequestOperateComponent implements OnInit {
         this.isLoadingResultsServices = false;
       }, error => {
         this.isLoadingResultsServices = false;
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de servicios')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de servicios', error);
       })
 
     // Get all supplies
@@ -265,16 +263,16 @@ export class RequestOperateComponent implements OnInit {
       .subscribe(res => {
         // Clone response
         for (let i = 0; i < res.data.suministros.length; i++) {
-          this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 })
+          this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0 });
         }
         // Inicialize supplies table
         this.dataSourceSupplies = new MatTableDataSource(this.supplies);
         this.dataSourceSupplies.paginator = this.paginator;
         this.dataSourceSupplies.sort = this.sort;
         this.isLoadingResultsSupplies = false;
-      }, res => {
+      }, error => {
         this.isLoadingResultsSupplies = false;
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de suministros')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de suministros', error);
       })
   }
 
@@ -307,8 +305,7 @@ export class RequestOperateComponent implements OnInit {
             this.router.navigate(['/solicitudes']);
           }
         }, error => {
-          debugger
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Crear solicitud', error);
         })
       } else {
         this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
@@ -317,8 +314,7 @@ export class RequestOperateComponent implements OnInit {
             this.router.navigate(['/solicitudes']);
           }
         }, error => {
-          debugger
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualizar solicitud', error);
         })
     }
   }
