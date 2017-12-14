@@ -104,7 +104,16 @@ export class RequestsService {
         estadoSolicitud: request.estadoSolicitud,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [
+        {
+          query: queryOfferts,
+          variables: {
+            uid: this.userAuth.uid,
+            credential: this.userAuth.token
+          }
+        }
+      ]
     })
   }
 

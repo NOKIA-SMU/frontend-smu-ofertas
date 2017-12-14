@@ -136,10 +136,11 @@ export class OffersComponent implements OnInit {
 
   constructor(private offersService: OffersService, private router: Router, private appService: AppService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngAfterViewInit() {
     this.offersService.getOffers()
       .subscribe(({ data }) => {
-        debugger
         this.dataSourceOfferts = new MatTableDataSource(data.ofertas);
         this.dataSourceOfferts.paginator = this.paginator;
         this.dataSourceOfferts.sort = this.sort;
@@ -148,8 +149,6 @@ export class OffersComponent implements OnInit {
         this.isLoadingResultsOfferts = false;
       });
   }
-
-  ngAfterViewInit() { }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
