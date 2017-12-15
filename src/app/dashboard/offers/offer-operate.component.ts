@@ -72,8 +72,19 @@ export class OfferOperateComponent implements OnInit {
       this.isNew = false;
       this.offersService.getOfferById(this.route.snapshot.params.id)
         .subscribe(res => {
+          // debugger
           this.offer = {
             id: res.data.oferta.id,
+            solicitudId: res.data.oferta.solicitud.id,
+            solicitudSupervisor: res.data.oferta.solicitud.supervisor,
+            solicitudEstacionNombre: res.data.oferta.solicitud.estacion.nombre,
+            solicitudEstacionRegion: res.data.oferta.solicitud.estacion.region,
+            solicitudEstacionDepartamento: res.data.oferta.solicitud.estacion.departamento,
+            solicitudEstacionCiudad: res.data.oferta.solicitud.estacion.ciudad,
+            suministroId: res.data.oferta.suministro ? res.data.oferta.suministro.id : null,
+            suministroNombre: res.data.oferta.suministro ? res.data.oferta.suministro.nombre : null,
+            servicioId: res.data.oferta.servicio ? res.data.oferta.servicio.id : null,
+            servicioNombre: res.data.oferta.servicio ? res.data.oferta.servicio.nombre : null,
             cantidad: res.data.oferta.cantidad,
             tipoOferta: res.data.oferta.tipoOferta,
             tarea: res.data.oferta.tarea,
