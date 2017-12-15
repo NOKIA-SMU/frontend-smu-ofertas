@@ -54,6 +54,9 @@ form {
           &:nth-child(1) {
             flex: 0 0 70px;
           }
+          &:nth-child(5),{
+            flex: 0 0 400px;
+          }
           &:nth-child(9),{
             flex: 0 0 70px;
           }

@@ -13,17 +13,65 @@ export class OfferOperateComponent implements OnInit {
   isNew: boolean;
   offer: any;
 
+  offerTypes: string[];
+  confirmationsReceived: string[];
+  substatesOffer: string[];
+  statesOffer: string[];
+  modalities: string[];
+  typesClientResponse: string[];
+
   constructor(
     private route: ActivatedRoute,
     private offersService: OffersService
-  ) { }
+  ) {
+    this.offersService.getOfferTypes()
+      .subscribe(res => {
+        this.offerTypes = res.data.tipoOfertas;
+      }, error => {
+        debugger
+      })
+
+    this.offersService.getConfirmationsReceived()
+      .subscribe(res => {
+        this.confirmationsReceived = res.data.confirmacionRecibido;
+      }, error => {
+        debugger
+      })
+
+    this.offersService.getSubstatesOffer()
+      .subscribe(res => {
+        this.substatesOffer = res.data.subestadoOferta;
+      }, error => {
+        debugger
+      })
+
+    this.offersService.getStatesOffer()
+      .subscribe(res => {
+        this.statesOffer = res.data.estadoOferta;
+      }, error => {
+        debugger
+      })
+
+    this.offersService.getModalities()
+      .subscribe(res => {
+        this.modalities = res.data.modalidad;
+      }, error => {
+        debugger
+      })
+
+    this.offersService.getTypesClientResponse()
+      .subscribe(res => {
+        this.typesClientResponse = res.data.tipoRespuestaCliente;
+      }, error => {
+        debugger
+      })
+  }
 
   ngOnInit() {
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
       this.offersService.getOfferById(this.route.snapshot.params.id)
         .subscribe(res => {
-          // debugger
           this.offer = {
             id: res.data.oferta.id,
             cantidad: res.data.oferta.cantidad,
@@ -39,12 +87,12 @@ export class OfferOperateComponent implements OnInit {
             usuario: res.data.oferta.usuario,
             numeroOferta: res.data.oferta.numeroOferta,
             modalidad: res.data.oferta.modalidad,
-            percioUnidadProveedor: res.data.oferta.percioUnidadProveedor,
-            percioTotalProveedor: res.data.oferta.percioTotalProveedor,
-            percioUnidadVenta: res.data.oferta.percioUnidadVenta,
-            percioTotalVenta: res.data.oferta.percioTotalVenta,
-            percioUnidadCliente: res.data.oferta.percioUnidadCliente,
-            percioTotalCliente: res.data.oferta.percioTotalCliente,
+            precioUnidadProveedor: res.data.oferta.precioUnidadProveedor,
+            precioTotalProveedor: res.data.oferta.precioTotalProveedor,
+            precioUnidadVenta: res.data.oferta.precioUnidadVenta,
+            precioTotalVenta: res.data.oferta.precioTotalVenta,
+            precioUnidadCliente: res.data.oferta.precioUnidadCliente,
+            precioTotalCliente: res.data.oferta.precioTotalCliente,
             margen: res.data.oferta.margen,
             tipoAdquisicion: res.data.oferta.tipoAdquisicion,
             fechaRecibidoCliente: res.data.oferta.fechaRecibidoCliente,
@@ -57,7 +105,7 @@ export class OfferOperateComponent implements OnInit {
             po: res.data.oferta.po,
             fechaPo: res.data.oferta.fechaPo,
             comentarioAnalista: res.data.oferta.comentarioAnalista,
-            fechaEntrgaAlmacen: res.data.oferta.fechaEntrgaAlmacen,
+            fechaEntregaAlmacen: res.data.oferta.fechaEntregaAlmacen,
             comentarioAlmacenista: res.data.oferta.comentarioAlmacenista,
             comentarioCoordinador: res.data.oferta.comentarioCoordinador,
             valorConciliadoCliente: res.data.oferta.valorConciliadoCliente,
@@ -69,22 +117,52 @@ export class OfferOperateComponent implements OnInit {
             fechaGrSmu: res.data.oferta.fechaGrSmu
           }
         }, error => {
-
+          debugger
         })
     } else {
-      // this.station = {
-      //   id: null,
-      //   nombre: '',
-      //   ubicacion: '',
-      //   region: '',
-      //   departamento: '',
-      //   ciudad: '',
-      //   direccion: '',
-      //   latitud: null,
-      //   longitud: null,
-      //   estructura: '',
-      //   categoria: ''
-      // }
+      this.offer = {
+        cantidad: null,
+        tipoOferta: null,
+        tarea: null,
+        descripcionTarea: null,
+        encargadoCliente: null,
+        fechaEjecucion: null,
+        confirmacionRecibido: null,
+        comentarioSupervisor: null,
+        subestadoOferta: null,
+        estadoOferta: null,
+        usuario: null,
+        numeroOferta: null,
+        modalidad: null,
+        precioUnidadProveedor: null,
+        precioTotalProveedor: null,
+        precioUnidadVenta: null,
+        precioTotalVenta: null,
+        precioUnidadCliente: null,
+        precioTotalCliente: null,
+        margen: null,
+        tipoAdquisicion: null,
+        fechaRecibidoCliente: null,
+        fechaDespachoSupervisor: null,
+        fechaDespachoCompras: null,
+        fechaRespuestaCompras: null,
+        fechaEnvioCliente: null,
+        fechaRespuestaCliente: null,
+        tipoRespuestaCliente: null,
+        po: null,
+        fechaPo: null,
+        comentarioAnalista: null,
+        fechaEntregaAlmacen: null,
+        comentarioAlmacenista: null,
+        comentarioCoordinador: null,
+        valorConciliadoCliente: null,
+        fechaConciliadoCliente: null,
+        comentarioFacturador: null,
+        fechaEnvioActaSmu: null,
+        comentarioActa: null,
+        fechaFirmaActaSmu: null,
+        fechaGrSmu: null
+      }
       this.isNew = true;
     }
 

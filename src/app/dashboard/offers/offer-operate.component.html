@@ -3,7 +3,7 @@
   <!-- OFFER TYPE -->
   <mat-form-field>
     <mat-select placeholder="Tipo de oferta" name="tipoOferta" [(ngModel)]="offer.tipoOferta" required>
-      <mat-option *ngFor="let item of typeOffers" [value]="item">
+      <mat-option *ngFor="let item of offerTypes" [value]="item">
         {{item}}
       </mat-option>
     </mat-select>
@@ -29,7 +29,7 @@
   <!-- CONFIRMATION RECEIVED -->
   <mat-form-field>
     <mat-select placeholder="Confirmación recibido" name="confirmacionRecibido" [(ngModel)]="offer.confirmacionRecibido" required>
-      <mat-option *ngFor="let item of confirmationsReceived" [value]="itemy">
+      <mat-option *ngFor="let item of confirmationsReceived" [value]="item">
         {{item}}
       </mat-option>
     </mat-select>
@@ -72,27 +72,27 @@
   </mat-form-field>
   <!-- UNIT PRICE SUPPLIER -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio unidad proveedor" name="percioUnidadProveedor" [(ngModel)]="offer.percioUnidadProveedor" required>
+    <input matInput type="number" placeholder="Precio unidad proveedor" name="precioUnidadProveedor" [(ngModel)]="offer.precioUnidadProveedor" required>
   </mat-form-field>
   <!-- TOTAL PRICE SUPPLIER -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio total proveedor" name="percioTotalProveedor" [(ngModel)]="offer.percioTotalProveedor" required>
+    <input matInput type="number" placeholder="Precio total proveedor" name="precioTotalProveedor" [(ngModel)]="offer.precioTotalProveedor" required>
   </mat-form-field>
   <!-- UNIT PRICE SALE -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio unidad venta" name="percioUnidadVenta" [(ngModel)]="offer.percioUnidadVenta" required>
+    <input matInput type="number" placeholder="Precio unidad venta" name="precioUnidadVenta" [(ngModel)]="offer.precioUnidadVenta" required>
   </mat-form-field>
   <!-- TOTAL PRICE SALE -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio total venta" name="percioTotalVenta" [(ngModel)]="offer.percioTotalVenta" required>
+    <input matInput type="number" placeholder="Precio total venta" name="precioTotalVenta" [(ngModel)]="offer.precioTotalVenta" required>
   </mat-form-field>
   <!-- UNIT PRICE CLIENT -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio unidad cliente" name="percioUnidadCliente" [(ngModel)]="offer.percioUnidadCliente" required>
+    <input matInput type="number" placeholder="Precio unidad cliente" name="precioUnidadCliente" [(ngModel)]="offer.precioUnidadCliente" required>
   </mat-form-field>
   <!-- TOTAL PRICE CLIENT -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio total cliente" name="percioTotalCliente" [(ngModel)]="offer.percioTotalCliente" required>
+    <input matInput type="number" placeholder="Precio total cliente" name="precioTotalCliente" [(ngModel)]="offer.precioTotalCliente" required>
   </mat-form-field>
   <!-- MARGIN -->
   <mat-form-field>
@@ -162,9 +162,9 @@
   </mat-form-field>
   <!-- DATE DELIVERY STORE -->
   <mat-form-field>
-    <input matInput [matDatepicker]="pickerfechaEntrgaAlmacen" name="fechaEntrgaAlmacen" placeholder="Fecha entrega almacen" [(ngModel)]="offer.fechaEntrgaAlmacen">
-    <mat-datepicker-toggle matSuffix [for]="pickerfechaEntrgaAlmacen"></mat-datepicker-toggle>
-    <mat-datepicker #pickerfechaEntrgaAlmacen></mat-datepicker>
+    <input matInput [matDatepicker]="pickerfechaEntregaAlmacen" name="fechaEntregaAlmacen" placeholder="Fecha entrega almacen" [(ngModel)]="offer.fechaEntregaAlmacen">
+    <mat-datepicker-toggle matSuffix [for]="pickerfechaEntregaAlmacen"></mat-datepicker-toggle>
+    <mat-datepicker #pickerfechaEntregaAlmacen></mat-datepicker>
   </mat-form-field>
   <!-- COMMENT ALMACENISTA -->
   <mat-form-field>
@@ -213,7 +213,8 @@
 
 
   <div class="footer-buttom">
-    <button mat-raised-button color="primary" type="submit" [disabled]="!offerForm.form.valid">Guardar</button>
+    <!-- <button mat-raised-button color="primary" type="submit" [disabled]="!offerForm.form.valid">Guardar</button> -->
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
     <button mat-raised-button color="danger" routerLink="/ofertas">Cancelar</button>
   </div>
 </form>

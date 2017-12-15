@@ -1,5 +1,45 @@
 import gql from 'graphql-tag';
 
+export const queryOfferTypes = gql`
+	query($uid:String, $credential:String) {
+		tipoOfertas(uid: $uid, credential: $credential)
+	}
+`;
+
+export const queryConfirmationsReceived = gql`
+	query($uid:String, $credential:String) {
+		confirmacionRecibido(uid: $uid, credential: $credential)
+	}
+`;
+
+export const querySubstatesOffer = gql`
+	query($uid:String, $credential:String) {
+		subestadoOferta (uid: $uid, credential: $credential)
+	}
+`;
+
+export const queryStatesOffer = gql`
+	query($uid:String, $credential:String) {
+		estadoOferta (uid: $uid, credential: $credential)
+	}
+`;
+
+export const queryModalities = gql`
+	query($uid:String, $credential:String) {
+		modalidad (uid: $uid, credential: $credential)
+	}
+`;
+
+export const queryTypesClientResponse = gql`
+	query($uid:String, $credential:String) {
+		tipoRespuestaCliente (uid: $uid, credential: $credential)
+	}
+`;
+
+
+
+
+
 export const queryOfferts = gql`
 	query ($uid: String, $credential: String) {
 		ofertas(uid: $uid, credential: $credential) {
@@ -40,12 +80,12 @@ export const queryOfferts = gql`
 			usuario
 			numeroOferta
 			modalidad
-			percioUnidadProveedor
-			percioTotalProveedor
-			percioUnidadVenta
-			percioTotalVenta
-			percioUnidadCliente
-			percioTotalCliente
+			precioUnidadProveedor
+			precioTotalProveedor
+			precioUnidadVenta
+			precioTotalVenta
+			precioUnidadCliente
+			precioTotalCliente
 			margen
 			tipoAdquisicion
 			fechaRecibidoCliente
@@ -58,7 +98,7 @@ export const queryOfferts = gql`
 			po
 			fechaPo
 			comentarioAnalista
-			fechaEntrgaAlmacen
+			fechaEntregaAlmacen
 			comentarioAlmacenista
 			comentarioCoordinador
 			valorConciliadoCliente
@@ -113,12 +153,11 @@ export const queryOfferById = gql`
 			usuario
 			numeroOferta
 			modalidad
-			percioUnidadProveedor
-			percioTotalProveedor
-			percioUnidadVenta
-			percioTotalVenta
-			percioUnidadCliente
-			percioTotalCliente
+			precioTotalProveedor
+			precioUnidadVenta
+			precioTotalVenta
+			precioUnidadCliente
+			precioTotalCliente
 			margen
 			tipoAdquisicion
 			fechaRecibidoCliente
@@ -131,7 +170,7 @@ export const queryOfferById = gql`
 			po
 			fechaPo
 			comentarioAnalista
-			fechaEntrgaAlmacen
+			fechaEntregaAlmacen
 			comentarioAlmacenista
 			comentarioCoordinador
 			valorConciliadoCliente
