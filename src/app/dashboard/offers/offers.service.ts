@@ -4,8 +4,9 @@ import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
 import {
-  queryOfferts,
+  queryOffers,
   queryOfferById,
+  updateOferta,
   queryOfferTypes,
   queryConfirmationsReceived,
   querySubstatesOffer,
@@ -90,7 +91,7 @@ export class OffersService {
 
   public getOffers() {
     return this.apollo.watchQuery<any>({
-      query: queryOfferts,
+      query: queryOffers,
       variables: {
         uid: this.userAuth.uid,
         credential: this.userAuth.token
@@ -107,6 +108,61 @@ export class OffersService {
         credential: this.userAuth.token
       }
     }).valueChanges
+  }
+
+  public updateOffer(id, offer) {
+    return this.apollo.mutate({
+      mutation: updateOferta,
+      variables: {
+        pk: offer.id,
+        solicitud: offer.solicitudId,
+        suministro: offer.suministroId,
+        servicio: offer.servicioId,
+        cantidad: offer.cantidad,
+        tipoOferta: offer.tipoOferta,
+        tarea: offer.tarea,
+        descripcionTarea: offer.descripcionTarea,
+        encargadoCliente: offer.encargadoCliente,
+        fechaEjecucion: offer.fechaEjecucion,
+        confirmacionRecibido: offer.confirmacionRecibido,
+        comentarioSupervisor: offer.comentarioSupervisor,
+        subestadoOferta: offer.subestadoOferta,
+        estadoOferta: offer.estadoOferta,
+        usuario: offer.usuario,
+        numeroOferta: offer.numeroOferta,
+        modalidad: offer.modalidad,
+        precioUnidadProveedor: offer.precioUnidadProveedor,
+        precioTotalProveedor: offer.precioTotalProveedor,
+        precioUnidadVenta: offer.precioUnidadVenta,
+        precioTotalVenta: offer.precioTotalVenta,
+        precioUnidadCliente: offer.precioUnidadCliente,
+        precioTotalCliente: offer.precioTotalCliente,
+        margen: offer.margen,
+        tipoAdquisicion: offer.tipoAdquisicion,
+        fechaRecibidoCliente: offer.fechaRecibidoCliente,
+        fechaDespachoSupervisor: offer.fechaDespachoSupervisor,
+        fechaDespachoCompras: offer.fechaDespachoCompras,
+        fechaRespuestaCompras: offer.fechaRespuestaCompras,
+        fechaEnvioCliente: offer.fechaEnvioCliente,
+        fechaRespuestaCliente: offer.fechaRespuestaCliente,
+        tipoRespuestaCliente: offer.tipoRespuestaCliente,
+        po: offer.po,
+        fechaPo: offer.fechaPo,
+        comentarioAnalista: offer.comentarioAnalista,
+        fechaEntregaAlmacen: offer.fechaEntregaAlmacen,
+        comentarioAlmacenista: offer.comentarioAlmacenista,
+        comentarioCoordinador: offer.comentarioCoordinador,
+        valorConciliadoCliente: offer.valorConciliadoCliente,
+        fechaConciliadoCliente: offer.fechaConciliadoCliente,
+        comentarioFacturador: offer.comentarioFacturador,
+        fechaEnvioActaSmu: offer.fechaEnvioActaSmu,
+        comentarioActa: offer.comentarioActa,
+        fechaFirmaActaSmu: offer.fechaFirmaActaSmu,
+        fechaGrSmu: offer.fechaGrSmu,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    })
   }
 
 }

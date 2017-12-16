@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OffersService } from './offers.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-offer-operate',
@@ -22,6 +23,7 @@ export class OfferOperateComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private offersService: OffersService
   ) {
     this.offersService.getOfferTypes()
@@ -72,7 +74,6 @@ export class OfferOperateComponent implements OnInit {
       this.isNew = false;
       this.offersService.getOfferById(this.route.snapshot.params.id)
         .subscribe(res => {
-          // debugger
           this.offer = {
             id: res.data.oferta.id,
             solicitudId: res.data.oferta.solicitud.id,
@@ -130,57 +131,94 @@ export class OfferOperateComponent implements OnInit {
         }, error => {
           debugger
         })
-    } else {
-      this.offer = {
-        cantidad: null,
-        tipoOferta: null,
-        tarea: null,
-        descripcionTarea: null,
-        encargadoCliente: null,
-        fechaEjecucion: null,
-        confirmacionRecibido: null,
-        comentarioSupervisor: null,
-        subestadoOferta: null,
-        estadoOferta: null,
-        usuario: null,
-        numeroOferta: null,
-        modalidad: null,
-        precioUnidadProveedor: null,
-        precioTotalProveedor: null,
-        precioUnidadVenta: null,
-        precioTotalVenta: null,
-        precioUnidadCliente: null,
-        precioTotalCliente: null,
-        margen: null,
-        tipoAdquisicion: null,
-        fechaRecibidoCliente: null,
-        fechaDespachoSupervisor: null,
-        fechaDespachoCompras: null,
-        fechaRespuestaCompras: null,
-        fechaEnvioCliente: null,
-        fechaRespuestaCliente: null,
-        tipoRespuestaCliente: null,
-        po: null,
-        fechaPo: null,
-        comentarioAnalista: null,
-        fechaEntregaAlmacen: null,
-        comentarioAlmacenista: null,
-        comentarioCoordinador: null,
-        valorConciliadoCliente: null,
-        fechaConciliadoCliente: null,
-        comentarioFacturador: null,
-        fechaEnvioActaSmu: null,
-        comentarioActa: null,
-        fechaFirmaActaSmu: null,
-        fechaGrSmu: null
-      }
-      this.isNew = true;
     }
+  }
 
+  normalizeDate(date) {
+    if (typeof date === "object") {
+      let day = date.getDate();
+      let month = date.getMonth();
+      let year = date.getFullYear();
+      return `${year}-${month + 1}-${day}`;
+    }
+    return date
   }
 
   saveOffert() {
-    debugger
+    this.offer.fechaEjecucion == null ? null : this.normalizeDate(this.offer.fechaEjecucion);
+    this.offer.fechaRecibidoCliente == null ? null : this.normalizeDate(this.offer.fechaRecibidoCliente);
+    this.offer.fechaDespachoSupervisor == null ? null : this.normalizeDate(this.offer.fechaDespachoSupervisor);
+    this.offer.fechaDespachoCompras == null ? null : this.normalizeDate(this.offer.fechaDespachoCompras);
+    this.offer.fechaRespuestaCompras == null ? null : this.normalizeDate(this.offer.fechaRespuestaCompras);
+    this.offer.fechaRespuestaCliente == null ? null : this.normalizeDate(this.offer.fechaRespuestaCliente);
+    this.offer.fechaEnvioCliente == null ? null : this.normalizeDate(this.offer.fechaEnvioCliente);
+    this.offer.fechaPo == null ? null : this.normalizeDate(this.offer.fechaPo);
+    this.offer.fechaEntregaAlmacen == null ? null : this.normalizeDate(this.offer.fechaEntregaAlmacen);
+    this.offer.fechaConciliadoCliente == null ? null : this.normalizeDate(this.offer.fechaConciliadoCliente);
+    this.offer.fechaEnvioActaSmu == null ? null : this.normalizeDate(this.offer.fechaEnvioActaSmu);
+    this.offer.fechaFirmaActaSmu == null ? null : this.normalizeDate(this.offer.fechaFirmaActaSmu);
+    this.offer.fechaGrSmu == null ? null : this.normalizeDate(this.offer.fechaGrSmu);
+    // var abc = {
+    //   id: "94",
+    //   solicitudId: "72",
+    //   solicitudSupervisor: "supervisor uno",
+    //   solicitudEstacionNombre: "IEC.VAL.IE MANUEL DOLORES MONDRAGON CARMEN DE BOLIVAR",
+    //   solicitudEstacionRegion: "SUROCCIDENTE",
+    //   solicitudEstacionDepartamento: "Valle del Cauca",
+    //   solicitudEstacionCiudad: "Bolivar",
+    //   suministroId: "4",
+    //   suministroNombre: "suministro4",
+    //   servicioId: null,
+    //   servicioNombre: null,
+    //   cantidad: 1,
+    //   tipoOferta: "SMU",
+    //   tarea: "task test  1301",
+    //   descripcionTarea: "description 1301",
+    //   encargadoCliente: "encargado 1301",
+    //   fechaEjecucion: "2017-12-16",
+    //   confirmacionRecibido: "SI",
+    //   comentarioSupervisor: "comentario supervisor 1301",
+    //   subestadoOferta: "PENDIENTE PO",
+    //   estadoOferta: "PENDIENTE EJECUCION",
+    //   usuario: "daguiheso 1301",
+    //   numeroOferta: "1301",
+    //   modalidad: "LPU",
+    //   precioUnidadProveedor: 123456,
+    //   precioTotalProveedor: 123456,
+    //   precioUnidadVenta: 654321,
+    //   precioTotalVenta: 654321,
+    //   precioUnidadCliente: 789,
+    //   precioTotalCliente: 987,
+    //   margen: 9991301,
+    //   tipoAdquisicion: "adquisicion 1301",
+    //   fechaRecibidoCliente: "2017-12-17",
+    //   fechaDespachoSupervisor: "2017-12-18",
+    //   fechaDespachoCompras: "2017-12-19",
+    //   fechaRespuestaCompras: "2017-12-20",
+    //   fechaEnvioCliente: "2017-12-21",
+    //   fechaRespuestaCliente: "2017-12-22",
+    //   tipoRespuestaCliente: "APROBADO",
+    //   po: "po1301",
+    //   fechaPo: "2017-12-27",
+    //   comentarioAnalista: "comentario analista 1301",
+    //   fechaEntregaAlmacen: "2017-12-28",
+    //   comentarioAlmacenista: "comment almacenista 1301",
+    //   comentarioCoordinador: "commnet coord 1301",
+    //   valorConciliadoCliente: 1301500,
+    //   fechaConciliadoCliente: "2017-12-30",
+    //   comentarioFacturador: "comment factirador 1301",
+    //   fechaEnvioActaSmu: "2017-12-31",
+    //   comentarioActa: "comment acta 1301",
+    //   fechaFirmaActaSmu: "2018-01-01",
+    //   fechaGrSmu: "2017-12-02"
+    // }
+    // debugger
+    this.offersService.updateOffer(this.route.snapshot.params.id, this.offer)
+      .subscribe(res => {
+        this.router.navigate(['/ofertas']);
+      }, error => {
+        debugger
+      })
   }
 
 }

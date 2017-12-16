@@ -2,7 +2,7 @@
 <form #offerForm="ngForm" (ngSubmit)="saveOffert()" *ngIf="offer">
   <!-- OFFER TYPE -->
   <mat-form-field>
-    <mat-select placeholder="Tipo de oferta" name="tipoOferta" [(ngModel)]="offer.tipoOferta" required>
+    <mat-select placeholder="Tipo de oferta" name="tipoOferta" [(ngModel)]="offer.tipoOferta">
       <mat-option *ngFor="let item of offerTypes" [value]="item">
         {{item}}
       </mat-option>
@@ -10,7 +10,7 @@
   </mat-form-field>
   <!-- TASK -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Tarea" name="tarea" [(ngModel)]="offer.tarea" required>
+    <input matInput type="text" placeholder="Tarea" name="tarea" [(ngModel)]="offer.tarea">
   </mat-form-field>
   <!-- DESCRIPTION TASK -->
   <mat-form-field>
@@ -18,7 +18,7 @@
   </mat-form-field>
   <!-- CUSTOMER MANAGER -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Encargado cliente" name="encargadoCliente" [(ngModel)]="offer.encargadoCliente" required>
+    <input matInput type="text" placeholder="Encargado cliente" name="encargadoCliente" [(ngModel)]="offer.encargadoCliente">
   </mat-form-field>
   <!-- DATE -->
   <mat-form-field>
@@ -28,7 +28,7 @@
   </mat-form-field>
   <!-- CONFIRMATION RECEIVED -->
   <mat-form-field>
-    <mat-select placeholder="Confirmación recibido" name="confirmacionRecibido" [(ngModel)]="offer.confirmacionRecibido" required>
+    <mat-select placeholder="Confirmación recibido" name="confirmacionRecibido" [(ngModel)]="offer.confirmacionRecibido">
       <mat-option *ngFor="let item of confirmationsReceived" [value]="item">
         {{item}}
       </mat-option>
@@ -40,15 +40,15 @@
   </mat-form-field>
    <!-- SUBSTATE OFFER -->
   <mat-form-field>
-    <mat-select placeholder="Subestado oferta" name="subestadoOferta" [(ngModel)]="offer.subestadoOferta" required>
-      <mat-option *ngFor="let item of  substatesOffer" [value]="item">
+    <mat-select placeholder="Subestado oferta" name="subestadoOferta" [(ngModel)]="offer.subestadoOferta">
+      <mat-option *ngFor="let item of substatesOffer" [value]="item">
         {{item}}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <!-- STATE OFFER -->
   <mat-form-field>
-    <mat-select placeholder="Estado oferta" name="estadoOferta" [(ngModel)]="offer.estadoOferta" required>
+    <mat-select placeholder="Estado oferta" name="estadoOferta" [(ngModel)]="offer.estadoOferta">
       <mat-option *ngFor="let item of  statesOffer" [value]="item">
         {{item}}
       </mat-option>
@@ -56,15 +56,15 @@
   </mat-form-field>
   <!-- USER -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Usuario" name="usuario" [(ngModel)]="offer.usuario" required>
+    <input matInput type="text" placeholder="Usuario" name="usuario" [(ngModel)]="offer.usuario">
   </mat-form-field>
   <!-- NUMBER OFFER -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Numero oferta" name="numeroOferta" [(ngModel)]="offer.numeroOferta" required>
+    <input matInput type="text" placeholder="Numero oferta" name="numeroOferta" [(ngModel)]="offer.numeroOferta">
   </mat-form-field>
   <!-- MODALITY -->
   <mat-form-field>
-    <mat-select placeholder="Modalidad" name="modalidad" [(ngModel)]="offer.modalidad" required>
+    <mat-select placeholder="Modalidad" name="modalidad" [(ngModel)]="offer.modalidad">
       <mat-option *ngFor="let item of modalities" [value]="item">
         {{item}}
       </mat-option>
@@ -72,35 +72,35 @@
   </mat-form-field>
   <!-- UNIT PRICE SUPPLIER -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio unidad proveedor" name="precioUnidadProveedor" [(ngModel)]="offer.precioUnidadProveedor" required>
+    <input matInput type="number" placeholder="Precio unidad proveedor" name="precioUnidadProveedor" [(ngModel)]="offer.precioUnidadProveedor">
   </mat-form-field>
   <!-- TOTAL PRICE SUPPLIER -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio total proveedor" name="precioTotalProveedor" [(ngModel)]="offer.precioTotalProveedor" required>
+    <input matInput type="number" placeholder="Precio total proveedor" name="precioTotalProveedor" [(ngModel)]="offer.precioTotalProveedor">
   </mat-form-field>
   <!-- UNIT PRICE SALE -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio unidad venta" name="precioUnidadVenta" [(ngModel)]="offer.precioUnidadVenta" required>
+    <input matInput type="number" placeholder="Precio unidad venta" name="precioUnidadVenta" [(ngModel)]="offer.precioUnidadVenta">
   </mat-form-field>
   <!-- TOTAL PRICE SALE -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio total venta" name="precioTotalVenta" [(ngModel)]="offer.precioTotalVenta" required>
+    <input matInput type="number" placeholder="Precio total venta" name="precioTotalVenta" [(ngModel)]="offer.precioTotalVenta">
   </mat-form-field>
   <!-- UNIT PRICE CLIENT -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio unidad cliente" name="precioUnidadCliente" [(ngModel)]="offer.precioUnidadCliente" required>
+    <input matInput type="number" placeholder="Precio unidad cliente" name="precioUnidadCliente" [(ngModel)]="offer.precioUnidadCliente">
   </mat-form-field>
   <!-- TOTAL PRICE CLIENT -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Precio total cliente" name="precioTotalCliente" [(ngModel)]="offer.precioTotalCliente" required>
+    <input matInput type="number" placeholder="Precio total cliente" name="precioTotalCliente" [(ngModel)]="offer.precioTotalCliente">
   </mat-form-field>
   <!-- MARGIN -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Margen" name="margen" [(ngModel)]="offer.margen" required>
+    <input matInput type="number" placeholder="Margen" name="margen" [(ngModel)]="offer.margen">
   </mat-form-field>
   <!-- ACQUISITION TYPE -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Tipo adquisición" name="tipoAdquisicion" [(ngModel)]="offer.tipoAdquisicion" required>
+    <input matInput type="text" placeholder="Tipo adquisición" name="tipoAdquisicion" [(ngModel)]="offer.tipoAdquisicion">
   </mat-form-field>
   <!-- DATE RECEIVED CLIENT -->
   <mat-form-field>
@@ -140,7 +140,7 @@
   </mat-form-field>
   <!-- TYPE CLIENT RESPONSE -->
   <mat-form-field>
-    <mat-select placeholder="Tipo respuesta cliente" name="tipoRespuestaCliente" [(ngModel)]="offer.tipoRespuestaCliente" required>
+    <mat-select placeholder="Tipo respuesta cliente" name="tipoRespuestaCliente" [(ngModel)]="offer.tipoRespuestaCliente">
       <mat-option *ngFor="let item of typesClientResponse" [value]="item">
         {{item}}
       </mat-option>
@@ -148,7 +148,7 @@
   </mat-form-field>
   <!-- PO -->
   <mat-form-field>
-    <input matInput type="text" placeholder="PO" name="po" [(ngModel)]="offer.po" required>
+    <input matInput type="text" placeholder="PO" name="po" [(ngModel)]="offer.po">
   </mat-form-field>
   <!-- DATE PO -->
   <mat-form-field>
@@ -176,7 +176,7 @@
   </mat-form-field>
   <!-- RECONCILED VALUE CLIENT-->
   <mat-form-field>
-    <input matInput type="number" placeholder="Valor conciliado cliente" name="valorConciliadoCliente" [(ngModel)]="offer.valorConciliadoCliente" required>
+    <input matInput type="number" placeholder="Valor conciliado cliente" name="valorConciliadoCliente" [(ngModel)]="offer.valorConciliadoCliente">
   </mat-form-field>
   <!-- DATE RECONCILED CLIENTE -->
   <mat-form-field>
