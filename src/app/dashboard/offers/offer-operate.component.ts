@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OffersService } from './offers.service';
-import { DatePipe } from '@angular/common';
+import { AuthService } from "../../auth/auth.service";
+import { AppService } from "../../app.service";
 
 @Component({
   selector: 'app-offer-operate',
@@ -21,11 +22,21 @@ export class OfferOperateComponent implements OnInit {
   modalities: string[];
   typesClientResponse: string[];
 
+  actualRoles: any;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private offersService: OffersService
+    private offersService: OffersService,
+    private authService: AuthService,
+    private appService: AppService
   ) {
+    this.authService.currentUser()
+      .subscribe(res => {
+        this.actualRoles = res.roles;
+      }, error => {
+        debugger
+      })
     this.offersService.getOfferTypes()
       .subscribe(res => {
         this.offerTypes = res.data.tipoOfertas;
@@ -158,66 +169,11 @@ export class OfferOperateComponent implements OnInit {
     this.offer.fechaEnvioActaSmu == null ? null : this.normalizeDate(this.offer.fechaEnvioActaSmu);
     this.offer.fechaFirmaActaSmu == null ? null : this.normalizeDate(this.offer.fechaFirmaActaSmu);
     this.offer.fechaGrSmu == null ? null : this.normalizeDate(this.offer.fechaGrSmu);
-    // var abc = {
-    //   id: "94",
-    //   solicitudId: "72",
-    //   solicitudSupervisor: "supervisor uno",
-    //   solicitudEstacionNombre: "IEC.VAL.IE MANUEL DOLORES MONDRAGON CARMEN DE BOLIVAR",
-    //   solicitudEstacionRegion: "SUROCCIDENTE",
-    //   solicitudEstacionDepartamento: "Valle del Cauca",
-    //   solicitudEstacionCiudad: "Bolivar",
-    //   suministroId: "4",
-    //   suministroNombre: "suministro4",
-    //   servicioId: null,
-    //   servicioNombre: null,
-    //   cantidad: 1,
-    //   tipoOferta: "SMU",
-    //   tarea: "task test  1301",
-    //   descripcionTarea: "description 1301",
-    //   encargadoCliente: "encargado 1301",
-    //   fechaEjecucion: "2017-12-16",
-    //   confirmacionRecibido: "SI",
-    //   comentarioSupervisor: "comentario supervisor 1301",
-    //   subestadoOferta: "PENDIENTE PO",
-    //   estadoOferta: "PENDIENTE EJECUCION",
-    //   usuario: "daguiheso 1301",
-    //   numeroOferta: "1301",
-    //   modalidad: "LPU",
-    //   precioUnidadProveedor: 123456,
-    //   precioTotalProveedor: 123456,
-    //   precioUnidadVenta: 654321,
-    //   precioTotalVenta: 654321,
-    //   precioUnidadCliente: 789,
-    //   precioTotalCliente: 987,
-    //   margen: 9991301,
-    //   tipoAdquisicion: "adquisicion 1301",
-    //   fechaRecibidoCliente: "2017-12-17",
-    //   fechaDespachoSupervisor: "2017-12-18",
-    //   fechaDespachoCompras: "2017-12-19",
-    //   fechaRespuestaCompras: "2017-12-20",
-    //   fechaEnvioCliente: "2017-12-21",
-    //   fechaRespuestaCliente: "2017-12-22",
-    //   tipoRespuestaCliente: "APROBADO",
-    //   po: "po1301",
-    //   fechaPo: "2017-12-27",
-    //   comentarioAnalista: "comentario analista 1301",
-    //   fechaEntregaAlmacen: "2017-12-28",
-    //   comentarioAlmacenista: "comment almacenista 1301",
-    //   comentarioCoordinador: "commnet coord 1301",
-    //   valorConciliadoCliente: 1301500,
-    //   fechaConciliadoCliente: "2017-12-30",
-    //   comentarioFacturador: "comment factirador 1301",
-    //   fechaEnvioActaSmu: "2017-12-31",
-    //   comentarioActa: "comment acta 1301",
-    //   fechaFirmaActaSmu: "2018-01-01",
-    //   fechaGrSmu: "2017-12-02"
-    // }
-    // debugger
     this.offersService.updateOffer(this.route.snapshot.params.id, this.offer)
       .subscribe(res => {
         this.router.navigate(['/ofertas']);
       }, error => {
-        debugger
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualización de oferta', error)
       })
   }
 
