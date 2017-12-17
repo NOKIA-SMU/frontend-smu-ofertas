@@ -76,14 +76,14 @@
 			<ng-container *ngFor="let item of offersColumnsDynamics" matColumnDef="{{item}}">
 				<mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
 				<mat-cell *matCellDef="let row">
-					<ng-container>
+					<ng-container (click)="imprimir(row[item])">
 						{{row[item]}}
 					</ng-container>
 				</mat-cell>
 			</ng-container>
 			<mat-header-row *matHeaderRowDef="offersAllColumns"></mat-header-row>
 			<mat-row *matRowDef="let row; columns: offersAllColumns; let i = index"
-							(click)="selectRow(i, row)"
+							(click)="selectRow(i, row);imprimir(row)"
 							[ngClass]="{ active : i == currentRowSelect}">
 			</mat-row>
 		</mat-table>

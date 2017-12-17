@@ -141,6 +141,7 @@ export class OffersComponent implements OnInit {
   ngAfterViewInit() {
     this.offersService.getOffers()
       .subscribe(({ data }) => {
+        debugger
         this.dataSourceOffers = new MatTableDataSource(data.ofertas);
         this.dataSourceOffers.paginator = this.paginator;
         this.dataSourceOffers.sort = this.sort;

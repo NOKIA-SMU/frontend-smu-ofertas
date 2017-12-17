@@ -29,7 +29,7 @@ export class RequestsComponent implements OnInit {
   dataSource = new MatTableDataSource();
   isLoadingResults = true;
   currentRowSelect: any;
-  currentRowSelectData: any = {}
+  currentRowSelectData: any = {};
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

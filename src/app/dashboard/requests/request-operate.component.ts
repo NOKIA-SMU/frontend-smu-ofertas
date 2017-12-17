@@ -151,7 +151,7 @@ export class RequestOperateComponent implements OnInit {
           // Get supplies
           this.supplies = [];
           this.isLoadingResultsSupplies = true;
-          this.suppliesService.getSupplies(this.request.subsistema)
+          this.suppliesService.getSuppliesBySubsystem(this.request.subsistema)
             .subscribe(res => {
               // Clone response
               for (let i = 0; i < res.data.suministros.length; i++) {
@@ -259,7 +259,7 @@ export class RequestOperateComponent implements OnInit {
       })
 
     // Get all supplies
-    this.suppliesService.getSupplies(subsystemId)
+    this.suppliesService.getSuppliesBySubsystem(subsystemId)
       .subscribe(res => {
         // Clone response
         for (let i = 0; i < res.data.suministros.length; i++) {

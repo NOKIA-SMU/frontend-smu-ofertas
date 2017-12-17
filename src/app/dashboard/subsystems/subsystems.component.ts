@@ -74,4 +74,8 @@ export class SubsystemsComponent implements OnInit {
       })
   }
 
+  imprimir(row) {
+    debugger
+  }
+
 }
