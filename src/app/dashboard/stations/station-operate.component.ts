@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Station } from "../../models/dashboard.models";
 import { StationsService } from "./stations.service";
 import { AppService } from "../../app.service";
-import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-station-operate',
@@ -63,6 +62,7 @@ export class StationOperateComponent implements OnInit {
   createStation() {
     this.stationsService.createStation(this.station)
       .subscribe(res => {
+
         // if (res.data.updateEstacion.status) {
           this.router.navigate(['/estaciones']);
         // }
@@ -74,9 +74,7 @@ export class StationOperateComponent implements OnInit {
   updateStation() {
     this.stationsService.updateStation(this.station)
       .subscribe(res => {
-        if (res.data.updateEstacion.status) {
-          this.router.navigate(['/estaciones']);
-        }
+        if (res.data.updateEstacion.status === 200) this.router.navigate(['/estaciones']);
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualizar estación', error);
       })

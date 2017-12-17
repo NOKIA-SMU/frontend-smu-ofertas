@@ -3,94 +3,54 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from "rxjs/Observable";
 import gql from 'graphql-tag';
 
-const queryStations = gql`
-  query {
-    estaciones {
-      id
-      nombre
-      ubicacion
-      region
-      departamento
-      ciudad
-      direccion
-      latitud
-      longitud
-      estructura
-      categoria
-      estado
-      subestado
-      creado
-      actualizado
-    }
-  }
-`;
+import {
+  queryStations,
+  mutationCreateStation,
+  mutationUpdateStation,
+  mutationDeleteStation
+} from './stations.queries'
+
 
 @Injectable()
 
 export class StationsService {
 
-  constructor(private apollo: Apollo) { }
+  userAuth: any;
+
+  constructor(private apollo: Apollo) {
+    this.userAuth = JSON.parse(localStorage.getItem('userAuth'));
+  }
 
   public getStations(filter) {
-    const queryStations = gql`
-      query {
-        estaciones(query: "${filter}") {
-          id
-          nombre
-          ubicacion
-          region
-          departamento
-          ciudad
-          direccion
-          latitud
-          longitud
-          estructura
-          categoria
-          estado
-          subestado
-          creado
-          actualizado
-        }
+    return this.apollo.watchQuery<any>({
+      query: queryStations,
+      variables: {
+        query: filter,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
-    `;
-    return this.apollo.watchQuery<any>({ query: queryStations }).valueChanges
+    }).valueChanges
   }
 
   public createStation(station) {
-    const createEstacion = gql`
-      mutation {
-        createEstacion(
-          nombre: "${station.nombre}",
-          ubicacion: "${station.ubicacion}",
-          region: "${station.region}",
-          departamento: "${station.departamento}",
-          ciudad: "${station.ciudad}",
-          direccion: "${station.direccion}",
-          latitud: ${station.latitud},
-          longitud: ${station.longitud},
-          estructura: "${station.estructura}",
-          categoria: "${station.categoria}",
-        ) {
-          estacion {
-            id
-            nombre
-            ubicacion
-            region
-            departamento
-            ciudad
-            direccion
-            latitud
-            longitud
-            estructura
-            categoria
-          }
-        }
-      }
-    `
     return this.apollo.mutate({
-      mutation: createEstacion,
+      mutation: mutationCreateStation,
       refetchQueries: [{
-        query: queryStations
+        query: queryStations,
+        variables: {
+          name: station.nombre,
+          ubication: station.ubicacion,
+          region: station.region,
+          departament: station.departamento,
+          city: station.ciudad,
+          address: station.direccion,
+          lat: station.latitud,
+          lon: station.longitud,
+          estructure: station.estructura,
+          category: station.categoria,
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
       }]
     })
   }
@@ -99,53 +59,37 @@ export class StationsService {
     let id = parseInt(station.id)
     let latitud = parseFloat(station.latitud)
     let longitud = parseFloat(station.longitud)
-    const updateEstacion = gql`
-      mutation {
-        updateEstacion(
-          id: ${id},
-          nombre: "${station.nombre}",
-          ubicacion: "${station.ubicacion}",
-          region: "${station.region}",
-          departamento: "${station.departamento}",
-          ciudad: "${station.ciudad}",
-          direccion: "${station.direccion}",
-          latitud: ${latitud},
-          longitud: ${longitud},
-          estructura: "${station.estructura}",
-          categoria: "${station.categoria}",
-        ) {
-          estacion {
-            id
-            nombre
-            ubicacion
-            region
-            departamento
-            ciudad
-            direccion
-            latitud
-            longitud
-            estructura
-            categoria
-          }
-          status
-        }
+
+    return this.apollo.mutate({
+      mutation: mutationUpdateStation,
+      variables: {
+        pk: station.id,
+        name: station.nombre,
+        ubication: station.ubicacion,
+        region: station.region,
+        departament: station.departamento,
+        city: station.ciudad,
+        address: station.direccion,
+        lat: station.latitud,
+        lon: station.longitud,
+        structure: station.estructura,
+        category: station.categoria,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
-    `
-    return this.apollo.mutate({ mutation: updateEstacion })
+    })
   }
 
   public deleteStation(stationId) {
     let id = parseInt(stationId)
-    const deleteEstacion = gql`
-    mutation {
-      deleteEstacion(id: ${id}) {
-        estacion {
-          id
-        }
+    return this.apollo.mutate({
+      mutation: mutationDeleteStation,
+      variables: {
+        pk: id,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
-    }
-    `
-    return this.apollo.mutate({ mutation: deleteEstacion })
+    })
   }
 
 }

@@ -74,9 +74,7 @@ export class StationsComponent implements OnInit {
   deleteStation() {
     this.stationsService.deleteStation(this.currentRowSelectData.id)
       .subscribe(res => {
-        // if (res.data.updateEstacion.status) {
-          this.router.navigate(['/estaciones']);
-        // }
+        if (res.data.deleteEstacion.status === 200) this.router.navigate(['/estaciones']);
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo', error);
       })
