@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { SubsystemsService } from "./subsystems.service";
@@ -6,6 +6,7 @@ import { AppService } from "../../app.service";
 
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-subsystems',
   templateUrl: './subsystems.component.html',
   styleUrls: ['../dashboard.component.scss', './subsystems.component.scss']
@@ -36,8 +37,8 @@ export class SubsystemsComponent implements OnInit {
     this.subsystemsService.getSubsystems()
       .subscribe(({ data }) => {
         this.dataSource = new MatTableDataSource(data.subsistemas);
-        this.dataSource.sort = this.sort;
         this.isLoadingResults = false;
+        this.dataSource.sort = this.sort;
       }, error => {
         this.isLoadingResults = false;
       });

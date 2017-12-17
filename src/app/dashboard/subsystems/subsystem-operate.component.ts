@@ -13,15 +13,17 @@ import { Observable } from "rxjs/Observable";
 
 export class SubsystemOperateComponent implements OnInit {
 
-  id: null;
+  // id: null;
   data: any;
   subsystem: Subsystem;
   isNew: boolean;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private subsystemsService: SubsystemsService,
-    private appService: AppService) {
+    private appService: AppService
+  ) {
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
       this.data = this.route.snapshot.queryParams;

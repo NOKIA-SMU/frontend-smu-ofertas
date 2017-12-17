@@ -1,80 +1,69 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { Observable } from "rxjs/Observable";
-import gql from 'graphql-tag';
-
-const querySubsystems = gql`
-  query {
-    subsistemas {
-      id
-      nombre
-    }
-  }
-`;
+import { Observable } from 'rxjs/Observable';
+import { querySubsystems, mutationCreateSubsystem, mutationUpdateSubsystem, mutationDeleteSubsystem } from './subsystems.queries';
 
 @Injectable()
+
 export class SubsystemsService {
 
-  constructor(private apollo: Apollo) { }
+  userAuth: any;
+
+  constructor(private apollo: Apollo) {
+    this.userAuth = JSON.parse(localStorage.getItem('userAuth'));
+  }
 
   public getSubsystems() {
-    return this.apollo.watchQuery<any>({ query: querySubsystems })
-      .valueChanges
+    return this.apollo.watchQuery<any>({
+      query: querySubsystems,
+      variables: {
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    }).valueChanges
   }
 
   public createSubsystem(subsystem) {
-    const createSubsistema = gql`
-      mutation {
-        createSubsistema(
-          nombre: "${subsystem.nombre}"
-        ) {
-          subsistema {
-            id
-            nombre
-          }
-        }
-      }
-    `;
     return this.apollo.mutate({
-      mutation: createSubsistema,
+      mutation: mutationCreateSubsystem,
+      variables: {
+        name: subsystem.nombre,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      },
       refetchQueries: [{
-        query: querySubsystems
+        query: querySubsystems,
+        variables: {
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
       }]
     })
-
   }
 
   public updateSubsystem(subsystem) {
     let id = parseInt(subsystem.id)
-    const updateSubsistema = gql`
-      mutation {
-        updateSubsistema(
-          id:  ${id},
-          nombre: "${subsystem.nombre}",
-        ) {
-          subsistema {
-            id
-            nombre
-          }
-        }
+
+    return this.apollo.mutate({
+      mutation: mutationUpdateSubsystem,
+      variables: {
+        pk: id,
+        name: subsystem.nombre,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
-    `
-    return this.apollo.mutate({ mutation: updateSubsistema })
+    })
   }
 
   public deleteSubsystem(subsystemId) {
     let id = parseInt(subsystemId)
-    const deleteSubsistema = gql`
-    mutation {
-      deleteSubsistema(id: ${id}) {
-        subsistema {
-          id
-          nombre
-        }
+    return this.apollo.mutate({
+      mutation: mutationDeleteSubsystem,
+      variables: {
+        pk: id,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
-    }
-    `
-    return this.apollo.mutate({ mutation: deleteSubsistema })
+    })
   }
-
 }
