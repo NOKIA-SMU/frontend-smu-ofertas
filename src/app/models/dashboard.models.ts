@@ -35,3 +35,13 @@ export interface Request {
 	prioridad: any,
 	estadoSolicitud: boolean
 }
+
+export interface Supplie {
+	id?: string,
+	nombre: string,
+	subsistema: any,
+	marca: string,
+	referencia: string,
+	unidad: string,
+	cantidad: number
+}

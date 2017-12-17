@@ -21,6 +21,7 @@ import { RequestOperateComponent } from './requests/request-operate.component';
 import { RequestsService } from './requests/requests.service';
 
 import { SuppliesComponent } from './supplies/supplies.component';
+import { SupplieOperateComponent } from './supplies/supplie-operate.component';
 import { SuppliesService } from './supplies/supplies.service';
 
 import { ServicesComponent } from './services/services.component';
@@ -47,6 +48,7 @@ import { OffersService } from './offers/offers.service';
     RequestsComponent,
     RequestOperateComponent,
     SuppliesComponent,
+    SupplieOperateComponent,
     ServicesComponent,
     OffersComponent,
     OfferOperateComponent],

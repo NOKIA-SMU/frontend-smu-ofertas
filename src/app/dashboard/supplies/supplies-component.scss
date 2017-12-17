@@ -1,0 +1,26 @@
+.tableContainer {
+  width: 100%;
+  min-height: 40vh;
+  &.supplies{
+    .mat-table {
+      > .mat-header-row, > .mat-row {
+				cursor: pointer;
+				&.active {
+					background: #2974ff !important;
+					.mat-header-cell, .mat-cell {
+						background: #2974ff !important;
+						color: white !important;
+					}
+				}
+        > .mat-header-cell, > .mat-cell {
+          flex: 0 0 150px;
+          &:nth-child(1),
+          &:nth-child(6),
+          &:nth-child(7), {
+            flex: 0 0 70px;
+          }
+        }
+      }
+    }
+  }
+}

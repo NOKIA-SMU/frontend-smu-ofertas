@@ -1,0 +1,27 @@
+<h2>Suministro</h2>
+<form #createSupplieForm="ngForm" (ngSubmit)="saveSupplie()" *ngIf="supplie">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="supplie.nombre" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Marca" name="marca" [(ngModel)]="supplie.marca" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Referencia" name="referencia" [(ngModel)]="supplie.referencia" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Unidad" name="unidad" [(ngModel)]="supplie.unidad" required>
+  </mat-form-field>
+  <!-- <mat-form-field>
+    <mat-select placeholder="Subestado oferta" name="subestadoOferta" [(ngModel)]="offer.subestadoOferta">
+      <mat-option *ngFor="let item of substatesOffer" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+  <div class="footer-buttom">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!createSupplieForm.form.valid">Guardar</button>
+    <button mat-raised-button color="danger" routerLink="/suministros">Cancelar</button>
+  </div>
+</form>

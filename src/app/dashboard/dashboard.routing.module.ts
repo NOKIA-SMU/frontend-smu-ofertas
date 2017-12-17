@@ -13,10 +13,12 @@ import { RequestsComponent } from './requests/requests.component';
 import { RequestOperateComponent } from './requests/request-operate.component';
 
 import { SuppliesComponent } from './supplies/supplies.component';
-import { ServicesComponent } from './services/services.component';
+import { SupplieOperateComponent } from "./supplies/supplie-operate.component";
 
 import { OffersComponent } from './offers/offers.component';
 import { OfferOperateComponent } from './offers/offer-operate.component';
+
+import { ServicesComponent } from './services/services.component';
 
 const dashboardRoutes: Routes = [
 	{
@@ -33,6 +35,7 @@ const dashboardRoutes: Routes = [
 					{ path: 'solicitudes', component: RequestsComponent},
 					{ path: 'solicitudes/:id', component: RequestOperateComponent},
 					{ path: 'suministros', component: SuppliesComponent },
+					{ path: 'suministros/:id', component: SupplieOperateComponent },
 					{ path: 'servicios', component: ServicesComponent },
 					{ path: 'ofertas', component: OffersComponent },
 					{ path: 'ofertas/:id', component: OfferOperateComponent },
