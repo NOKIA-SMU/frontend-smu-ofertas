@@ -55,13 +55,13 @@ export class RequestOperateComponent implements OnInit {
   currentRowSelectData: any = {};
 
   supplies: any[] = [];
-  suppliesColumns = ['activo', 'id', 'nombre', 'cantidad'];
+  suppliesColumns = ['activo', 'id', 'nombre', 'cantidad', 'comentario'];
   dataSourceSupplies = new MatTableDataSource();
   isLoadingResultsSupplies = false;
   selectionSupplies = new SelectionModel(true, []);
 
   services: any[] = [];
-  servicesColumns = ['activo', 'id', 'nombre', 'cantidad'];
+  servicesColumns = ['activo', 'id', 'nombre', 'cantidad', 'comentario'];
   dataSourceServices = new MatTableDataSource();
   isLoadingResultsServices = false;
   selectionServices = new SelectionModel(true, []);
@@ -162,6 +162,7 @@ export class RequestOperateComponent implements OnInit {
                 for (let j = 0; j < this.request.suministros.length; j++) {
                   if (this.supplies[i].id === this.request.suministros[j].id) {
                     this.supplies[i].qty = this.request.suministros[j].cantidad;
+                    this.supplies[i].comentario = this.request.suministros[j].comentario;
                     this.selectionSupplies.toggle(this.supplies[i]);
                   }
                 }
@@ -188,7 +189,8 @@ export class RequestOperateComponent implements OnInit {
               for (let i = 0; i < this.services.length; i++) {
                 for (let j = 0; j < this.request.servicios.length; j++) {
                   if (this.services[i].id === this.request.servicios[j].id) {
-                    this.services[i].qty = parseInt(this.request.servicios[j].cantidad);
+                    this.services[i].qty = this.request.servicios[j].cantidad;
+                    this.services[i].comentario = this.request.servicios[j].comentario;
                     this.selectionServices.toggle(this.services[i]);
                   }
                 }
@@ -288,7 +290,7 @@ export class RequestOperateComponent implements OnInit {
     const tmpArray = []
     for (let i = 0; i < collection.length; i++) {
       collection[i].id = parseInt(collection[i].id);
-      tmpArray.push({ pk: collection[i].id, qty: collection[i].qty })
+      tmpArray.push({ pk: collection[i].id, qty: collection[i].qty, comentario: collection[i].comentario })
     }
     return tmpArray
   }

@@ -25,6 +25,11 @@ form {
     padding: 8px;
     width: 40px;
   }
+  .inputText {
+    border-radius: 3px;
+    padding: 4px;
+    width: 90%;
+  }
   .qty {
     span {
       display: inline-block;
@@ -80,11 +85,13 @@ form {
             flex: 0 0 100px;
           }
           &:nth-child(3),{
-            min-width: 300px;
-            flex: 0 0 calc(100% - 310px);
+            flex: 0 0 300px;
           }
           &:nth-child(4),{
             max-width: 140px;
+          }
+          &:nth-child(5),{
+            flex: 0 0 400px;
           }
         }
       }

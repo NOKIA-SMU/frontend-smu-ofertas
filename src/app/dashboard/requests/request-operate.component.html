@@ -105,6 +105,13 @@
           </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="comentario">
+          <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <textarea name="comment-{{element.nombre}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
+          </mat-cell>
+        </ng-container>
+
         <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: suppliesColumns;"></mat-row>
       </mat-table>
@@ -145,6 +152,13 @@
           <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <input type="number" name="qtys-{{element.nombre}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="comentario">
+          <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <textarea name="comment-{{element.nombre}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
           </mat-cell>
         </ng-container>
 

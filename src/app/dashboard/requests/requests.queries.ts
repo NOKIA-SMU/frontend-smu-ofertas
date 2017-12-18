@@ -26,10 +26,14 @@ export const queryRequests = gql`
       suministros {
         id
         nombre
+        cantidad
+        comentario
       }
       servicios {
         id
         nombre
+        cantidad
+        comentario
       }
       prioridad
       estadoSolicitud
@@ -40,9 +44,9 @@ export const queryRequests = gql`
 
 export const queryRequestById = gql`
   query (
-    $pk: ID,
-    $uid: String,
-    $credential: String
+    $pk: ID!,
+    $uid: String!,
+    $credential: String!
   ) {
     solicitud(
       pk: $pk,
@@ -67,11 +71,13 @@ export const queryRequestById = gql`
         id
         nombre
         cantidad
+        comentario
       }
       servicios {
         id
         nombre
         cantidad
+        comentario
       }
       prioridad
       estadoSolicitud
@@ -93,8 +99,8 @@ export const createSolicitud = gql`
     $servicios: [ServicioInput],
     $prioridad: String,
     $estadoSolicitud: Boolean,
-    $uid: String,
-    $credential: String,
+    $uid: String!,
+    $credential: String!,
   ){
     createSolicitud(
       supervisorId: $supervisorId,
@@ -140,7 +146,7 @@ export const createSolicitud = gql`
 
 export const updateSolicitud = gql`
   mutation (
-    $pk: ID,
+    $pk: ID!,
     $supervisorId: String,
     $supervisor: String,
     $analistaId: String,
@@ -152,8 +158,8 @@ export const updateSolicitud = gql`
     $servicios: [ServicioInput],
     $prioridad: String,
     $estadoSolicitud: Boolean,
-    $uid: String,
-    $credential: String,
+    $uid: String!,
+    $credential: String!,
   ){
     updateSolicitud(
       pk: $pk,
@@ -200,7 +206,7 @@ export const updateSolicitud = gql`
 `;
 
 export const deleteSolicitud = gql`
-  mutation($pk: ID, $uid: String, $credential: String){
+  mutation($pk: ID!, $uid: String!, $credential: String!){
     deleteSolicitud(pk: $pk, uid: $uid, credential: $credential) {
       status
     }
