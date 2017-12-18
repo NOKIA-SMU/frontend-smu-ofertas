@@ -45,3 +45,9 @@ export interface Supplie {
 	unidad: string,
 	cantidad: number
 }
+
+export interface Service {
+	id?: string,
+	nombre: string,
+	subsistema: any
+}

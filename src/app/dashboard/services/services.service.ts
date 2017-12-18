@@ -1,23 +1,78 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import gql from 'graphql-tag';
+import {
+  queryServices,
+  queryServicesById,
+  mutationCreateService,
+  mutationUpdateService,
+  mutationDeleteService
+} from './services.queries';
 
 @Injectable()
 export class ServicesService {
 
-  constructor(private apollo: Apollo) { }
+  userAuth: any;
 
-  public getServices(subsystemId) {
-    const queryServices = gql`
-      query {
-        servicios(query: "${subsystemId}") {
-          id
-          nombre
-        }
+  constructor(private apollo: Apollo) {
+    this.userAuth = JSON.parse(localStorage.getItem('userAuth'));
+  }
+
+  public getServices(subsystemId?) {
+    return this.apollo.watchQuery<any>({
+      query: queryServices,
+      variables: {
+        query: subsystemId,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
-    `;
-    return this.apollo.watchQuery<any>({ query: queryServices }).valueChanges
+    }).valueChanges
+  }
+
+  public getServiceById(id: string) {
+    return this.apollo.watchQuery<any>({
+      query: queryServicesById,
+      variables: {
+        pk: id,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    }).valueChanges
+  }
+
+  public createService(supplie) {
+    return this.apollo.mutate({
+      mutation: mutationCreateService,
+      variables: {
+        nombre: supplie.nombre,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    })
+  }
+
+  public updateService(id, supplie) {
+    return this.apollo.mutate({
+      mutation: mutationUpdateService,
+      variables: {
+        pk: id,
+        name: supplie.nombre,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    })
+  }
+
+  public deleteService(id) {
+    return this.apollo.mutate({
+      mutation: mutationDeleteService,
+      variables: {
+        pk: id,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      }
+    })
   }
 
 }

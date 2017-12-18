@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SuppliesService } from "./supplies.service";
-import { AppService } from "../../app.service";
 import { AuthService } from "../../auth/auth.service";
+import { AppService } from "../../app.service";
 
 @Component({
   selector: 'app-supplies',
   templateUrl: './supplies.component.html',
-  styleUrls: ['../dashboard.component.scss', './supplies-component.scss']
+  styleUrls: ['../dashboard.component.scss', './supplies.component.scss']
 })
 
 export class SuppliesComponent implements OnInit {
@@ -16,7 +16,7 @@ export class SuppliesComponent implements OnInit {
   supplies: any[] = [];
   suppliesColumns = ['id', 'nombre', 'subsistema', 'marca', 'referencia', 'estado', 'subestado'];
   dataSourceSupplies = new MatTableDataSource();
-  isLoadingResultsSupplies = false;
+  isLoadingResultsSupplies = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
@@ -58,12 +58,12 @@ export class SuppliesComponent implements OnInit {
     this.currentRowSelectData = data;
   }
 
-  goToEdit() {
-    this.router.navigate([`dashboard/suministros/${this.currentRowSelectData.id}`]);
+  goToCreate() {
+    this.router.navigate([`dashboard/suministros/crear`]);
   }
 
-  imprimir(row) {
-    debugger
+  goToEdit() {
+    this.router.navigate([`dashboard/suministros/${this.currentRowSelectData.id}`]);
   }
 
 }

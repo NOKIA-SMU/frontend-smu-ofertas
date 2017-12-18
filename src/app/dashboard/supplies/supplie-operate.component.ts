@@ -7,8 +7,9 @@ import { AppService } from "../../app.service";
 @Component({
   selector: 'app-supplie-operate',
   templateUrl: './supplie-operate.component.html',
-  styleUrls: ['./supplie-operate.component.scss']
+  styleUrls: ['./supplies.component.scss']
 })
+
 export class SupplieOperateComponent implements OnInit {
 
   supplie: Supplie;
@@ -37,7 +38,7 @@ export class SupplieOperateComponent implements OnInit {
             }
           }
         }, error => {
-          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de suministro por Id', error)
         })
     } else {
       this.supplie = {
@@ -62,20 +63,17 @@ export class SupplieOperateComponent implements OnInit {
     if (this.isNew) {
       this.suppliesService.createSupplie(this.supplie)
         .subscribe(res => {
-          debugger
           this.router.navigate(['/suministros']);
         }, error => {
-          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Crear suministro', error)
         })
     } else {
       this.suppliesService.updateSupplie(this.route.snapshot.params.id, this.supplie)
         .subscribe(res => {
-          debugger
           this.router.navigate(['/suministros']);
         }, error => {
-          debugger
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualización de suministro', error)
         })
-
     }
   }
 

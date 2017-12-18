@@ -1,0 +1,19 @@
+<h2>Suministro</h2>
+<form #createServiceForm="ngForm" (ngSubmit)="saveService()" *ngIf="service">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="service.nombre" required>
+  </mat-form-field>
+  <!-- SUBSYSTEM -->
+  <mat-form-field>
+    <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="service.subsistema" required>
+      <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
+        {{subsystem.nombre}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="footer-buttom">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!createServiceForm.form.valid">Guardar</button>
+    <button mat-raised-button color="danger" routerLink="/servicios">Cancelar</button>
+  </div>
+</form>
