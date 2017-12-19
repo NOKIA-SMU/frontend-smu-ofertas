@@ -41,6 +41,7 @@ export class RequestsComponent implements OnInit {
   ngAfterViewInit() {
     this.requestsService.getRequests()
       .subscribe(({ data }) => {
+        debugger
         this.dataSource = new MatTableDataSource(data.solicitudes);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

@@ -14,9 +14,9 @@ const adminRoutes: Routes = [
 			{
 				path: '',
 				children: [
-					{ path: 'profiles', component: ProfilesComponent },
+					{ path: 'perfiles', component: ProfilesComponent },
 					{ path: 'roles', component: RolesComponent },
-					{ path: 'permissions', component: PermissionsComponent },
+					{ path: 'permisos', component: PermissionsComponent },
 				]
 			}
 		]

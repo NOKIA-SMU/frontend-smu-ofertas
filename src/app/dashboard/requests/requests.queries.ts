@@ -23,17 +23,18 @@ export const queryRequests = gql`
         id
         nombre
       }
-      suministros {
+      ordenes {
         id
-        nombre
         cantidad
         comentario
-      }
-      servicios {
-        id
-        nombre
-        cantidad
-        comentario
+        suministro {
+          id
+          nombre
+        }
+        servicio {
+          id
+          nombre
+        }
       }
       prioridad
       estadoSolicitud
@@ -67,17 +68,18 @@ export const queryRequestById = gql`
         id
         nombre
       }
-      suministros {
+      ordenes {
         id
-        nombre
         cantidad
         comentario
-      }
-      servicios {
-        id
-        nombre
-        cantidad
-        comentario
+        suministro {
+          id
+          nombre
+        }
+        servicio {
+          id
+          nombre
+        }
       }
       prioridad
       estadoSolicitud
@@ -130,11 +132,18 @@ export const createSolicitud = gql`
         subsistema {
           id
         }
-        suministros {
+        ordenes {
           id
-        }
-        servicios {
-          id
+          cantidad
+          comentario
+          suministro {
+            id
+            nombre
+          }
+          servicio {
+            id
+            nombre
+          }
         }
         prioridad
         estadoSolicitud
@@ -190,11 +199,18 @@ export const updateSolicitud = gql`
         subsistema {
           id
         }
-        suministros {
+        ordenes {
           id
-        }
-        servicios {
-          id
+          cantidad
+          comentario
+          suministro {
+            id
+            nombre
+          }
+          servicio {
+            id
+            nombre
+          }
         }
         prioridad
         estadoSolicitud

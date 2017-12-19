@@ -43,30 +43,34 @@ export const queryOffers = gql`
 	query ($uid: String, $credential: String) {
 		ofertas(uid: $uid, credential: $credential) {
 			id
-			solicitud {
+			orden {
 				id
-				supervisor
-				estacion {
+				cantidad
+				solicitud {
+					id
+					supervisor
+					estacion {
+						id
+						nombre
+						region
+						departamento
+						ciudad
+						__typename
+					}
+					__typename
+				}
+				suministro {
 					id
 					nombre
-					region
-					departamento
-					ciudad
+					__typename
+				}
+				servicio {
+					id
+					nombre
 					__typename
 				}
 				__typename
 			}
-			suministro {
-				id
-				nombre
-				__typename
-			}
-			servicio {
-				id
-				nombre
-				__typename
-			}
-			cantidad
 			tipoOferta
 			tarea
 			descripcionTarea

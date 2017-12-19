@@ -19,9 +19,9 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-nav-list>
-          <mat-list-item routerLink="/admin">Perfiles</mat-list-item>
-          <mat-list-item routerLink="/admin">Roles</mat-list-item>
-          <mat-list-item routerLink="/admin">Permisos</mat-list-item>
+          <mat-list-item routerLink="/admin/perfiles">Perfiles</mat-list-item>
+          <mat-list-item routerLink="/admin/roles">Roles</mat-list-item>
+          <mat-list-item routerLink="/admin/permisos">Permisos</mat-list-item>
         </mat-nav-list>
       </mat-expansion-panel>
       <mat-expansion-panel>
@@ -47,9 +47,9 @@
     <div class="container">
       <br>
       <mat-grid-list cols="3" gutterSize="14" rowHeight="180px" *ngIf="router.url === '/admin'">
-        <mat-grid-tile routerLink="/admin/profiles">Perfiles</mat-grid-tile>
+        <mat-grid-tile routerLink="/admin/perfiles">Perfiles</mat-grid-tile>
         <mat-grid-tile routerLink="/admin/roles">Roles</mat-grid-tile>
-        <mat-grid-tile routerLink="/admin/permissions">Permisos</mat-grid-tile>
+        <mat-grid-tile routerLink="/admin/permisos">Permisos</mat-grid-tile>
       </mat-grid-list>
       <router-outlet></router-outlet>
     </div>
