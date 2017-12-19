@@ -23,18 +23,23 @@ export const queryRequests = gql`
         id
         nombre
       }
-      ordenes {
+      ordenSuministros {
         id
-        cantidad
-        comentario
         suministro {
           id
           nombre
         }
+        cantidad
+        comentario
+      }
+      ordenServicios {
+        id
         servicio {
           id
           nombre
         }
+        cantidad
+        comentario
       }
       prioridad
       estadoSolicitud
@@ -68,18 +73,23 @@ export const queryRequestById = gql`
         id
         nombre
       }
-      ordenes {
+      ordenSuministros {
         id
-        cantidad
-        comentario
         suministro {
           id
           nombre
         }
+        cantidad
+        comentario
+      }
+      ordenServicios {
+        id
         servicio {
           id
           nombre
         }
+        cantidad
+        comentario
       }
       prioridad
       estadoSolicitud
@@ -132,18 +142,23 @@ export const createSolicitud = gql`
         subsistema {
           id
         }
-        ordenes {
+        ordenSuministros {
           id
-          cantidad
-          comentario
           suministro {
             id
             nombre
           }
+          cantidad
+          comentario
+        }
+        ordenServicios {
+          id
           servicio {
             id
             nombre
           }
+          cantidad
+          comentario
         }
         prioridad
         estadoSolicitud
@@ -199,18 +214,23 @@ export const updateSolicitud = gql`
         subsistema {
           id
         }
-        ordenes {
+        ordenSuministros {
           id
-          cantidad
-          comentario
           suministro {
             id
             nombre
           }
+          cantidad
+          comentario
+        }
+        ordenServicios {
+          id
           servicio {
             id
             nombre
           }
+          cantidad
+          comentario
         }
         prioridad
         estadoSolicitud

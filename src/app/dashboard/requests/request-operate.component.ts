@@ -135,13 +135,14 @@ export class RequestOperateComponent implements OnInit {
         .subscribe(res => {
           let suministros = []
           let servicios = []
-          for (let i = 0; i < res.data.solicitud.ordenes.length; i++) {
-            if (res.data.solicitud.ordenes[i].suministro != null) {
-              suministros.push(res.data.solicitud.ordenes[i]);
-            } else if (res.data.solicitud.ordenes[i].servicio != null) {
-              servicios.push(res.data.solicitud.ordenes[i]);
-            }
+          // Clone data
+          for (let i = 0; i < res.data.solicitud.ordenSuministros.length; i++) {
+            suministros.push(res.data.solicitud.ordenSuministros[i]);
           }
+          for (let i = 0; i < res.data.solicitud.ordenServicios.length; i++) {
+            servicios.push(res.data.solicitud.ordenServicios[i]);
+          }
+          // Create object request
           this.request = {
             id: res.data.solicitud.id,
             supervisorId: res.data.solicitud.supervisorId,
@@ -160,17 +161,17 @@ export class RequestOperateComponent implements OnInit {
           // Get supplies
           this.supplies = [];
           this.isLoadingResultsSupplies = true;
+          // Get all supplies by subsystem
           this.suppliesService.getSuppliesBySubsystem(this.request.subsistema)
             .subscribe(res => {
               // Clone response
               for (let i = 0; i < res.data.suministros.length; i++) {
                 this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre })
               }
-              // Update and change data by request data
+              // Update data by request data
               for (let i = 0; i < this.supplies.length; i++) {
                 for (let j = 0; j < this.request.suministros.length; j++) {
-                  // alert(this.request.suministros[j])
-                  if (this.supplies[i].id === this.request.suministros[j].id) {
+                  if (this.supplies[i].id === this.request.suministros[j].suministro.id) {
                     this.supplies[i].qty = this.request.suministros[j].cantidad;
                     this.supplies[i].comentario = this.request.suministros[j].comentario;
                     this.selectionSupplies.toggle(this.supplies[i]);
@@ -195,11 +196,10 @@ export class RequestOperateComponent implements OnInit {
               for (let i = 0; i < res.data.servicios.length; i++) {
                 this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre })
               }
-              // Update and change data by request data
+              // Update data by request data
               for (let i = 0; i < this.services.length; i++) {
                 for (let j = 0; j < this.request.servicios.length; j++) {
-                  // alert(this.request.servicios[j])
-                  if (this.services[i].id === this.request.servicios[j].id) {
+                  if (this.services[i].id === this.request.servicios[j].servicio.id) {
                     this.services[i].qty = this.request.servicios[j].cantidad;
                     this.services[i].comentario = this.request.servicios[j].comentario;
                     this.selectionServices.toggle(this.services[i]);
@@ -235,7 +235,6 @@ export class RequestOperateComponent implements OnInit {
       }
       this.isNew = true;
     }
-
   }
 
   ngAfterViewInit() {  }

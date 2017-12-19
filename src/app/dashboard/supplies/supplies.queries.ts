@@ -39,6 +39,10 @@ export const querySuppliesBySubsystem = gql`
 		suministros(query: $query, uid: $uid, credential: $credential) {
 			id
 			nombre
+			subsistema {
+				id
+				nombre
+			}
 		}
 	}
 `;

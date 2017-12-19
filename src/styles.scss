@@ -54,28 +54,56 @@ body {
 	}
 }
 
-.mat-toolbar {
-	background: #124191;
-	border-bottom: 1px solid #bbb5b5;
-	color: white;
-	button {
-		margin-left: 20px;
+.mat {
+	&-checkbox {
+		&-checked.mat-accent .mat-checkbox-background {
+			background-color: #124191;
+		}
+		&-indeterminate.mat-accent .mat-checkbox-background {
+			background-color: #124191;
+		}
 	}
-	li {
-		list-style: none;
+	&-drawer {
+		margin-top: 63px;
+		background-color: #fff !important;
 	}
-	h2 {
-		font-weight: bold;
+	&-mini-fab {
+		background-color: #2974ff !important;
+		color: white !important;
+		margin-right: 18px !important;
+	}
+	&-slide {
+		&-toggle {
+			&.mat-checked:not(.mat-disabled) {
+				.mat-slide-toggle-thumb {
+					background-color: #124191;
+				}
+				.mat-slide-toggle-bar {
+					background-color: rgba(7, 17, 255, 0.5);
+				}
+			}
+		}
+	}
+	&-toolbar {
+		background: #124191;
+		border-bottom: 1px solid #bbb5b5;
+		color: white;
+		button {
+			margin-left: 20px;
+		}
+		li {
+			list-style: none;
+		}
+		h2 {
+			font-weight: bold;
+		}
 	}
 }
 
-.mat-mini-fab {
-	background-color: #2974ff !important;
-  color: white !important;
-  margin-right: 18px !important;
-}
 
-.mat-fab.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary,
+.mat-raised-button.mat-primary {
 	background-color: #124191;
 }
 
@@ -100,11 +128,6 @@ mat-sidenav {
 		font-weight: 400;
 		font-size: 1rem;
 	}
-}
-
-.mat-drawer {
-	margin-top: 63px;
-	background-color: #fff !important;
 }
 
 
