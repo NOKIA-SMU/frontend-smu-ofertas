@@ -20,8 +20,12 @@ export class RequestsComponent implements OnInit {
     'tas',
     'estacion',
     'subsistema',
-    'suministros',
-    'servicios',
+    // 'ordenSuministros',
+    // 'ordenSuministrosCantidad',
+    // 'ordenSuministrosComentario',
+    // 'ordenServicios',
+    // 'ordenServiciosCantidad',
+    // 'ordenServiciosComentario',
     'prioridad',
     'estadoSolicitud'
   ];
@@ -82,6 +86,10 @@ export class RequestsComponent implements OnInit {
 
   isArray(obj: any) {
     return Array.isArray(obj);
+  }
+
+  imprimir(row) {
+    debugger
   }
 
 }

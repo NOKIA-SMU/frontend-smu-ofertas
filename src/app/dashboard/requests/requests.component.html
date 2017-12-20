@@ -15,22 +15,118 @@
     <div class="example-loading-shade" *ngIf="isLoadingResults">
       <mat-spinner></mat-spinner>
     </div>
+
     <mat-table [dataSource]="dataSource" matSort>
-      <ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+
+      <!-- ID -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
+      <!-- SUPERVISER -->
+      <ng-container matColumnDef="supervisor">
+        <mat-header-cell *matHeaderCellDef> Supervisor </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.supervisor}} </mat-cell>
+      </ng-container>
+      <!-- ANALYST -->
+      <ng-container matColumnDef="analista">
+        <mat-header-cell *matHeaderCellDef> Analista </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.analista}} </mat-cell>
+      </ng-container>
+      <!-- TAS -->
+      <ng-container matColumnDef="tas">
+        <mat-header-cell *matHeaderCellDef> Tas </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.tas}} </mat-cell>
+      </ng-container>
+      <!-- STATION -->
+      <ng-container matColumnDef="estacion">
+        <mat-header-cell *matHeaderCellDef> Estación </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.estacion.nombre}} </mat-cell>
+      </ng-container>
+      <!-- SUBSYSTEM -->
+      <ng-container matColumnDef="subsistema">
+        <mat-header-cell *matHeaderCellDef> Subsistema </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.subsistema.nombre}} </mat-cell>
+      </ng-container>
+      <!-- SUPPLIES -->
+      <!-- <ng-container matColumnDef="ordenSuministros">
+        <mat-header-cell *matHeaderCellDef> Suministros </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <ng-container *ngIf="isArray(row[item])">
-            <ng-container *ngFor="let subitem of row[item]">
-              {{subitem.nombre}} <br>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngIf="!isArray(row[item])">
-            {{ row[item]?.nombre ? row[item].nombre : row[item] }}
+          <ng-container *ngFor="let subitem of row.ordenSuministros">
+            <div class="array">
+              {{subitem?.suministro?.nombre}}
+            </div>
           </ng-container>
         </mat-cell>
+      </ng-container> -->
+      <!-- SUPPLIES QTY -->
+      <!-- <ng-container matColumnDef="ordenSuministrosCantidad">
+        <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngFor="let subitem of row.ordenSuministros">
+            <div class="array">
+              {{subitem?.cantidad}}
+            </div>
+          </ng-container>
+        </mat-cell>
+      </ng-container> -->
+      <!-- SUPPLIES COMMENT -->
+      <!-- <ng-container matColumnDef="ordenSuministrosComentario">
+        <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngFor="let subitem of row.ordenSuministros">
+            <div class="array">
+              {{subitem?.comentario | truncate : 68}}
+            </div>
+          </ng-container>
+        </mat-cell>
+      </ng-container> -->
+      <!-- SERVICES -->
+      <!-- <ng-container matColumnDef="ordenServicios">
+        <mat-header-cell *matHeaderCellDef> Servicios </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngFor="let subitem of row.ordenServicios">
+            <div class="array">
+              {{subitem?.servicio?.nombre}}
+            </div>
+          </ng-container>
+        </mat-cell>
+      </ng-container> -->
+      <!-- SERVICES QTY -->
+      <!-- <ng-container matColumnDef="ordenServiciosCantidad">
+        <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngFor="let subitem of row.ordenServicios">
+            <div class="array">
+              {{subitem?.cantidad}}
+            </div>
+          </ng-container>
+        </mat-cell>
+      </ng-container> -->
+      <!-- SERVICES COMMENT -->
+      <!-- <ng-container matColumnDef="ordenServiciosComentario">
+        <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ng-container *ngFor="let subitem of row.ordenServicios">
+            <div class="array">
+              {{subitem?.comentario | truncate : 68}}
+            </div>
+          </ng-container>
+        </mat-cell>
+      </ng-container> -->
+      <!-- PRIORITY -->
+      <ng-container matColumnDef="prioridad">
+        <mat-header-cell *matHeaderCellDef> Prioridad </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.prioridad}} </mat-cell>
       </ng-container>
+      <!-- STATE -->
+      <ng-container matColumnDef="estadoSolicitud">
+        <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.estadoSolicitud}} </mat-cell>
+      </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row); imprimir(row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
     </mat-table>
   </div>
   <mat-paginator [pageSizeOptions]="[15, 50, 100]"></mat-paginator>

@@ -32,13 +32,16 @@ import { OffersComponent } from './offers/offers.component';
 import { OfferOperateComponent } from './offers/offer-operate.component';
 import { OffersService } from './offers/offers.service';
 
+import { TruncateModule } from 'ng2-truncate';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     DashboardRoutingModule,
     NgxDatatableModule,
-    MaterialModule
+    MaterialModule,
+    TruncateModule
   ],
   declarations: [
     DashboardComponent,
