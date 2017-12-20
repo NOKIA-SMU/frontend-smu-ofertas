@@ -25,53 +25,74 @@
 			<!-- REQUEST ID -->
 			<ng-container matColumnDef="solicitudId">
 				<mat-header-cell *matHeaderCellDef> Id solicitud </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.solicitud.id}} </mat-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.id : row.ordenServicio?.solicitud?.id}}
+				</mat-cell>
 			</ng-container>
 			<!-- REQUEST SUPERVISOR -->
 			<ng-container matColumnDef="solicitudSupervisor">
 				<mat-header-cell *matHeaderCellDef> Supervisor </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.solicitud.supervisor}} </mat-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.supervisor : row.ordenServicio?.solicitud?.supervisor}}
+				</mat-cell>
 			</ng-container>
 			<!-- REQUEST ESTATION -->
 			<ng-container matColumnDef="solicitudEstacionNombre">
 				<mat-header-cell *matHeaderCellDef> Estación nombre </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.solicitud.estacion.nombre}} </mat-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.nombre : row.ordenServicio?.solicitud?.estacion?.nombre}}
+				</mat-cell>
 			</ng-container>
 			<!-- REQUEST ESTATION REGION -->
 			<ng-container matColumnDef="solicitudEstacionRegion">
 				<mat-header-cell *matHeaderCellDef> Estación region </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.solicitud.estacion.region}} </mat-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.region : row.ordenServicio?.solicitud?.estacion?.region}}
+				</mat-cell>
 			</ng-container>
 			<!-- REQUEST ESTATION DEPARTAMENT -->
 			<ng-container matColumnDef="solicitudEstacionDepartamento">
 				<mat-header-cell *matHeaderCellDef> Estación departamento</mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.solicitud.estacion.departamento}} </mat-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.departamento : row.ordenServicio?.solicitud?.estacion?.departamento}}
+				</mat-cell>
 			</ng-container>
 			<!-- REQUEST ESTATION CITY -->
 			<ng-container matColumnDef="solicitudEstacionCiudad">
 				<mat-header-cell *matHeaderCellDef> Estación ciudad </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.solicitud.estacion.ciudad}} </mat-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.ciudad : row.ordenServicio?.solicitud?.estacion?.ciudad}}
+				</mat-cell>
 			</ng-container>
-			<!-- SUPPLIE ID -->
-			<ng-container matColumnDef="suministroId">
-				<mat-header-cell *matHeaderCellDef> Suministro id </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.suministro?.id}} </mat-cell>
+			<!-- SUPPLIE OR SERVICE ID -->
+			<ng-container matColumnDef="suministroServicioId">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser id </mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.id : row.ordenServicio?.servicio?.id}}
+				</mat-cell>
 			</ng-container>
-			<!-- SUPPLIE NOMBRE -->
-			<ng-container matColumnDef="suministroNombre">
-				<mat-header-cell *matHeaderCellDef> Suministro nombre </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.suministro?.nombre}} </mat-cell>
+			<!-- SUPPLIE OR SERVICE NOMBRE -->
+			<ng-container matColumnDef="suministroServicioNombre">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser nombre </mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.nombre : row.ordenServicio?.servicio?.nombre}}
+				</mat-cell>
 			</ng-container>
-			<!-- SERVICE ID -->
-			<ng-container matColumnDef="servicioId">
-				<mat-header-cell *matHeaderCellDef> Servicio id </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.servicio?.id}} </mat-cell>
+			<!-- SUPPLIE OR SERVICE QTY -->
+			<ng-container matColumnDef="suministroServicioQty">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser cantidad </mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro ? row.ordenSuministro?.cantidad : row.ordenServicio?.cantidad}}
+				</mat-cell>
 			</ng-container>
-			<!-- SERVICE NOMBRE -->
-			<ng-container matColumnDef="servicioNombre">
-				<mat-header-cell *matHeaderCellDef> Servicio nombre </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.servicio?.nombre}} </mat-cell>
+			<!-- SUPPLIE OR SERVICE COMMENT -->
+			<ng-container matColumnDef="suministroServicioComentario">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser comentario </mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro ? (row.ordenSuministro?.comentario | truncate : 160) : (row.ordenServicio?.comentario | truncate : 160)}}
+				</mat-cell>
 			</ng-container>
+
 			<!-- DYNAMICS ROWS -->
 			<ng-container *ngFor="let item of offersColumnsDynamics" matColumnDef="{{item}}">
 				<mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
@@ -82,9 +103,10 @@
 				</mat-cell>
 			</ng-container>
 			<mat-header-row *matHeaderRowDef="offersAllColumns"></mat-header-row>
-			<mat-row *matRowDef="let row; columns: offersAllColumns; let i = index"
-							(click)="selectRow(i, row);imprimir(row)"
-							[ngClass]="{ active : i == currentRowSelect}">
+			<mat-row
+				*matRowDef="let row; columns: offersAllColumns; let i = index"
+				(click)="selectRow(i, row);imprimir(row)"
+				[ngClass]="{ active : i == currentRowSelect}">
 			</mat-row>
 		</mat-table>
 	</div>

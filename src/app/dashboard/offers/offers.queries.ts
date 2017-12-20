@@ -36,9 +36,6 @@ export const queryTypesClientResponse = gql`
 	}
 `;
 
-
-
-
 export const queryOffers = gql`
 	query ($uid: String, $credential: String) {
 		ofertas(uid: $uid, credential: $credential) {
@@ -51,8 +48,10 @@ export const queryOffers = gql`
 					analista
 					estacion {
 						id
+						nombre
 						region
 						departamento
+						ciudad
 					}
 				}
 				suministro {
@@ -70,9 +69,15 @@ export const queryOffers = gql`
 					analista
 					estacion {
 						id
+						nombre
 						region
 						departamento
+						ciudad
 					}
+				}
+				servicio {
+					id
+					nombre
 				}
 				cantidad
 				comentario
@@ -139,8 +144,10 @@ export const queryOfferById = gql`
 					analista
 					estacion {
 						id
+						nombre
 						region
 						departamento
+						ciudad
 					}
 				}
 				suministro {
@@ -161,6 +168,10 @@ export const queryOfferById = gql`
 						region
 						departamento
 					}
+				}
+				servicio {
+					id
+					nombre
 				}
 				cantidad
 				comentario
