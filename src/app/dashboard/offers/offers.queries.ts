@@ -1,40 +1,16 @@
 import gql from 'graphql-tag';
 
-export const queryOfferTypes = gql`
-	query($uid:String, $credential:String) {
-		tipoOfertas(uid: $uid, credential: $credential)
-	}
-`;
-
-export const queryConfirmationsReceived = gql`
-	query($uid:String, $credential:String) {
-		confirmacionRecibido(uid: $uid, credential: $credential)
-	}
-`;
-
-export const querySubstatesOffer = gql`
-	query($uid:String, $credential:String) {
-		subestadoOferta (uid: $uid, credential: $credential)
-	}
-`;
-
-export const queryStatesOffer = gql`
-	query($uid:String, $credential:String) {
-		estadoOferta (uid: $uid, credential: $credential)
-	}
-`;
-
-export const queryModalities = gql`
-	query($uid:String, $credential:String) {
-		modalidad (uid: $uid, credential: $credential)
-	}
-`;
-
-export const queryTypesClientResponse = gql`
-	query($uid:String, $credential:String) {
-		tipoRespuestaCliente (uid: $uid, credential: $credential)
-	}
-`;
+export const queryAccessType = gql`query($uid:String, $credential:String) { tipoAcceso(uid: $uid, credential: $credential) }`;
+export const queryNatureServices = gql`query($uid:String, $credential:String) { naturalezaServicio(uid: $uid, credential: $credential) }`;
+export const queryOfferType = gql`query($uid:String, $credential:String) { tipoOferta(uid: $uid, credential: $credential) }`;
+export const queryElementType = gql`query($uid:String, $credential:String) { tipoElemento(uid: $uid, credential: $credential) }`;
+export const queryModalities = gql`query($uid:String, $credential:String) { modalidad(uid: $uid, credential: $credential) }`;
+export const queryAcquisitionTypes = gql`query($uid:String, $credential:String) { tipoAdquisicion (uid: $uid, credential: $credential) }`;
+export const queryProviders = gql`query($uid:String, $credential:String) { proveedor(uid: $uid, credential: $credential) }`;
+export const queryTypesClientResponse = gql`query($uid:String, $credential:String) { tipoRespuestaCliente (uid: $uid, credential: $credential) }`;
+export const queryConfirmationsReceived = gql`query($uid:String, $credential:String) { confirmacionRecibido(uid: $uid, credential: $credential) }`;
+export const querySubstatesOffer = gql`query($uid:String, $credential:String) { subestadoOferta (uid: $uid, credential: $credential) }`;
+export const queryStatesOffer = gql`query($uid:String, $credential:String) { estadoOferta (uid: $uid, credential: $credential) }`;
 
 export const queryOffers = gql`
 	query ($uid: String, $credential: String) {
@@ -133,7 +109,7 @@ export const queryOffers = gql`
 `;
 
 export const queryOfferById = gql`
-	query ($pk: Int, $uid: String, $credential: String) {
+	query ($pk: ID, $uid: String, $credential: String) {
 		oferta(pk: $pk, uid: $uid, credential: $credential) {
 			id
 			ordenSuministro {

@@ -7,12 +7,18 @@ import {
   queryOffers,
   queryOfferById,
   updateOferta,
-  queryOfferTypes,
+
+  queryAccessType,
+  queryNatureServices,
+  queryOfferType,
+  queryElementType,
+  queryModalities,
+  queryAcquisitionTypes,
+  queryProviders,
+  queryTypesClientResponse,
   queryConfirmationsReceived,
   querySubstatesOffer,
   queryStatesOffer,
-  queryModalities,
-  queryTypesClientResponse
 } from './offers.queries';
 
 @Injectable()
@@ -24,69 +30,84 @@ export class OffersService {
     this.userAuth = JSON.parse(localStorage.getItem('userAuth'));
   }
 
-  // Params
+  // Param
+
+  public getAccessTypes() {
+    return this.apollo.watchQuery<any>({
+      query: queryAccessType,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
+
+  public getNatureServices() {
+    return this.apollo.watchQuery<any>({
+      query: queryNatureServices,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
+
   public getOfferTypes() {
     return this.apollo.watchQuery<any>({
-      query: queryOfferTypes,
-      variables: {
-        uid: this.userAuth.uid,
-        credential: this.userAuth.token
-      }
+      query: queryOfferType,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
     }).valueChanges
   }
 
-  public getConfirmationsReceived() {
+  public getElementTypes() {
     return this.apollo.watchQuery<any>({
-      query: queryConfirmationsReceived,
-      variables: {
-        uid: this.userAuth.uid,
-        credential: this.userAuth.token
-      }
-    }).valueChanges
-  }
-
-  public getSubstatesOffer() {
-    return this.apollo.watchQuery<any>({
-      query: querySubstatesOffer,
-      variables: {
-        uid: this.userAuth.uid,
-        credential: this.userAuth.token
-      }
-    }).valueChanges
-  }
-
-  public getStatesOffer() {
-    return this.apollo.watchQuery<any>({
-      query: queryStatesOffer,
-      variables: {
-        uid: this.userAuth.uid,
-        credential: this.userAuth.token
-      }
+      query: queryElementType,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
     }).valueChanges
   }
 
   public getModalities() {
     return this.apollo.watchQuery<any>({
       query: queryModalities,
-      variables: {
-        uid: this.userAuth.uid,
-        credential: this.userAuth.token
-      }
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
+
+  public getAcquisitionTypes() {
+    return this.apollo.watchQuery<any>({
+      query: queryAcquisitionTypes,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
+
+  public getProviders() {
+    return this.apollo.watchQuery<any>({
+      query: queryProviders,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
     }).valueChanges
   }
 
   public getTypesClientResponse() {
     return this.apollo.watchQuery<any>({
       query: queryTypesClientResponse,
-      variables: {
-        uid: this.userAuth.uid,
-        credential: this.userAuth.token
-      }
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
     }).valueChanges
   }
 
+  public getConfirmationsReceived() {
+    return this.apollo.watchQuery<any>({
+      query: queryConfirmationsReceived,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
 
+  public getSubstatesOffer() {
+    return this.apollo.watchQuery<any>({
+      query: querySubstatesOffer,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
 
+  public getStatesOffer() {
+    return this.apollo.watchQuery<any>({
+      query: queryStatesOffer,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
 
 
   public getOffers() {
@@ -115,46 +136,50 @@ export class OffersService {
       mutation: updateOferta,
       variables: {
         pk: offer.id,
-        solicitud: offer.solicitudId,
-        suministro: offer.suministroId,
-        servicio: offer.servicioId,
-        cantidad: offer.cantidad,
+        ordenSuministro: offer.ordenSuministro,
+        ordenServicio: offer.ordenServicio,
+        tipoAcceso: offer.tipoAcceso,
+        naturalezaServicio: offer.naturalezaServicio,
+        descripcionOds: offer.descripcionOds,
+        fechaRecibidoOds: offer.fechaRecibidoOds,
         tipoOferta: offer.tipoOferta,
         tarea: offer.tarea,
         descripcionTarea: offer.descripcionTarea,
         encargadoCliente: offer.encargadoCliente,
+        tipoElemento: offer.tipoElemento,
         fechaEjecucion: offer.fechaEjecucion,
         confirmacionRecibido: offer.confirmacionRecibido,
         comentarioSupervisor: offer.comentarioSupervisor,
-        subestadoOferta: offer.subestadoOferta,
-        estadoOferta: offer.estadoOferta,
-        usuario: offer.usuario,
-        numeroOferta: offer.numeroOferta,
-        modalidad: offer.modalidad,
+        usuario: offer.Susuario,
+        numeroOferta: offer.SnumeroOferta,
+        modalidad: offer.Smodalidad,
         precioUnidadProveedor: offer.precioUnidadProveedor,
-        precioTotalProveedor: offer.precioTotalProveedor,
         precioUnidadVenta: offer.precioUnidadVenta,
-        precioTotalVenta: offer.precioTotalVenta,
         precioUnidadCliente: offer.precioUnidadCliente,
-        precioTotalCliente: offer.precioTotalCliente,
         margen: offer.margen,
         tipoAdquisicion: offer.tipoAdquisicion,
-        fechaRecibidoCliente: offer.fechaRecibidoCliente,
+        proveedor: offer.proveedor,
+        tasOfertaAnterior: offer.tasOfertaAnterior,
         fechaDespachoSupervisor: offer.fechaDespachoSupervisor,
         fechaDespachoCompras: offer.fechaDespachoCompras,
         fechaRespuestaCompras: offer.fechaRespuestaCompras,
-        fechaEnvioCliente: offer.fechaEnvioCliente,
+        fechaEnvioOfertaCliente: offer.fechaEnvioOfertaCliente,
+        fechaEnvioOfertaClienteNegociada: offer.fechaEnvioOfertaClienteNegociada,
         fechaRespuestaCliente: offer.fechaRespuestaCliente,
+        fechaRespuestaClienteNegociada: offer.fechaRespuestaClienteNegociada,
         tipoRespuestaCliente: offer.tipoRespuestaCliente,
+        tipoRespuestaClienteNegociada: offer.tipoRespuestaClienteNegociada,
         po: offer.po,
         fechaPo: offer.fechaPo,
         comentarioAnalista: offer.comentarioAnalista,
+        subestadoOferta: offer.SsubestadoOferta,
+        estadoOferta: offer.SestadoOferta,
         fechaEntregaAlmacen: offer.fechaEntregaAlmacen,
         comentarioAlmacenista: offer.comentarioAlmacenista,
         comentarioCoordinador: offer.comentarioCoordinador,
         valorConciliadoCliente: offer.valorConciliadoCliente,
         fechaConciliadoCliente: offer.fechaConciliadoCliente,
-        comentarioFacturador: offer.comentarioFacturador,
+        comentarioFacturador: offer.ScomentarioFacturador,
         fechaEnvioActaSmu: offer.fechaEnvioActaSmu,
         comentarioActa: offer.comentarioActa,
         fechaFirmaActaSmu: offer.fechaFirmaActaSmu,

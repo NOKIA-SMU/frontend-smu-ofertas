@@ -15,7 +15,10 @@ export class OfferOperateComponent implements OnInit {
   isNew: boolean;
   offer: any;
 
+  accessTypes: string[];
   offerTypes: string[];
+  natureServices: string[];
+
   confirmationsReceived: string[];
   substatesOffer: string[];
   statesOffer: string[];
@@ -37,6 +40,21 @@ export class OfferOperateComponent implements OnInit {
       }, error => {
         debugger
       })
+
+    this.offersService.getAccessTypes()
+      .subscribe(res => {
+        this.accessTypes = res.data.tipoAcceso
+      }, error => {
+        debugger
+      })
+
+    this.offersService.getNatureServices()
+      .subscribe(res => {
+        this.natureServices = res.data.naturalezaServicios;
+      }, error => {
+        debugger
+      })
+
     this.offersService.getOfferTypes()
       .subscribe(res => {
         this.offerTypes = res.data.tipoOfertas;
@@ -87,57 +105,64 @@ export class OfferOperateComponent implements OnInit {
         .subscribe(res => {
           this.offer = {
             id: res.data.oferta.id,
-            solicitudId: res.data.oferta.solicitud.id,
-            solicitudSupervisor: res.data.oferta.solicitud.supervisor,
-            solicitudEstacionNombre: res.data.oferta.solicitud.estacion.nombre,
-            solicitudEstacionRegion: res.data.oferta.solicitud.estacion.region,
-            solicitudEstacionDepartamento: res.data.oferta.solicitud.estacion.departamento,
-            solicitudEstacionCiudad: res.data.oferta.solicitud.estacion.ciudad,
-            suministroId: res.data.oferta.suministro ? res.data.oferta.suministro.id : null,
-            suministroNombre: res.data.oferta.suministro ? res.data.oferta.suministro.nombre : null,
-            servicioId: res.data.oferta.servicio ? res.data.oferta.servicio.id : null,
-            servicioNombre: res.data.oferta.servicio ? res.data.oferta.servicio.nombre : null,
-            cantidad: res.data.oferta.cantidad,
+            ordenSuministro: res.data.oferta.ordenSuministro.id,
+            ordenServicio: res.data.oferta.ordenServicio.id,
+            tipoAcceso: res.data.oferta.tipoAcceso,
+            naturalezaServicio: res.data.oferta.naturalezaServicio,
+            descripcionOds: res.data.oferta.descripcionOds,
+            fechaRecibidoOds: res.data.oferta.fechaRecibidoOds,
             tipoOferta: res.data.oferta.tipoOferta,
             tarea: res.data.oferta.tarea,
             descripcionTarea: res.data.oferta.descripcionTarea,
             encargadoCliente: res.data.oferta.encargadoCliente,
+            tipoElemento: res.data.oferta.tipoElemento,
             fechaEjecucion: res.data.oferta.fechaEjecucion,
             confirmacionRecibido: res.data.oferta.confirmacionRecibido,
             comentarioSupervisor: res.data.oferta.comentarioSupervisor,
-            subestadoOferta: res.data.oferta.subestadoOferta,
-            estadoOferta: res.data.oferta.estadoOferta,
-            usuario: res.data.oferta.usuario,
-            numeroOferta: res.data.oferta.numeroOferta,
-            modalidad: res.data.oferta.modalidad,
+            usuario: res.data.oferta.Susuario,
+            numeroOferta: res.data.oferta.SnumeroOferta,
+            modalidad: res.data.oferta.Smodalidad,
             precioUnidadProveedor: res.data.oferta.precioUnidadProveedor,
-            precioTotalProveedor: res.data.oferta.precioTotalProveedor,
             precioUnidadVenta: res.data.oferta.precioUnidadVenta,
-            precioTotalVenta: res.data.oferta.precioTotalVenta,
             precioUnidadCliente: res.data.oferta.precioUnidadCliente,
-            precioTotalCliente: res.data.oferta.precioTotalCliente,
             margen: res.data.oferta.margen,
             tipoAdquisicion: res.data.oferta.tipoAdquisicion,
-            fechaRecibidoCliente: res.data.oferta.fechaRecibidoCliente,
+            proveedor: res.data.oferta.proveedor,
+            tasOfertaAnterior: res.data.oferta.tasOfertaAnterior,
             fechaDespachoSupervisor: res.data.oferta.fechaDespachoSupervisor,
             fechaDespachoCompras: res.data.oferta.fechaDespachoCompras,
             fechaRespuestaCompras: res.data.oferta.fechaRespuestaCompras,
-            fechaEnvioCliente: res.data.oferta.fechaEnvioCliente,
+            fechaEnvioOfertaCliente: res.data.oferta.fechaEnvioOfertaCliente,
+            fechaEnvioOfertaClienteNegociada: res.data.oferta.fechaEnvioOfertaClienteNegociada,
             fechaRespuestaCliente: res.data.oferta.fechaRespuestaCliente,
+            fechaRespuestaClienteNegociada: res.data.oferta.fechaRespuestaClienteNegociada,
             tipoRespuestaCliente: res.data.oferta.tipoRespuestaCliente,
+            tipoRespuestaClienteNegociada: res.data.oferta.tipoRespuestaClienteNegociada,
             po: res.data.oferta.po,
             fechaPo: res.data.oferta.fechaPo,
             comentarioAnalista: res.data.oferta.comentarioAnalista,
+            subestadoOferta: res.data.oferta.SsubestadoOferta,
+            estadoOferta: res.data.oferta.SestadoOferta,
             fechaEntregaAlmacen: res.data.oferta.fechaEntregaAlmacen,
             comentarioAlmacenista: res.data.oferta.comentarioAlmacenista,
             comentarioCoordinador: res.data.oferta.comentarioCoordinador,
             valorConciliadoCliente: res.data.oferta.valorConciliadoCliente,
             fechaConciliadoCliente: res.data.oferta.fechaConciliadoCliente,
-            comentarioFacturador: res.data.oferta.comentarioFacturador,
+            comentarioFacturador: res.data.oferta.ScomentarioFacturador,
             fechaEnvioActaSmu: res.data.oferta.fechaEnvioActaSmu,
             comentarioActa: res.data.oferta.comentarioActa,
             fechaFirmaActaSmu: res.data.oferta.fechaFirmaActaSmu,
-            fechaGrSmu: res.data.oferta.fechaGrSmu
+            fechaGrSmu: res.data.oferta.fechaGrSmu,
+            // suministroId: res.data.oferta.suministro ? res.data.oferta.suministro.id : null,
+            // suministroNombre: res.data.oferta.suministro ? res.data.oferta.suministro.nombre : null,
+            // servicioId: res.data.oferta.servicio ? res.data.oferta.servicio.id : null,
+            // servicioNombre: res.data.oferta.servicio ? res.data.oferta.servicio.nombre : null,
+            // cantidad: res.data.oferta.cantidad,
+            // tipoOferta: res.data.oferta.tipoOferta,
+            // tarea: res.data.oferta.tarea,
+            // descripcionTarea: res.data.oferta.descripcionTarea,
+            // encargadoCliente: res.data.oferta.encargadoCliente,
+            // fechaEjecucion: res.data.oferta.fechaEjecucion,
           }
         }, error => {
           debugger

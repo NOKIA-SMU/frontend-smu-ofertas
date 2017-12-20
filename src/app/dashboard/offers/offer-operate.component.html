@@ -1,6 +1,14 @@
 <h2 class="title">Oferta</h2>
 <form #offerForm="ngForm" (ngSubmit)="saveOffert()" *ngIf="offer">
   <ng-container *ngIf="actualRoles?.Supervisor || actualRoles?.Analista">
+    <!-- ACCESS TYPE -->
+    <mat-form-field>
+      <mat-select placeholder="Tipo de acceso" name="tipoAcceso" [(ngModel)]="offer.tipoAcceso">
+        <mat-option *ngFor="let item of offerTypes" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <!-- OFFER TYPE -->
     <mat-form-field>
       <mat-select placeholder="Tipo de oferta" name="tipoOferta" [(ngModel)]="offer.tipoOferta">
