@@ -43,34 +43,44 @@ export const queryOffers = gql`
 	query ($uid: String, $credential: String) {
 		ofertas(uid: $uid, credential: $credential) {
 			id
-			orden {
+			ordenSuministro {
 				id
-				cantidad
 				solicitud {
 					id
 					supervisor
+					analista
 					estacion {
 						id
-						nombre
 						region
 						departamento
-						ciudad
-						__typename
 					}
-					__typename
 				}
 				suministro {
 					id
 					nombre
-					__typename
 				}
-				servicio {
-					id
-					nombre
-					__typename
-				}
-				__typename
+				cantidad
+				comentario
 			}
+			ordenServicio {
+				id
+				solicitud {
+					id
+					supervisor
+					analista
+					estacion {
+						id
+						region
+						departamento
+					}
+				}
+				cantidad
+				comentario
+			}
+			tipoAcceso
+			naturalezaServicio
+			descripcionOds
+			fechaRecibidoOds
 			tipoOferta
 			tarea
 			descripcionTarea
@@ -78,29 +88,30 @@ export const queryOffers = gql`
 			fechaEjecucion
 			confirmacionRecibido
 			comentarioSupervisor
-			subestadoOferta
-			estadoOferta
 			usuario
 			numeroOferta
 			modalidad
 			precioUnidadProveedor
-			precioTotalProveedor
 			precioUnidadVenta
-			precioTotalVenta
 			precioUnidadCliente
-			precioTotalCliente
 			margen
 			tipoAdquisicion
-			fechaRecibidoCliente
+			proveedor
+			tasOfertaAnterior
 			fechaDespachoSupervisor
 			fechaDespachoCompras
 			fechaRespuestaCompras
-			fechaEnvioCliente
+			fechaEnvioOfertaCliente
+			fechaEnvioOfertaClienteNegociada
 			fechaRespuestaCliente
+			fechaRespuestaClienteNegociada
 			tipoRespuestaCliente
+			tipoRespuestaClienteNegociada
 			po
 			fechaPo
 			comentarioAnalista
+			subestadoOferta
+			estadoOferta
 			fechaEntregaAlmacen
 			comentarioAlmacenista
 			comentarioCoordinador
@@ -120,30 +131,44 @@ export const queryOfferById = gql`
 	query ($pk: Int, $uid: String, $credential: String) {
 		oferta(pk: $pk, uid: $uid, credential: $credential) {
 			id
-			solicitud {
+			ordenSuministro {
 				id
-				supervisor
-				estacion {
+				solicitud {
+					id
+					supervisor
+					analista
+					estacion {
+						id
+						region
+						departamento
+					}
+				}
+				suministro {
 					id
 					nombre
-					region
-					departamento
-					ciudad
-					__typename
 				}
-				__typename
+				cantidad
+				comentario
 			}
-			suministro {
+			ordenServicio {
 				id
-				nombre
-				__typename
+				solicitud {
+					id
+					supervisor
+					analista
+					estacion {
+						id
+						region
+						departamento
+					}
+				}
+				cantidad
+				comentario
 			}
-			servicio {
-				id
-				nombre
-				__typename
-			}
-			cantidad
+			tipoAcceso
+			naturalezaServicio
+			descripcionOds
+			fechaRecibidoOds
 			tipoOferta
 			tarea
 			descripcionTarea
@@ -151,29 +176,30 @@ export const queryOfferById = gql`
 			fechaEjecucion
 			confirmacionRecibido
 			comentarioSupervisor
-			subestadoOferta
-			estadoOferta
 			usuario
 			numeroOferta
 			modalidad
 			precioUnidadProveedor
-			precioTotalProveedor
 			precioUnidadVenta
-			precioTotalVenta
 			precioUnidadCliente
-			precioTotalCliente
 			margen
 			tipoAdquisicion
-			fechaRecibidoCliente
+			proveedor
+			tasOfertaAnterior
 			fechaDespachoSupervisor
 			fechaDespachoCompras
 			fechaRespuestaCompras
-			fechaEnvioCliente
+			fechaEnvioOfertaCliente
+			fechaEnvioOfertaClienteNegociada
 			fechaRespuestaCliente
+			fechaRespuestaClienteNegociada
 			tipoRespuestaCliente
+			tipoRespuestaClienteNegociada
 			po
 			fechaPo
 			comentarioAnalista
+			subestadoOferta
+			estadoOferta
 			fechaEntregaAlmacen
 			comentarioAlmacenista
 			comentarioCoordinador
@@ -192,42 +218,44 @@ export const queryOfferById = gql`
 export const updateOferta = gql`
 	mutation (
 		$pk: ID!,
-		$solicitud: ID!,
-    $suministro: ID,
-    $servicio: ID,
-		$cantidad: Int,
+		$ordenSuministro: ID,
+		$ordenServicio: ID,
+		$tipoAcceso: String,
+		$naturalezaServicio: String,
+		$descripcionOds: String,
+		$fechaRecibidoOds: Date,
 		$tipoOferta: String,
 		$tarea: String,
 		$descripcionTarea: String,
-		$uid: String,
-		$credential: String,
 		$encargadoCliente: String,
+		$tipoElemento: String,
 		$fechaEjecucion: Date,
 		$confirmacionRecibido: String,
 		$comentarioSupervisor: String,
-		$subestadoOferta:String,
-		$estadoOferta:String,
 		$usuario:String,
 		$numeroOferta:String,
 		$modalidad:String,
 		$precioUnidadProveedor: Float,
-		$precioTotalProveedor: Float,
 		$precioUnidadVenta: Float,
-		$precioTotalVenta: Float,
 		$precioUnidadCliente: Float,
-		$precioTotalCliente: Float,
 		$margen: Int,
 		$tipoAdquisicion: String,
-		$fechaRecibidoCliente: Date,
+		$proveedor: String,
+		$tasOfertaAnterior: String,
 		$fechaDespachoSupervisor: Date,
 		$fechaDespachoCompras: Date,
 		$fechaRespuestaCompras: Date,
-		$fechaEnvioCliente: Date,
+		$fechaEnvioOfertaCliente: Date,
+		$fechaEnvioOfertaClienteNegociada: Date,
 		$fechaRespuestaCliente: Date,
+		$fechaRespuestaClienteNegociada: Date,
 		$tipoRespuestaCliente: String,
+		$tipoRespuestaClienteNegociada: String,
 		$po: String,
 		$fechaPo: Date,
 		$comentarioAnalista: String,
+		$subestadoOferta:String,
+		$estadoOferta:String,
 		$fechaEntregaAlmacen: Date,
 		$comentarioAlmacenista: String,
 		$comentarioCoordinador: String,
@@ -238,85 +266,102 @@ export const updateOferta = gql`
 		$comentarioActa: String,
 		$fechaFirmaActaSmu: Date,
 		$fechaGrSmu: Date
+		$uid: String,
+		$credential: String,
 	) {
 		updateOferta(
-			input: {
-				pk: $pk,
-				solicitud: $solicitud,
-				suministro: $suministro,
-				servicio: $servicio ,
-				cantidad: $cantidad,
-				tipoOferta: $tipoOferta,
-				tarea: $tarea,
-				descripcionTarea: $descripcionTarea,
-				encargadoCliente: $encargadoCliente,
-				fechaEjecucion: $fechaEjecucion,
-				confirmacionRecibido: $confirmacionRecibido,
-				comentarioSupervisor: $comentarioSupervisor,
-				subestadoOferta: $subestadoOferta,
-				estadoOferta: $estadoOferta,
-				usuario: $usuario,
-				numeroOferta: $numeroOferta,
-				modalidad: $modalidad,
-				precioUnidadProveedor: $precioUnidadProveedor,
-				precioTotalProveedor: $precioTotalProveedor,
-				precioUnidadVenta: $precioUnidadVenta,
-				precioTotalVenta: $precioTotalVenta,
-				precioUnidadCliente: $precioUnidadCliente,
-				precioTotalCliente: $precioTotalCliente,
-				margen: $margen,
-				tipoAdquisicion: $tipoAdquisicion,
-				fechaRecibidoCliente: $fechaRecibidoCliente,
-				fechaDespachoSupervisor: $fechaDespachoSupervisor,
-				fechaDespachoCompras: $fechaDespachoCompras,
-				fechaRespuestaCompras: $fechaRespuestaCompras,
-				fechaEnvioCliente: $fechaEnvioCliente,
-				fechaRespuestaCliente: $fechaRespuestaCliente,
-				tipoRespuestaCliente: $tipoRespuestaCliente,
-				po: $po,
-				fechaPo: $fechaPo,
-				comentarioAnalista: $comentarioAnalista,
-				fechaEntregaAlmacen: $fechaEntregaAlmacen,
-				comentarioAlmacenista: $comentarioAlmacenista,
-				comentarioCoordinador: $comentarioCoordinador,
-				valorConciliadoCliente: $valorConciliadoCliente,
-				fechaConciliadoCliente: $fechaConciliadoCliente,
-				comentarioFacturador:$comentarioFacturador,
-				fechaEnvioActaSmu: $fechaEnvioActaSmu,
-				comentarioActa: $comentarioActa,
-				fechaFirmaActaSmu: $fechaFirmaActaSmu,
-				fechaGrSmu: $fechaGrSmu,
-				uid: $uid,
-				credential: $credential
-			}
+			pk: $pk,
+			ordenSuministro: $ordenSuministro,
+			ordenServicio: $ordenServicio,
+			tipoAcceso: $tipoAcceso,
+			naturalezaServicio: $naturalezaServicio,
+			descripcionOds: $descripcionOds,
+			fechaRecibidoOds: $fechaRecibidoOds,
+			tipoOferta: $tipoOferta,
+			tarea: $tarea,
+			descripcionTarea: $descripcionTarea,
+			encargadoCliente: $encargadoCliente,
+			tipoElemento: $tipoElemento,
+			fechaEjecucion: $fechaEjecucion,
+			confirmacionRecibido: $confirmacionRecibido,
+			comentarioSupervisor: $comentarioSupervisor,
+			usuario:$Susuario,
+			numeroOferta:$SnumeroOferta,
+			modalidad:$Smodalidad,
+			precioUnidadProveedor: $precioUnidadProveedor,
+			precioUnidadVenta: $precioUnidadVenta,
+			precioUnidadCliente: $precioUnidadCliente,
+			margen: $margen,
+			tipoAdquisicion: $tipoAdquisicion,
+			proveedor: $proveedor,
+			tasOfertaAnterior: $tasOfertaAnterior,
+			fechaDespachoSupervisor: $fechaDespachoSupervisor,
+			fechaDespachoCompras: $fechaDespachoCompras,
+			fechaRespuestaCompras: $fechaRespuestaCompras,
+			fechaEnvioOfertaCliente: $fechaEnvioOfertaCliente,
+			fechaEnvioOfertaClienteNegociada: $fechaEnvioOfertaClienteNegociada,
+			fechaRespuestaCliente: $fechaRespuestaCliente,
+			fechaRespuestaClienteNegociada: $fechaRespuestaClienteNegociada,
+			tipoRespuestaCliente: $tipoRespuestaCliente,
+			tipoRespuestaClienteNegociada: $tipoRespuestaClienteNegociada,
+			po: $po,
+			fechaPo: $fechaPo,
+			comentarioAnalista: $comentarioAnalista,
+			subestadoOferta:$SsubestadoOferta,
+			estadoOferta:$SestadoOferta,
+			fechaEntregaAlmacen: $fechaEntregaAlmacen,
+			comentarioAlmacenista: $comentarioAlmacenista,
+			comentarioCoordinador: $comentarioCoordinador,
+			valorConciliadoCliente: $valorConciliadoCliente,
+			fechaConciliadoCliente: $fechaConciliadoCliente,
+			comentarioFacturador:$ScomentarioFacturador,
+			fechaEnvioActaSmu: $fechaEnvioActaSmu,
+			comentarioActa: $comentarioActa,
+			fechaFirmaActaSmu: $fechaFirmaActaSmu,
+			fechaGrSmu: $fechaGrSmu
+			uid: $uid,
+			credential: $credential
 		) {
 			oferta {
-
 				id
-				solicitud {
+				ordenSuministro {
 					id
-					supervisor
-					estacion {
+					solicitud {
+						id
+						supervisor
+						analista
+						estacion {
+							id
+							region
+							departamento
+						}
+					}
+					suministro {
 						id
 						nombre
-						region
-						departamento
-						ciudad
-						__typename
 					}
-					__typename
+					cantidad
+					comentario
 				}
-				suministro {
+				ordenServicio {
 					id
-					nombre
-					__typename
+					solicitud {
+						id
+						supervisor
+						analista
+						estacion {
+							id
+							region
+							departamento
+						}
+					}
+					cantidad
+					comentario
 				}
-				servicio {
-					id
-					nombre
-					__typename
-				}
-				cantidad
+				tipoAcceso
+				naturalezaServicio
+				descripcionOds
+				fechaRecibidoOds
 				tipoOferta
 				tarea
 				descripcionTarea
@@ -324,29 +369,30 @@ export const updateOferta = gql`
 				fechaEjecucion
 				confirmacionRecibido
 				comentarioSupervisor
-				subestadoOferta
-				estadoOferta
 				usuario
 				numeroOferta
 				modalidad
 				precioUnidadProveedor
-				precioTotalProveedor
 				precioUnidadVenta
-				precioTotalVenta
 				precioUnidadCliente
-				precioTotalCliente
 				margen
 				tipoAdquisicion
-				fechaRecibidoCliente
+				proveedor
+				tasOfertaAnterior
 				fechaDespachoSupervisor
 				fechaDespachoCompras
 				fechaRespuestaCompras
-				fechaEnvioCliente
+				fechaEnvioOfertaCliente
+				fechaEnvioOfertaClienteNegociada
 				fechaRespuestaCliente
+				fechaRespuestaClienteNegociada
 				tipoRespuestaCliente
+				tipoRespuestaClienteNegociada
 				po
 				fechaPo
 				comentarioAnalista
+				subestadoOferta
+				estadoOferta
 				fechaEntregaAlmacen
 				comentarioAlmacenista
 				comentarioCoordinador

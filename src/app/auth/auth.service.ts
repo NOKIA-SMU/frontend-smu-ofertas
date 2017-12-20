@@ -25,7 +25,6 @@ export class AuthService {
   profilesCollection: AngularFirestoreCollection<Profile>;
   profiles: Observable<Profile[]>;
   user: Observable<Profile>;
-  // currentUser: any;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -39,9 +38,9 @@ export class AuthService {
     this.user = this.afAuth.authState
       .switchMap(user => {
         if (user) {
-          return this.afs.doc<Profile>(`profiles/${user.uid}`).valueChanges()
+          return this.afs.doc<Profile>(`profiles/${user.uid}`).valueChanges();
         } else {
-          return Observable.of(null)
+          return Observable.of(null);
         }
       })
   }
@@ -55,19 +54,20 @@ export class AuthService {
   }
 
   public createUser(user: Profile, id: string) {
-    return this.profilesCollection.doc(id).set(user)
+    return this.profilesCollection.doc(id).set(user);
   }
 
   public currentUser() {
-    return this.user
+    return this.user;
   }
 
   public logout() {
-    return this.afAuth.auth.signOut()
+    localStorage.clear();
+    return this.afAuth.auth.signOut();
   }
 
   public getToken() {
-    return this.afAuth.auth.currentUser.getIdToken()
+    return this.afAuth.auth.currentUser.getIdToken();
   }
 
   public sendToken(uid: string, token: string) {
@@ -88,7 +88,7 @@ export class AuthService {
     `;
     return this.apollo.mutate({
       mutation: postToken
-    })
+    });
   }
 
   public updateToken(uid: string, token: string) {
@@ -124,7 +124,7 @@ export class AuthService {
     `;
     return this.apollo.mutate({
       mutation: removeToken
-    })
+    });
   }
 
 }
