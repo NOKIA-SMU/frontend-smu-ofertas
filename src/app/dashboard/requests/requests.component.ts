@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { RequestsService } from "./requests.service";
+import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
 
 @Component({
@@ -34,18 +35,41 @@ export class RequestsComponent implements OnInit {
   isLoadingResults = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
+  public currentUser: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private requestsService: RequestsService, private router: Router, private appService: AppService) { }
+  constructor(
+    private requestsService: RequestsService,
+    private router: Router,
+    public authService: AuthService,
+    private appService: AppService
+  ) { }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
+    this.authService.currentUser()
+      .subscribe(res => {
+        this.currentUser = res;
+        console.log(res)
+      }, error => {
+        debugger
+      })
     this.requestsService.getRequests()
-      .subscribe(({ data }) => {
-        this.dataSource = new MatTableDataSource(data.solicitudes);
+      .subscribe(res => {
+        debugger
+        let filteredRequests = [];
+        if (this.currentUser.roles.Administrador) {
+          this.dataSource = new MatTableDataSource(res.data.solicitudes);
+        } else if (this.currentUser.roles.Supervisor) {
+          for (let i = 0; i <= res.data.solicitudes.length; i++) {
+            if (this.currentUser.supervisorId == res.data.solicitudes[i].id) {
+
+            }
+          }
+        }
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.isLoadingResults = false;
