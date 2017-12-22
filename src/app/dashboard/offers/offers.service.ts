@@ -7,7 +7,6 @@ import {
   queryOffers,
   queryOfferById,
   updateOferta,
-
   queryAccessType,
   queryNatureServices,
   queryOfferType,
@@ -109,7 +108,6 @@ export class OffersService {
     }).valueChanges
   }
 
-
   public getOffers() {
     return this.apollo.watchQuery<any>({
       query: queryOffers,
@@ -156,7 +154,6 @@ export class OffersService {
         precioUnidadProveedor: offer.precioUnidadProveedor,
         precioUnidadVenta: offer.precioUnidadVenta,
         precioUnidadCliente: offer.precioUnidadCliente,
-        margen: offer.margen,
         tipoAdquisicion: offer.tipoAdquisicion,
         proveedor: offer.proveedor,
         tasOfertaAnterior: offer.tasOfertaAnterior,
@@ -186,7 +183,13 @@ export class OffersService {
         fechaGrSmu: offer.fechaGrSmu,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [
+        {
+          query: queryOffers,
+          variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+        }
+      ]
     })
   }
 

@@ -62,6 +62,7 @@ export const queryOffers = gql`
 			naturalezaServicio
 			descripcionOds
 			fechaRecibidoOds
+			semanaRecibidoOds
 			tipoOferta
 			tarea
 			descripcionTarea
@@ -73,19 +74,29 @@ export const queryOffers = gql`
 			numeroOferta
 			modalidad
 			precioUnidadProveedor
+			precioTotalProveedor
 			precioUnidadVenta
+			precioTotalVenta
 			precioUnidadCliente
+			precioTotalCliente
 			margen
 			tipoAdquisicion
 			proveedor
 			tasOfertaAnterior
 			fechaDespachoSupervisor
+			semanaDespachoSupervisor
 			fechaDespachoCompras
+			semanaDespachoCompras
 			fechaRespuestaCompras
+			semanaRespuestaCompras
 			fechaEnvioOfertaCliente
+			semanaEnvioOfertaCliente
 			fechaEnvioOfertaClienteNegociada
+			semanaEnvioOfertaClienteNegociada
 			fechaRespuestaCliente
+			semanaRespuestaCliente
 			fechaRespuestaClienteNegociada
+			semanaRespuestaClienteNegociada
 			tipoRespuestaCliente
 			tipoRespuestaClienteNegociada
 			po
@@ -156,6 +167,7 @@ export const queryOfferById = gql`
 			naturalezaServicio
 			descripcionOds
 			fechaRecibidoOds
+			semanaRecibidoOds
 			tipoOferta
 			tarea
 			descripcionTarea
@@ -169,7 +181,6 @@ export const queryOfferById = gql`
 			precioUnidadProveedor
 			precioUnidadVenta
 			precioUnidadCliente
-			margen
 			tipoAdquisicion
 			proveedor
 			tasOfertaAnterior
@@ -225,7 +236,6 @@ export const updateOferta = gql`
 		$precioUnidadProveedor: Float,
 		$precioUnidadVenta: Float,
 		$precioUnidadCliente: Float,
-		$margen: Int,
 		$tipoAdquisicion: String,
 		$proveedor: String,
 		$tasOfertaAnterior: String,
@@ -252,9 +262,9 @@ export const updateOferta = gql`
 		$fechaEnvioActaSmu: Date,
 		$comentarioActa: String,
 		$fechaFirmaActaSmu: Date,
-		$fechaGrSmu: Date
-		$uid: String,
-		$credential: String,
+		$fechaGrSmu: Date,
+		$uid: String!,
+		$credential: String!,
 	) {
 		updateOferta(
 			pk: $pk,
@@ -272,13 +282,12 @@ export const updateOferta = gql`
 			fechaEjecucion: $fechaEjecucion,
 			confirmacionRecibido: $confirmacionRecibido,
 			comentarioSupervisor: $comentarioSupervisor,
-			usuario:$Susuario,
-			numeroOferta:$SnumeroOferta,
-			modalidad:$Smodalidad,
+			usuario: $usuario,
+			numeroOferta: $numeroOferta,
+			modalidad: $modalidad,
 			precioUnidadProveedor: $precioUnidadProveedor,
 			precioUnidadVenta: $precioUnidadVenta,
 			precioUnidadCliente: $precioUnidadCliente,
-			margen: $margen,
 			tipoAdquisicion: $tipoAdquisicion,
 			proveedor: $proveedor,
 			tasOfertaAnterior: $tasOfertaAnterior,
@@ -294,18 +303,18 @@ export const updateOferta = gql`
 			po: $po,
 			fechaPo: $fechaPo,
 			comentarioAnalista: $comentarioAnalista,
-			subestadoOferta:$SsubestadoOferta,
-			estadoOferta:$SestadoOferta,
+			subestadoOferta: $subestadoOferta,
+			estadoOferta: $estadoOferta,
 			fechaEntregaAlmacen: $fechaEntregaAlmacen,
 			comentarioAlmacenista: $comentarioAlmacenista,
 			comentarioCoordinador: $comentarioCoordinador,
 			valorConciliadoCliente: $valorConciliadoCliente,
 			fechaConciliadoCliente: $fechaConciliadoCliente,
-			comentarioFacturador:$ScomentarioFacturador,
+			comentarioFacturador: $comentarioFacturador,
 			fechaEnvioActaSmu: $fechaEnvioActaSmu,
 			comentarioActa: $comentarioActa,
 			fechaFirmaActaSmu: $fechaFirmaActaSmu,
-			fechaGrSmu: $fechaGrSmu
+			fechaGrSmu: $fechaGrSmu,
 			uid: $uid,
 			credential: $credential
 		) {
@@ -362,7 +371,6 @@ export const updateOferta = gql`
 				precioUnidadProveedor
 				precioUnidadVenta
 				precioUnidadCliente
-				margen
 				tipoAdquisicion
 				proveedor
 				tasOfertaAnterior

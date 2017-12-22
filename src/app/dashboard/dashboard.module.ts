@@ -33,6 +33,18 @@ import { OfferOperateComponent } from './offers/offer-operate.component';
 import { OffersService } from './offers/offers.service';
 
 import { TruncateModule } from 'ng2-truncate';
+import { Pipe, PipeTransform } from '@angular/core';
+
+
+@Pipe({ name: 'replaceLineBreaks' })
+export class ReplaceLineBreaks implements PipeTransform {
+  transform(value: string): string {
+    if (value) {
+      let newValue = value.split('_').join(' ');
+      return `${newValue}`;
+    }
+  }
+}
 
 @NgModule({
   imports: [
@@ -56,6 +68,7 @@ import { TruncateModule } from 'ng2-truncate';
     ServicesComponent,
     ServiceOperateComponent,
     OffersComponent,
+    ReplaceLineBreaks,
     OfferOperateComponent],
   providers: [
     DashboardService,
@@ -69,3 +82,6 @@ import { TruncateModule } from 'ng2-truncate';
 })
 
 export class DashboardModule { }
+
+
+

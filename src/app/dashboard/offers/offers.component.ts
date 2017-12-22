@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { OffersService } from "./offers.service";
 import { AppService } from "../../app.service";
 
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-offers',
@@ -32,6 +33,7 @@ export class OffersComponent implements OnInit {
     'naturalezaServicio',
     'descripcionOds',
     'fechaRecibidoOds',
+    'semanaRecibidoOds',
     'tipoOferta',
     'tarea',
     'descripcionTarea',
@@ -43,19 +45,29 @@ export class OffersComponent implements OnInit {
     'numeroOferta',
     'modalidad',
     'precioUnidadProveedor',
+    'precioTotalProveedor',
     'precioUnidadVenta',
+    'precioTotalVenta',
     'precioUnidadCliente',
+    'precioTotalCliente',
     'margen',
     'tipoAdquisicion',
     'proveedor',
     'tasOfertaAnterior',
     'fechaDespachoSupervisor',
+    'semanaDespachoSupervisor',
     'fechaDespachoCompras',
+    'semanaDespachoCompras',
     'fechaRespuestaCompras',
+    'semanaRespuestaCompras',
     'fechaEnvioOfertaCliente',
+    'semanaEnvioOfertaCliente',
     'fechaEnvioOfertaClienteNegociada',
+    'semanaEnvioOfertaClienteNegociada',
     'fechaRespuestaCliente',
+    'semanaRespuestaCliente',
     'fechaRespuestaClienteNegociada',
+    'semanaRespuestaClienteNegociada',
     'tipoRespuestaCliente',
     'tipoRespuestaClienteNegociada',
     'po',
@@ -91,6 +103,7 @@ export class OffersComponent implements OnInit {
     'naturalezaServicio',
     'descripcionOds',
     'fechaRecibidoOds',
+    'semanaRecibidoOds',
     'tipoOferta',
     'tarea',
     'descripcionTarea',
@@ -102,19 +115,29 @@ export class OffersComponent implements OnInit {
     'numeroOferta',
     'modalidad',
     'precioUnidadProveedor',
+    'precioTotalProveedor',
     'precioUnidadVenta',
+    'precioTotalVenta',
     'precioUnidadCliente',
+    'precioTotalCliente',
     'margen',
     'tipoAdquisicion',
     'proveedor',
     'tasOfertaAnterior',
     'fechaDespachoSupervisor',
+    'semanaDespachoSupervisor',
     'fechaDespachoCompras',
+    'semanaDespachoCompras',
     'fechaRespuestaCompras',
+    'semanaRespuestaCompras',
     'fechaEnvioOfertaCliente',
+    'semanaEnvioOfertaCliente',
     'fechaEnvioOfertaClienteNegociada',
+    'semanaEnvioOfertaClienteNegociada',
     'fechaRespuestaCliente',
+    'semanaRespuestaCliente',
     'fechaRespuestaClienteNegociada',
+    'semanaRespuestaClienteNegociada',
     'tipoRespuestaCliente',
     'tipoRespuestaClienteNegociada',
     'po',
@@ -149,7 +172,6 @@ export class OffersComponent implements OnInit {
   ngAfterViewInit() {
     this.offersService.getOffers()
       .subscribe(({ data }) => {
-        debugger
         this.dataSourceOffers = new MatTableDataSource(data.ofertas);
         this.dataSourceOffers.paginator = this.paginator;
         this.dataSourceOffers.sort = this.sort;
@@ -193,3 +215,4 @@ export class OffersComponent implements OnInit {
   }
 
 }
+
