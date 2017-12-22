@@ -299,6 +299,7 @@ export class RequestOperateComponent implements OnInit {
   normalizeList(collection) {
     const tmpArray = []
     for (let i = 0; i < collection.length; i++) {
+      collection[i].comentario = collection[i].comentario || '';
       collection[i].id = parseInt(collection[i].id);
       tmpArray.push({ pk: collection[i].id, qty: collection[i].qty, comentario: collection[i].comentario })
     }
@@ -306,8 +307,14 @@ export class RequestOperateComponent implements OnInit {
   }
 
   saveRequest() {
-    if (this.selectionSupplies.selected.length > 0) this.request.suministros = this.normalizeList(this.selectionSupplies.selected);
-    if (this.selectionServices.selected.length > 0) this.request.servicios = this.normalizeList(this.selectionServices.selected);
+    if (this.selectionSupplies.selected.length > 0)
+      this.request.suministros = this.normalizeList(this.selectionSupplies.selected);
+    else
+      this.request.suministros = [];
+    if (this.selectionServices.selected.length > 0)
+      this.request.servicios = this.normalizeList(this.selectionServices.selected);
+    else
+      this.request.servicios = []
     this.request.supervisorId = this.currentUser.id;
     this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
     if (this.isNew) {

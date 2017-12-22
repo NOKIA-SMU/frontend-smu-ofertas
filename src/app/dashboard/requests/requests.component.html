@@ -126,7 +126,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row); imprimir(row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row);" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
     </mat-table>
   </div>
   <mat-paginator [pageSizeOptions]="[15, 50, 100]"></mat-paginator>
