@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { SubsystemsService } from "./subsystems.service";
+import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
-
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,16 +14,14 @@ import { AppService } from "../../app.service";
 
 export class SubsystemsComponent implements OnInit {
 
-  displayedColumns = [
-    'id',
-    'nombre'
-  ];
-
-  dataSource = new MatTableDataSource();
-  isLoadingResults = true;
+  displayedColumns = ['id', 'nombre'];
+  dataSourceSubsystems = new MatTableDataSource();
+  isLoadingResultsSubsystems = true;
   currentRowSelect: any;
   currentRowSelectData: any = {}
+  testm: any
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
@@ -31,23 +29,28 @@ export class SubsystemsComponent implements OnInit {
     private router: Router,
     private appService: AppService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   ngAfterViewInit() {
     this.subsystemsService.getSubsystems()
-      .subscribe(({ data }) => {
-        this.dataSource = new MatTableDataSource(data.subsistemas);
-        this.isLoadingResults = false;
-        this.dataSource.sort = this.sort;
+      .subscribe(res => {
+        this.testm = res.data.subsistemas
+        this.dataSourceSubsystems = new MatTableDataSource(res.data.subsistemas);
+        this.dataSourceSubsystems.paginator = this.paginator;
+        this.dataSourceSubsystems.sort = this.sort;
+        this.isLoadingResultsSubsystems = false;
       }, error => {
-        this.isLoadingResults = false;
+        this.isLoadingResultsSubsystems = false;
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de subsistemas', error);
       });
   }
 
-  applyFilter(filterValue: string) {
+  applyFilterServices(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.dataSourceSubsystems.filter = filterValue;
   }
 
   selectRow(index, data) {

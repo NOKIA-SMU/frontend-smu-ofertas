@@ -1,13 +1,21 @@
 .mat-table {
   > .mat-header-row, > .mat-row {
+    cursor: pointer;
+    &.active {
+      background: #2974ff !important;
+      .mat-header-cell, .mat-cell {
+        background: #2974ff !important;
+        color: white !important;
+      }
+    }
     > .mat-header-cell, > .mat-cell {
       flex: 1;
-      &:nth-child(1) {
-        flex: 1;
-      }
-      &:nth-child(7) {
-        flex: 1;
-      }
+      // &:nth-child(1) {
+      //   flex: 1;
+      // }
+      // &:nth-child(7) {
+      //   flex: 1;
+      // }
     }
   }
 }

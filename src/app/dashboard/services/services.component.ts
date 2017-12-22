@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ServicesService } from './services.service';
 import { AuthService } from '../../auth/auth.service';
 import { AppService } from '../../app.service';
@@ -14,7 +14,6 @@ import { AppService } from '../../app.service';
 
 export class ServicesComponent implements OnInit {
 
-  services: any[] = [];
   servicesColumns = ['id', 'nombre', 'subsistema', 'estado', 'subestado'];
   dataSourceServices = new MatTableDataSource();
   isLoadingResultsServices = true;
@@ -25,7 +24,6 @@ export class ServicesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private servicesService: ServicesService,
     private authService: AuthService,

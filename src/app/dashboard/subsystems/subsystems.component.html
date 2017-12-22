@@ -6,21 +6,28 @@
 	</nav>
 	<h2 class="title">Subsistemas</h2>
 	<mat-form-field>
-		<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+		<input matInput (keyup)="applyFilterServices($event.target.value)" placeholder="Filter">
 	</mat-form-field>
 
-	<div class="example-container mat-elevation-z3">
-		<div class="example-loading-shade" *ngIf="isLoadingResults">
+	<div class="tableContainer mat-elevation-z3 subsystems">
+		<div class="example-loading-shade" *ngIf="isLoadingResultsSubsystems">
 			<mat-spinner></mat-spinner>
 		</div>
-		<mat-table [dataSource]="dataSource" matSort>
+		<mat-table [dataSource]="dataSourceSubsystems" matSort>
 			<ng-container *ngFor="let item of displayedColumns" matColumnDef="{{item}}">
 				<mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row[item]}} </mat-cell>
+				<mat-cell *matCellDef="let row">
+					{{row[item]}}
+				</mat-cell>
 			</ng-container>
-			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 			<mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
 		</mat-table>
 	</div>
+
+	<mat-paginator [pageSizeOptions]="[15, 50, 100]"></mat-paginator>
+	<br>
+	<br>
+	<br>
 </div>

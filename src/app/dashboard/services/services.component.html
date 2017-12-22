@@ -5,11 +5,9 @@
 		<i (click)="deleteService()" *ngIf="currentRowSelect >= 0" class="material-icons">delete</i>
 	</nav>
 	<h2 class="title">Servicios</h2>
-	<div class="example-header">
-		<mat-form-field>
-			<input matInput (keyup)="applyFilterServices($event.target.value)" placeholder="Filter">
-		</mat-form-field>
-	</div>
+	<mat-form-field>
+		<input matInput (keyup)="applyFilterServices($event.target.value)" placeholder="Filter">
+	</mat-form-field>
 
 	<div class="tableContainer mat-elevation-z3 services">
 		<div class="example-loading-shade" *ngIf="isLoadingResultsServices">

@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs/Observable';
-import { querySubsystems, mutationCreateSubsystem, mutationUpdateSubsystem, mutationDeleteSubsystem } from './subsystems.queries';
+import {
+  querySubsystems,
+  mutationCreateSubsystem,
+  mutationUpdateSubsystem,
+  mutationDeleteSubsystem
+} from './subsystems.queries';
 
 @Injectable()
 
