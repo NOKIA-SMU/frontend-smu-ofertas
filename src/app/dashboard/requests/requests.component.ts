@@ -35,7 +35,7 @@ export class RequestsComponent implements OnInit {
   isLoadingResults = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
-  public currentUser: any;
+  currentUser: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -43,7 +43,7 @@ export class RequestsComponent implements OnInit {
   constructor(
     private requestsService: RequestsService,
     private router: Router,
-    public authService: AuthService,
+    private authService: AuthService,
     private appService: AppService
   ) { }
 
@@ -53,30 +53,38 @@ export class RequestsComponent implements OnInit {
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res;
-        console.log(res)
+        this.requestsService.getRequests()
+          .subscribe(res => {
+            // Filter requests by rol
+            let filteredRequests = [];
+            if (this.currentUser.roles.Administrador) {
+              this.dataSource = new MatTableDataSource(res.data.solicitudes);
+            } else if (this.currentUser.roles.Supervisor) {
+              for (let i = 0; i < res.data.solicitudes.length; i++) {
+                if (res.data.solicitudes[i].supervisorId == this.currentUser.id) {
+                  filteredRequests.push(res.data.solicitudes[i]);
+                }
+              }
+              this.dataSource = new MatTableDataSource(filteredRequests);
+            } else if (this.currentUser.roles.Analista) {
+              for (let i = 0; i < res.data.solicitudes.length; i++) {
+                if (res.data.solicitudes[i].analistaId === this.currentUser.id) {
+                  filteredRequests.push(filteredRequests);
+                }
+              }
+              this.dataSource = new MatTableDataSource(res.data.solicitudes);
+            }
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.isLoadingResults = false;
+          }, error => {
+            this.isLoadingResults = false;
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);
+          });
       }, error => {
         debugger
       })
-    this.requestsService.getRequests()
-      .subscribe(res => {
-        debugger
-        let filteredRequests = [];
-        if (this.currentUser.roles.Administrador) {
-          this.dataSource = new MatTableDataSource(res.data.solicitudes);
-        } else if (this.currentUser.roles.Supervisor) {
-          for (let i = 0; i <= res.data.solicitudes.length; i++) {
-            if (this.currentUser.supervisorId == res.data.solicitudes[i].id) {
 
-            }
-          }
-        }
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.isLoadingResults = false;
-      }, error => {
-        this.isLoadingResults = false;
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);
-      });
   }
 
   applyFilter(filterValue: string) {

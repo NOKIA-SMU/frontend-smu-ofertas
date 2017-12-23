@@ -1,8 +1,23 @@
 <div class="wrapper">
   <nav class="wrapper__nav">
-    <i (click)="goToCreate()" class="material-icons">add_circle_outline</i>
-    <i (click)="goToEdit()" *ngIf="currentRowSelect >= 0" class="material-icons">mode_edit</i>
-    <i (click)="deleteRequest()" *ngIf="currentRowSelect >= 0" class="material-icons">delete</i>
+    <!-- CREATE REQUEST BTN -->
+    <i (click)="goToCreate()"
+      class="material-icons"
+      *ngIf="currentUser?.roles?.Administrador || currentUser?.roles?.Supervisor">
+      add_circle_outline
+    </i>
+    <!-- UPDATE REQUEST BTN -->
+    <i (click)="goToEdit()"
+      *ngIf="currentRowSelect >= 0 && (currentUser?.roles?.Administrador || currentUser?.roles?.Supervisor)"
+      class="material-icons">
+      mode_edit
+    </i>
+    <!-- DELETE REQUEST BTN -->
+    <i (click)="deleteRequest()"
+      *ngIf="currentRowSelect >= 0 && currentUser?.roles?.Administrador"
+      class="material-icons">
+      delete
+    </i>
   </nav>
   <h2 class="title">Solicitudes</h2>
   <div class="example-header">
