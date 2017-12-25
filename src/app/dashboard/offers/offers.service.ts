@@ -109,6 +109,7 @@ export class OffersService {
   }
 
   public getOffers() {
+    debugger
     return this.apollo.watchQuery<any>({
       query: queryOffers,
       variables: {
@@ -130,6 +131,7 @@ export class OffersService {
   }
 
   public updateOffer(id, offer) {
+    debugger
     return this.apollo.mutate({
       mutation: updateOferta,
       variables: {
@@ -148,9 +150,9 @@ export class OffersService {
         fechaEjecucion: offer.fechaEjecucion,
         confirmacionRecibido: offer.confirmacionRecibido,
         comentarioSupervisor: offer.comentarioSupervisor,
-        usuario: offer.Susuario,
-        numeroOferta: offer.SnumeroOferta,
-        modalidad: offer.Smodalidad,
+        usuario: offer.usuario,
+        numeroOferta: offer.numeroOferta,
+        modalidad: offer.modalidad,
         precioUnidadProveedor: offer.precioUnidadProveedor,
         precioUnidadVenta: offer.precioUnidadVenta,
         precioUnidadCliente: offer.precioUnidadCliente,
@@ -169,14 +171,14 @@ export class OffersService {
         po: offer.po,
         fechaPo: offer.fechaPo,
         comentarioAnalista: offer.comentarioAnalista,
-        subestadoOferta: offer.SsubestadoOferta,
-        estadoOferta: offer.SestadoOferta,
+        subestadoOferta: offer.subestadoOferta,
+        estadoOferta: offer.estadoOferta,
         fechaEntregaAlmacen: offer.fechaEntregaAlmacen,
         comentarioAlmacenista: offer.comentarioAlmacenista,
         comentarioCoordinador: offer.comentarioCoordinador,
         valorConciliadoCliente: offer.valorConciliadoCliente,
         fechaConciliadoCliente: offer.fechaConciliadoCliente,
-        comentarioFacturador: offer.ScomentarioFacturador,
+        comentarioFacturador: offer.comentarioFacturador,
         fechaEnvioActaSmu: offer.fechaEnvioActaSmu,
         comentarioActa: offer.comentarioActa,
         fechaFirmaActaSmu: offer.fechaFirmaActaSmu,

@@ -1,7 +1,7 @@
 <h2 class="title">Oferta</h2>
-<h1>Proveedor: {{testm}}</h1>
 <form #offerForm="ngForm" (ngSubmit)="saveOffert()" *ngIf="offer">
-  <!-- <ng-container *ngIf="actualRoles?.Supervisor || actualRoles?.Analista"> -->
+  <!-- SUPERVISOR & ANALYST FILEDS -->
+  <ng-container *ngIf="currentUser?.roles?.Supervisor || currentUser?.roles?.Analista || currentUser?.roles?.Administrador">
     <!-- ACCESS TYPE -->
     <mat-form-field>
       <mat-select placeholder="Tipo de acceso" name="tipoAcceso" [(ngModel)]="offer.tipoAcceso">
@@ -21,7 +21,7 @@
     <!-- DESCRIPTION ODS -->
     <mat-form-field>
       <textarea matInput placeholder="Descripción ods" name="descripcionOds" [(ngModel)]="offer.descripcionOds" matTextareaAutosize
-        matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+        matAutosizeMinRows="1" matAutosizeMaxRows="8"></textarea>
     </mat-form-field>
     <!-- DATE RECEIVED ODS -->
     <mat-form-field>
@@ -76,6 +76,10 @@
     <mat-form-field>
       <textarea matInput placeholder="Comentario supervisor" name="comentarioSupervisor" [(ngModel)]="offer.comentarioSupervisor" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
     </mat-form-field>
+  </ng-container>
+
+  <!-- ANALYST FILEDS -->
+  <ng-container *ngIf="currentUser?.roles?.Analista || currentUser?.roles?.Administrador">
     <!-- USER -->
     <mat-form-field>
       <input matInput type="text" placeholder="Usuario" name="usuario" [(ngModel)]="offer.usuario">
@@ -196,7 +200,7 @@
     <!-- COMMENT ANALYST -->
     <mat-form-field>
       <textarea matInput placeholder="Comentario analista" name="comentarioAnalista" [(ngModel)]="offer.comentarioAnalista" matTextareaAutosize
-        matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+        matAutosizeMinRows="1" matAutosizeMaxRows="8"></textarea>
     </mat-form-field>
     <!-- SUBSTATE OFFER -->
     <mat-form-field>
@@ -214,7 +218,8 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  <!-- </ng-container> -->
+  </ng-container>
+
 
 
   <!-- DATE DELIVERY STORE -->

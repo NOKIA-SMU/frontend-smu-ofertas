@@ -21,7 +21,9 @@ export const queryOffers = gql`
 				solicitud {
 					id
 					supervisor
+					supervisorId
 					analista
+					analistaId
 					estacion {
 						id
 						nombre
@@ -42,7 +44,9 @@ export const queryOffers = gql`
 				solicitud {
 					id
 					supervisor
+					supervisorId
 					analista
+					analistaId
 					estacion {
 						id
 						nombre

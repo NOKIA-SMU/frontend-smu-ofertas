@@ -27,9 +27,7 @@ export class OfferOperateComponent implements OnInit {
   substatesOffer: string[];
   statesOffer: string[];
 
-  testm: any;
-
-  actualRoles: any;
+  currentUser: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,7 +38,7 @@ export class OfferOperateComponent implements OnInit {
   ) {
     this.authService.currentUser()
       .subscribe(res => {
-        this.actualRoles = res.roles;
+        this.currentUser = res;
       }, error => {
         debugger
       })
@@ -128,32 +126,30 @@ export class OfferOperateComponent implements OnInit {
       this.isNew = false;
       this.offersService.getOfferById(this.route.snapshot.params.id)
         .subscribe(res => {
-          debugger
-          this.testm = res.data.oferta.proveedor;
           this.offer = {
             id: res.data.oferta.id,
             ordenSuministro: res.data.oferta.ordenSuministro ? res.data.oferta.ordenSuministro.id : null,
             ordenServicio: res.data.oferta.ordenServicio ? res.data.oferta.ordenServicio.id : null,
-            tipoAcceso: res.data.oferta.tipoAcceso.split('_').join(' '),
-            naturalezaServicio: res.data.oferta.naturalezaServicio.split('_').join(' '),
+            tipoAcceso: res.data.oferta.tipoAcceso ? res.data.oferta.tipoAcceso.split('_').join(' ') : null,
+            naturalezaServicio: res.data.oferta.naturalezaServicio ? res.data.oferta.naturalezaServicio.split('_').join(' ') : null,
             descripcionOds: res.data.oferta.descripcionOds,
             fechaRecibidoOds: res.data.oferta.fechaRecibidoOds,
-            tipoOferta: res.data.oferta.tipoOferta.split('_').join(' '),
+            tipoOferta: res.data.oferta.tipoOferta ? res.data.oferta.tipoOferta.split('_').join(' ') : null,
             tarea: res.data.oferta.tarea,
             descripcionTarea: res.data.oferta.descripcionTarea,
             encargadoCliente: res.data.oferta.encargadoCliente,
-            tipoElemento: res.data.oferta.tipoElemento.split('_').join(' '),
+            tipoElemento: res.data.oferta.tipoElemento ? res.data.oferta.tipoElemento.split('_').join(' ') : null,
             fechaEjecucion: res.data.oferta.fechaEjecucion,
-            confirmacionRecibido: res.data.oferta.confirmacionRecibido.split('_').join(' '),
+            confirmacionRecibido: res.data.oferta.confirmacionRecibido ? res.data.oferta.confirmacionRecibido.split('_').join(' ') : null,
             comentarioSupervisor: res.data.oferta.comentarioSupervisor,
             usuario: res.data.oferta.usuario,
             numeroOferta: res.data.oferta.numeroOferta,
-            modalidad: res.data.oferta.modalidad.split('_').join(' '),
+            modalidad: res.data.oferta.modalidad ? res.data.oferta.modalidad.split('_').join(' ') : null,
             precioUnidadProveedor: res.data.oferta.precioUnidadProveedor,
             precioUnidadVenta: res.data.oferta.precioUnidadVenta,
             precioUnidadCliente: res.data.oferta.precioUnidadCliente,
-            tipoAdquisicion: res.data.oferta.tipoAdquisicion.split('_').join(' '),
-            proveedor: res.data.oferta.proveedor.split('_').join(' '),
+            tipoAdquisicion: res.data.oferta.tipoAdquisicion ? res.data.oferta.tipoAdquisicion.split('_').join(' ') : null,
+            proveedor: res.data.oferta.proveedor ? res.data.oferta.proveedor.split('_').join(' ') : null,
             tasOfertaAnterior: res.data.oferta.tasOfertaAnterior,
             fechaDespachoSupervisor: res.data.oferta.fechaDespachoSupervisor,
             fechaDespachoCompras: res.data.oferta.fechaDespachoCompras,
@@ -162,13 +158,13 @@ export class OfferOperateComponent implements OnInit {
             fechaEnvioOfertaClienteNegociada: res.data.oferta.fechaEnvioOfertaClienteNegociada,
             fechaRespuestaCliente: res.data.oferta.fechaRespuestaCliente,
             fechaRespuestaClienteNegociada: res.data.oferta.fechaRespuestaClienteNegociada,
-            tipoRespuestaCliente: res.data.oferta.tipoRespuestaCliente.split('_').join(' '),
-            tipoRespuestaClienteNegociada: res.data.oferta.tipoRespuestaClienteNegociada.split('_').join(' '),
+            tipoRespuestaCliente: res.data.oferta.tipoRespuestaCliente ? res.data.oferta.tipoRespuestaCliente.split('_').join(' ') : null,
+            tipoRespuestaClienteNegociada: res.data.oferta.tipoRespuestaClienteNegociada ? res.data.oferta.tipoRespuestaClienteNegociada.split('_').join(' ') : null,
             po: res.data.oferta.po,
             fechaPo: res.data.oferta.fechaPo,
             comentarioAnalista: res.data.oferta.comentarioAnalista,
-            subestadoOferta: res.data.oferta.subestadoOferta.split('_').join(' '),
-            estadoOferta: res.data.oferta.estadoOferta.split('_').join(' '),
+            subestadoOferta: res.data.oferta.subestadoOferta ? res.data.oferta.subestadoOferta.split('_').join(' ') : null,
+            estadoOferta: res.data.oferta.estadoOferta ? res.data.oferta.estadoOferta.split('_').join(' ') : null,
             fechaEntregaAlmacen: res.data.oferta.fechaEntregaAlmacen,
             comentarioAlmacenista: res.data.oferta.comentarioAlmacenista,
             comentarioCoordinador: res.data.oferta.comentarioCoordinador,
@@ -212,7 +208,6 @@ export class OfferOperateComponent implements OnInit {
     this.offer.fechaEnvioActaSmu == null ? null : this.normalizeDate(this.offer.fechaEnvioActaSmu);
     this.offer.fechaFirmaActaSmu == null ? null : this.normalizeDate(this.offer.fechaFirmaActaSmu);
     this.offer.fechaGrSmu == null ? null : this.normalizeDate(this.offer.fechaGrSmu);
-    debugger
     this.offersService.updateOffer(this.route.snapshot.params.id, this.offer)
       .subscribe(res => {
         this.router.navigate(['/ofertas']);
