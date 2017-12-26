@@ -50,7 +50,7 @@ export class RolesComponent implements OnInit {
 
   showEditPermissionsToRole(event, role: Role, permission: Permission) {
     this.isShowEditRole = false;
-    this.isShowEditPermissionsToRole = !this.isShowEditPermissionsToRole
+    this.isShowEditPermissionsToRole = !this.isShowEditPermissionsToRole;
     this.rolToEditPermissions = role;
     for (let i = 0; i < this.permissions.length; i++) this.permissions[i].checked = false;
 
@@ -58,15 +58,15 @@ export class RolesComponent implements OnInit {
   }
 
   selectPermission(permission: Permission) {
-    permission.checked = !permission.checked
+    permission.checked = !permission.checked;
   }
 
   // Methods
   getRolPermissions(role: Role) {
     this.adminService.getRolePermissions(role).subscribe(res => {
       res.map(res => {
-        this.actualColPermissions = res.id
-        this.rolePermissions = res.list
+        this.actualColPermissions = res.id;
+        this.rolePermissions = res.list;
         for (let i = 0; i < this.rolePermissions.length; i++) {
           for (let j = 0; j < this.permissions.length; j++) {
             if (this.rolePermissions[i].id == this.permissions[j].id) {
@@ -76,8 +76,7 @@ export class RolesComponent implements OnInit {
         }
       })
     }, error => {
-      this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
-
+      this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
     })
   }
 
@@ -87,9 +86,9 @@ export class RolesComponent implements OnInit {
       .then(res => {
         this.adminService.assignPermissionToRole(res.id, permissions)
           .then(res => {
-            this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos asignados a rol')
+            this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos asignados a rol');
           }, error => {
-            this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
+            this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
           })
         }, error => {
           debugger;
@@ -99,18 +98,18 @@ export class RolesComponent implements OnInit {
       updateRole(role: Role) {
         this.adminService.updateRole(role)
         .then(res => {
-          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Rol actualizado')
+          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Rol actualizado');
         }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
+          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
         });
       }
 
       deleteRole(role: Role) {
         this.adminService.deleteRole(role)
         .then(res => {
-          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Rol eliminado')
+          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Rol eliminado');
         }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
+          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
         });
       }
 
@@ -122,11 +121,11 @@ export class RolesComponent implements OnInit {
           }
         }
         this.adminService.updatePermissionsToRole(role.id, this.actualColPermissions, permissions)
-        .then(res => {
-          this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos del rol actualizados')
-        }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo')
-      });
+          .then(res => {
+            this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos del rol actualizados');
+          }, error => {
+            this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
+        });
   }
 
 }

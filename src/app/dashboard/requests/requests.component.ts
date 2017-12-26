@@ -69,10 +69,10 @@ export class RequestsComponent implements OnInit {
             } else if (this.currentUser.roles.Analista) {
               for (let i = 0; i < res.data.solicitudes.length; i++) {
                 if (res.data.solicitudes[i].analistaId === this.currentUser.id) {
-                  filteredRequests.push(filteredRequests);
+                  filteredRequests.push(res.data.solicitudes[i]);
                 }
               }
-              this.dataSource = new MatTableDataSource(res.data.solicitudes);
+              this.dataSource = new MatTableDataSource(filteredRequests);
             }
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;

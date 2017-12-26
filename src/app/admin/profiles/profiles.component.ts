@@ -17,6 +17,7 @@ export class ProfilesComponent implements OnInit {
   profileToEdit: Profile;
   profileToAssignRole: Profile;
   showMoreProfile: boolean = false;
+  roleSelected: any[] = [];
   regions = [
     'NOROCCIDENTE',
     'SUROCCIDENTE',
@@ -27,12 +28,14 @@ export class ProfilesComponent implements OnInit {
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {
-    this.adminService.getProfiles().subscribe(profiles => {
-      this.loadingProfiles = false;
-      this.profiles = profiles;
-    }, error => {
+    this.adminService.getProfiles()
+      .subscribe(profiles => {
+        debugger
+        this.loadingProfiles = false;
+        this.profiles = profiles;
+      }, error => {
 
-    });
+      });
 
     this.adminService.getRoles().subscribe(roles => {
       this.roles = roles;
@@ -42,6 +45,7 @@ export class ProfilesComponent implements OnInit {
   }
 
   editProfile(event, profile: Profile) {
+    debugger
     this.showMoreProfile = false;
     this.editState = !this.editState;
     this.profileToEdit = profile;
@@ -54,6 +58,7 @@ export class ProfilesComponent implements OnInit {
   }
 
   updateProfile(event, profile: Profile, roleSelected) {
+    debugger
     if (roleSelected) {
       let actualRoles = {}
       for (let i = 0; i < roleSelected.length; i++) {
@@ -61,7 +66,7 @@ export class ProfilesComponent implements OnInit {
       }
       profile.roles = actualRoles;
     }
-    this.adminService.updateProfile(profile)
+    // this.adminService.updateProfile(profile)
   }
 
 }

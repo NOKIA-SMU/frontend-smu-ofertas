@@ -36,10 +36,11 @@ export class AppService {
     } else if (mod === 'cancel') {
       debugger
       if (error) {
-        if (error.message == "GraphQL error: credential invalid") {
+        if (error.message == "GraphQL error: credential invalid" || error.message == "GraphQL error: are you login?") {
           title = "Credenciales invalidas";
           text = "Por favor vuelva a ingresar al sistema";
-          this.toAction = "login"
+          this.toAction = "login";
+          localStorage.clear();
         }
       }
       swal({
