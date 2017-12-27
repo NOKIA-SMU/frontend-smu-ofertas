@@ -30,7 +30,6 @@ export class ProfilesComponent implements OnInit {
   ngOnInit() {
     this.adminService.getProfiles()
       .subscribe(profiles => {
-        debugger
         this.loadingProfiles = false;
         this.profiles = profiles;
       }, error => {
@@ -45,28 +44,50 @@ export class ProfilesComponent implements OnInit {
   }
 
   editProfile(event, profile: Profile) {
-    debugger
+    // Clean back selected roles
+    for (let i = 0; i < this.roles.length; i++) this.roles[i].checked = false;
+    // Get roles from profile
+    let defaultRoles = []
+    if (profile.roles != undefined) {
+      for (let i = 0; i < Object.keys(profile.roles).length; i++) {
+        defaultRoles.push(Object.keys(profile.roles)[i])
+      }
+    }
+    // Checked roles
+    for (let i = 0; i < defaultRoles.length; i++) {
+      for (let j = 0; j < this.roles.length; j++) {
+        if (defaultRoles[i] === this.roles[j].name) this.roles[j].checked = true;
+      }
+    }
     this.showMoreProfile = false;
     this.editState = !this.editState;
     this.profileToEdit = profile;
   }
 
   showMore(event, profile: Profile) {
+    // let defaultRoles = []
+    // if (profile.roles != undefined) {
+    //   for (let i = 0; i < Object.keys(profile.roles).length; i++) {
+    //     defaultRoles.push(Object.keys(profile.roles)[i])
+    //   }
+    // }
     this.editState = false;
     this.showMoreProfile = !this.showMoreProfile;
     this.profileToEdit = profile;
   }
 
-  updateProfile(event, profile: Profile, roleSelected) {
-    debugger
-    if (roleSelected) {
-      let actualRoles = {}
-      for (let i = 0; i < roleSelected.length; i++) {
-        actualRoles[roleSelected[i].name] = true;
-      }
-      profile.roles = actualRoles;
+  selectRole(role: Role) {
+    role.checked = !role.checked;
+  }
+
+  updateProfile(event, profile: Profile) {
+    profile.roles = {};
+    let actualRoles = {}
+    for (let i = 0; i < this.roles.length; i++) {
+      if (this.roles[i].checked) actualRoles[this.roles[i].name] = true;
     }
-    // this.adminService.updateProfile(profile)
+    profile.roles = actualRoles;
+    this.adminService.updateProfile(profile)
   }
 
 }

@@ -72,6 +72,13 @@ body {
 		color: white !important;
 		margin-right: 18px !important;
 	}
+	&-pseudo {
+		&-checkbox {
+			&-checked {
+				background: #124191;
+			}
+		}
+	}
 	&-slide {
 		&-toggle {
 			&.mat-checked:not(.mat-disabled) {

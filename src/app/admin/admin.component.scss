@@ -37,6 +37,12 @@ input {
 h2.title {
 	color: #124191;
 	margin-top: 0;
+	width: 100%;
+}
+
+h3 {
+	color: #124191;
+	width: 100%;
 }
 
 mat-grid-tile {
@@ -46,6 +52,15 @@ mat-grid-tile {
   cursor: pointer;
   font-size: 1.2em;
   text-transform: uppercase;
+}
+
+mat-selection-list {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	mat-list-option {
+		width: 33.3%;
+	}
 }
 
 

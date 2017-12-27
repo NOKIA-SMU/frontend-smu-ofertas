@@ -15,6 +15,7 @@ export interface Role {
 	id?: string;
 	name: string;
 	list?: any[];
+	checked?: boolean;
 }
 
 export interface Permission {

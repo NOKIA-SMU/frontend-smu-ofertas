@@ -15,6 +15,10 @@
         <mat-list-item><strong>Email:</strong>{{ profile.email }}</mat-list-item>
         <mat-list-item><strong>Telefono:</strong>{{ profile.phoneNumber }}</mat-list-item>
         <mat-list-item><strong>Region:</strong>{{ profile.region }}</mat-list-item>
+        <mat-list-item *ngIf="defaultRoles">
+          <strong>Roles:</strong>
+          <span *ngFor="let rol of defaultRoles">{{ rol }}</span>
+        </mat-list-item>
       </mat-list>
     </ng-container>
     <ng-container *ngIf="editState && profileToEdit.id == profile.id">
@@ -38,13 +42,14 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Rol" name="role" [(ngModel)]="roleSelected" multiple required>
-            <mat-option *ngFor="let role of roles" [value]="role">
-              {{role.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+       <h3>Roles</h3>
+        <mat-selection-list>
+          <mat-list-option *ngFor="let role of roles" [selected]="role.checked" (click)="selectRole(role)">
+            {{role.name}}
+          </mat-list-option>
+        </mat-selection-list>
+
+
         <div class="footer-buttom">
           <button type="submit" mat-raised-button color="primary">Actualizar</button>
         </div>
