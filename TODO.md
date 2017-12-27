@@ -3,13 +3,13 @@
 
 - [ ] Refactor selectores de componentes
 
-- [ ] Listar solicitudes propias del usuario loqueado actualmente
+- [x] Listar solicitudes propias del usuario loqueado actualmente
 
 - [ ] Mensaje de confirmacion para eliminar
 
 - [ ] Pipe para TRUE&FALSE a Activo e inactivo
 
-- [ ] Pipe para remover _
+- [x] Pipe para remover _
 
 - [ ] Pipe para quitar camel case
 
