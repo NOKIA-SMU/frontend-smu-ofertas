@@ -18,6 +18,7 @@ export class ProfilesComponent implements OnInit {
   profileToAssignRole: Profile;
   showMoreProfile: boolean = false;
   roleSelected: any[] = [];
+  showPerfilRoles: any[] = [];
   regions = [
     'NOROCCIDENTE',
     'SUROCCIDENTE',
@@ -65,12 +66,12 @@ export class ProfilesComponent implements OnInit {
   }
 
   showMore(event, profile: Profile) {
-    // let defaultRoles = []
-    // if (profile.roles != undefined) {
-    //   for (let i = 0; i < Object.keys(profile.roles).length; i++) {
-    //     defaultRoles.push(Object.keys(profile.roles)[i])
-    //   }
-    // }
+    this.showPerfilRoles = [];
+    if (profile.roles != undefined) {
+      for (let i = 0; i < Object.keys(profile.roles).length; i++) {
+        this.showPerfilRoles.push(Object.keys(profile.roles)[i])
+      }
+    }
     this.editState = false;
     this.showMoreProfile = !this.showMoreProfile;
     this.profileToEdit = profile;

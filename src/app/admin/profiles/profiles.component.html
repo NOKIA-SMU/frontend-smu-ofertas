@@ -15,9 +15,9 @@
         <mat-list-item><strong>Email:</strong>{{ profile.email }}</mat-list-item>
         <mat-list-item><strong>Telefono:</strong>{{ profile.phoneNumber }}</mat-list-item>
         <mat-list-item><strong>Region:</strong>{{ profile.region }}</mat-list-item>
-        <mat-list-item *ngIf="defaultRoles">
+        <mat-list-item *ngIf="showPerfilRoles">
           <strong>Roles:</strong>
-          <span *ngFor="let rol of defaultRoles">{{ rol }}</span>
+          <span *ngFor="let rol of showPerfilRoles">{{ rol }} -&nbsp;</span>
         </mat-list-item>
       </mat-list>
     </ng-container>

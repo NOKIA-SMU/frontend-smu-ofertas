@@ -43,6 +43,8 @@ h2.title {
 h3 {
 	color: #124191;
 	width: 100%;
+	margin: 0 0 8px;
+	font-size: .9rem;
 }
 
 mat-grid-tile {
@@ -58,6 +60,9 @@ mat-selection-list {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
+	border-radius: 8px;
+	border: 1px solid #cec8c8;
+	margin-bottom: 18px;
 	mat-list-option {
 		width: 33.3%;
 	}
@@ -71,6 +76,8 @@ mat-selection-list {
 	margin: 3% 0;
 	position: relative;
 	min-height: 50vh;
+	max-height: 350px;
+  overflow: auto;
 	&__item {
 		display: flex;
 		align-items: center;
