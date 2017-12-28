@@ -109,7 +109,6 @@ export class OffersService {
   }
 
   public getOffers() {
-    debugger
     return this.apollo.watchQuery<any>({
       query: queryOffers,
       variables: {

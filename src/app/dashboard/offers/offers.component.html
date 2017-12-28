@@ -94,7 +94,7 @@
 
 			<!-- DYNAMICS ROWS -->
 			<ng-container *ngFor="let item of offersColumnsDynamics" matColumnDef="{{item}}">
-				<mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
+				<mat-header-cell *matHeaderCellDef> {{item | dictionary}} </mat-header-cell>
 				<mat-cell *matCellDef="let row">
 					<ng-container>
 						{{row[item] | replaceLineBreaks }}

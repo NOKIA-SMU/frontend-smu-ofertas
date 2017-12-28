@@ -26,8 +26,7 @@ form {
         &:nth-child(1),
         &:nth-child(2),
         &:nth-child(8),
-        &:nth-child(10),
-        &:nth-child(12){
+        &:nth-child(10){
           flex: 0 0 70px;
         }
         &:nth-child(4){
@@ -35,6 +34,18 @@ form {
         }
         &:nth-child(11){
           flex: 0 0 500px;
+        }
+        &.mat-column-fechaDespachoSupervisor,
+        &.mat-column-semanaDespachoSupervisor,
+        &.mat-column-semanaDespachoCompras,
+        &.mat-column-semanaRespuestaCompras,
+        &.mat-column-semanaEnvioOfertaCliente,
+        {
+          flex: 0 0 200px;
+        }
+        &.mat-column-fechaEnvioOfertaClienteNegociada,
+        &.mat-column-semanaEnvioOfertaClienteNegociada {
+          flex: 0 0 220px;
         }
       }
     }

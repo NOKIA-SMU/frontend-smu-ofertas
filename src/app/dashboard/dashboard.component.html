@@ -5,8 +5,8 @@
     </button>
     <h2>NOKIA SMU Dashboard</h2>
     <span class="navBar__spacer"></span>
-    <p *ngIf="currentUser" class="navBar__username">{{currentUser.firstName}} {{currentUser.lastName}}</p>
-    <i (click)="logout()" class="material-icons">exit_to_app</i>
+    <p *ngIf="currentUser" class="navBar__username">{{currentUser.firstName}} {{currentUser.lastName}} &nbsp;</p>
+    <i (click)="logout()" class="material-icons logout">exit_to_app</i>
   </mat-toolbar>
 </nav>
 <mat-sidenav-container class="base-container">

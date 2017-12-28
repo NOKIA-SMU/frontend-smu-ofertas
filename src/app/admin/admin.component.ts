@@ -22,4 +22,16 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() { }
 
+  logout() {
+    this.authService.deleteToken(this.currentUser.id)
+      .subscribe(res => {
+        this.authService.logout()
+          .then(res => {
+            this.router.navigate(['/']);
+          }, error => {
+            debugger
+          })
+      })
+  }
+
 }

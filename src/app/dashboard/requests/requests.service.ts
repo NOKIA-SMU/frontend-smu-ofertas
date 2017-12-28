@@ -26,12 +26,11 @@ export class RequestsService {
   }
 
   public getRequests() {
-    var userAuth = JSON.parse(localStorage.getItem('userAuth'))
     return this.apollo.watchQuery<any>({
       query: queryRequests,
       variables: {
-        uid: userAuth.uid,
-        credential: userAuth.token
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
       }
     }).valueChanges
   }

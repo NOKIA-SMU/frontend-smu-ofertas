@@ -46,6 +46,69 @@ export class ReplaceLineBreaks implements PipeTransform {
   }
 }
 
+@Pipe({ name: 'dictionary' })
+export class Dictionary implements PipeTransform {
+  transform(value: string): string {
+    if (value) {
+      let newValue = value;
+      if (value === 'tipoAcceso') newValue = 'Tipo acceso'
+      if (value === 'naturalezaServicio') newValue = 'Naturaleza servicio'
+      if (value === 'descripcionOds') newValue = 'Descripción ods'
+      if (value === 'fechaRecibidoOds') newValue = 'Fecha recibido ods'
+      if (value === 'semanaRecibidoOds') newValue = 'Semana recibido ods'
+      if (value === 'tipoOferta') newValue = 'Tipo oferta'
+      if (value === 'descripcionTarea') newValue = 'Descripción tarea'
+      if (value === 'encargadoCliente') newValue = 'Encargado cliente'
+      if (value === 'fechaEjecucion') newValue = 'Fecha ejecución'
+      if (value === 'confirmacionRecibido') newValue = 'Confirmación recibido'
+      if (value === 'comentarioSupervisor') newValue = 'Comentario supervisor'
+      if (value === 'numeroOferta') newValue = 'Numero oferta'
+      if (value === 'precioUnidadProveedor') newValue = 'Precio unidad proveedor'
+      if (value === 'precioTotalProveedor') newValue = 'Precio total proveedor'
+      if (value === 'precioUnidadVenta') newValue = 'Precio unidad venta'
+      if (value === 'precioTotalVenta') newValue = 'Precio total venta'
+      if (value === 'precioUnidadCliente') newValue = 'Precio unidad cliente'
+      if (value === 'precioTotalCliente') newValue = 'Precio total cliente'
+      if (value === 'margen') newValue = 'Margen'
+      if (value === 'tipoAdquisicion') newValue = 'Tipo adquisicion'
+      if (value === 'proveedor') newValue = 'Proveedor'
+      if (value === 'tasOfertaAnterior') newValue = 'Tas oferta anterior'
+      if (value === 'fechaDespachoSupervisor') newValue = 'Fecha despacho supervisor'
+      if (value === 'semanaDespachoSupervisor') newValue = 'Semana despacho supervisor'
+      if (value === 'fechaDespachoCompras') newValue = 'Fecha despacho compras'
+      if (value === 'semanaDespachoCompras') newValue = 'Semana despacho compras'
+      if (value === 'fechaRespuestaCompras') newValue = 'Fecha respuesta compras'
+      if (value === 'semanaRespuestaCompras') newValue = 'Semana respuesta compras'
+      if (value === 'fechaEnvioOfertaCliente') newValue = 'Fecha envio oferta cliente'
+      if (value === 'semanaEnvioOfertaCliente') newValue = 'Semana envio oferta cliente'
+      if (value === 'fechaEnvioOfertaClienteNegociada') newValue = 'Fecha envio oferta cliente negociada'
+      if (value === 'semanaEnvioOfertaClienteNegociada') newValue = 'Semana envio oferta cliente negociada'
+      if (value === 'fechaRespuestaCliente') newValue = 'Fecha respuesta cliente'
+      if (value === 'semanaRespuestaCliente') newValue = 'Semana respuesta cliente'
+      if (value === 'fechaRespuestaClienteNegociada') newValue = 'Fecha respuesta cliente negociada'
+      if (value === 'semanaRespuestaClienteNegociada') newValue = 'Semana respuesta cliente negociada'
+      if (value === 'tipoRespuestaCliente') newValue = 'Tipo respuesta cliente'
+      if (value === 'tipoRespuestaClienteNegociada') newValue = 'Tipo respuesta cliente negociada'
+      if (value === 'po') newValue = 'Po'
+      if (value === 'fechaPo') newValue = 'Fecha Po'
+      if (value === 'comentarioAnalista') newValue = 'Comentario analista'
+      if (value === 'subestadoOferta') newValue = 'Subestado oferta'
+      if (value === 'estadoOferta') newValue = 'Estado oferta'
+      if (value === 'fechaEntregaAlmacen') newValue = 'Fecha entrega almacen'
+      if (value === 'comentarioAlmacenista') newValue = 'Comentario almacenista'
+      if (value === 'comentarioCoordinador') newValue = 'Comentario coordinador'
+      if (value === 'valorConciliadoCliente') newValue = 'Valor conciliado cliente'
+      if (value === 'fechaConciliadoCliente') newValue = 'Fecha conciliado cliente'
+      if (value === 'comentarioFacturador') newValue = 'Comentario facturador'
+      if (value === 'fechaEnvioActaSmu') newValue = 'Fecha envio acta smu'
+      if (value === 'comentarioActa') newValue = 'Comentario acta'
+      if (value === 'fechaFirmaActaSmu') newValue = 'Fecha firma acta smu'
+      if (value === 'fechaGrSmu') newValue = 'Fecha Gr smu'
+      return `${newValue}`;
+    }
+  }
+}
+
 @NgModule({
   imports: [
     CommonModule,
@@ -69,6 +132,7 @@ export class ReplaceLineBreaks implements PipeTransform {
     ServiceOperateComponent,
     OffersComponent,
     ReplaceLineBreaks,
+    Dictionary,
     OfferOperateComponent],
   providers: [
     DashboardService,

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from './auth/auth.service';
+import { Profile } from './models/auth.models';
+
 
 declare var $: any;
 declare var swal: any;
@@ -8,8 +11,14 @@ declare var swal: any;
 export class AppService {
 
   toAction: any;
+  currentUser: Profile;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) {
+    this.authService.currentUser()
+      .subscribe(res => {
+        this.currentUser = res
+      })
+  }
 
   public showSwal(mod, type, title, text, error?) {
     if (mod === 'basic') {
@@ -41,6 +50,15 @@ export class AppService {
           text = "Por favor vuelva a ingresar al sistema";
           this.toAction = "login";
           localStorage.clear();
+          this.authService.deleteToken(this.currentUser.id)
+            .subscribe(res => {
+              this.authService.logout()
+                .then(res => {
+                  this.router.navigate(['/']);
+                }, error => {
+                  debugger
+                })
+            })
         }
       }
       swal({

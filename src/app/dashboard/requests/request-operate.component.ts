@@ -110,7 +110,7 @@ export class RequestOperateComponent implements OnInit {
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res
-        if (this.currentUser.region) {
+        if (this.currentUser.region || this.currentUser.roles.Administrador) {
           this.stationService.getStations(this.currentUser.region)
             .subscribe(res => {
               this.dataSource = new MatTableDataSource(res.data.estaciones);

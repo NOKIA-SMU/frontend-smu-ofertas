@@ -11,11 +11,11 @@
 
 - [x] Pipe para remover _
 
-- [ ] Pipe para quitar camel case
+- [x] Pipe para quitar camel case
 
 - [ ] Deshabilitar toogle estado de solicitud al editar la solicitud
 
-- [ ] Boton logout en vista de Admin
+- [x] Boton logout en vista de Admin
 
 - [ ] Validacion de roles y permisos para oferta
 
