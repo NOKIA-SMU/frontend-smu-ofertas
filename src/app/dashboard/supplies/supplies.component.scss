@@ -15,9 +15,16 @@
         > .mat-header-cell, > .mat-cell {
           flex: 0 0 150px;
           &:nth-child(1),
-          &:nth-child(6),
-          &:nth-child(7), {
+          &:nth-child(12),
+          &:nth-child(13), {
             flex: 0 0 70px;
+          }
+          &:nth-child(2),
+          &:nth-child(3) {
+            flex: 0 0 200px;
+          }
+          &:nth-child(10), {
+            flex: 0 0 300px;
           }
         }
       }

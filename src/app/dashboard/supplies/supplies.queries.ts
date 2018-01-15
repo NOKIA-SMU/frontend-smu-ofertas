@@ -5,6 +5,12 @@ export const querySupplies = gql`
 		suministros(uid: $uid, credential: $credential) {
 			id
 			nombre
+			codigoLpu
+			codigoMm
+			descripcion
+			unidad
+			valorLpu
+			descripcionLpu
 			subsistema {
 				id
 				nombre
@@ -22,6 +28,12 @@ export const querySuppliesById = gql`
 		suministro (pk: $pk, uid: $uid, credential: $credential) {
 			id
 			nombre
+			codigoLpu
+			codigoMm
+			descripcion
+			unidad
+			valorLpu
+			descripcionLpu
 			subsistema {
 				id
 				nombre
@@ -39,6 +51,12 @@ export const querySuppliesBySubsystem = gql`
 		suministros(query: $query, uid: $uid, credential: $credential) {
 			id
 			nombre
+			codigoLpu
+			codigoMm
+			descripcion
+			unidad
+			valorLpu
+			descripcionLpu
 			subsistema {
 				id
 				nombre
@@ -49,23 +67,34 @@ export const querySuppliesBySubsystem = gql`
 
 export const mutationCreateSupplie = gql`
 	mutation (
-		$nombre: String,
+		$codigoLpu: String!,
+		$codigoMm: String!,
+		$nombre: String!,
+		$descripcion: String,
 		$marca: String,
 		$referencia: String,
+		$subsistema: ID!,
 		$unidad: String,
+		$valorLpu: Float,
+		$descripcionLpu: String,
 		$uid: String!,
 		$credential: String!
 	) {
-		suministros(
+		createSuministro(
+			codigoLpu: $codigoLpu,
+			codigoMm: $codigoMm,
 			nombre: $nombre,
+			descripcion: $descripcion,
 			marca: $marca,
 			referencia: $referencia,
+			subsistema: $subsistema,
 			unidad: $unidad,
+			valorLpu: $valorLpu,
+			descripcionLpu: $descripcionLpu,
 			uid: $uid,
 			credential: $credential
 		) {
-			id
-			nombre
+			status
 		}
 	}
 `;
@@ -73,18 +102,35 @@ export const mutationCreateSupplie = gql`
 export const mutationUpdateSupplie = gql`
 	mutation (
 		$pk: ID!,
+		$codigoLpu: String!,
+		$codigoMm: String!,
 		$name: String,
+		$descripcion: String,
+		$marca: String,
+		$referencia: String,
+		$subsistema: ID!,
+		$unidad: String,
+		$valorLpu: Float,
+		$descripcionLpu: String,
 		$uid: String!,
 		$credential: String!
 	) {
 		updateSuministro(
 			pk: $pk,
+			codigoLpu: $codigoLpu,
+			codigoMm: $codigoMm,
 			nombre: $name,
+			descripcion: $descripcion,
+			marca: $marca,
+			referencia: $referencia,
+			subsistema: $subsistema,
+			unidad: $unidad,
+			valorLpu: $valorLpu,
+			descripcionLpu: $descripcionLpu,
 			uid: $uid,
 			credential: $credential
 		) {
-			id
-			nombre
+			status
 		}
 	}
 `;

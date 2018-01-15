@@ -39,11 +39,17 @@ export interface Request {
 export interface Supplie {
 	id?: string,
 	nombre: string,
+	descripcion?: string
+	codigoLpu: string,
+	codigoMm: string,
+	marca?: string,
+	referencia?: string,
 	subsistema: any,
-	marca: string,
-	referencia: string,
-	unidad: string,
-	cantidad: number
+	unidad?: string,
+	valorLpu?: number,
+	descripcionLpu?: string
+	estado?: boolean,
+	subestado?: boolean
 }
 
 export interface Service {

@@ -14,7 +14,21 @@ import { AppService } from "../../app.service";
 export class SuppliesComponent implements OnInit {
 
   supplies: any[] = [];
-  suppliesColumns = ['id', 'nombre', 'subsistema', 'marca', 'referencia', 'estado', 'subestado'];
+  suppliesColumns = [
+    'id',
+    'nombre',
+    'descripcion',
+    'codigoLpu',
+    'codigoMm',
+    'subsistema',
+    'marca',
+    'unidad',
+    'valorLpu',
+    'descripcionLpu',
+    'referencia',
+    'estado',
+    'subestado'
+  ];
   dataSourceSupplies = new MatTableDataSource();
   isLoadingResultsSupplies = true;
   currentRowSelect: any;
@@ -37,6 +51,7 @@ export class SuppliesComponent implements OnInit {
     this.suppliesService.getSupplies()
       .subscribe(res => {
         // Inicialize supplies table
+        debugger
         this.dataSourceSupplies = new MatTableDataSource(res.data.suministros);
         this.dataSourceSupplies.paginator = this.paginator;
         this.dataSourceSupplies.sort = this.sort;

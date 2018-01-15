@@ -1,16 +1,49 @@
 <h2>Suministro</h2>
 <form #createSupplieForm="ngForm" (ngSubmit)="saveSupplie()" *ngIf="supplie">
+  <!-- CODE LPU -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Codigo Lpu" name="codigoLpu" [(ngModel)]="supplie.codigoLpu" required>
+  </mat-form-field>
+  <!-- CODE MM -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Codigo Mm" name="codigoMm" [(ngModel)]="supplie.codigoMm" required>
+  </mat-form-field>
+  <!-- NAME -->
   <mat-form-field>
     <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="supplie.nombre" required>
   </mat-form-field>
+  <!-- DESCRIPTION -->
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción" name="descripcion" [(ngModel)]="supplie.descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+
   <mat-form-field>
     <input matInput type="text" placeholder="Marca" name="marca" [(ngModel)]="supplie.marca" required>
   </mat-form-field>
+  <!-- REFERENCE -->
   <mat-form-field>
     <input matInput type="text" placeholder="Referencia" name="referencia" [(ngModel)]="supplie.referencia" required>
   </mat-form-field>
+  <!-- UNITY -->
   <mat-form-field>
     <input matInput type="text" placeholder="Unidad" name="unidad" [(ngModel)]="supplie.unidad" required>
+  </mat-form-field>
+  <!-- SUBSYSTEM -->
+  <mat-form-field>
+    <mat-select placeholder="Subsistema" name="subsistema" [(ngModel)]="supplie.subsistema">
+      <mat-option *ngFor="let item of subsystems" [value]="item.id">
+        {{item.nombre}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- LPU VALUE -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Valor Lpu" name="valorLpu" [(ngModel)]="supplie.valorLpu">
+  </mat-form-field>
+  <!-- DESCRIPTION LPU -->
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción Lpu" name="descripcionLpu" [(ngModel)]="supplie.descripcionLpu" matTextareaAutosize matAutosizeMinRows="2"
+      matAutosizeMaxRows="8"></textarea>
   </mat-form-field>
   <!-- <mat-form-field>
     <mat-select placeholder="Subestado oferta" name="subestadoOferta" [(ngModel)]="offer.subestadoOferta">

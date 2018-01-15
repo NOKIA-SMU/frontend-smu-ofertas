@@ -55,10 +55,16 @@ export class SuppliesService {
     return this.apollo.mutate({
       mutation: mutationCreateSupplie,
       variables: {
+        codigoLpu: supplie.codigoLpu,
+        codigoMm: supplie.codigoMm,
         nombre: supplie.nombre,
+        descripcion: supplie.descripcion,
         marca: supplie.marca,
         referencia: supplie.referencia,
+        subsistema: supplie.subsistema,
         unidad: supplie.unidad,
+        valorLpu: supplie.valorLpu,
+        descripcionLpu: supplie.descripcionLpu,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
       }
