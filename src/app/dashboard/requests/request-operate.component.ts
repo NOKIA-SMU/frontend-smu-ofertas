@@ -67,6 +67,8 @@ export class RequestOperateComponent implements OnInit {
   selectionServices = new SelectionModel(true, []);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('PagSupplies') PagSupplies: MatPaginator;
+  @ViewChild('PagServices') PagServices: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
@@ -165,6 +167,7 @@ export class RequestOperateComponent implements OnInit {
           this.suppliesService.getSuppliesBySubsystem(this.request.subsistema)
             .subscribe(res => {
               // Clone response
+              debugger
               for (let i = 0; i < res.data.suministros.length; i++) {
                 this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre })
               }
@@ -180,7 +183,7 @@ export class RequestOperateComponent implements OnInit {
               }
               // Inicialize supplies table
               this.dataSourceSupplies = new MatTableDataSource(this.supplies);
-              this.dataSourceSupplies.paginator = this.paginator;
+              this.dataSourceSupplies.paginator = this.PagSupplies;
               this.dataSourceSupplies.sort = this.sort;
               this.isLoadingResultsSupplies = false;
             }, error => {
@@ -208,7 +211,7 @@ export class RequestOperateComponent implements OnInit {
               }
               // Inicialize services table
               this.dataSourceServices = new MatTableDataSource(this.services);
-              this.dataSourceServices.paginator = this.paginator;
+              this.dataSourceServices.paginator = this.PagServices;
               this.dataSourceServices.sort = this.sort;
               this.isLoadingResultsServices = false;
             }, error => {
@@ -262,7 +265,7 @@ export class RequestOperateComponent implements OnInit {
         }
         // Initialize services table
         this.dataSourceServices = new MatTableDataSource(this.services);
-        this.dataSourceServices.paginator = this.paginator;
+        this.dataSourceServices.paginator = this.PagServices;
         this.dataSourceServices.sort = this.sort;
         this.isLoadingResultsServices = false;
       }, error => {
@@ -273,13 +276,14 @@ export class RequestOperateComponent implements OnInit {
     // Get all supplies
     this.suppliesService.getSuppliesBySubsystem(subsystemId)
       .subscribe(res => {
+        debugger
         // Clone response
         for (let i = 0; i < res.data.suministros.length; i++) {
           this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0, comentario: '' });
         }
         // Inicialize supplies table
         this.dataSourceSupplies = new MatTableDataSource(this.supplies);
-        this.dataSourceSupplies.paginator = this.paginator;
+        this.dataSourceSupplies.paginator = this.PagSupplies;
         this.dataSourceSupplies.sort = this.sort;
         this.isLoadingResultsSupplies = false;
       }, error => {

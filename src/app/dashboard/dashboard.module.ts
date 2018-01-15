@@ -40,8 +40,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ReplaceLineBreaks implements PipeTransform {
   transform(value: string): string {
     if (value) {
-      let newValue = value.split('_').join(' ');
-      return `${newValue}`;
+      if (typeof value === 'number') {
+        return value;
+      } else {
+        let newValue = value.split('_').join(' ');
+        return `${newValue}`;
+      }
     }
   }
 }
