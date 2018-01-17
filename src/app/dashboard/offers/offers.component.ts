@@ -26,8 +26,8 @@ export class OffersComponent implements OnInit {
     'solicitudEstacionCiudad',
     'suministroServicioId',
     'suministroServicioNombre',
-    'suministroServicioQty',
     'suministroServicioUnidad',
+    'suministroServicioQty',
     'suministroServicioComentario'
   ];
 
@@ -102,8 +102,8 @@ export class OffersComponent implements OnInit {
     'solicitudEstacionCiudad',
     'suministroServicioId',
     'suministroServicioNombre',
-    'suministroServicioQty',
     'suministroServicioUnidad',
+    'suministroServicioQty',
     'suministroServicioComentario',
     'tipoAcceso',
     'tipoSitio',

@@ -84,19 +84,19 @@
 					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.nombre : row.ordenServicio?.servicio?.nombre}}
 				</mat-cell>
 			</ng-container>
-			<!-- SUPPLIE OR SERVICE QTY -->
-			<ng-container matColumnDef="suministroServicioQty">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser cantidad </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro ? row.ordenSuministro?.cantidad : row.ordenServicio?.cantidad}}
-					<!-- {{row.ordenSuministro| json}} -->
-				</mat-cell>
-			</ng-container>
 			<!-- SUPPLIE OR SERVICE UNITY -->
 			<ng-container matColumnDef="suministroServicioUnidad">
 				<mat-header-cell *matHeaderCellDef> Sum/Ser unidad </mat-header-cell>
 				<mat-cell *matCellDef="let row">
 					{{row.ordenSuministro ? row.ordenSuministro?.suministro.unidad : row.ordenServicio?.servicio.unidad}}
+					<!-- {{row.ordenSuministro| json}} -->
+				</mat-cell>
+			</ng-container>
+			<!-- SUPPLIE OR SERVICE QTY -->
+			<ng-container matColumnDef="suministroServicioQty">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser cantidad </mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro ? row.ordenSuministro?.cantidad : row.ordenServicio?.cantidad}}
 					<!-- {{row.ordenSuministro| json}} -->
 				</mat-cell>
 			</ng-container>
