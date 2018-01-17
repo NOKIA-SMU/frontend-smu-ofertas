@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OffersService } from './offers.service';
 import { AuthService } from "../../auth/auth.service";
 import { AppService } from "../../app.service";
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-offer-operate',
@@ -16,6 +17,7 @@ export class OfferOperateComponent implements OnInit {
   offer: any;
 
   accessTypes: string[];
+  sitesTypes: string[];
   natureServices: string[];
   offerTypes: string[];
   elementTypes: string[];
@@ -46,6 +48,13 @@ export class OfferOperateComponent implements OnInit {
     this.offersService.getAccessTypes()
       .subscribe(res => {
         this.accessTypes = res.data.tipoAcceso
+      }, error => {
+        debugger
+      })
+
+    this.offersService.getSitesTypes()
+      .subscribe(res => {
+        this.sitesTypes = res.data.tipoSitio
       }, error => {
         debugger
       })
@@ -126,23 +135,25 @@ export class OfferOperateComponent implements OnInit {
       this.isNew = false;
       this.offersService.getOfferById(this.route.snapshot.params.id)
         .subscribe(res => {
+          debugger
           this.offer = {
             id: res.data.oferta.id,
             ordenSuministro: res.data.oferta.ordenSuministro ? res.data.oferta.ordenSuministro.id : null,
             ordenServicio: res.data.oferta.ordenServicio ? res.data.oferta.ordenServicio.id : null,
             tipoAcceso: res.data.oferta.tipoAcceso ? res.data.oferta.tipoAcceso.split('_').join(' ') : null,
+            tipoSitio: res.data.oferta.tipoSitio ? res.data.oferta.tipoSitio.split('_').join(' ') : null,
             naturalezaServicio: res.data.oferta.naturalezaServicio ? res.data.oferta.naturalezaServicio.split('_').join(' ') : null,
             descripcionOds: res.data.oferta.descripcionOds,
             fechaRecibidoOds: res.data.oferta.fechaRecibidoOds,
             tipoOferta: res.data.oferta.tipoOferta ? res.data.oferta.tipoOferta.split('_').join(' ') : null,
-            tarea: res.data.oferta.tarea,
+            workOrder: res.data.oferta.workOrder,
             descripcionTarea: res.data.oferta.descripcionTarea,
             encargadoCliente: res.data.oferta.encargadoCliente,
             tipoElemento: res.data.oferta.tipoElemento ? res.data.oferta.tipoElemento.split('_').join(' ') : null,
             fechaEjecucion: res.data.oferta.fechaEjecucion,
             confirmacionRecibido: res.data.oferta.confirmacionRecibido ? res.data.oferta.confirmacionRecibido.split('_').join(' ') : null,
             comentarioSupervisor: res.data.oferta.comentarioSupervisor,
-            usuario: res.data.oferta.usuario,
+            // usuario: res.data.oferta.usuario,
             numeroOferta: res.data.oferta.numeroOferta,
             modalidad: res.data.oferta.modalidad ? res.data.oferta.modalidad.split('_').join(' ') : null,
             precioUnidadProveedor: res.data.oferta.precioUnidadProveedor,

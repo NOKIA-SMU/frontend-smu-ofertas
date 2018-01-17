@@ -8,6 +8,7 @@ import {
   queryOfferById,
   updateOferta,
   queryAccessType,
+  querySitesType,
   queryNatureServices,
   queryOfferType,
   queryElementType,
@@ -34,6 +35,13 @@ export class OffersService {
   public getAccessTypes() {
     return this.apollo.watchQuery<any>({
       query: queryAccessType,
+      variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
+    }).valueChanges
+  }
+
+  public getSitesTypes() {
+    return this.apollo.watchQuery<any>({
+      query: querySitesType,
       variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
     }).valueChanges
   }
@@ -138,11 +146,12 @@ export class OffersService {
         ordenSuministro: offer.ordenSuministro,
         ordenServicio: offer.ordenServicio,
         tipoAcceso: offer.tipoAcceso,
+        tipoSitio: offer.tipoSitio,
         naturalezaServicio: offer.naturalezaServicio,
         descripcionOds: offer.descripcionOds,
         fechaRecibidoOds: offer.fechaRecibidoOds,
         tipoOferta: offer.tipoOferta,
-        tarea: offer.tarea,
+        workOrder: offer.workOrder,
         descripcionTarea: offer.descripcionTarea,
         encargadoCliente: offer.encargadoCliente,
         tipoElemento: offer.tipoElemento,

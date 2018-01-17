@@ -35,6 +35,13 @@
 					{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.supervisor : row.ordenServicio?.solicitud?.supervisor}}
 				</mat-cell>
 			</ng-container>
+			<!-- REQUEST ANALYST -->
+			<ng-container matColumnDef="solicitudAnalista">
+				<mat-header-cell *matHeaderCellDef> Analista </mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.analista : row.ordenServicio?.solicitud?.analista}}
+				</mat-cell>
+			</ng-container>
 			<!-- REQUEST ESTATION -->
 			<ng-container matColumnDef="solicitudEstacionNombre">
 				<mat-header-cell *matHeaderCellDef> Estación nombre </mat-header-cell>

@@ -10,6 +10,14 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <!-- SITES TYPE -->
+    <mat-form-field>
+      <mat-select placeholder="Tipo sitio" name="tipoSitio" [(ngModel)]="offer.tipoSitio">
+        <mat-option *ngFor="let item of sitesTypes" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <!-- NATURE SERVICES -->
     <mat-form-field>
       <mat-select placeholder="Naturaleza servicio" name="naturalezaServicio" [(ngModel)]="offer.naturalezaServicio">
@@ -38,9 +46,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <!-- TASK -->
+    <!-- WORK ORDER -->
     <mat-form-field>
-      <input matInput type="text" placeholder="Tarea" name="tarea" [(ngModel)]="offer.tarea">
+      <input matInput type="text" placeholder="Work Order" name="workOrder" [(ngModel)]="offer.workOrder">
     </mat-form-field>
     <!-- DESCRIPTION TASK -->
     <mat-form-field>
@@ -81,9 +89,9 @@
   <!-- ANALYST FILEDS -->
   <ng-container *ngIf="currentUser?.roles?.Analista || currentUser?.roles?.Administrador">
     <!-- USER -->
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input matInput type="text" placeholder="Usuario" name="usuario" [(ngModel)]="offer.usuario">
-    </mat-form-field>
+    </mat-form-field> -->
     <!-- NUMBER OFFER -->
     <mat-form-field>
       <input matInput type="text" placeholder="Numero oferta" name="numeroOferta" [(ngModel)]="offer.numeroOferta">
@@ -98,19 +106,23 @@
     </mat-form-field>
     <!-- UNIT PRICE SUPPLIER -->
     <mat-form-field>
-      <input matInput type="number" placeholder="Precio unidad proveedor" name="precioUnidadProveedor" [(ngModel)]="offer.precioUnidadProveedor">
+      <input matInput type="number" placeholder="Precio unidad proveedor" name="precioUnidadProveedor" [ngModel]="offer.precioUnidadProveedor" (ngModelChange)="offer.precioUnidadProveedor=$event">
     </mat-form-field>
     <!-- UNIT PRICE SALE -->
     <mat-form-field>
-      <input matInput type="number" placeholder="Precio unidad venta" name="precioUnidadVenta" [(ngModel)]="offer.precioUnidadVenta">
+      <input matInput type="number" placeholder="Precio unidad venta" name="precioUnidadVenta" [ngModel]="offer.precioUnidadVenta" (ngModelChange)="offer.precioUnidadVenta=$event">
     </mat-form-field>
     <!-- UNIT PRICE CLIENT -->
     <mat-form-field>
-      <input matInput type="number" placeholder="Precio unidad cliente" name="precioUnidadCliente" [(ngModel)]="offer.precioUnidadCliente">
+      <input matInput type="number" placeholder="Precio unidad cliente" name="precioUnidadCliente" [ngModel]="offer.precioUnidadCliente" (ngModelChange)="offer.precioUnidadCliente=$event">
     </mat-form-field>
     <!-- ACQUISITION TYPE -->
     <mat-form-field>
-      <input matInput type="text" placeholder="Tipo adquisición" name="tipoAdquisicion" [(ngModel)]="offer.tipoAdquisicion">
+      <mat-select placeholder="Tipo adquisición" name="tipoAdquisicion" [(ngModel)]="offer.tipoAdquisicion">
+        <mat-option *ngFor="let item of acquisitionTypes" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <!-- MODALITIES -->
     <mat-form-field>
@@ -125,12 +137,12 @@
       <input matInput type="text" placeholder="Tas oferta anterior" name="tasOfertaAnterior" [(ngModel)]="offer.tasOfertaAnterior">
     </mat-form-field>
     <!-- DATE SUPERVISOR OFFICE -->
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input matInput [matDatepicker]="pickerfechaDespachoSupervisor" name="fechaDespachoSupervisor" placeholder="Fecha despacho supervisor"
         [(ngModel)]="offer.fechaDespachoSupervisor">
       <mat-datepicker-toggle matSuffix [for]="pickerfechaDespachoSupervisor"></mat-datepicker-toggle>
       <mat-datepicker #pickerfechaDespachoSupervisor></mat-datepicker>
-    </mat-form-field>
+    </mat-form-field> -->
     <!-- DATE SHOP OFFICE -->
     <mat-form-field>
       <input matInput [matDatepicker]="pickerfechaDespachoCompras" name="fechaDespachoCompras" placeholder="Fecha despacho compras"

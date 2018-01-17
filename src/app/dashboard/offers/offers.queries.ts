@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 
 export const queryAccessType = gql`query($uid:String, $credential:String) { tipoAcceso(uid: $uid, credential: $credential) }`;
+export const querySitesType = gql`query($uid:String, $credential:String) { tipoSitio(uid: $uid, credential: $credential) }`;
 export const queryNatureServices = gql`query($uid:String, $credential:String) { naturalezaServicio(uid: $uid, credential: $credential) }`;
 export const queryOfferType = gql`query($uid:String, $credential:String) { tipoOferta(uid: $uid, credential: $credential) }`;
 export const queryElementType = gql`query($uid:String, $credential:String) { tipoElemento(uid: $uid, credential: $credential) }`;
@@ -63,18 +64,18 @@ export const queryOffers = gql`
 				comentario
 			}
 			tipoAcceso
+			tipoSitio
 			naturalezaServicio
 			descripcionOds
 			fechaRecibidoOds
 			semanaRecibidoOds
 			tipoOferta
-			tarea
+			workOrder
 			descripcionTarea
 			encargadoCliente
 			fechaEjecucion
 			confirmacionRecibido
 			comentarioSupervisor
-			usuario
 			numeroOferta
 			modalidad
 			precioUnidadProveedor
@@ -168,18 +169,18 @@ export const queryOfferById = gql`
 				comentario
 			}
 			tipoAcceso
+			tipoSitio
 			naturalezaServicio
 			descripcionOds
 			fechaRecibidoOds
 			semanaRecibidoOds
 			tipoOferta
-			tarea
+			workOrder
 			descripcionTarea
 			encargadoCliente
 			fechaEjecucion
 			confirmacionRecibido
 			comentarioSupervisor
-			usuario
 			numeroOferta
 			modalidad
 			precioUnidadProveedor
@@ -223,18 +224,18 @@ export const updateOferta = gql`
 		$ordenSuministro: ID,
 		$ordenServicio: ID,
 		$tipoAcceso: String,
+		$tipoSitio: String,
 		$naturalezaServicio: String,
 		$descripcionOds: String,
 		$fechaRecibidoOds: Date,
 		$tipoOferta: String,
-		$tarea: String,
+		$workOrder: String,
 		$descripcionTarea: String,
 		$encargadoCliente: String,
 		$tipoElemento: String,
 		$fechaEjecucion: Date,
 		$confirmacionRecibido: String,
 		$comentarioSupervisor: String,
-		$usuario:String,
 		$numeroOferta:String,
 		$modalidad:String,
 		$precioUnidadProveedor: Float,
@@ -243,7 +244,6 @@ export const updateOferta = gql`
 		$tipoAdquisicion: String,
 		$proveedor: String,
 		$tasOfertaAnterior: String,
-		$fechaDespachoSupervisor: Date,
 		$fechaDespachoCompras: Date,
 		$fechaRespuestaCompras: Date,
 		$fechaEnvioOfertaCliente: Date,
@@ -275,18 +275,18 @@ export const updateOferta = gql`
 			ordenSuministro: $ordenSuministro,
 			ordenServicio: $ordenServicio,
 			tipoAcceso: $tipoAcceso,
+			tipoSitio: $tipoSitio,
 			naturalezaServicio: $naturalezaServicio,
 			descripcionOds: $descripcionOds,
 			fechaRecibidoOds: $fechaRecibidoOds,
 			tipoOferta: $tipoOferta,
-			tarea: $tarea,
+			workOrder: $workOrder,
 			descripcionTarea: $descripcionTarea,
 			encargadoCliente: $encargadoCliente,
 			tipoElemento: $tipoElemento,
 			fechaEjecucion: $fechaEjecucion,
 			confirmacionRecibido: $confirmacionRecibido,
 			comentarioSupervisor: $comentarioSupervisor,
-			usuario: $usuario,
 			numeroOferta: $numeroOferta,
 			modalidad: $modalidad,
 			precioUnidadProveedor: $precioUnidadProveedor,
@@ -295,7 +295,6 @@ export const updateOferta = gql`
 			tipoAdquisicion: $tipoAdquisicion,
 			proveedor: $proveedor,
 			tasOfertaAnterior: $tasOfertaAnterior,
-			fechaDespachoSupervisor: $fechaDespachoSupervisor,
 			fechaDespachoCompras: $fechaDespachoCompras,
 			fechaRespuestaCompras: $fechaRespuestaCompras,
 			fechaEnvioOfertaCliente: $fechaEnvioOfertaCliente,
@@ -359,17 +358,17 @@ export const updateOferta = gql`
 					comentario
 				}
 				tipoAcceso
+				tipoSitio
 				naturalezaServicio
 				descripcionOds
 				fechaRecibidoOds
 				tipoOferta
-				tarea
+				workOrder
 				descripcionTarea
 				encargadoCliente
 				fechaEjecucion
 				confirmacionRecibido
 				comentarioSupervisor
-				usuario
 				numeroOferta
 				modalidad
 				precioUnidadProveedor
