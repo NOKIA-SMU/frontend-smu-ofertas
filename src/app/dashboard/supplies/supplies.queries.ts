@@ -55,6 +55,8 @@ export const querySuppliesBySubsystem = gql`
 			codigoMm
 			descripcion
 			unidad
+			marca
+			referencia
 			valorLpu
 			descripcionLpu
 			subsistema {

@@ -98,11 +98,31 @@
           <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="descripcion">
+          <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="cantidad">
           <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <input type="number" name="qty-{{element.nombre}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
           </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="unidad">
+          <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="marca">
+          <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.marca}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="referencia">
+          <mat-header-cell *matHeaderCellDef> Referencia </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.referencia}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="comentario">
@@ -146,6 +166,31 @@
         <ng-container matColumnDef="nombre">
           <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="distancia">
+          <mat-header-cell *matHeaderCellDef> Distancia </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.distancia}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="peso">
+          <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.peso}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="tiempo">
+          <mat-header-cell *matHeaderCellDef> Tiempo </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.tiempo}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="unidad">
+          <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="cantidad">

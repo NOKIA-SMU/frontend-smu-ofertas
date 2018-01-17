@@ -100,15 +100,30 @@ form {
             flex: 0 0 300px;
           }
           &:nth-child(4),{
-            max-width: 140px;
-          }
-          &:nth-child(5),{
             flex: 0 0 400px;
           }
         }
       }
     }
   }
+  // &.supplies {
+  //   .mat-table {
+  //     > .mat-header-row, > .mat-row {
+  //       > .mat-header-cell, > .mat-cell {
+
+  //       }
+  //     }
+  //   }
+  // }
+  // &.services {
+  //   .mat-table {
+  //     > .mat-header-row, > .mat-row {
+  //       > .mat-header-cell, > .mat-cell {
+
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 h2.title, h4 {

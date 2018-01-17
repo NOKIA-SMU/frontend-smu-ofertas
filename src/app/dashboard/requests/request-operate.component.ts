@@ -55,13 +55,13 @@ export class RequestOperateComponent implements OnInit {
   currentRowSelectData: any = {};
 
   supplies: any[] = [];
-  suppliesColumns = ['activo', 'id', 'nombre', 'cantidad', 'comentario'];
+  suppliesColumns = ['activo', 'id', 'nombre', 'descripcion', 'unidad', 'marca', 'referencia', 'cantidad', 'comentario'];
   dataSourceSupplies = new MatTableDataSource();
   isLoadingResultsSupplies = false;
   selectionSupplies = new SelectionModel(true, []);
 
   services: any[] = [];
-  servicesColumns = ['activo', 'id', 'nombre', 'cantidad', 'comentario'];
+  servicesColumns = ['activo', 'id', 'nombre', 'descripcion', 'distancia', 'peso', 'tiempo', 'unidad', 'cantidad', 'comentario'];
   dataSourceServices = new MatTableDataSource();
   isLoadingResultsServices = false;
   selectionServices = new SelectionModel(true, []);
@@ -167,7 +167,6 @@ export class RequestOperateComponent implements OnInit {
           this.suppliesService.getSuppliesBySubsystem(this.request.subsistema)
             .subscribe(res => {
               // Clone response
-              debugger
               for (let i = 0; i < res.data.suministros.length; i++) {
                 this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre })
               }
@@ -261,7 +260,19 @@ export class RequestOperateComponent implements OnInit {
       // Clone response
       .subscribe(res => {
         for (let i = 0; i < res.data.servicios.length; i++) {
-          this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre, qty: 0, comentario: '' })
+          this.services.push({
+            id: res.data.servicios[i].id,
+            codigoLpu: res.data.servicios[i].codigoLpu,
+            nombre: res.data.servicios[i].nombre,
+            descripcion: res.data.servicios[i].descripcion,
+            unidad: res.data.servicios[i].unidad,
+            distancia: res.data.servicios[i].distancia,
+            peso: res.data.servicios[i].peso,
+            tiempo: res.data.servicios[i].tiempo,
+            qty: 0,
+            comentario: '',
+            valorLpu: res.data.servicios[i].valorLpu
+          })
         }
         // Initialize services table
         this.dataSourceServices = new MatTableDataSource(this.services);
@@ -276,10 +287,21 @@ export class RequestOperateComponent implements OnInit {
     // Get all supplies
     this.suppliesService.getSuppliesBySubsystem(subsystemId)
       .subscribe(res => {
-        debugger
         // Clone response
+        debugger
         for (let i = 0; i < res.data.suministros.length; i++) {
-          this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre, qty: 0, comentario: '' });
+          this.supplies.push({
+            id: res.data.suministros[i].id,
+            codigoLpu: res.data.suministros[i].codigoLpu,
+            codigoMm: res.data.suministros[i].codigoMm,
+            nombre: res.data.suministros[i].nombre,
+            descripcion: res.data.suministros[i].descripcion,
+            unidad: res.data.suministros[i].unidad,
+            valorLpu: res.data.suministros[i].valorLpu,
+            descripcionLpu: res.data.suministros[i].descripcionLpu,
+            qty: 0,
+            comentario: ''
+          });
         }
         // Inicialize supplies table
         this.dataSourceSupplies = new MatTableDataSource(this.supplies);
