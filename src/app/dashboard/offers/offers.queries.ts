@@ -36,6 +36,9 @@ export const queryOffers = gql`
 				suministro {
 					id
 					nombre
+					unidad
+					marca
+					referencia
 				}
 				cantidad
 				comentario
@@ -59,6 +62,7 @@ export const queryOffers = gql`
 				servicio {
 					id
 					nombre
+					unidad
 				}
 				cantidad
 				comentario

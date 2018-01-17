@@ -27,6 +27,7 @@ export class OffersComponent implements OnInit {
     'suministroServicioId',
     'suministroServicioNombre',
     'suministroServicioQty',
+    'suministroServicioUnidad',
     'suministroServicioComentario'
   ];
 
@@ -102,6 +103,7 @@ export class OffersComponent implements OnInit {
     'suministroServicioId',
     'suministroServicioNombre',
     'suministroServicioQty',
+    'suministroServicioUnidad',
     'suministroServicioComentario',
     'tipoAcceso',
     'tipoSitio',
