@@ -25,7 +25,6 @@ export class ProfilesComponent implements OnInit {
     'COSTA'
   ]
 
-
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {

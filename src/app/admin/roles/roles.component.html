@@ -15,24 +15,26 @@
           <a (click)="deleteRole(role)" class="material-icons red">delete</a>
         </div>
         <ng-container *ngIf="isShowEditRole && rolToEdit.id == role.id">
-          <form #createRoleForm="ngForm" (ngSubmit)="updateRole(role)" class="u__form">
-            <div class="form-group">
-              <label for="nameRole">Nombre</label>
-              <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
+          <form #createRoleForm="ngForm" (ngSubmit)="updateRole(role)">
+            <mat-form-field>
+              <input matInput type="text" placeholder="Nombre" name="nameRole" [(ngModel)]="role.name" required>
+            </mat-form-field>
+
+            <div class="footer-buttom">
+              <button mat-raised-button type="submit" color="primary">Actualizar role</button>
             </div>
-            <br>
-            <button type="submit" class="btn btn-success">Actualizar Rol</button>
           </form>
         </ng-container>
         <ng-container *ngIf="isShowEditPermissionsToRole && rolToEditPermissions.id == role.id">
-          <form #createRoleForm="ngForm" (ngSubmit)="updatePermissionsToRole(role)" class="u__form">
+          <form #createRoleForm="ngForm" (ngSubmit)="updatePermissionsToRole(role)">
             <mat-selection-list>
               <mat-list-option *ngFor="let permission of permissions" [selected]="permission.checked" (click)="selectPermission(permission)">
                 {{permission.name}} - {{permission.model}}
               </mat-list-option>
             </mat-selection-list>
-            <br>
-            <button type="submit" class="btn btn-success">Update Role</button>
+            <div class="footer-buttom">
+              <button mat-raised-button type="submit" color="primary">Actualizar role</button>
+            </div>
           </form>
         </ng-container>
       </li>
@@ -40,18 +42,19 @@
   </mat-tab>
   <mat-tab label="Crear Roles">
     <br>
-    <form #createRoleForm="ngForm" (ngSubmit)="createRole(permissionsSelected)" class="u__form">
-      <div class="form-group">
-        <label for="nameRole">Nombre</label>
-        <input type="text" class="form-control" id="nameRole" name="nameRole" [(ngModel)]="role.name" required>
-      </div>
+    <form #createRoleForm="ngForm" (ngSubmit)="createRole(permissionsSelected)">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Nombre" name="nameRole" [(ngModel)]="role.name" required>
+      </mat-form-field>
       <br>
       <mat-form-field>
         <mat-select placeholder="Permiso" [(ngModel)]="permissionsSelected" name="permission" multiple>
           <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission.name}} - {{permission.model}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <button type="submit" class="btn btn-success">Create permisse</button>
+      <div class="footer-buttom">
+        <button mat-raised-button type="submit" color="primary">Crear role</button>
+      </div>
     </form>
   </mat-tab>
 </mat-tab-group>

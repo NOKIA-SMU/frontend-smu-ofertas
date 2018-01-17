@@ -4,7 +4,7 @@
   </div>
   <li *ngFor="let profile of profiles" class="listItems__item">
     <div class="data">
-      {{ profile.firstName }} - {{ profile.lastName }}
+      {{ profile.firstName }} &nbsp; {{ profile.lastName }}
     </div>
     <div class="actions">
       <a (click)="editProfile($event, profile)" class="material-icons blue">mode_edit</a>
