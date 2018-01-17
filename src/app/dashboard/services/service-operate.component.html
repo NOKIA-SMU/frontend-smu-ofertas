@@ -1,7 +1,28 @@
-<h2>Suministro</h2>
+<h2>Servicios</h2>
 <form #createServiceForm="ngForm" (ngSubmit)="saveService()" *ngIf="service">
+  <!-- CODE LPU -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Codigo Lpu" name="codigoLpu" [(ngModel)]="service.codigoLpu" required>
+  </mat-form-field>
+  <!-- NAME -->
   <mat-form-field>
     <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="service.nombre" required>
+  </mat-form-field>
+  <!-- DESCRIPTION -->
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción" name="descripcion" [(ngModel)]="service.descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- DISTANCE -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Distancia" name="distancia" [(ngModel)]="service.distancia" required>
+  </mat-form-field>
+  <!-- WEIGHT -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Peso" name="peso" [(ngModel)]="service.peso" required>
+  </mat-form-field>
+  <!-- TIME -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Tiempo" name="tiempo" [(ngModel)]="service.tiempo" required>
   </mat-form-field>
   <!-- SUBSYSTEM -->
   <mat-form-field>
@@ -10,6 +31,19 @@
         {{subsystem.nombre}}
       </mat-option>
     </mat-select>
+  </mat-form-field>
+  <!-- UNITY -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Unidad" name="unidad" [(ngModel)]="service.unidad" required>
+  </mat-form-field>
+  <!-- LPU VALUE -->
+  <mat-form-field>
+    <input matInput type="number" placeholder="Valor Lpu" name="valorLpu" [(ngModel)]="service.valorLpu">
+  </mat-form-field>
+  <!-- DESCRIPTION LPU -->
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción Lpu" name="descripcionLpu" [(ngModel)]="service.descripcionLpu" matTextareaAutosize
+      matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
   </mat-form-field>
 
   <div class="footer-buttom">

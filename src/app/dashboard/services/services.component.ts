@@ -14,7 +14,21 @@ import { AppService } from '../../app.service';
 
 export class ServicesComponent implements OnInit {
 
-  servicesColumns = ['id', 'nombre', 'subsistema', 'estado', 'subestado'];
+  servicesColumns = [
+    'id',
+    'codigoLpu',
+    'nombre',
+    'descripcion',
+    'distancia',
+    'peso',
+    'tiempo',
+    'subsistema',
+    'unidad',
+    'valorLpu',
+    'descripcionLpu',
+    'estado',
+    'subestado'
+  ];
   dataSourceServices = new MatTableDataSource();
   isLoadingResultsServices = true;
   currentRowSelect: any;
