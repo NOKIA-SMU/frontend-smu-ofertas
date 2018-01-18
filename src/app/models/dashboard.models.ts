@@ -28,7 +28,10 @@ export interface Request {
 	analistaId: string,
 	analista: string,
 	tas: string
-	estacion: number,
+	estacion: {
+		id: number,
+		name: string
+	},
 	subsistema: number,
 	suministros: any[],
 	servicios: any[],

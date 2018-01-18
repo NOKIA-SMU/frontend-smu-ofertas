@@ -45,7 +45,7 @@
     </mat-form-field>
     <!-- STATION -->
     <mat-form-field>
-      <input matInput type="number" placeholder="Estación" name="estacion" [(ngModel)]="request.estacion" disabled required>
+      <input matInput type="text" placeholder="Estación" name="estacion" [(ngModel)]="request.estacion.name" disabled required>
     </mat-form-field>
     <!-- PRIORITY -->
     <mat-form-field>
@@ -90,7 +90,7 @@
 
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          <mat-cell *matCellDef="let element" (click)="imprimir(element)"> {{element.id}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="nombre">
@@ -160,7 +160,7 @@
 
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          <mat-cell *matCellDef="let element" (click)="imprimir(element)"> {{element.id}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="nombre">

@@ -135,8 +135,8 @@ export class RequestOperateComponent implements OnInit {
       this.isSelectionSubsystem = true;
       this.requestsService.getRequestById(this.route.snapshot.params.id)
         .subscribe(res => {
-          let suministros = []
-          let servicios = []
+          let suministros = [];
+          let servicios = [];
           // Clone data
           for (let i = 0; i < res.data.solicitud.ordenSuministros.length; i++) {
             suministros.push(res.data.solicitud.ordenSuministros[i]);
@@ -152,7 +152,10 @@ export class RequestOperateComponent implements OnInit {
             analistaId: res.data.solicitud.analistaId,
             analista: res.data.solicitud.analista,
             tas: res.data.solicitud.tas,
-            estacion: res.data.solicitud.estacion.id,
+            estacion: {
+              id: res.data.solicitud.estacion.id,
+              name: res.data.solicitud.estacion.nombre
+            },
             subsistema: res.data.solicitud.subsistema.id,
             suministros,
             servicios,
@@ -168,7 +171,19 @@ export class RequestOperateComponent implements OnInit {
             .subscribe(res => {
               // Clone response
               for (let i = 0; i < res.data.suministros.length; i++) {
-                this.supplies.push({ id: res.data.suministros[i].id, nombre: res.data.suministros[i].nombre })
+                this.supplies.push({
+                  id: res.data.suministros[i].id,
+                  codigoLpu: res.data.suministros[i].codigoLpu,
+                  codigoMm: res.data.suministros[i].codigoMm,
+                  nombre: res.data.suministros[i].nombre,
+                  descripcion: res.data.suministros[i].descripcion,
+                  marca: res.data.suministros[i].marca,
+                  referencia: res.data.suministros[i].referencia,
+                  subsistema: res.data.suministros[i].subsistema,
+                  unidad: res.data.suministros[i].unidad,
+                  descripcionLpu: res.data.suministros[i].descripcionLpu,
+                  valorLpu: res.data.suministros[i].valorLpu,
+                })
               }
               // Update data by request data
               for (let i = 0; i < this.supplies.length; i++) {
@@ -196,7 +211,19 @@ export class RequestOperateComponent implements OnInit {
             .subscribe(res => {
               // Clone response
               for (let i = 0; i < res.data.servicios.length; i++) {
-                this.services.push({ id: res.data.servicios[i].id, nombre: res.data.servicios[i].nombre })
+                this.services.push({
+                  id: res.data.servicios[i].id,
+                  codigoLpu: res.data.servicios[i].codigoLpu,
+                  nombre: res.data.servicios[i].nombre,
+                  descripcion: res.data.servicios[i].descripcion,
+                  distancia: res.data.servicios[i].distancia,
+                  peso: res.data.servicios[i].peso,
+                  tiempo: res.data.servicios[i].tiempo,
+                  subsistema: res.data.servicios[i].subsistema,
+                  unidad: res.data.servicios[i].unidad,
+                  valorLpu: res.data.servicios[i].valorLpu,
+                  descripcionLpu: res.data.servicios[i].descripcionLpu,
+                })
               }
               // Update data by request data
               for (let i = 0; i < this.services.length; i++) {
@@ -228,7 +255,7 @@ export class RequestOperateComponent implements OnInit {
         analistaId: '',
         analista: '',
         tas: '',
-        estacion: 0,
+        estacion: {id: 0, name: ''},
         subsistema: 0,
         suministros: [],
         servicios: [],
@@ -242,7 +269,10 @@ export class RequestOperateComponent implements OnInit {
   ngAfterViewInit() {  }
 
   selectRow(index, data) {
-    this.request.estacion = data.id
+    this.request.estacion = {
+      id: data.id,
+      name: data.nombre
+    }
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
   }
@@ -386,6 +416,10 @@ export class RequestOperateComponent implements OnInit {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSourceServices.filter = filterValue;
+  }
+
+  imprimir(row) {
+    debugger
   }
 
 }

@@ -119,10 +119,6 @@ export const mutationUpdateService = gql`
 			uid: $uid,
 			credential: $credential
 		) {
-			servicio {
-				id
-				nombre
-			}
 			status
 		}
 	}

@@ -78,6 +78,19 @@ export const queryRequestById = gql`
         suministro {
           id
           nombre
+          codigoLpu
+          codigoMm
+          descripcion
+          unidad
+          valorLpu
+          descripcionLpu
+          subsistema {
+            id
+            nombre
+          }
+          marca
+          referencia
+          estado
         }
         cantidad
         comentario
@@ -86,7 +99,21 @@ export const queryRequestById = gql`
         id
         servicio {
           id
+          codigoLpu
           nombre
+          descripcion
+          distancia
+          peso
+          tiempo
+          subsistema {
+            id
+            nombre
+          }
+          unidad
+          valorLpu
+          descripcionLpu
+          estado
+          subestado
         }
         cantidad
         comentario
