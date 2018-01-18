@@ -19,6 +19,7 @@ import {
   queryConfirmationsReceived,
   querySubstatesOffer,
   queryStatesOffer,
+  deleteOffer
 } from './offers.queries';
 
 @Injectable()
@@ -200,6 +201,25 @@ export class OffersService {
           variables: {uid: this.userAuth.uid, credential: this.userAuth.token}
         }
       ]
+    })
+  }
+
+  public deleteOffer(offerId) {
+    let id = parseInt(offerId);
+    return this.apollo.mutate({
+      mutation: deleteOffer,
+      variables: {
+        pk: id,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      },
+      refetchQueries: [{
+        query: queryOffers,
+        variables: {
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
+      }]
     })
   }
 

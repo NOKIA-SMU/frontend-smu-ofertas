@@ -246,6 +246,16 @@ export class OffersComponent implements OnInit {
     this.router.navigate([`dashboard/ofertas/${this.currentRowSelectData.id}`]);
   }
 
+  deleteOffer() {
+    this.offersService.deleteOffer(this.currentRowSelectData.id)
+      .subscribe(res => {
+        if (res.data.deleteOferta.status === 200)
+          this.router.navigate(['/ofertas']);
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar oferta', error);
+      })
+  }
+
   isArray(obj: any) {
     return Array.isArray(obj);
   }

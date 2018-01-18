@@ -410,3 +410,20 @@ export const updateOferta = gql`
 		}
 	}
 `;
+
+export const deleteOffer = gql`
+	mutation (
+		$pk: ID!,
+		$uid: String!,
+		$credential: String!,
+	) {
+		deleteOferta(
+			pk: $pk,
+			uid: $uid,
+			credential: $credential
+		) {
+			status
+			__typename
+		}
+	}
+`;

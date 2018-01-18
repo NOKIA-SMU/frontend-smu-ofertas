@@ -135,7 +135,6 @@ export class OfferOperateComponent implements OnInit {
       this.isNew = false;
       this.offersService.getOfferById(this.route.snapshot.params.id)
         .subscribe(res => {
-          debugger
           this.offer = {
             id: res.data.oferta.id,
             ordenSuministro: res.data.oferta.ordenSuministro ? res.data.oferta.ordenSuministro.id : null,
