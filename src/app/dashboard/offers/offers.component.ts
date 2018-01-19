@@ -32,8 +32,8 @@ export class OffersComponent implements OnInit {
   ];
 
   offersColumnsDynamics = [
-    'tipoAcceso',
     'tipoSitio',
+    'tipoAcceso',
     'naturalezaServicio',
     'descripcionOds',
     'fechaRecibidoOds',
@@ -105,8 +105,8 @@ export class OffersComponent implements OnInit {
     'suministroServicioUnidad',
     'suministroServicioQty',
     'suministroServicioComentario',
-    'tipoAcceso',
     'tipoSitio',
+    'tipoAcceso',
     'naturalezaServicio',
     'descripcionOds',
     'fechaRecibidoOds',

@@ -95,7 +95,7 @@ export class RequestsService {
         analistaId: request.analistaId,
         analista: request.analista,
         tas: request.tas,
-        estacion: request.estacion,
+        estacion: request.estacion.id,
         subsistema: request.subsistema,
         suministros: request.suministros,
         servicios: request.servicios,

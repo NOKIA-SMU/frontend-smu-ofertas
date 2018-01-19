@@ -53,15 +53,36 @@ export class RequestOperateComponent implements OnInit {
   isLoadingResults = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
-
+  // Supplies
   supplies: any[] = [];
-  suppliesColumns = ['activo', 'id', 'nombre', 'descripcion', 'unidad', 'marca', 'referencia', 'cantidad', 'comentario'];
+  suppliesColumns = [
+    'activo',
+    'id',
+    'nombre',
+    'descripcion',
+    'unidad',
+    'marca',
+    'referencia',
+    'cantidad',
+    'comentario'
+  ];
   dataSourceSupplies = new MatTableDataSource();
   isLoadingResultsSupplies = false;
   selectionSupplies = new SelectionModel(true, []);
-
+  // Services
   services: any[] = [];
-  servicesColumns = ['activo', 'id', 'nombre', 'descripcion', 'distancia', 'peso', 'tiempo', 'unidad', 'cantidad', 'comentario'];
+  servicesColumns = [
+    'activo',
+    'id',
+    'nombre',
+    'descripcion',
+    'distancia',
+    'peso',
+    'tiempo',
+    'unidad',
+    'cantidad',
+    'comentario'
+  ];
   dataSourceServices = new MatTableDataSource();
   isLoadingResultsServices = false;
   selectionServices = new SelectionModel(true, []);
@@ -108,10 +129,11 @@ export class RequestOperateComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    // Get actual user
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res
+        // Filter stations by region
         if (this.currentUser.region || this.currentUser.roles.Administrador) {
           this.stationService.getStations(this.currentUser.region)
             .subscribe(res => {
@@ -129,7 +151,7 @@ export class RequestOperateComponent implements OnInit {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Este usuario no tiene asignada una región')
         }
       })
-
+    // Update request
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
       this.isSelectionSubsystem = true;
@@ -163,10 +185,9 @@ export class RequestOperateComponent implements OnInit {
             estadoSolicitud: res.data.solicitud.estadoSolicitud
           }
           this.selectedAnalyst = { id: res.data.solicitud.analistaId, firstName: res.data.solicitud.analista };
-          // Get supplies
+          // Get all supplies by subsystem
           this.supplies = [];
           this.isLoadingResultsSupplies = true;
-          // Get all supplies by subsystem
           this.suppliesService.getSuppliesBySubsystem(this.request.subsistema)
             .subscribe(res => {
               // Clone response
@@ -197,6 +218,20 @@ export class RequestOperateComponent implements OnInit {
               }
               // Inicialize supplies table
               this.dataSourceSupplies = new MatTableDataSource(this.supplies);
+
+              var seen = [];
+
+              var replacer = function (key, value) {
+                if (value != null && typeof value == "object") {
+                  if (seen.indexOf(value) >= 0) {
+                    return;
+                  }
+                  seen.push(value);
+                }
+                return value;
+              };
+
+              // if (this.PagSupplies) {
               this.dataSourceSupplies.paginator = this.PagSupplies;
               this.dataSourceSupplies.sort = this.sort;
               this.isLoadingResultsSupplies = false;
@@ -247,6 +282,7 @@ export class RequestOperateComponent implements OnInit {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Solicitud por Id', error);
         })
     }
+    // Create Request
     if (this.route.snapshot.params.id == 'crear') {
       this.selectedAnalyst = { };
       this.request = {
@@ -280,8 +316,8 @@ export class RequestOperateComponent implements OnInit {
   selectSubsystem(event, subsystemId) {
     if (this.selectionSupplies.selected.length > 0) this.selectionSupplies.clear();
     if (this.selectionServices.selected.length > 0) this.selectionServices.clear();
-    this.supplies = []
-    this.services = []
+    this.supplies = [];
+    this.services = [];
     this.isSelectionSubsystem = true;
     this.isLoadingResultsServices = true;
     this.isLoadingResultsSupplies = true;
@@ -352,6 +388,7 @@ export class RequestOperateComponent implements OnInit {
     this.request.analistaId = analyst.id;
   }
 
+  // Normalize list for send request
   normalizeList(collection) {
     const tmpArray = []
     for (let i = 0; i < collection.length; i++) {
@@ -400,6 +437,7 @@ export class RequestOperateComponent implements OnInit {
   }
 
   // Filters Tables
+
   filterStations(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches

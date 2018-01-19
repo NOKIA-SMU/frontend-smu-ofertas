@@ -103,13 +103,6 @@
           <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="cantidad">
-          <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <input type="number" name="qty-{{element.nombre}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
-          </mat-cell>
-        </ng-container>
-
         <ng-container matColumnDef="unidad">
           <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
@@ -125,10 +118,17 @@
           <mat-cell *matCellDef="let element"> {{element.referencia}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="cantidad">
+          <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <input type="number" name="qty-{{element.nombre}}-{{element.descripcion}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+          </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="comentario">
           <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <textarea name="comment-{{element.nombre}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
+            <textarea name="comment-{{element.nombre}}-{{element.descripcion}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
           </mat-cell>
         </ng-container>
 
@@ -136,7 +136,7 @@
         <mat-row *matRowDef="let row; columns: suppliesColumns;"></mat-row>
       </mat-table>
     </div>
-    <mat-paginator #PagSupplies [pageSizeOptions]="[5, 50]"></mat-paginator>
+    <mat-paginator #PagSupplies [pageSizeOptions]="[5, 10]"></mat-paginator>
     <!-- <h2>{{this.selectionSupplies.selected | json}}</h2> -->
     <!-- SERVICES -->
     <h4>Servicios</h4>
@@ -153,7 +153,10 @@
             Selección
           </mat-header-cell>
           <mat-cell *matCellDef="let row" (click)="selectionServices.toggle(row)">
-            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionServices.toggle(row) : null" [checked]="selectionServices.isSelected(row)">
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selectionServices.toggle(row) : null"
+              [checked]="selectionServices.isSelected(row)">
             </mat-checkbox>
           </mat-cell>
         </ng-container>
@@ -196,14 +199,14 @@
         <ng-container matColumnDef="cantidad">
           <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <input type="number" name="qtys-{{element.nombre}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+            <input type="number" name="qtys-{{element.nombre}}-{{element.descripcion}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="comentario">
           <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <textarea name="comment-{{element.nombre}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
+            <textarea name="comment-{{element.nombre}}-{{element.descripcion}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
           </mat-cell>
         </ng-container>
 
@@ -211,7 +214,7 @@
         <mat-row *matRowDef="let row; columns: servicesColumns;"></mat-row>
       </mat-table>
     </div>
-    <mat-paginator #PagServices [pageSizeOptions]="[5, 50]"></mat-paginator>
+    <mat-paginator #PagServices [pageSizeOptions]="[5, 10]"></mat-paginator>
     <!-- <h2>{{this.selectionServices.selected | json}}</h2> -->
   </ng-container>
 

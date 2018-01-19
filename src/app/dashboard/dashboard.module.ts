@@ -55,6 +55,7 @@ export class Dictionary implements PipeTransform {
   transform(value: string): string {
     if (value) {
       let newValue = value;
+      if (value === 'tipoSitio') newValue = 'Tipo sitio'
       if (value === 'tipoAcceso') newValue = 'Tipo acceso'
       if (value === 'naturalezaServicio') newValue = 'Naturaleza servicio'
       if (value === 'descripcionOds') newValue = 'Descripción ods'

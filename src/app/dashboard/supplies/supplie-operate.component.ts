@@ -80,7 +80,6 @@ export class SupplieOperateComponent implements OnInit {
 
   saveSupplie() {
     if (this.isNew) {
-      debugger
       this.suppliesService.createSupplie(this.supplie)
         .subscribe(res => {
           this.router.navigate(['/suministros']);

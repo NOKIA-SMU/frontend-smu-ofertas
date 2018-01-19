@@ -22,10 +22,10 @@ export class SuppliesComponent implements OnInit {
     'codigoMm',
     'subsistema',
     'marca',
+    'referencia',
     'unidad',
     'valorLpu',
     'descripcionLpu',
-    'referencia',
     'estado',
     'subestado'
   ];
@@ -51,7 +51,6 @@ export class SuppliesComponent implements OnInit {
     this.suppliesService.getSupplies()
       .subscribe(res => {
         // Inicialize supplies table
-        debugger
         this.dataSourceSupplies = new MatTableDataSource(res.data.suministros);
         this.dataSourceSupplies.paginator = this.paginator;
         this.dataSourceSupplies.sort = this.sort;
