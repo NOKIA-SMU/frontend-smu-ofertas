@@ -108,6 +108,18 @@ export class AdminService {
     //   })
   }
 
+  getProfilesCustomerManager() {
+    this.profilesCol = this.afs.collection<Profile>('profiles', ref => ref.where('roles.Encargado cliente', '==', true) );
+    return this.profilesCol.snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Profile;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
+  }
+
   public getRoles() {
     this.rolesCol = this.afs.collection<Role>('roles')
     return  this.rolesCol.snapshotChanges()

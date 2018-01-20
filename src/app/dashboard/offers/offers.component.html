@@ -84,6 +84,36 @@
 					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.nombre : row.ordenServicio?.servicio?.nombre}}
 				</mat-cell>
 			</ng-container>
+			<!-- SUPPLIE OR SERVICE LPU CODE -->
+			<ng-container matColumnDef="suministroServicioCodigoLpu">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser codigo lpu</mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.codigoLpu : row.ordenServicio?.servicio?.codigoLpu}}
+				</mat-cell>
+			</ng-container>
+			<!-- SUPPLIE OR SERVICE DESCRIPTION -->
+			<ng-container matColumnDef="suministroServicioDescripcion">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser descripción</mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.descripcion : row.ordenServicio?.servicio?.descripcion}}
+				</mat-cell>
+			</ng-container>
+			<!-- SUPPLIE OR SERVICE LPU DESCRIPTION -->
+			<ng-container matColumnDef="suministroServicioDescripcionLpu">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser descripción lpu</mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.descripcionLpu : row.ordenServicio?.servicio?.descripcionLpu}}
+				</mat-cell>
+			</ng-container>
+			<!-- SUPPLIE OR SERVICE LPU VALUE -->
+			<ng-container matColumnDef="suministroServicioValorLpu">
+				<mat-header-cell *matHeaderCellDef> Sum/Ser valor lpu</mat-header-cell>
+				<mat-cell *matCellDef="let row">
+					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.valorLpu : row.ordenServicio?.servicio?.valorLpu}}
+				</mat-cell>
+			</ng-container>
+
+
 			<!-- SUPPLIE OR SERVICE UNITY -->
 			<ng-container matColumnDef="suministroServicioUnidad">
 				<mat-header-cell *matHeaderCellDef> Sum/Ser unidad </mat-header-cell>

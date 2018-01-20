@@ -2,18 +2,18 @@
 <form #offerForm="ngForm" (ngSubmit)="saveOffert()" *ngIf="offer">
   <!-- SUPERVISOR & ANALYST FILEDS -->
   <ng-container *ngIf="currentUser?.roles?.Supervisor || currentUser?.roles?.Analista || currentUser?.roles?.Administrador">
-    <!-- ACCESS TYPE -->
-    <mat-form-field>
-      <mat-select placeholder="Tipo de acceso" name="tipoAcceso" [(ngModel)]="offer.tipoAcceso">
-        <mat-option *ngFor="let item of accessTypes" [value]="item">
-          {{item}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
     <!-- SITES TYPE -->
     <mat-form-field>
       <mat-select placeholder="Tipo sitio" name="tipoSitio" [(ngModel)]="offer.tipoSitio">
         <mat-option *ngFor="let item of sitesTypes" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- ACCESS TYPE -->
+    <mat-form-field>
+      <mat-select placeholder="Tipo de acceso" name="tipoAcceso" [(ngModel)]="offer.tipoAcceso">
+        <mat-option *ngFor="let item of accessTypes" [value]="item">
           {{item}}
         </mat-option>
       </mat-select>
@@ -55,13 +55,10 @@
       <textarea matInput placeholder="Descripción tarea" name="descripcionTarea" [(ngModel)]="offer.descripcionTarea" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
     </mat-form-field>
     <!-- CUSTOMER MANAGER -->
+    <!-- <div>{{offer.encargadoCliente}}</div> -->
     <mat-form-field>
-      <input matInput type="text" placeholder="Encargado cliente" name="encargadoCliente" [(ngModel)]="offer.encargadoCliente">
-    </mat-form-field>
-    <!-- ELEMENT TYPE -->
-    <mat-form-field>
-      <mat-select placeholder="Tipo elemento" name="tipoElemento" [(ngModel)]="offer.tipoElemento">
-        <mat-option *ngFor="let item of elementTypes" [value]="item">
+      <mat-select placeholder="Encargado cliente" name="encargadoCliente" [(ngModel)]="offer.encargadoCliente">
+        <mat-option *ngFor="let item of customerManager" [value]="item">
           {{item}}
         </mat-option>
       </mat-select>
@@ -209,6 +206,10 @@
       <mat-datepicker-toggle matSuffix [for]="pickerfechaPo"></mat-datepicker-toggle>
       <mat-datepicker #pickerfechaPo></mat-datepicker>
     </mat-form-field>
+    <!-- RECONCILED VALUE CLIENT-->
+    <mat-form-field>
+      <input matInput type="number" placeholder="Valor PO" name="valorPo" [(ngModel)]="offer.valorPo">
+    </mat-form-field>
     <!-- COMMENT ANALYST -->
     <mat-form-field>
       <textarea matInput placeholder="Comentario analista" name="comentarioAnalista" [(ngModel)]="offer.comentarioAnalista" matTextareaAutosize
@@ -250,6 +251,14 @@
   <mat-form-field>
     <textarea matInput placeholder="Comentario coordinador" name="comentarioCoordinador" [(ngModel)]="offer.comentarioCoordinador"
       matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+  </mat-form-field>
+  <!-- ELEMENT TYPE -->
+  <mat-form-field>
+    <mat-select placeholder="Tipo elemento" name="tipoElemento" [(ngModel)]="offer.tipoElemento">
+      <mat-option *ngFor="let item of elementTypes" [value]="item">
+        {{item}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
   <!-- RECONCILED VALUE CLIENT-->
   <mat-form-field>

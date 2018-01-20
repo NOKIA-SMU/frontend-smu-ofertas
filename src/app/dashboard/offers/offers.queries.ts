@@ -39,6 +39,10 @@ export const queryOffers = gql`
 					unidad
 					marca
 					referencia
+					codigoLpu
+					descripcion
+					valorLpu
+					descripcionLpu
 				}
 				cantidad
 				comentario
@@ -63,6 +67,10 @@ export const queryOffers = gql`
 					id
 					nombre
 					unidad
+					codigoLpu
+					descripcion
+					valorLpu
+					descripcionLpu
 				}
 				cantidad
 				comentario
@@ -110,12 +118,14 @@ export const queryOffers = gql`
 			tipoRespuestaClienteNegociada
 			po
 			fechaPo
+			valorPo
 			comentarioAnalista
 			subestadoOferta
 			estadoOferta
 			fechaEntregaAlmacen
 			comentarioAlmacenista
 			comentarioCoordinador
+			tipoElemento
 			valorConciliadoCliente
 			fechaConciliadoCliente
 			comentarioFacturador
@@ -204,12 +214,14 @@ export const queryOfferById = gql`
 			tipoRespuestaClienteNegociada
 			po
 			fechaPo
+			valorPo
 			comentarioAnalista
 			subestadoOferta
 			estadoOferta
 			fechaEntregaAlmacen
 			comentarioAlmacenista
 			comentarioCoordinador
+			tipoElemento
 			valorConciliadoCliente
 			fechaConciliadoCliente
 			comentarioFacturador
@@ -258,6 +270,7 @@ export const updateOferta = gql`
 		$tipoRespuestaClienteNegociada: String,
 		$po: String,
 		$fechaPo: Date,
+		$valorPo: Float,
 		$comentarioAnalista: String,
 		$subestadoOferta:String,
 		$estadoOferta:String,
@@ -309,6 +322,7 @@ export const updateOferta = gql`
 			tipoRespuestaClienteNegociada: $tipoRespuestaClienteNegociada,
 			po: $po,
 			fechaPo: $fechaPo,
+			valorPo: $valorPo,
 			comentarioAnalista: $comentarioAnalista,
 			subestadoOferta: $subestadoOferta,
 			estadoOferta: $estadoOferta,

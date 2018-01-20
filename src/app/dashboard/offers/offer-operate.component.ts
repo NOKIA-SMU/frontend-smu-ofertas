@@ -4,6 +4,7 @@ import { OffersService } from './offers.service';
 import { AuthService } from "../../auth/auth.service";
 import { AppService } from "../../app.service";
 import { CurrencyPipe } from '@angular/common';
+import { AdminService } from '../../admin/admin.service';
 
 @Component({
   selector: 'app-offer-operate',
@@ -24,6 +25,7 @@ export class OfferOperateComponent implements OnInit {
   modalities: string[];
   acquisitionTypes: string[];
   providers: string[];
+  customerManager: any[] = [];
   typesClientResponse: string[];
   confirmationsReceived: string[];
   substatesOffer: string[];
@@ -36,7 +38,8 @@ export class OfferOperateComponent implements OnInit {
     private router: Router,
     private offersService: OffersService,
     private authService: AuthService,
-    private appService: AppService
+    private appService: AppService,
+    private adminService: AdminService
   ) {
     this.authService.currentUser()
       .subscribe(res => {
@@ -128,6 +131,18 @@ export class OfferOperateComponent implements OnInit {
       }, error => {
         debugger
       })
+
+    // Get profiles filter by customer manager
+    this.adminService.getProfilesCustomerManager()
+      .subscribe(res => {
+        for (let i = 0; i < res.length; i++) {
+          let fullName = res[i].firstName + res[i].lastName;
+          this.customerManager.push(fullName);
+        }
+        debugger
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de encargado cliente', error)
+      })
   }
 
   ngOnInit() {
@@ -139,8 +154,8 @@ export class OfferOperateComponent implements OnInit {
             id: res.data.oferta.id,
             ordenSuministro: res.data.oferta.ordenSuministro ? res.data.oferta.ordenSuministro.id : null,
             ordenServicio: res.data.oferta.ordenServicio ? res.data.oferta.ordenServicio.id : null,
-            tipoAcceso: res.data.oferta.tipoAcceso ? res.data.oferta.tipoAcceso.split('_').join(' ') : null,
             tipoSitio: res.data.oferta.tipoSitio ? res.data.oferta.tipoSitio.split('_').join(' ') : null,
+            tipoAcceso: res.data.oferta.tipoAcceso ? res.data.oferta.tipoAcceso.split('_').join(' ') : null,
             naturalezaServicio: res.data.oferta.naturalezaServicio ? res.data.oferta.naturalezaServicio.split('_').join(' ') : null,
             descripcionOds: res.data.oferta.descripcionOds,
             fechaRecibidoOds: res.data.oferta.fechaRecibidoOds,
@@ -148,11 +163,9 @@ export class OfferOperateComponent implements OnInit {
             workOrder: res.data.oferta.workOrder,
             descripcionTarea: res.data.oferta.descripcionTarea,
             encargadoCliente: res.data.oferta.encargadoCliente,
-            tipoElemento: res.data.oferta.tipoElemento ? res.data.oferta.tipoElemento.split('_').join(' ') : null,
             fechaEjecucion: res.data.oferta.fechaEjecucion,
             confirmacionRecibido: res.data.oferta.confirmacionRecibido ? res.data.oferta.confirmacionRecibido.split('_').join(' ') : null,
             comentarioSupervisor: res.data.oferta.comentarioSupervisor,
-            // usuario: res.data.oferta.usuario,
             numeroOferta: res.data.oferta.numeroOferta,
             modalidad: res.data.oferta.modalidad ? res.data.oferta.modalidad.split('_').join(' ') : null,
             precioUnidadProveedor: res.data.oferta.precioUnidadProveedor,
@@ -172,12 +185,14 @@ export class OfferOperateComponent implements OnInit {
             tipoRespuestaClienteNegociada: res.data.oferta.tipoRespuestaClienteNegociada ? res.data.oferta.tipoRespuestaClienteNegociada.split('_').join(' ') : null,
             po: res.data.oferta.po,
             fechaPo: res.data.oferta.fechaPo,
+            valorPo: res.data.oferta.valorPo,
             comentarioAnalista: res.data.oferta.comentarioAnalista,
             subestadoOferta: res.data.oferta.subestadoOferta ? res.data.oferta.subestadoOferta.split('_').join(' ') : null,
             estadoOferta: res.data.oferta.estadoOferta ? res.data.oferta.estadoOferta.split('_').join(' ') : null,
             fechaEntregaAlmacen: res.data.oferta.fechaEntregaAlmacen,
             comentarioAlmacenista: res.data.oferta.comentarioAlmacenista,
             comentarioCoordinador: res.data.oferta.comentarioCoordinador,
+            tipoElemento: res.data.oferta.tipoElemento ? res.data.oferta.tipoElemento.split('_').join(' ') : null,
             valorConciliadoCliente: res.data.oferta.valorConciliadoCliente,
             fechaConciliadoCliente: res.data.oferta.fechaConciliadoCliente,
             comentarioFacturador: res.data.oferta.comentarioFacturador,
@@ -203,6 +218,7 @@ export class OfferOperateComponent implements OnInit {
   }
 
   saveOffert() {
+    this.offer.encargadoCliente = this.offer.encargadoCliente.firstName + this.offer.encargadoCliente.lastName
     this.offer.fechaRecibidoOds == null ? null : this.normalizeDate(this.offer.fechaRecibidoOds);
     this.offer.fechaEjecucion == null ? null : this.normalizeDate(this.offer.fechaEjecucion);
     this.offer.fechaDespachoSupervisor == null ? null : this.normalizeDate(this.offer.fechaDespachoSupervisor);
