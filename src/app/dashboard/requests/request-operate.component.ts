@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Request, Subsystem } from "../../models/dashboard.models";
@@ -16,12 +16,13 @@ import { AuthService } from '../../auth/auth.service';
 import { AdminService } from '../../admin/admin.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-request-operate',
   templateUrl: './request-operate.component.html',
   styleUrls: ['../dashboard.component.scss', './requests.component.scss']
 })
 
-export class RequestOperateComponent implements OnInit {
+export class RequestOperateComponent implements OnInit, AfterViewInit {
 
   displayedColumns = [
     'id',
@@ -87,7 +88,7 @@ export class RequestOperateComponent implements OnInit {
   isLoadingResultsServices = false;
   selectionServices = new SelectionModel(true, []);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('PagStations') PagStations: MatPaginator;
   @ViewChild('PagSupplies') PagSupplies: MatPaginator;
   @ViewChild('PagServices') PagServices: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -128,7 +129,9 @@ export class RequestOperateComponent implements OnInit {
       })
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngAfterViewInit() {
     // Get actual user
     this.authService.currentUser()
       .subscribe(res => {
@@ -138,7 +141,7 @@ export class RequestOperateComponent implements OnInit {
           this.stationService.getStations(this.currentUser.region)
             .subscribe(res => {
               this.dataSource = new MatTableDataSource(res.data.estaciones);
-              this.dataSource.paginator = this.paginator;
+              this.dataSource.paginator = this.PagStations;
               this.dataSource.sort = this.sort;
               this.isLoadingResults = false;
             }, error => {
@@ -216,8 +219,6 @@ export class RequestOperateComponent implements OnInit {
                   }
                 }
               }
-              // Inicialize supplies table
-              this.dataSourceSupplies = new MatTableDataSource(this.supplies);
 
               var seen = [];
 
@@ -231,7 +232,8 @@ export class RequestOperateComponent implements OnInit {
                 return value;
               };
 
-              // if (this.PagSupplies) {
+              // Initialize supplies table
+              this.dataSourceSupplies = new MatTableDataSource(this.supplies);
               this.dataSourceSupplies.paginator = this.PagSupplies;
               this.dataSourceSupplies.sort = this.sort;
               this.isLoadingResultsSupplies = false;
@@ -302,8 +304,6 @@ export class RequestOperateComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {  }
-
   selectRow(index, data) {
     this.request.estacion = {
       id: data.id,
@@ -354,7 +354,6 @@ export class RequestOperateComponent implements OnInit {
     this.suppliesService.getSuppliesBySubsystem(subsystemId)
       .subscribe(res => {
         // Clone response
-        debugger
         for (let i = 0; i < res.data.suministros.length; i++) {
           this.supplies.push({
             id: res.data.suministros[i].id,
@@ -400,25 +399,34 @@ export class RequestOperateComponent implements OnInit {
   }
 
   saveRequest() {
-    if (this.selectionSupplies.selected.length > 0)
-      this.request.suministros = this.normalizeList(this.selectionSupplies.selected);
-    else
-      this.request.suministros = [];
-    if (this.selectionServices.selected.length > 0)
-      this.request.servicios = this.normalizeList(this.selectionServices.selected);
-    else
-      this.request.servicios = []
-    this.request.supervisorId = this.currentUser.id;
-    this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
-    if (this.isNew) {
-      this.requestsService.createRequest(this.request)
-        .subscribe(res => {
-          if (res.data.createSolicitud.status == 200) {
-            this.router.navigate(['/solicitudes']);
-          }
-        }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Crear solicitud', error);
-        })
+    let statesRequest = false;
+    if (this.request.tas) {
+      if (this.request.tas.length > 15) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Tas excede 15 caracteres');
+        statesRequest = false;
+      } else
+        statesRequest = true;
+    }
+    if (statesRequest) {
+      if (this.selectionSupplies.selected.length > 0)
+        this.request.suministros = this.normalizeList(this.selectionSupplies.selected);
+      else
+        this.request.suministros = [];
+      if (this.selectionServices.selected.length > 0)
+        this.request.servicios = this.normalizeList(this.selectionServices.selected);
+      else
+        this.request.servicios = []
+      this.request.supervisorId = this.currentUser.id;
+      this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+      if (this.isNew) {
+        this.requestsService.createRequest(this.request)
+          .subscribe(res => {
+            if (res.data.createSolicitud.status == 200) {
+              this.router.navigate(['/solicitudes']);
+            }
+          }, error => {
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Crear solicitud', error);
+          })
       } else {
         this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
         .subscribe(res => {
@@ -428,6 +436,7 @@ export class RequestOperateComponent implements OnInit {
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualizar solicitud', error);
         })
+      }
     }
   }
 

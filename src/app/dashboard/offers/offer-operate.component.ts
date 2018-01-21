@@ -139,7 +139,6 @@ export class OfferOperateComponent implements OnInit {
           let fullName = res[i].firstName + res[i].lastName;
           this.customerManager.push(fullName);
         }
-        debugger
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de encargado cliente', error)
       })
@@ -218,28 +217,53 @@ export class OfferOperateComponent implements OnInit {
   }
 
   saveOffert() {
-    this.offer.encargadoCliente = this.offer.encargadoCliente.firstName + this.offer.encargadoCliente.lastName
-    this.offer.fechaRecibidoOds == null ? null : this.normalizeDate(this.offer.fechaRecibidoOds);
-    this.offer.fechaEjecucion == null ? null : this.normalizeDate(this.offer.fechaEjecucion);
-    this.offer.fechaDespachoSupervisor == null ? null : this.normalizeDate(this.offer.fechaDespachoSupervisor);
-    this.offer.fechaDespachoCompras == null ? null : this.normalizeDate(this.offer.fechaDespachoCompras);
-    this.offer.fechaRespuestaCompras == null ? null : this.normalizeDate(this.offer.fechaRespuestaCompras);
-    this.offer.fechaEnvioOfertaCliente == null ? null : this.normalizeDate(this.offer.fechaEnvioOfertaCliente);
-    this.offer.fechaEnvioOfertaClienteNegociada == null ? null : this.normalizeDate(this.offer.fechaEnvioOfertaClienteNegociada);
-    this.offer.fechaRespuestaCliente == null ? null : this.normalizeDate(this.offer.fechaRespuestaCliente);
-    this.offer.fechaRespuestaClienteNegociada == null ? null : this.normalizeDate(this.offer.fechaRespuestaClienteNegociada);
-    this.offer.fechaPo == null ? null : this.normalizeDate(this.offer.fechaPo);
-    this.offer.fechaEntregaAlmacen == null ? null : this.normalizeDate(this.offer.fechaEntregaAlmacen);
-    this.offer.fechaConciliadoCliente == null ? null : this.normalizeDate(this.offer.fechaConciliadoCliente);
-    this.offer.fechaEnvioActaSmu == null ? null : this.normalizeDate(this.offer.fechaEnvioActaSmu);
-    this.offer.fechaFirmaActaSmu == null ? null : this.normalizeDate(this.offer.fechaFirmaActaSmu);
-    this.offer.fechaGrSmu == null ? null : this.normalizeDate(this.offer.fechaGrSmu);
-    this.offersService.updateOffer(this.route.snapshot.params.id, this.offer)
-      .subscribe(res => {
-        this.router.navigate(['/ofertas']);
-      }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualización de oferta', error)
-      })
+    let statesOffer = false;
+    if (this.offer.workOrder) {
+      if (this.offer.workOrder.length > 16) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Work order excede 16 caracteres');
+        statesOffer = false;
+      } else
+        statesOffer = true;
+    }
+    if (this.offer.tasOfertaAnterior) {
+      if (this.offer.tasOfertaAnterior.length > 15) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Tas oferta anterior excede 15 caracteres');
+        statesOffer = false;
+      } else
+        statesOffer = true;
+    }
+    if (this.offer.numeroOferta) {
+      if (this.offer.numeroOferta.length > 15) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Numero oferta excede 15 caracteres');
+        statesOffer = false;
+      } else
+        statesOffer = true;
+    }
+    if (statesOffer) {
+      this.offer.encargadoCliente = this.offer.encargadoCliente.firstName + this.offer.encargadoCliente.lastName
+      this.offer.fechaRecibidoOds == null ? null : this.normalizeDate(this.offer.fechaRecibidoOds);
+      this.offer.fechaEjecucion == null ? null : this.normalizeDate(this.offer.fechaEjecucion);
+      this.offer.fechaDespachoSupervisor == null ? null : this.normalizeDate(this.offer.fechaDespachoSupervisor);
+      this.offer.fechaDespachoCompras == null ? null : this.normalizeDate(this.offer.fechaDespachoCompras);
+      this.offer.fechaRespuestaCompras == null ? null : this.normalizeDate(this.offer.fechaRespuestaCompras);
+      this.offer.fechaEnvioOfertaCliente == null ? null : this.normalizeDate(this.offer.fechaEnvioOfertaCliente);
+      this.offer.fechaEnvioOfertaClienteNegociada == null ? null : this.normalizeDate(this.offer.fechaEnvioOfertaClienteNegociada);
+      this.offer.fechaRespuestaCliente == null ? null : this.normalizeDate(this.offer.fechaRespuestaCliente);
+      this.offer.fechaRespuestaClienteNegociada == null ? null : this.normalizeDate(this.offer.fechaRespuestaClienteNegociada);
+      this.offer.fechaPo == null ? null : this.normalizeDate(this.offer.fechaPo);
+      this.offer.fechaEntregaAlmacen == null ? null : this.normalizeDate(this.offer.fechaEntregaAlmacen);
+      this.offer.fechaConciliadoCliente == null ? null : this.normalizeDate(this.offer.fechaConciliadoCliente);
+      this.offer.fechaEnvioActaSmu == null ? null : this.normalizeDate(this.offer.fechaEnvioActaSmu);
+      this.offer.fechaFirmaActaSmu == null ? null : this.normalizeDate(this.offer.fechaFirmaActaSmu);
+      this.offer.fechaGrSmu == null ? null : this.normalizeDate(this.offer.fechaGrSmu);
+      this.offersService.updateOffer(this.route.snapshot.params.id, this.offer)
+        .subscribe(res => {
+          this.router.navigate(['/ofertas']);
+        }, error => {
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualización de oferta', error)
+              })
+    }
+
   }
 
 }

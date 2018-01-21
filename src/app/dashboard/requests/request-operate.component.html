@@ -21,6 +21,7 @@
   </div>
   <mat-paginator #PagStations [pageSizeOptions]="[5, 50]"></mat-paginator>
   <div class="divider"></div>
+
   <ng-container *ngIf="request">
     <!-- ANALYST -->
     <mat-form-field>
@@ -31,13 +32,6 @@
           </mat-option>
         </mat-select>
       </ng-container>
-      <!-- <ng-container *ngIf="!isNew">
-        <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
-          <mat-option *ngFor="let analyst of analysts" [value]="selectedAnalyst">
-            {{analyst.firstName}} {{analyst.lastName}}
-          </mat-option>
-        </mat-select>
-      </ng-container> -->
     </mat-form-field>
     <!-- TAS -->
     <mat-form-field>
@@ -64,10 +58,8 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <!-- REQUEST STATE -->
-    <mat-slide-toggle [color]="color" name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
   </ng-container>
-  <ng-container *ngIf="isSelectionSubsystem">
+  <div [hidden]="!isSelectionSubsystem">
     <!-- SUPPLIES -->
     <h4>Suministros</h4>
     <mat-form-field>
@@ -138,6 +130,7 @@
     </div>
     <mat-paginator #PagSupplies [pageSizeOptions]="[5, 10]"></mat-paginator>
     <!-- <h2>{{this.selectionSupplies.selected | json}}</h2> -->
+
     <!-- SERVICES -->
     <h4>Servicios</h4>
     <mat-form-field>
@@ -163,7 +156,7 @@
 
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-          <mat-cell *matCellDef="let element" (click)="imprimir(element)"> {{element.id}} </mat-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="nombre">
@@ -216,6 +209,13 @@
     </div>
     <mat-paginator #PagServices [pageSizeOptions]="[5, 10]"></mat-paginator>
     <!-- <h2>{{this.selectionServices.selected | json}}</h2> -->
+  </div>
+
+  <ng-container *ngIf="request">
+    <div class="toggleState">
+      <!-- REQUEST STATE -->
+      <mat-slide-toggle name="state" [(ngModel)]="request.estadoSolicitud">Estado de la solicitud</mat-slide-toggle>
+    </div >
   </ng-container>
 
   <div class="footer-buttom">
