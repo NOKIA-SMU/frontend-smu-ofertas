@@ -136,11 +136,11 @@ export class OfferOperateComponent implements OnInit {
     this.adminService.getProfilesCustomerManager()
       .subscribe(res => {
         for (let i = 0; i < res.length; i++) {
-          let fullName = res[i].firstName + res[i].lastName;
+          let fullName = res[i].firstName + ' ' + res[i].lastName;
           this.customerManager.push(fullName);
         }
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de encargado cliente', error)
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de encargado cliente', error);
       })
   }
 
@@ -241,7 +241,6 @@ export class OfferOperateComponent implements OnInit {
         statesOffer = true;
     }
     if (statesOffer) {
-      this.offer.encargadoCliente = this.offer.encargadoCliente.firstName + this.offer.encargadoCliente.lastName
       this.offer.fechaRecibidoOds == null ? null : this.normalizeDate(this.offer.fechaRecibidoOds);
       this.offer.fechaEjecucion == null ? null : this.normalizeDate(this.offer.fechaEjecucion);
       this.offer.fechaDespachoSupervisor == null ? null : this.normalizeDate(this.offer.fechaDespachoSupervisor);

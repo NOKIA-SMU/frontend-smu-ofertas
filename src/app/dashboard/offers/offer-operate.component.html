@@ -28,13 +28,11 @@
     </mat-form-field>
     <!-- DESCRIPTION ODS -->
     <mat-form-field>
-      <textarea matInput placeholder="Descripción ods" name="descripcionOds" [(ngModel)]="offer.descripcionOds" matTextareaAutosize
-        matAutosizeMinRows="1" matAutosizeMaxRows="8"></textarea>
+      <textarea matInput placeholder="Descripción ods" name="descripcionOds" [(ngModel)]="offer.descripcionOds" matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="8"></textarea>
     </mat-form-field>
     <!-- DATE RECEIVED ODS -->
     <mat-form-field>
-      <input matInput [matDatepicker]="pickerfechaRecibidoOds" name="fechaRecibidoOds" placeholder="Fecha recibido ods"
-        [(ngModel)]="offer.fechaRecibidoOds">
+      <input matInput [matDatepicker]="pickerfechaRecibidoOds" name="fechaRecibidoOds" placeholder="Fecha recibido ods" [(ngModel)]="offer.fechaRecibidoOds">
       <mat-datepicker-toggle matSuffix [for]="pickerfechaRecibidoOds"></mat-datepicker-toggle>
       <mat-datepicker #pickerfechaRecibidoOds></mat-datepicker>
     </mat-form-field>

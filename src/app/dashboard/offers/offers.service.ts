@@ -139,7 +139,6 @@ export class OffersService {
   }
 
   public updateOffer(id, offer) {
-    debugger
     return this.apollo.mutate({
       mutation: updateOferta,
       variables: {
