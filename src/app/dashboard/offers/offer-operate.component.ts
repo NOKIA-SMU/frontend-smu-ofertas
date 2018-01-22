@@ -217,7 +217,8 @@ export class OfferOperateComponent implements OnInit {
   }
 
   saveOffert() {
-    let statesOffer = false;
+    debugger
+    let statesOffer = true;
     if (this.offer.workOrder) {
       if (this.offer.workOrder.length > 16) {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Work order excede 16 caracteres');

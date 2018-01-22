@@ -70,6 +70,11 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   dataSourceSupplies = new MatTableDataSource();
   isLoadingResultsSupplies = false;
   selectionSupplies = new SelectionModel(true, []);
+  // Supplies selected
+  suppliesSelected: any[] = [];
+  suppliesSelectedColumns = ['id', 'nombre', 'descripcion']
+  dataSourceSuppliesSelected = new MatTableDataSource();
+  isLoadingResultSuppliesSelected = false;
   // Services
   services: any[] = [];
   servicesColumns = [
@@ -87,6 +92,11 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   dataSourceServices = new MatTableDataSource();
   isLoadingResultsServices = false;
   selectionServices = new SelectionModel(true, []);
+  // Services selected
+  servicesSelected: any[] = [];
+  servicesSelectedColumns = ['id', 'nombre', 'descripcion']
+  dataSourceServicesSelected = new MatTableDataSource();
+  isLoadingResultServicesSelected = false;
 
   @ViewChild('PagStations') PagStations: MatPaginator;
   @ViewChild('PagSupplies') PagSupplies: MatPaginator;
@@ -213,12 +223,14 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
               for (let i = 0; i < this.supplies.length; i++) {
                 for (let j = 0; j < this.request.suministros.length; j++) {
                   if (this.supplies[i].id === this.request.suministros[j].suministro.id) {
+                    this.suppliesSelected.push(this.supplies[i]);
                     this.supplies[i].qty = this.request.suministros[j].cantidad;
                     this.supplies[i].comentario = this.request.suministros[j].comentario;
                     this.selectionSupplies.toggle(this.supplies[i]);
                   }
                 }
               }
+              this.dataSourceSuppliesSelected = new MatTableDataSource(this.suppliesSelected);
 
               var seen = [];
 
@@ -266,12 +278,14 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
               for (let i = 0; i < this.services.length; i++) {
                 for (let j = 0; j < this.request.servicios.length; j++) {
                   if (this.services[i].id === this.request.servicios[j].servicio.id) {
+                    this.servicesSelected.push(this.services[i]);
                     this.services[i].qty = this.request.servicios[j].cantidad;
                     this.services[i].comentario = this.request.servicios[j].comentario;
                     this.selectionServices.toggle(this.services[i]);
                   }
                 }
               }
+              this.dataSourceServicesSelected = new MatTableDataSource(this.servicesSelected);
               // Inicialize services table
               this.dataSourceServices = new MatTableDataSource(this.services);
               this.dataSourceServices.paginator = this.PagServices;
@@ -399,6 +413,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   }
 
   saveRequest() {
+    debugger
     let statesRequest = false;
     if (this.request.tas) {
       if (this.request.tas.length > 15) {

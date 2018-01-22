@@ -55,7 +55,6 @@
       <textarea matInput placeholder="Descripción tarea" name="descripcionTarea" [(ngModel)]="offer.descripcionTarea" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
     </mat-form-field>
     <!-- CUSTOMER MANAGER -->
-    <!-- <div>{{offer.encargadoCliente}}</div> -->
     <mat-form-field>
       <mat-select placeholder="Encargado cliente" name="encargadoCliente" [(ngModel)]="offer.encargadoCliente">
         <mat-option *ngFor="let item of customerManager" [value]="item">
@@ -103,15 +102,15 @@
     </mat-form-field>
     <!-- UNIT PRICE SUPPLIER -->
     <mat-form-field>
-      <input matInput type="number" placeholder="Precio unidad proveedor" name="precioUnidadProveedor" [ngModel]="offer.precioUnidadProveedor" (ngModelChange)="offer.precioUnidadProveedor=$event">
+      <input matInput type="number" placeholder="Precio unidad proveedor {{offer.precioUnidadProveedor | number}}" name="precioUnidadProveedor" [ngModel]="offer.precioUnidadProveedor" (ngModelChange)="offer.precioUnidadProveedor=$event">
     </mat-form-field>
     <!-- UNIT PRICE SALE -->
     <mat-form-field>
-      <input matInput type="number" placeholder="Precio unidad venta" name="precioUnidadVenta" [ngModel]="offer.precioUnidadVenta" (ngModelChange)="offer.precioUnidadVenta=$event">
+      <input matInput type="number" placeholder="Precio unidad venta {{offer.precioUnidadVenta | number}}" name="precioUnidadVenta" [ngModel]="offer.precioUnidadVenta" (ngModelChange)="offer.precioUnidadVenta=$event">
     </mat-form-field>
     <!-- UNIT PRICE CLIENT -->
     <mat-form-field>
-      <input matInput type="number" placeholder="Precio unidad cliente" name="precioUnidadCliente" [ngModel]="offer.precioUnidadCliente" (ngModelChange)="offer.precioUnidadCliente=$event">
+      <input matInput type="number" placeholder="Precio unidad cliente {{offer.precioUnidadCliente | number}}" name="precioUnidadCliente" [ngModel]="offer.precioUnidadCliente" (ngModelChange)="offer.precioUnidadCliente=$event">
     </mat-form-field>
     <!-- ACQUISITION TYPE -->
     <mat-form-field>
