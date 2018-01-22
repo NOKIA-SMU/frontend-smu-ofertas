@@ -24,6 +24,20 @@ import { AdminService } from '../../admin/admin.service';
 
 export class RequestOperateComponent implements OnInit, AfterViewInit {
 
+  data: any;
+  request: Request;
+  isNew: boolean;
+  subsystems: Subsystem[];
+  priorities: string[];
+  checkedRequestState: boolean = false;
+  currentUser: Profile;
+  selectedAnalyst: any = {};
+  analysts: any;
+  isSelectionSubsystem: boolean = false;
+
+  // Tables initialize
+
+  // Stations
   displayedColumns = [
     'id',
     'nombre',
@@ -37,23 +51,11 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
     'estructura',
     'categoria'
   ];
-
-  data: any;
-  request: Request;
-  isNew: boolean;
-  subsystems: Subsystem[];
-  priorities: string[];
-  checkedRequestState: boolean = false;
-  currentUser: Profile;
-  selectedAnalyst: any = {};
-  analysts: any;
-  isSelectionSubsystem: boolean = false;
-
-  // Tables
   dataSource = new MatTableDataSource();
   isLoadingResults = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
+  @ViewChild('PagStations') PagStations: MatPaginator;
   // Supplies
   supplies: any[] = [];
   suppliesColumns = [
@@ -70,11 +72,12 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   dataSourceSupplies = new MatTableDataSource();
   isLoadingResultsSupplies = false;
   selectionSupplies = new SelectionModel(true, []);
+  @ViewChild('PagSupplies') PagSupplies: MatPaginator;
   // Supplies selected
-  suppliesSelected: any[] = [];
   suppliesSelectedColumns = ['id', 'nombre', 'descripcion']
   dataSourceSuppliesSelected = new MatTableDataSource();
-  isLoadingResultSuppliesSelected = false;
+  isLoadingResultsSuppliesSelected = false;
+  @ViewChild('PagSuppliesSelected') PagSuppliesSelected: MatPaginator;
   // Services
   services: any[] = [];
   servicesColumns = [
@@ -92,16 +95,15 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   dataSourceServices = new MatTableDataSource();
   isLoadingResultsServices = false;
   selectionServices = new SelectionModel(true, []);
+  @ViewChild('PagServices') PagServices: MatPaginator;
   // Services selected
-  servicesSelected: any[] = [];
   servicesSelectedColumns = ['id', 'nombre', 'descripcion']
   dataSourceServicesSelected = new MatTableDataSource();
-  isLoadingResultServicesSelected = false;
+  isLoadingResultsServicesSelected = false;
+  @ViewChild('PagServicesSelected') PagServicesSelected: MatPaginator;
 
-  @ViewChild('PagStations') PagStations: MatPaginator;
-  @ViewChild('PagSupplies') PagSupplies: MatPaginator;
-  @ViewChild('PagServices') PagServices: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -122,7 +124,6 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de subsistemas', error)
       })
-
     // Get profiles filter by analysts
     this.adminService.getProfilesAnalysts()
       .subscribe(res => {
@@ -130,7 +131,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de analistas', error)
       })
-
+    // Get priorities
     this.requestsService.getPriorities()
       .subscribe(res => {
         this.priorities = res.data.prioridades;
@@ -201,6 +202,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
           // Get all supplies by subsystem
           this.supplies = [];
           this.isLoadingResultsSupplies = true;
+          this.isLoadingResultsSuppliesSelected = true;
           this.suppliesService.getSuppliesBySubsystem(this.request.subsistema)
             .subscribe(res => {
               // Clone response
@@ -223,39 +225,30 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
               for (let i = 0; i < this.supplies.length; i++) {
                 for (let j = 0; j < this.request.suministros.length; j++) {
                   if (this.supplies[i].id === this.request.suministros[j].suministro.id) {
-                    this.suppliesSelected.push(this.supplies[i]);
                     this.supplies[i].qty = this.request.suministros[j].cantidad;
                     this.supplies[i].comentario = this.request.suministros[j].comentario;
                     this.selectionSupplies.toggle(this.supplies[i]);
                   }
                 }
               }
-              this.dataSourceSuppliesSelected = new MatTableDataSource(this.suppliesSelected);
-
-              var seen = [];
-
-              var replacer = function (key, value) {
-                if (value != null && typeof value == "object") {
-                  if (seen.indexOf(value) >= 0) {
-                    return;
-                  }
-                  seen.push(value);
-                }
-                return value;
-              };
-
               // Initialize supplies table
               this.dataSourceSupplies = new MatTableDataSource(this.supplies);
               this.dataSourceSupplies.paginator = this.PagSupplies;
               this.dataSourceSupplies.sort = this.sort;
               this.isLoadingResultsSupplies = false;
+              // Inicialize supplies selected table
+              this.dataSourceSuppliesSelected = new MatTableDataSource(this.selectionSupplies.selected);
+              this.dataSourceSuppliesSelected.paginator = this.PagSuppliesSelected;
+              this.dataSourceSuppliesSelected.sort = this.sort;
+              this.isLoadingResultsSuppliesSelected = false;
             }, error => {
-              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de sumnistros', error)
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de sumnistros', error);
             })
 
           // Get services
           this.services = [];
           this.isLoadingResultsServices = true;
+          this.isLoadingResultsServicesSelected = true;
           this.servicesService.getServices(this.request.subsistema)
             .subscribe(res => {
               // Clone response
@@ -278,21 +271,24 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
               for (let i = 0; i < this.services.length; i++) {
                 for (let j = 0; j < this.request.servicios.length; j++) {
                   if (this.services[i].id === this.request.servicios[j].servicio.id) {
-                    this.servicesSelected.push(this.services[i]);
                     this.services[i].qty = this.request.servicios[j].cantidad;
                     this.services[i].comentario = this.request.servicios[j].comentario;
                     this.selectionServices.toggle(this.services[i]);
                   }
                 }
               }
-              this.dataSourceServicesSelected = new MatTableDataSource(this.servicesSelected);
               // Inicialize services table
               this.dataSourceServices = new MatTableDataSource(this.services);
               this.dataSourceServices.paginator = this.PagServices;
               this.dataSourceServices.sort = this.sort;
               this.isLoadingResultsServices = false;
+              // Inicialize services selected table
+              this.dataSourceServicesSelected = new MatTableDataSource(this.selectionServices.selected);
+              this.dataSourceServicesSelected.paginator = this.PagServicesSelected;
+              this.dataSourceServicesSelected.sort = this.sort;
+              this.isLoadingResultsServicesSelected = false;
             }, error => {
-              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de servicios', error)
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de servicios', error);
             })
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Solicitud por Id', error);
@@ -317,16 +313,13 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       this.isNew = true;
     }
   }
-
+  // Select row list stations
   selectRow(index, data) {
-    this.request.estacion = {
-      id: data.id,
-      name: data.nombre
-    }
+    this.request.estacion = {id: data.id, name: data.nombre}
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
   }
-
+  // Select subsystem from select input
   selectSubsystem(event, subsystemId) {
     if (this.selectionSupplies.selected.length > 0) this.selectionSupplies.clear();
     if (this.selectionServices.selected.length > 0) this.selectionServices.clear();
@@ -392,7 +385,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de suministros', error);
       })
   }
-
+  // Select analyst from selecty input
   selectAnalyst(event, analyst) {
     if (analyst.lastName)
       this.request.analista = `${analyst.firstName} ${analyst.lastName}`;
@@ -400,7 +393,6 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       this.request.analista = analyst.firstName;
     this.request.analistaId = analyst.id;
   }
-
   // Normalize list for send request
   normalizeList(collection) {
     const tmpArray = []
@@ -411,7 +403,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
     }
     return tmpArray
   }
-
+  // Save and send request
   saveRequest() {
     debugger
     let statesRequest = false;
@@ -456,9 +448,9 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.dataSource.data.forEach(row => this.selectionSupplies.select(row));
-  }
+  // masterToggle() {
+  //   this.dataSource.data.forEach(row => this.selectionSupplies.select(row));
+  // }
 
   // Filters Tables
 
@@ -473,15 +465,31 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.toLowerCase();
     this.dataSourceSupplies.filter = filterValue;
   }
-
+  filterSuppliesSelected(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSourceSuppliesSelected.filter = filterValue;
+  }
   filterServices(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSourceServices.filter = filterValue;
   }
-
-  imprimir(row) {
-    debugger
+  filterServicesSelected(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSourceServicesSelected.filter = filterValue;
   }
 
+  refreshSelectionSupplies() {
+    this.dataSourceSuppliesSelected = new MatTableDataSource(this.selectionSupplies.selected);
+    this.dataSourceSuppliesSelected.paginator = this.PagSuppliesSelected;
+    this.dataSourceSuppliesSelected.sort = this.sort;
+  }
+
+  refreshSelectionServices() {
+    this.dataSourceServicesSelected = new MatTableDataSource(this.selectionServices.selected);
+    this.dataSourceServicesSelected.paginator = this.PagServicesSelected;
+    this.dataSourceServicesSelected.sort = this.sort;
+  }
 }

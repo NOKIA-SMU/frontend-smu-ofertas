@@ -61,189 +61,211 @@
   </ng-container>
   <div style="width: 100%;"></div>
 
-  <div [hidden]="!isSelectionSubsystem">
-    <!-- SUPPLIES -->
-    <h4>Suministros</h4>
-    <mat-tab-group>
-      <mat-tab label="Selección">
-        <br>
-        <mat-form-field>
-          <input matInput (keyup)="filterSupplies($event.target.value)" placeholder="Filtro suministros">
-        </mat-form-field>
-        <div class="tableContainer mat-elevation-z3 supplies">
-          <div class="example-loading-shade" *ngIf="isLoadingResultsSupplies">
-            <mat-spinner></mat-spinner>
+  <ng-container>
+    <div [hidden]="!isSelectionSubsystem" style="width: 100%;">
+      <!-- SUPPLIES -->
+      <h4>Suministros</h4>
+      <mat-tab-group>
+        <mat-tab label="Selección">
+          <br>
+          <mat-form-field>
+            <input matInput (keyup)="filterSupplies($event.target.value)" placeholder="Filtro suministros">
+          </mat-form-field>
+          <div class="tableContainer mat-elevation-z3 supplies">
+            <div class="example-loading-shade" *ngIf="isLoadingResultsSupplies">
+              <mat-spinner></mat-spinner>
+            </div>
+            <mat-table #table [dataSource]="dataSourceSupplies" *ngIf="supplies?.length > 0">
+              <ng-container matColumnDef="activo">
+                <mat-header-cell *matHeaderCellDef>
+                  Selección
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" (click)="selectionSupplies.toggle(row);">
+                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionSupplies.toggle(row) : null; $event ? refreshSelectionSupplies() : null;" [checked]="selectionSupplies.isSelected(row)">
+                  </mat-checkbox>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="imprimir(element)"> {{element.id}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcion">
+                <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="unidad">
+                <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="marca">
+                <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.marca}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="referencia">
+                <mat-header-cell *matHeaderCellDef> Referencia </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.referencia}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="cantidad">
+                <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <input type="number" name="qty-{{element.nombre}}-{{element.descripcion}}" class="inputNumber" [(ngModel)]="element.qty" min="0" max="10000">
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="comentario">
+                <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <textarea name="comment-{{element.nombre}}-{{element.descripcion}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: suppliesColumns;"></mat-row>
+            </mat-table>
           </div>
-          <mat-table #table [dataSource]="dataSourceSupplies" *ngIf="supplies?.length > 0">
-            <ng-container matColumnDef="activo">
-              <mat-header-cell *matHeaderCellDef>
-                Selección
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row" (click)="selectionSupplies.toggle(row)">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionSupplies.toggle(row) : null" [checked]="selectionSupplies.isSelected(row)">
-                </mat-checkbox>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-              <mat-cell *matCellDef="let element" (click)="imprimir(element)"> {{element.id}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="nombre">
-              <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="descripcion">
-              <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="unidad">
-              <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="marca">
-              <mat-header-cell *matHeaderCellDef> Marca </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.marca}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="referencia">
-              <mat-header-cell *matHeaderCellDef> Referencia </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.referencia}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="cantidad">
-              <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <input type="number" name="qty-{{element.nombre}}-{{element.descripcion}}" class="inputNumber" [(ngModel)]="element.qty"
-                  min="0" max="10000">
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="comentario">
-              <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <textarea name="comment-{{element.nombre}}-{{element.descripcion}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
-              </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="suppliesColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: suppliesColumns;"></mat-row>
-          </mat-table>
-        </div>
-        <mat-paginator #PagSupplies [pageSizeOptions]="[5, 10]"></mat-paginator>
-      </mat-tab>
-      <mat-tab label="Seleccionados">
-        <br>
-        <div class="tableContainer mat-elevation-z3 suppliesSelected">
-          <div class="example-loading-shade" *ngIf="isLoadingResultsSuppliesSelected">
-            <mat-spinner></mat-spinner>
+          <mat-paginator #PagSupplies [pageSizeOptions]="[5, 10]"></mat-paginator>
+        </mat-tab>
+        <mat-tab label="Seleccionados">
+          <br>
+          <mat-form-field>
+            <input matInput (keyup)="filterSuppliesSelected($event.target.value)" placeholder="Filtro suministros seleccionados">
+          </mat-form-field>
+          <div class="tableContainer mat-elevation-z3 suppliesSelected">
+            <div class="example-loading-shade" *ngIf="isLoadingResultsSuppliesSelected">
+              <mat-spinner></mat-spinner>
+            </div>
+            <mat-table [dataSource]="dataSourceSuppliesSelected" matSort>
+              <ng-container *ngFor="let item of suppliesSelectedColumns" matColumnDef="{{item}}">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  {{row[item]}}
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="suppliesSelectedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: suppliesSelectedColumns; let i = index"></mat-row>
+            </mat-table>
           </div>
-          <mat-table [dataSource]="dataSourceSuppliesSelected" matSort>
-            <ng-container *ngFor="let item of servicesSelectedColumns" matColumnDef="{{item}}">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
-              <mat-cell *matCellDef="let row" (click)="imprimir(row)">
-                {{row[item]}}
-              </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="servicesSelectedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: servicesSelectedColumns; let i = index"></mat-row>
-          </mat-table>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+          <mat-paginator #PagSuppliesSelected [pageSizeOptions]="[5, 10]"></mat-paginator>
+        </mat-tab>
+      </mat-tab-group>
+      <!-- <h2>{{this.selectionSupplies.selected | json}}</h2> -->
 
+      <!-- SERVICES -->
+      <h4>Servicios</h4>
+      <mat-tab-group>
+        <mat-tab label="Selección">
+          <br>
+          <mat-form-field>
+            <input matInput (keyup)="filterServices($event.target.value)" placeholder="Filtro servicios">
+          </mat-form-field>
+          <div class="tableContainer mat-elevation-z3 services">
+            <div class="example-loading-shade" *ngIf="isLoadingResultsServices">
+              <mat-spinner></mat-spinner>
+            </div>
+            <mat-table #table [dataSource]="dataSourceServices" *ngIf="services?.length > 0">
+              <ng-container matColumnDef="activo">
+                <mat-header-cell *matHeaderCellDef>
+                  Selección
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row" (click)="selectionServices.toggle(row)">
+                  <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionServices.toggle(row) : null; $event ? refreshSelectionServices() : null;" [checked]="selectionServices.isSelected(row)">
+                  </mat-checkbox>
+                </mat-cell>
+              </ng-container>
 
-    <!-- <h2>{{this.selectionSupplies.selected | json}}</h2> -->
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+              </ng-container>
 
-    <!-- SERVICES -->
-    <h4>Servicios</h4>
-    <mat-tab-group>
-      <mat-tab label="Selección">
-        <br>
-        <mat-form-field>
-          <input matInput (keyup)="filterServices($event.target.value)" placeholder="Filtro servicios">
-        </mat-form-field>
-        <div class="tableContainer mat-elevation-z3 services">
-          <div class="example-loading-shade" *ngIf="isLoadingResultsServices">
-            <mat-spinner></mat-spinner>
+              <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcion">
+                <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="distancia">
+                <mat-header-cell *matHeaderCellDef> Distancia </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.distancia}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="peso">
+                <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.peso}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="tiempo">
+                <mat-header-cell *matHeaderCellDef> Tiempo </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.tiempo}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="unidad">
+                <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="cantidad">
+                <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <input type="number" name="qtys-{{element.nombre}}-{{element.descripcion}}" class="inputNumber" [(ngModel)]="element.qty"
+                    min="0" max="10000">
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="comentario">
+                <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <textarea name="comment-{{element.nombre}}-{{element.descripcion}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="servicesColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: servicesColumns;"></mat-row>
+            </mat-table>
           </div>
-          <mat-table #table [dataSource]="dataSourceServices" *ngIf="services?.length > 0">
-            <ng-container matColumnDef="activo">
-              <mat-header-cell *matHeaderCellDef>
-                Selección
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row" (click)="selectionServices.toggle(row)">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionServices.toggle(row) : null" [checked]="selectionServices.isSelected(row)">
-                </mat-checkbox>
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="nombre">
-              <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="descripcion">
-              <mat-header-cell *matHeaderCellDef> Descripción </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="distancia">
-              <mat-header-cell *matHeaderCellDef> Distancia </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.distancia}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="peso">
-              <mat-header-cell *matHeaderCellDef> Peso </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.peso}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="tiempo">
-              <mat-header-cell *matHeaderCellDef> Tiempo </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.tiempo}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="unidad">
-              <mat-header-cell *matHeaderCellDef> Unidad </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="cantidad">
-              <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <input type="number" name="qtys-{{element.nombre}}-{{element.descripcion}}" class="inputNumber" [(ngModel)]="element.qty"
-                  min="0" max="10000">
-              </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="comentario">
-              <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <textarea name="comment-{{element.nombre}}-{{element.descripcion}}" class="inputText" placeholder="Comentario" [(ngModel)]="element.comentario"></textarea>
-              </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="servicesColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: servicesColumns;"></mat-row>
-          </mat-table>
-        </div>
-        <mat-paginator #PagServices [pageSizeOptions]="[5, 10]"></mat-paginator>
-      </mat-tab>
-      <mat-tab label="Seleccionados">
-
-      </mat-tab>
-    </mat-tab-group>
-    <!-- <h2>{{this.selectionServices.selected | json}}</h2> -->
-  </div>
+          <mat-paginator #PagServices [pageSizeOptions]="[5, 10]"></mat-paginator>
+        </mat-tab>
+        <mat-tab label="Seleccionados">
+          <br>
+          <mat-form-field>
+            <input matInput (keyup)="filterServicesSelected($event.target.value)" placeholder="Filtro servicios seleccionados">
+          </mat-form-field>
+          <div class="tableContainer mat-elevation-z3 servicesSelected">
+            <div class="example-loading-shade" *ngIf="isLoadingResultsServicesSelected">
+              <mat-spinner></mat-spinner>
+            </div>
+            <mat-table [dataSource]="dataSourceServicesSelected" matSort>
+              <ng-container *ngFor="let item of servicesSelectedColumns" matColumnDef="{{item}}">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{item}} </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  {{row[item]}}
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="servicesSelectedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: servicesSelectedColumns; let i = index"></mat-row>
+            </mat-table>
+          </div>
+          <mat-paginator #PagServicesSelected [pageSizeOptions]="[5, 10]"></mat-paginator>
+        </mat-tab>
+      </mat-tab-group>
+      <!-- <h2>{{this.selectionServices.selected | json}}</h2> -->
+    </div>
+  </ng-container>
 
   <ng-container *ngIf="request">
     <div class="toggleState">

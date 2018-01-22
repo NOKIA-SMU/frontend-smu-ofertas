@@ -106,11 +106,12 @@ form {
       }
     }
   }
-  &.suppliesSelected {
+  &.suppliesSelected,
+  &.servicesSelected {
     .mat-table {
       > .mat-header-row, > .mat-row {
         > .mat-header-cell, > .mat-cell {
-          flex: 0 0 30%;
+          flex: 0 0 33.3%;
         }
       }
     }
