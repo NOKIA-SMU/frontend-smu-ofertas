@@ -405,11 +405,10 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   }
   // Save and send request
   saveRequest() {
-    debugger
     let statesRequest = false;
     if (this.request.tas) {
-      if (this.request.tas.length > 15) {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Tas excede 15 caracteres');
+      if (this.request.tas.length != 15) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Tas no tiene 15 caracteres');
         statesRequest = false;
       } else
         statesRequest = true;
@@ -423,8 +422,10 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
         this.request.servicios = this.normalizeList(this.selectionServices.selected);
       else
         this.request.servicios = []
-      this.request.supervisorId = this.currentUser.id;
-      this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+      if (this.isNew) {
+        this.request.supervisorId = this.currentUser.id;
+        this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+      }
       if (this.isNew) {
         this.requestsService.createRequest(this.request)
           .subscribe(res => {
@@ -446,11 +447,6 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  // masterToggle() {
-  //   this.dataSource.data.forEach(row => this.selectionSupplies.select(row));
-  // }
 
   // Filters Tables
 

@@ -217,25 +217,24 @@ export class OfferOperateComponent implements OnInit {
   }
 
   saveOffert() {
-    debugger
     let statesOffer = true;
     if (this.offer.workOrder) {
-      if (this.offer.workOrder.length > 16) {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Work order excede 16 caracteres');
+      if (this.offer.workOrder.length != 16) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Work order no tiene 16 caracteres');
         statesOffer = false;
       } else
         statesOffer = true;
     }
-    if (this.offer.tasOfertaAnterior) {
-      if (this.offer.tasOfertaAnterior.length > 15) {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Tas oferta anterior excede 15 caracteres');
+    if (this.offer.tasOfertaAnterior && statesOffer) {
+      if (this.offer.tasOfertaAnterior.length != 15) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Tas oferta anterior no tiene 15 caracteres');
         statesOffer = false;
       } else
         statesOffer = true;
     }
-    if (this.offer.numeroOferta) {
-      if (this.offer.numeroOferta.length > 15) {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Numero oferta excede 15 caracteres');
+    if (this.offer.numeroOferta && statesOffer) {
+      if (this.offer.numeroOferta.length != 15) {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Numero oferta no tiene 15 caracteres');
         statesOffer = false;
       } else
         statesOffer = true;
