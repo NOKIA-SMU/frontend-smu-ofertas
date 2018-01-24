@@ -53,7 +53,6 @@ export class AdminService {
     return this.rolesCol.doc(role.id).update(role)
   }
 
-
   public assignPermissionToRole(roleId, permissions: Permission[]) {
     return this.rolesCol.doc(roleId).collection('permissions').add({ list: permissions })
   }

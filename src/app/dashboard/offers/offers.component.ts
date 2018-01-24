@@ -201,6 +201,7 @@ export class OffersComponent implements OnInit {
             // Filter offers by rol
             let filteredOffers = [];
             if (this.currentUser.roles.Administrador) {
+              debugger
               this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
             } else if (this.currentUser.roles.Supervisor) {
               for (let i = 0; i < res.data.ofertas.length; i++) {

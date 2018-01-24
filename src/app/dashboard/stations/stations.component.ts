@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { StationsService } from "./stations.service";
+import { Profile, Role } from '../../models/auth.models';
+import { AuthService } from '../../auth/auth.service';
+import { AdminService } from '../../admin/admin.service';
 import { AppService } from "../../app.service";
 
 @Component({
@@ -30,12 +33,31 @@ export class StationsComponent implements OnInit {
   dataSource = new MatTableDataSource();
   isLoadingResults = true;
   currentRowSelect: any;
-  currentRowSelectData: any = {}
+  currentRowSelectData: any = {};
+
+  currentUser: Profile;
+  currentRoles: Role;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private stationsService: StationsService, private router: Router, private appService: AppService) { }
+  constructor(
+    private stationsService: StationsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private adminService: AdminService,
+    private authService: AuthService,
+    private appService: AppService
+  ) {
+
+    // this.adminService.getRoles()
+    //   .subscribe(res => {
+    //     debugger
+    //     this.currentRoles = res;
+    //   }, error => {
+
+    //   })
+  }
 
   ngOnInit() { }
 
@@ -78,6 +100,19 @@ export class StationsComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo', error);
       })
+  }
+
+
+  validateSecurity(item) {
+    this.authService.currentUser()
+      .subscribe(res => {
+        debugger
+        this.currentUser = res;
+      }, error => {
+
+      })
+    debugger
+    // this.route.snapshot.routeConfig.path;
   }
 
 }

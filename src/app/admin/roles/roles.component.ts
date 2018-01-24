@@ -53,8 +53,7 @@ export class RolesComponent implements OnInit {
     this.isShowEditPermissionsToRole = !this.isShowEditPermissionsToRole;
     this.rolToEditPermissions = role;
     for (let i = 0; i < this.permissions.length; i++) this.permissions[i].checked = false;
-
-    this.getRolPermissions(role)
+    this.getRolPermissions(role);
   }
 
   selectPermission(permission: Permission) {
@@ -67,6 +66,7 @@ export class RolesComponent implements OnInit {
       res.map(res => {
         this.actualColPermissions = res.id;
         this.rolePermissions = res.list;
+        debugger
         for (let i = 0; i < this.rolePermissions.length; i++) {
           for (let j = 0; j < this.permissions.length; j++) {
             if (this.rolePermissions[i].id == this.permissions[j].id) {
