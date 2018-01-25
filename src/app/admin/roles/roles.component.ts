@@ -63,6 +63,7 @@ export class RolesComponent implements OnInit {
   // Methods
   getRolPermissions(role: Role) {
     this.adminService.getRolePermissions(role).subscribe(res => {
+      debugger
       res.map(res => {
         this.actualColPermissions = res.id;
         this.rolePermissions = res.list;
@@ -113,7 +114,8 @@ export class RolesComponent implements OnInit {
         });
       }
 
-      updatePermissionsToRole(role: Role) {
+  updatePermissionsToRole(role: Role) {
+        debugger
         let permissions = []
         for (let i = 0; i < this.permissions.length; i++) {
           if (this.permissions[i].checked) {

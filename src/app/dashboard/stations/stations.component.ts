@@ -41,14 +41,6 @@ export class StationsComponent implements OnInit {
   userPermissions: Permission[] = [];
   rolesUserParsed: any[] = [];
 
-  permissionsView = {
-    create: false,
-    read: false,
-    update: false,
-    delete: false
-  }
-
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -60,17 +52,7 @@ export class StationsComponent implements OnInit {
     private authService: AuthService,
     private appService: AppService
   ) {
-
-    sessionStorage.removeItem('lastModelQuery');
-    sessionStorage.removeItem('lastPermissionQuery');
-    // this.adminService.getRoles()
-    //   .subscribe(res => {
-    //     debugger
-    //     this.currentRoles = res;
-    //   }, error => {
-
-    //   })
-    var te = this.validateSecurity('crear')
+    this.validateSecurity()
   }
 
   ngOnInit() { }
@@ -116,11 +98,7 @@ export class StationsComponent implements OnInit {
       })
   }
 
-  validateSecurity(item) {
-
-    let lastModelQuery = this.route.snapshot.routeConfig.path;
-    let lastPermissionQuery = item;
-
+  validateSecurity() {
     this.adminService.getRoles().subscribe(roles => {
       this.rolesGeneral = roles;
       this.authService.currentUser()
@@ -132,29 +110,19 @@ export class StationsComponent implements OnInit {
             }
           }
           // Object.keys(res.roles)
-          if (lastModelQuery === JSON.parse(sessionStorage.getItem('lastModelQuery')) && lastPermissionQuery === JSON.parse(sessionStorage.getItem('lastPermissionQuery'))) {
-
-          } else {
-            sessionStorage.setItem('lastModelQuery', JSON.stringify(this.route.snapshot.routeConfig.path));
-            sessionStorage.setItem('lastPermissionQuery', JSON.stringify(item));
-            this.adminService.getRolePermissions(this.rolesUserParsed[0]).subscribe(res => {
+          for (let i = 0; i < this.rolesUserParsed.length; i++) {
+            this.adminService.getRolePermissions(this.rolesUserParsed[i]).subscribe(res => {
+              debugger
               res.map(res => {
                 for (let k = 0; k < res.list.length; k++) {
                   this.userPermissions.push(res.list[k]);
                 }
-                return true
+                debugger
               })
             }, error => {
               this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
-              return false
             })
           }
-
-
-          // sessionStorage.setItem('lastRolesUserQuery', JSON.stringify(this.rolesUserParsed[0]));
-
-
-          // let query = JSON.parse(sessionStorage.getItem('lastRolesUserQuery'));
         }, error => {
           debugger
         })
@@ -164,6 +132,11 @@ export class StationsComponent implements OnInit {
     // this.route.snapshot.routeConfig.path;
   }
 
-
+  permissionsView = {
+    create: false,
+    read: false,
+    update: false,
+    delete: false
+  }
 
 }
