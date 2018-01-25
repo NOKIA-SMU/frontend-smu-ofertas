@@ -132,7 +132,7 @@ export class AdminService {
   }
 
   public getRolePermissions(role: Role) {
-    this.rolesColSub = this.afs.collection('roles').doc(role.id).collection<RolePermissions>('permissions')
+    this.rolesColSub = this.afs.collection('roles').doc(role.id).collection<RolePermissions>('permissions');
     return this.rolesColSub.snapshotChanges()
       .map(actions => {
         return actions
@@ -140,7 +140,7 @@ export class AdminService {
             const data = res.payload.doc.data() as RolePermissions;
             const id = res.payload.doc.id;
             return { id, ...data };
-        });
+          });
       });
   }
 

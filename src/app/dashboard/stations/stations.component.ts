@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StationsService } from "./stations.service";
-import { Profile, Role } from '../../models/auth.models';
+import { Profile, Role, Permission } from '../../models/auth.models';
 import { AuthService } from '../../auth/auth.service';
 import { AdminService } from '../../admin/admin.service';
 import { AppService } from "../../app.service";
@@ -36,7 +36,18 @@ export class StationsComponent implements OnInit {
   currentRowSelectData: any = {};
 
   currentUser: Profile;
-  currentRoles: Role;
+  currentRoles: Role[];
+  rolesGeneral: Role[];
+  userPermissions: Permission[] = [];
+  rolesUserParsed: any[] = [];
+
+  permissionsView = {
+    create: false,
+    read: false,
+    update: false,
+    delete: false
+  }
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -50,6 +61,8 @@ export class StationsComponent implements OnInit {
     private appService: AppService
   ) {
 
+    sessionStorage.removeItem('lastModelQuery');
+    sessionStorage.removeItem('lastPermissionQuery');
     // this.adminService.getRoles()
     //   .subscribe(res => {
     //     debugger
@@ -57,6 +70,7 @@ export class StationsComponent implements OnInit {
     //   }, error => {
 
     //   })
+    var te = this.validateSecurity('crear')
   }
 
   ngOnInit() { }
@@ -102,17 +116,54 @@ export class StationsComponent implements OnInit {
       })
   }
 
-
   validateSecurity(item) {
-    this.authService.currentUser()
-      .subscribe(res => {
-        debugger
-        this.currentUser = res;
-      }, error => {
 
-      })
-    debugger
+    let lastModelQuery = this.route.snapshot.routeConfig.path;
+    let lastPermissionQuery = item;
+
+    this.adminService.getRoles().subscribe(roles => {
+      this.rolesGeneral = roles;
+      this.authService.currentUser()
+        .subscribe(res => {
+          this.currentUser = res;
+          for (let i = 0; i < this.rolesGeneral.length; i++) {
+            if (res.roles[this.rolesGeneral[i].name]) {
+              this.rolesUserParsed.push({ name: this.rolesGeneral[i].name, id: this.rolesGeneral[i].id })
+            }
+          }
+          // Object.keys(res.roles)
+          if (lastModelQuery === JSON.parse(sessionStorage.getItem('lastModelQuery')) && lastPermissionQuery === JSON.parse(sessionStorage.getItem('lastPermissionQuery'))) {
+
+          } else {
+            sessionStorage.setItem('lastModelQuery', JSON.stringify(this.route.snapshot.routeConfig.path));
+            sessionStorage.setItem('lastPermissionQuery', JSON.stringify(item));
+            this.adminService.getRolePermissions(this.rolesUserParsed[0]).subscribe(res => {
+              res.map(res => {
+                for (let k = 0; k < res.list.length; k++) {
+                  this.userPermissions.push(res.list[k]);
+                }
+                return true
+              })
+            }, error => {
+              this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
+              return false
+            })
+          }
+
+
+          // sessionStorage.setItem('lastRolesUserQuery', JSON.stringify(this.rolesUserParsed[0]));
+
+
+          // let query = JSON.parse(sessionStorage.getItem('lastRolesUserQuery'));
+        }, error => {
+          debugger
+        })
+      }, error => {
+        debugger
+    });
     // this.route.snapshot.routeConfig.path;
   }
+
+
 
 }
