@@ -63,11 +63,9 @@ export class RolesComponent implements OnInit {
   // Methods
   getRolPermissions(role: Role) {
     this.adminService.getRolePermissions(role).subscribe(res => {
-      debugger
       res.map(res => {
         this.actualColPermissions = res.id;
         this.rolePermissions = res.list;
-        debugger
         for (let i = 0; i < this.rolePermissions.length; i++) {
           for (let j = 0; j < this.permissions.length; j++) {
             if (this.rolePermissions[i].id == this.permissions[j].id) {
@@ -115,19 +113,18 @@ export class RolesComponent implements OnInit {
       }
 
   updatePermissionsToRole(role: Role) {
-        debugger
-        let permissions = []
-        for (let i = 0; i < this.permissions.length; i++) {
-          if (this.permissions[i].checked) {
-            permissions.push(this.permissions[i])
-          }
-        }
-        this.adminService.updatePermissionsToRole(role.id, this.actualColPermissions, permissions)
-          .then(res => {
-            this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos del rol actualizados');
-          }, error => {
-            this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
-        });
+    let permissions = []
+    for (let i = 0; i < this.permissions.length; i++) {
+      if (this.permissions[i].checked) {
+        permissions.push(this.permissions[i])
+      }
+    }
+    this.adminService.updatePermissionsToRole(role.id, this.actualColPermissions, permissions)
+      .then(res => {
+        this.appService.showSwal('success-message', 'success', 'Operación Exitosa', 'Permisos del rol actualizados');
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Vuelva a intentarlo');
+    });
   }
 
 }
