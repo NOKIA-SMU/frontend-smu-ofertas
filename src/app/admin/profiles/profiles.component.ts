@@ -118,6 +118,10 @@ export class ProfilesComponent implements OnInit {
     role.checked = !role.checked;
   }
 
+  goToEdit() {
+    this.router.navigate([`admin/perfiles/${this.currentRowSelectData.id}`], { queryParams: this.currentRowSelectData, skipLocationChange: true });
+  }
+
   updateProfile(event, profile: Profile) {
     profile.roles = {};
     let actualRoles = {}

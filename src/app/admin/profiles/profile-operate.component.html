@@ -1,5 +1,5 @@
-<h2 class="title">Solicitud</h2>
-<form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile, roleSelected)" class="editProfile">
+<h2 class="title">Perfil</h2>
+<form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile, roleSelected)" class="editProfile" *ngIf="profile">
   <mat-form-field>
     <input matInput type="text" placeholder="Nombre" name="firstname" [(ngModel)]="profile.firstName" required>
   </mat-form-field>
