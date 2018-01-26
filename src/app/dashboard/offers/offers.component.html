@@ -25,7 +25,7 @@
 			<ng-container matColumnDef="solicitudId">
 				<mat-header-cell *matHeaderCellDef> Id solicitud </mat-header-cell>
 				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.id : row.ordenServicio?.solicitud?.id}}
+					{{row.idSolicitud}}
 				</mat-cell>
 			</ng-container>
 			<!-- REQUEST SUPERVISOR -->

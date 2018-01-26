@@ -75,6 +75,7 @@ export const queryOffers = gql`
 				cantidad
 				comentario
 			}
+			idSolicitud
 			tipoAcceso
 			tipoSitio
 			naturalezaServicio
