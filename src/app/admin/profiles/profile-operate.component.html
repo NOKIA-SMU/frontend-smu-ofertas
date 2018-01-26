@@ -1,0 +1,33 @@
+<h2 class="title">Solicitud</h2>
+<form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile, roleSelected)" class="editProfile">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Nombre" name="firstname" [(ngModel)]="profile.firstName" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Apellido" name="lastName" [(ngModel)]="profile.lastName" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" placeholder="Celular" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Email" name="email" [(ngModel)]="profile.email" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Region" name="region" [(ngModel)]="profile.region" required>
+      <mat-option *ngFor="let region of regions" [value]="region">
+        {{region}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <h3>Roles</h3>
+  <mat-selection-list>
+    <mat-list-option *ngFor="let role of roles" [selected]="role.checked" (click)="selectRole(role)">
+      {{role.name}}
+    </mat-list-option>
+  </mat-selection-list>
+
+
+  <div class="footer-buttom">
+    <button type="submit" mat-raised-button color="primary">Actualizar</button>
+  </div>
+</form>

@@ -9,6 +9,7 @@ export interface Profile {
 	userId: string;
 	region?: string;
 	roles?: any;
+	rolesParsed?: any;
 }
 
 export interface Role {

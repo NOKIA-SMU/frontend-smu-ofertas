@@ -11,6 +11,7 @@ import { RolesComponent } from './roles/roles.component';
 import { PermissionsComponent } from './permissions/permissions.component';
 import { AdminService } from './admin.service';
 import { ProfilesComponent } from './profiles/profiles.component';
+import { ProfileOperateComponent } from './profiles/profile-operate.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { ProfilesComponent } from './profiles/profiles.component';
     AdminRoutingModule,
     MaterialModule
   ],
-  declarations: [AdminComponent, PermissionsComponent, RolesComponent, ProfilesComponent],
+  declarations: [AdminComponent, PermissionsComponent, RolesComponent, ProfilesComponent, ProfileOperateComponent],
   providers: [AdminService]
 })
 

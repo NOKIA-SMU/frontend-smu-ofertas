@@ -1,8 +1,67 @@
-<ul *ngIf="profiles?.length > 0" class="listItems">
-  <div class="example-loading-shade" *ngIf="loadingProfiles">
-    <mat-spinner></mat-spinner>
+<div class="wrapper">
+  <nav class="wrapper__nav">
+    <i (click)="goToCreate()" class="material-icons">add_circle_outline</i>
+    <i *ngIf="currentRowSelect >= 0" (click)="goToEdit()" class="material-icons">mode_edit</i>
+    <i *ngIf="currentRowSelect >= 0" (click)="deleteStation()" class="material-icons">delete</i>
+  </nav>
+  <h2 class="title">Perfiles</h2>
+  <mat-form-field style="width: 100%">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+
+  <div class="tableContainer mat-elevation-z3 profiles">
+    <div class="example-loading-shade" *ngIf="isLoadingProfiles">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-table [dataSource]="dataSourceProfiles" matSort>
+      <!-- FIRSTNAME -->
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.firstName}} </mat-cell>
+      </ng-container>
+      <!-- LASTNAME -->
+      <ng-container matColumnDef="apellido">
+        <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.lastName}} </mat-cell>
+      </ng-container>
+      <!-- REGION -->
+      <ng-container matColumnDef="region">
+        <mat-header-cell *matHeaderCellDef> Región </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.region}} </mat-cell>
+      </ng-container>
+      <!-- ROLES -->
+      <ng-container matColumnDef="roles">
+        <mat-header-cell *matHeaderCellDef> Roles </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ul>
+            <li *ngFor="let item of row.rolesParsed">{{item}} / </li>
+          </ul>
+        </mat-cell>
+      </ng-container>
+      <!-- PHONE -->
+      <ng-container matColumnDef="telefono">
+        <mat-header-cell *matHeaderCellDef> Telefono </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.telefono}} </mat-cell>
+      </ng-container>
+      <!-- EMAIL -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+      </ng-container>
+      <!-- ID -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="profileColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: profileColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+    </mat-table>
   </div>
-  <li *ngFor="let profile of profiles" class="listItems__item">
+  <mat-paginator [pageSizeOptions]="[5, 50, 100]"></mat-paginator>
+</div>
+
+  <!-- <li *ngFor="let profile of profiles" class="listItems__item">
     <div class="data">
       {{ profile.firstName }} &nbsp; {{ profile.lastName }}
     </div>
@@ -55,5 +114,5 @@
         </div>
       </form>
     </ng-container>
-  </li>
-</ul>
+  </li> -->
+<!-- </ul> -->

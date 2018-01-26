@@ -45,12 +45,6 @@ mat-grid-tile {
   transform: translate(-50%, -50%);
 }
 
-.example-container {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-}
-
 .example-header {
   min-height: 64px;
   padding: 8px 24px 0;
@@ -59,6 +53,12 @@ mat-grid-tile {
 .mat-form-field {
   font-size: 14px;
   width: 100%;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
 }
 
 .example-container, .tableContainer {

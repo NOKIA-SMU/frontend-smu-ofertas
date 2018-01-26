@@ -1,0 +1,25 @@
+.mat-table {
+  > .mat-header-row, > .mat-row {
+    > .mat-header-cell, > .mat-cell {
+      flex: 0 0 150px;
+      &:nth-child(1),
+      &:nth-child(2) {
+        flex: 0 0 280px;
+      }
+			&:nth-child(4) {
+				flex: 0 0 400px;
+			}
+      &:nth-child(6),
+      &:nth-child(7) {
+        flex: 0 0 280px;
+      }
+    }
+	}
+	ul {
+		list-style: none;
+		display: flex;
+		li {
+			margin: 0 5px;
+		}
+	}
+}

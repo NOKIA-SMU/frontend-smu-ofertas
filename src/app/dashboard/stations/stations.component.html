@@ -5,11 +5,9 @@
     <i *ngIf="permissionsView.eliminar && currentRowSelect >= 0" (click)="deleteStation()" class="material-icons">delete</i>
   </nav>
   <h2 class="title">Estaciones</h2>
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
 
   <div class="tableContainer mat-elevation-z3 stations">
     <div class="example-loading-shade" *ngIf="isLoadingResults">
