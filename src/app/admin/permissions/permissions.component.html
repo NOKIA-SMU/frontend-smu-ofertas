@@ -11,16 +11,22 @@
           <a (click)="deletePermission(permission)" class="material-icons red">delete</a>
         </div>
         <div *ngIf="isShowFormUpdatePermission && permissionToEdit.id == permission.id" class="editProfile">
-          <form #permissionForm="ngForm" (ngSubmit)="updatePermission(permission)" class="u__form">
-            <div class="form-group">
-              <label for="namePermission">Nombre</label>
-              <input type="text" class="form-control" id="namePermission" name="namePermission" [(ngModel)]="permission.name" required>
+          <form #permissionForm="ngForm" (ngSubmit)="updatePermission(permission)">
+            <mat-form-field>
+              <mat-select placeholder="Nombre" name="namePermission" [(ngModel)]="permission.name">
+                <mat-option [value]="crear">crear</mat-option>
+                <mat-option [value]="crear">leer</mat-option>
+                <mat-option [value]="crear">editar</mat-option>
+                <mat-option [value]="crear">eliminar</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+              <input matInput type="text" placeholder="Modelo" name="model" [(ngModel)]="permission.model" required>
+            </mat-form-field>
+            <div class="footer-buttom">
+              <button mat-raised-button type="submit" color="primary">Actualizar permiso</button>
             </div>
-            <div class="form-group">
-              <label for="model">Modelo</label>
-              <input type="text" class="form-control" id="model" name="model" [(ngModel)]="permission.model" required>
-            </div>
-            <button type="submit" class="btn btn-success">Actualizar permiso</button>
           </form>
         </div>
       </li>
@@ -29,16 +35,22 @@
   <mat-tab label="Crear permisos">
     <br>
     <div>
-      <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)" class="u__form">
-        <div class="form-group">
-          <label for="namePermission">Nombre</label>
-          <input type="text" class="form-control" id="namePermission" name="namePermission" [(ngModel)]="permission.name" required>
+      <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)">
+        <mat-form-field>
+          <mat-select placeholder="Nombre" name="name" [(ngModel)]="permission.name">
+            <mat-option [value]="crear">crear</mat-option>
+            <mat-option [value]="crear">leer</mat-option>
+            <mat-option [value]="crear">editar</mat-option>
+            <mat-option [value]="crear">eliminar</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput type="text" placeholder="Modelo" name="model" [(ngModel)]="permission.model" required>
+        </mat-form-field>
+        <div class="footer-buttom">
+          <button mat-raised-button type="submit" color="primary">Crear permiso</button>
         </div>
-        <div class="form-group">
-          <label for="model">Modelo</label>
-          <input type="text" class="form-control" id="model" name="model" [(ngModel)]="permission.model" required>
-        </div>
-        <button type="submit" class="btn btn-success">Create permisse</button>
       </form>
     </div>
   </mat-tab>

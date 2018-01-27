@@ -6,7 +6,7 @@ export interface Profile {
 	lastName: string;
 	phoneNumber: number;
 	email: string;
-	userId: string;
+	userId?: string;
 	region?: string;
 	roles?: any;
 	rolesParsed?: any;

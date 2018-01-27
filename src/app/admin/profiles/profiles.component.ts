@@ -34,7 +34,6 @@ export class ProfilesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   profiles: Profile[];
-  roles: Role[];
   editState: boolean = false;
   profileToEdit: Profile;
   profileToAssignRole: Profile;
@@ -73,63 +72,11 @@ export class ProfilesComponent implements OnInit {
         this.isLoadingProfiles = false;
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de perfiles', error);
       });
-      // Get all roles
-      this.adminService.getRoles().subscribe(roles => {
-        this.roles = roles;
-      }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de roles', error);
-      });
-  }
-
-  editProfile(event, profile: Profile) {
-    // Clean back selected roles
-    for (let i = 0; i < this.roles.length; i++) this.roles[i].checked = false;
-    // Get roles from profile
-    let defaultRoles = []
-    if (profile.roles != undefined) {
-      for (let i = 0; i < Object.keys(profile.roles).length; i++) {
-        defaultRoles.push(Object.keys(profile.roles)[i])
-      }
-    }
-    // Checked roles
-    for (let i = 0; i < defaultRoles.length; i++) {
-      for (let j = 0; j < this.roles.length; j++) {
-        if (defaultRoles[i] === this.roles[j].name) this.roles[j].checked = true;
-      }
-    }
-    this.showMoreProfile = false;
-    this.editState = !this.editState;
-    this.profileToEdit = profile;
-  }
-
-  showMore(event, profile: Profile) {
-    this.showPerfilRoles = [];
-    if (profile.roles != undefined) {
-      for (let i = 0; i < Object.keys(profile.roles).length; i++) {
-        this.showPerfilRoles.push(Object.keys(profile.roles)[i])
-      }
-    }
-    this.editState = false;
-    this.showMoreProfile = !this.showMoreProfile;
-    this.profileToEdit = profile;
-  }
-
-  selectRole(role: Role) {
-    role.checked = !role.checked;
   }
 
   goToEdit() {
+    this.currentRowSelectData.roles = Object.keys(this.currentRowSelectData.roles);
     this.router.navigate([`admin/perfiles/${this.currentRowSelectData.id}`], { queryParams: this.currentRowSelectData, skipLocationChange: true });
-  }
-
-  updateProfile(event, profile: Profile) {
-    profile.roles = {};
-    let actualRoles = {}
-    for (let i = 0; i < this.roles.length; i++) {
-      if (this.roles[i].checked) actualRoles[this.roles[i].name] = true;
-    }
-    profile.roles = actualRoles;
-    this.adminService.updateProfile(profile)
   }
 
   applyFilter(filterValue: string) {

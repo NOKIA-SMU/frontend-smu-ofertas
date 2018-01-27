@@ -65,59 +65,59 @@ mat-selection-list {
 
 
 
-// .listItems {
-// 	padding: 10px 25px;
-// 	// border: 1px solid #bbb5b5;
-// 	margin: 3% 0;
-// 	position: relative;
-// 	min-height: 70vh;
-// 	max-height: 350px;
-//   overflow: auto;
-// 	&__item {
-// 		display: flex;
-// 		align-items: center;
-// 		flex-wrap: wrap;
-// 		justify-content: space-between;
-// 		.data {
-// 			width: 60%;
-// 			height: 50px;
-// 			display: flex;
-// 			align-items: center;
-// 			font-weight: bold;
-// 			color: #6b6767;
-// 		}
-// 		border-top: 1px solid #bbb5b5;
-// 		.actions {
-// 			display: flex;
-// 			align-items: center;
-// 			a {
-// 				display: inline-block;
-// 				padding: 10px;
-// 				cursor: pointer;
-// 			}
-// 		}
-// 		.editProfile {
-// 			width: 100%;
-// 			padding-top: 0;
-// 			mat-list-item {
-// 				background: #e2e2e2;
-// 				border-radius: 8px;
-// 				height: auto;
-// 				padding: 10px 5px;
-// 				margin: 8px 0;
-// 				color: #818181;
-// 				font-size: .9rem;
-// 				strong {
-// 					display: inline-block;
-// 					margin-right: 10px;
-// 				}
-// 			}
-// 		}
-// 		.assignRole {
-// 			width: 100%;
-// 		}
-// 	}
-// }
+.listItems {
+	padding: 10px 25px;
+	// border: 1px solid #bbb5b5;
+	margin: 3% 0;
+	position: relative;
+	min-height: 70vh;
+	max-height: 350px;
+  overflow: auto;
+	&__item {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		.data {
+			width: 60%;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			font-weight: bold;
+			color: #6b6767;
+		}
+		border-top: 1px solid #bbb5b5;
+		.actions {
+			display: flex;
+			align-items: center;
+			a {
+				display: inline-block;
+				padding: 10px;
+				cursor: pointer;
+			}
+		}
+		.editProfile {
+			width: 100%;
+			padding-top: 0;
+			mat-list-item {
+				background: #e2e2e2;
+				border-radius: 8px;
+				height: auto;
+				padding: 10px 5px;
+				margin: 8px 0;
+				color: #818181;
+				font-size: .9rem;
+				strong {
+					display: inline-block;
+					margin-right: 10px;
+				}
+			}
+		}
+		.assignRole {
+			width: 100%;
+		}
+	}
+}
 
 
 .red {
