@@ -1,5 +1,5 @@
 <h2 class="title">Permisos</h2>
-<mat-tab-group>
+<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="changeTab($event)">
   <mat-tab label="Permisos">
     <ul *ngIf="listPermissions?.length > 0" class="listItems">
       <li *ngFor="let permission of listPermissions" class="listItems__item">
@@ -14,10 +14,9 @@
           <form #permissionForm="ngForm" (ngSubmit)="updatePermission(permission)">
             <mat-form-field>
               <mat-select placeholder="Nombre" name="namePermission" [(ngModel)]="permission.name">
-                <mat-option [value]="crear">crear</mat-option>
-                <mat-option [value]="crear">leer</mat-option>
-                <mat-option [value]="crear">editar</mat-option>
-                <mat-option [value]="crear">eliminar</mat-option>
+                <mat-option *ngFor="let item of crud" [value]="item">
+                  {{item}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
             <br>
@@ -38,10 +37,9 @@
       <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)">
         <mat-form-field>
           <mat-select placeholder="Nombre" name="name" [(ngModel)]="permission.name">
-            <mat-option [value]="crear">crear</mat-option>
-            <mat-option [value]="crear">leer</mat-option>
-            <mat-option [value]="crear">editar</mat-option>
-            <mat-option [value]="crear">eliminar</mat-option>
+            <mat-option *ngFor="let item of crud" [value]="item">
+              {{item}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <br>
