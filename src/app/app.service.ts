@@ -17,6 +17,7 @@ export class AppService {
   rolesGeneral: Role[];
   userPermissions: Permission[] = [];
   rolesUserParsed: any[] = [];
+  permissionsView: {} = {};
 
   constructor(
     private router: Router,
@@ -120,8 +121,8 @@ export class AppService {
     }
   }
 
-  public validateSecurity(queryPath, permissionsView: {}) {
-    var promise = new Promise((resolve, reject) => {
+  public validateSecurity(queryPath) {
+    return new Promise((resolve, reject) => {
       this.adminService.getRoles().subscribe(roles => {
         this.rolesGeneral = roles;
 
@@ -129,6 +130,7 @@ export class AppService {
           .subscribe(res => {
             this.currentUser = res
             // Get all roles parsed (id - name)
+            this.rolesUserParsed = [];
             for (let i = 0; i < this.rolesGeneral.length; i++) {
               if (this.currentUser.roles[this.rolesGeneral[i].name]) {
                 this.rolesUserParsed.push({ name: this.rolesGeneral[i].name, id: this.rolesGeneral[i].id })
@@ -139,16 +141,19 @@ export class AppService {
               this.adminService.getRolePermissions(this.rolesUserParsed[i])
                 .subscribe(res => {
                   res.map(res => {
+                    this.userPermissions = [];
+                    this.permissionsView = {};
                     for (let k = 0; k < res.list.length; k++) {
                       this.userPermissions.push(res.list[k]);
+                      // console.log(res.list[k])
                     }
                     for (let m = 0; m < this.userPermissions.length; m++) {
                       if (queryPath === this.userPermissions[m].model) {
-                        permissionsView[this.userPermissions[m].name] = true;
+                        this.permissionsView[this.userPermissions[m].name] = true;
                       }
                     }
-                    // return permissionsView;
-                    resolve(permissionsView);
+                    console.log(this.permissionsView)
+                    resolve(this.permissionsView);
                   })
                 }, error => {
                   this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol', error);
@@ -161,7 +166,5 @@ export class AppService {
         this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta roles general', error);
       });
     });
-    return promise;
   }
-
 }

@@ -32,12 +32,7 @@ export class StationsComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
-  permissionsView = {
-    crear: false,
-    leer: false,
-    editar: false,
-    eliminar: false
-  }
+  permissionsView: {} = {};
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -48,7 +43,7 @@ export class StationsComponent implements OnInit {
     private route: ActivatedRoute,
     private appService: AppService
   ) {
-    this.appService.validateSecurity(this.route.snapshot.routeConfig.path, this.permissionsView)
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path)
       .then(res => {
         this.permissionsView = {
           crear: res['crear'],

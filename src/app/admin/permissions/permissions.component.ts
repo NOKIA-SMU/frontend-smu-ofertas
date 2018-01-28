@@ -18,7 +18,7 @@ export class PermissionsComponent implements OnInit {
   isShowFormUpdatePermission: boolean = false;
   permissionToEdit: Permission;
   crud: string[] = ['crear', 'leer', 'editar', 'eliminar'];
-  private selectedTab = 0;
+  selectedTab = 0;
 
   constructor(
     private adminService: AdminService,

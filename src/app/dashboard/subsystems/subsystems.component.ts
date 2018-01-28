@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SubsystemsService } from "./subsystems.service";
-import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
 
 @Component({
@@ -18,8 +17,9 @@ export class SubsystemsComponent implements OnInit {
   dataSourceSubsystems = new MatTableDataSource();
   isLoadingResultsSubsystems = true;
   currentRowSelect: any;
-  currentRowSelectData: any = {}
-  testm: any
+  currentRowSelectData: any = {};
+
+  permissionsView: {} = {};
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -27,16 +27,27 @@ export class SubsystemsComponent implements OnInit {
   constructor(
     private subsystemsService: SubsystemsService,
     private router: Router,
-    private appService: AppService) { }
-
-  ngOnInit() {
-
+    private route: ActivatedRoute,
+    private appService: AppService
+  ) {
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path)
+      .then(res => {
+        this.permissionsView = {
+          crear: res['crear'] || null,
+          leer: res['leer'] || null,
+          editar: res['editar'] || null,
+          eliminar: res['eliminar'] || null
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
   }
+
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.subsystemsService.getSubsystems()
       .subscribe(res => {
-        this.testm = res.data.subsistemas
         this.dataSourceSubsystems = new MatTableDataSource(res.data.subsistemas);
         this.dataSourceSubsystems.paginator = this.paginator;
         this.dataSourceSubsystems.sort = this.sort;
@@ -73,12 +84,8 @@ export class SubsystemsComponent implements OnInit {
         // this.router.navigate(['/estaciones']);
         // }
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo')
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Vuelva a intentarlo');
       })
-  }
-
-  imprimir(row) {
-    debugger
   }
 
 }

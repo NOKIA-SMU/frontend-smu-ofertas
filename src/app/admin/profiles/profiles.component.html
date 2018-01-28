@@ -1,6 +1,5 @@
 <div class="wrapper">
   <nav class="wrapper__nav">
-    <i (click)="goToCreate()" class="material-icons">add_circle_outline</i>
     <i *ngIf="currentRowSelect >= 0" (click)="goToEdit()" class="material-icons">mode_edit</i>
     <i *ngIf="currentRowSelect >= 0" (click)="deleteStation()" class="material-icons">delete</i>
   </nav>
@@ -60,59 +59,3 @@
   </div>
   <mat-paginator [pageSizeOptions]="[5, 50, 100]"></mat-paginator>
 </div>
-
-  <!-- <li *ngFor="let profile of profiles" class="listItems__item">
-    <div class="data">
-      {{ profile.firstName }} &nbsp; {{ profile.lastName }}
-    </div>
-    <div class="actions">
-      <a (click)="editProfile($event, profile)" class="material-icons blue">mode_edit</a>
-      <a (click)="showMore($event, profile)" class="material-icons semi">expand_more</a>
-    </div>
-    <ng-container *ngIf="showMoreProfile && profileToEdit.id == profile.id" >
-      <mat-list class="editProfile">
-        <mat-list-item><strong>Email:</strong>{{ profile.email }}</mat-list-item>
-        <mat-list-item><strong>Telefono:</strong>{{ profile.phoneNumber }}</mat-list-item>
-        <mat-list-item><strong>Region:</strong>{{ profile.region }}</mat-list-item>
-        <mat-list-item *ngIf="showPerfilRoles">
-          <strong>Roles:</strong>
-          <span *ngFor="let rol of showPerfilRoles">{{ rol }} -&nbsp;</span>
-        </mat-list-item>
-      </mat-list>
-    </ng-container>
-    <ng-container *ngIf="editState && profileToEdit.id == profile.id">
-      <form #editProfileForm="ngForm" (ngSubmit)="updateProfile($event, profile, roleSelected)" class="editProfile">
-        <mat-form-field>
-          <input matInput type="text" placeholder="Nombre" name="firstname" [(ngModel)]="profile.firstName" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="text" placeholder="Apellido" name="lastName" [(ngModel)]="profile.lastName" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="number" placeholder="Celular" name="phoneNumber" [(ngModel)]="profile.phoneNumber" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="text" placeholder="Email" name="email" [(ngModel)]="profile.email" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Region" name="region" [(ngModel)]="profile.region" required>
-            <mat-option *ngFor="let region of regions" [value]="region">
-              {{region}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-       <h3>Roles</h3>
-        <mat-selection-list>
-          <mat-list-option *ngFor="let role of roles" [selected]="role.checked" (click)="selectRole(role)">
-            {{role.name}}
-          </mat-list-option>
-        </mat-selection-list>
-
-
-        <div class="footer-buttom">
-          <button type="submit" mat-raised-button color="primary">Actualizar</button>
-        </div>
-      </form>
-    </ng-container>
-  </li> -->
-<!-- </ul> -->
