@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { OffersService } from "./offers.service";
 import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
@@ -180,15 +180,35 @@ export class OffersComponent implements OnInit {
   currentRowSelectData: any = {};
   currentUser: any;
 
+  permissionsView = {
+    crear: null,
+    leer: null,
+    editar: null,
+    eliminar: null,
+  };
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private offersService: OffersService,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private appService: AppService
-  ) { }
+  ) {
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path)
+      .then(res => {
+        this.permissionsView = {
+          crear: res['crear'],
+          leer: res['leer'],
+          editar: res['editar'],
+          eliminar: res['eliminar']
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
+  }
 
   ngOnInit() { }
 
@@ -237,7 +257,7 @@ export class OffersComponent implements OnInit {
             this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
           });
       }, error => {
-
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de usuario actual', error);
       })
   }
 
@@ -276,11 +296,6 @@ export class OffersComponent implements OnInit {
 
   isString(val: any) {
     return (typeof val === 'string');
-  }
-
-  imprimir(row) {
-    debugger
-    console.log(row)
   }
 
 }

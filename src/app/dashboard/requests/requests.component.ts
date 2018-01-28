@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { RequestsService } from "./requests.service";
 import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
@@ -21,12 +21,6 @@ export class RequestsComponent implements OnInit {
     'tas',
     'estacion',
     'subsistema',
-    // 'ordenSuministros',
-    // 'ordenSuministrosCantidad',
-    // 'ordenSuministrosComentario',
-    // 'ordenServicios',
-    // 'ordenServiciosCantidad',
-    // 'ordenServiciosComentario',
     'prioridad',
     'estadoSolicitud'
   ];
@@ -37,15 +31,35 @@ export class RequestsComponent implements OnInit {
   currentRowSelectData: any = {};
   currentUser: any;
 
+  permissionsView = {
+    crear: null,
+    leer: null,
+    editar: null,
+    eliminar: null,
+  };
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private requestsService: RequestsService,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private appService: AppService
-  ) { }
+  ) {
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path)
+      .then(res => {
+        this.permissionsView = {
+          crear: res['crear'],
+          leer: res['leer'],
+          editar: res['editar'],
+          eliminar: res['eliminar']
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
+  }
 
   ngOnInit() { }
 
@@ -118,10 +132,6 @@ export class RequestsComponent implements OnInit {
 
   isArray(obj: any) {
     return Array.isArray(obj);
-  }
-
-  imprimir(row) {
-    debugger
   }
 
 }

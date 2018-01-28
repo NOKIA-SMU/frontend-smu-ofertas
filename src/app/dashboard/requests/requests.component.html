@@ -1,23 +1,11 @@
 <div class="wrapper">
   <nav class="wrapper__nav">
     <!-- CREATE REQUEST BTN -->
-    <i (click)="goToCreate()"
-      class="material-icons"
-      *ngIf="currentUser?.roles?.Administrador || currentUser?.roles?.Supervisor">
-      add_circle_outline
-    </i>
+    <i *ngIf="permissionsView.crear" (click)="goToCreate()" class="material-icons">add_circle_outline</i>
     <!-- UPDATE REQUEST BTN -->
-    <i (click)="goToEdit()"
-      *ngIf="currentRowSelect >= 0 && (currentUser?.roles?.Administrador || currentUser?.roles?.Supervisor)"
-      class="material-icons">
-      mode_edit
-    </i>
+    <i (click)="goToEdit()" *ngIf="permissionsView.editar && currentRowSelect >= 0" class="material-icons">mode_edit</i>
     <!-- DELETE REQUEST BTN -->
-    <i (click)="deleteRequest()"
-      *ngIf="currentRowSelect >= 0 && currentUser?.roles?.Administrador"
-      class="material-icons">
-      delete
-    </i>
+    <i (click)="deleteRequest()" *ngIf="permissionsView.eliminar && currentRowSelect >= 0" class="material-icons">delete</i>
   </nav>
   <h2 class="title">Solicitudes</h2>
   <div class="example-header">
@@ -32,7 +20,6 @@
     </div>
 
     <mat-table [dataSource]="dataSource" matSort>
-
       <!-- ID -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
@@ -63,72 +50,6 @@
         <mat-header-cell *matHeaderCellDef> Subsistema </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.subsistema.nombre}} </mat-cell>
       </ng-container>
-      <!-- SUPPLIES -->
-      <!-- <ng-container matColumnDef="ordenSuministros">
-        <mat-header-cell *matHeaderCellDef> Suministros </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngFor="let subitem of row.ordenSuministros">
-            <div class="array">
-              {{subitem?.suministro?.nombre}}
-            </div>
-          </ng-container>
-        </mat-cell>
-      </ng-container> -->
-      <!-- SUPPLIES QTY -->
-      <!-- <ng-container matColumnDef="ordenSuministrosCantidad">
-        <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngFor="let subitem of row.ordenSuministros">
-            <div class="array">
-              {{subitem?.cantidad}}
-            </div>
-          </ng-container>
-        </mat-cell>
-      </ng-container> -->
-      <!-- SUPPLIES COMMENT -->
-      <!-- <ng-container matColumnDef="ordenSuministrosComentario">
-        <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngFor="let subitem of row.ordenSuministros">
-            <div class="array">
-              {{subitem?.comentario | truncate : 68}}
-            </div>
-          </ng-container>
-        </mat-cell>
-      </ng-container> -->
-      <!-- SERVICES -->
-      <!-- <ng-container matColumnDef="ordenServicios">
-        <mat-header-cell *matHeaderCellDef> Servicios </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngFor="let subitem of row.ordenServicios">
-            <div class="array">
-              {{subitem?.servicio?.nombre}}
-            </div>
-          </ng-container>
-        </mat-cell>
-      </ng-container> -->
-      <!-- SERVICES QTY -->
-      <!-- <ng-container matColumnDef="ordenServiciosCantidad">
-        <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngFor="let subitem of row.ordenServicios">
-            <div class="array">
-              {{subitem?.cantidad}}
-            </div>
-          </ng-container>
-        </mat-cell>
-      </ng-container> -->
-      <!-- SERVICES COMMENT -->
-      <!-- <ng-container matColumnDef="ordenServiciosComentario">
-        <mat-header-cell *matHeaderCellDef> Comentario </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngFor="let subitem of row.ordenServicios">
-            <div class="array">
-              {{subitem?.comentario | truncate : 68}}
-            </div>
-          </ng-container>
-        </mat-cell>
-      </ng-container> -->
       <!-- PRIORITY -->
       <ng-container matColumnDef="prioridad">
         <mat-header-cell *matHeaderCellDef> Prioridad </mat-header-cell>

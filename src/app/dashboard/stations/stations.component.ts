@@ -32,7 +32,12 @@ export class StationsComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
-  permissionsView: {} = {};
+  permissionsView = {
+    crear: null,
+    leer: null,
+    editar: null,
+    eliminar: null,
+  };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

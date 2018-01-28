@@ -17,7 +17,7 @@ export class AppService {
   rolesGeneral: Role[];
   userPermissions: Permission[] = [];
   rolesUserParsed: any[] = [];
-  permissionsView: {} = {};
+  permissionsView = {};
 
   constructor(
     private router: Router,
