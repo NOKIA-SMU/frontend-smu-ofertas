@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ServicesService } from './services.service';
-import { AuthService } from '../../auth/auth.service';
 import { AppService } from '../../app.service';
 
 @Component({
@@ -34,15 +33,29 @@ export class ServicesComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
+  permissionsView: {} = {};
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private servicesService: ServicesService,
-    private authService: AuthService,
     private appService: AppService
-  ) { }
+  ) {
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path)
+      .then(res => {
+        this.permissionsView = {
+          crear: res['crear'],
+          leer: res['leer'],
+          editar: res['editar'],
+          eliminar: res['eliminar']
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
+  }
 
   ngOnInit() { }
 

@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SuppliesService } from "./supplies.service";
-import { AuthService } from "../../auth/auth.service";
 import { AppService } from "../../app.service";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-supplies',
   templateUrl: './supplies.component.html',
   styleUrls: ['../dashboard.component.scss', './supplies.component.scss']
@@ -34,6 +34,8 @@ export class SuppliesComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
+  permissionsView: {} = {};
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -41,9 +43,20 @@ export class SuppliesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private suppliesService: SuppliesService,
-    private authService: AuthService,
     private appService: AppService
-  ) { }
+  ) {
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path)
+      .then(res => {
+        this.permissionsView = {
+          crear: res['crear'],
+          leer: res['leer'],
+          editar: res['editar'],
+          eliminar: res['eliminar']
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
+  }
 
   ngOnInit() { }
 
