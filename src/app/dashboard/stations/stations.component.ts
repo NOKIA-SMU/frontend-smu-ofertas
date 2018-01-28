@@ -2,9 +2,6 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StationsService } from "./stations.service";
-import { Profile, Role, Permission } from '../../models/auth.models';
-import { AuthService } from '../../auth/auth.service';
-import { AdminService } from '../../admin/admin.service';
 import { AppService } from "../../app.service";
 
 @Component({
@@ -35,11 +32,6 @@ export class StationsComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
 
-  currentUser: Profile;
-  currentRoles: Role[];
-  rolesGeneral: Role[];
-  userPermissions: Permission[] = [];
-  rolesUserParsed: any[] = [];
   permissionsView = {
     crear: false,
     leer: false,
@@ -54,11 +46,19 @@ export class StationsComponent implements OnInit {
     private stationsService: StationsService,
     private router: Router,
     private route: ActivatedRoute,
-    private adminService: AdminService,
-    private authService: AuthService,
     private appService: AppService
   ) {
-    this.validateSecurity()
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path, this.permissionsView)
+      .then(res => {
+        this.permissionsView = {
+          crear: res['crear'],
+          leer: res['leer'],
+          editar: res['editar'],
+          eliminar: res['eliminar']
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
   }
 
   ngOnInit() { }
@@ -102,43 +102,6 @@ export class StationsComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar estación', error);
       })
-  }
-
-  validateSecurity() {
-    this.adminService.getRoles().subscribe(roles => {
-      this.rolesGeneral = roles;
-      this.authService.currentUser()
-        .subscribe(res => {
-          this.currentUser = res;
-          // Get all roles parsed (id - name)
-          for (let i = 0; i < this.rolesGeneral.length; i++) {
-            if (res.roles[this.rolesGeneral[i].name]) {
-              this.rolesUserParsed.push({ name: this.rolesGeneral[i].name, id: this.rolesGeneral[i].id })
-            }
-          }
-          // Get permissions by role
-          for (let i = 0; i < this.rolesUserParsed.length; i++) {
-            this.adminService.getRolePermissions(this.rolesUserParsed[i]).subscribe(res => {
-              res.map(res => {
-                for (let k = 0; k < res.list.length; k++) {
-                  this.userPermissions.push(res.list[k]);
-                }
-                for (let m = 0; m < this.userPermissions.length; m++) {
-                  if (this.route.snapshot.routeConfig.path === this.userPermissions[m].model) {
-                    this.permissionsView[this.userPermissions[m].name] = true;
-                  }
-                }
-              })
-            }, error => {
-              this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol', error);
-            })
-          }
-        }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta usuario actual', error);
-        })
-      }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta roles general', error);
-    });
   }
 
 }

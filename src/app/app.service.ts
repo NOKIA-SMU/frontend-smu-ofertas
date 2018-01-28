@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Role, Profile, Permission } from './models/auth.models';
 import { AuthService } from './auth/auth.service';
-import { Profile } from './models/auth.models';
+import { AdminService } from './admin/admin.service';
 
 
 declare var $: any;
@@ -13,7 +14,15 @@ export class AppService {
   toAction: any;
   currentUser: Profile;
 
-  constructor(private router: Router, private authService: AuthService) {
+  rolesGeneral: Role[];
+  userPermissions: Permission[] = [];
+  rolesUserParsed: any[] = [];
+
+  constructor(
+    private router: Router,
+    private adminService: AdminService,
+    private authService: AuthService
+  ) {
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res
@@ -109,6 +118,50 @@ export class AppService {
         });
       }).catch(swal.noop);
     }
+  }
+
+  public validateSecurity(queryPath, permissionsView: {}) {
+    var promise = new Promise((resolve, reject) => {
+      this.adminService.getRoles().subscribe(roles => {
+        this.rolesGeneral = roles;
+
+        this.authService.currentUser()
+          .subscribe(res => {
+            this.currentUser = res
+            // Get all roles parsed (id - name)
+            for (let i = 0; i < this.rolesGeneral.length; i++) {
+              if (this.currentUser.roles[this.rolesGeneral[i].name]) {
+                this.rolesUserParsed.push({ name: this.rolesGeneral[i].name, id: this.rolesGeneral[i].id })
+              }
+            }
+            // Get permissions by role
+            for (let i = 0; i < this.rolesUserParsed.length; i++) {
+              this.adminService.getRolePermissions(this.rolesUserParsed[i])
+                .subscribe(res => {
+                  res.map(res => {
+                    for (let k = 0; k < res.list.length; k++) {
+                      this.userPermissions.push(res.list[k]);
+                    }
+                    for (let m = 0; m < this.userPermissions.length; m++) {
+                      if (queryPath === this.userPermissions[m].model) {
+                        permissionsView[this.userPermissions[m].name] = true;
+                      }
+                    }
+                    // return permissionsView;
+                    resolve(permissionsView);
+                  })
+                }, error => {
+                  this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol', error);
+                })
+            }
+          }, error => {
+            this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta usuario actual', error);
+          })
+      }, error => {
+        this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta roles general', error);
+      });
+    });
+    return promise;
   }
 
 }
