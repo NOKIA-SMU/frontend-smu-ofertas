@@ -4,6 +4,10 @@ import { Role, Profile, Permission } from './models/auth.models';
 import { AuthService } from './auth/auth.service';
 import { AdminService } from './admin/admin.service';
 
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 declare var $: any;
 declare var swal: any;
@@ -166,5 +170,20 @@ export class AppService {
         this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta roles general', error);
       });
     });
+  }
+
+  public exportAsExcelFile(json: any[], excelFileName: string): void {
+    debugger
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 }

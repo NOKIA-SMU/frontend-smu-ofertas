@@ -16,6 +16,11 @@ export class ProfileOperateComponent implements OnInit {
   isNew: boolean;
   profile: Profile;
   roles: Role[];
+  regions = [
+    'NOROCCIDENTE',
+    'SUROCCIDENTE',
+    'COSTA'
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -78,7 +83,6 @@ export class ProfileOperateComponent implements OnInit {
     profile.roles = actualRoles;
     this.adminService.updateProfile(profile)
       .then(res => {
-        // debugger
         this.router.navigate(['/perfiles']);
       }, error => {
         debugger

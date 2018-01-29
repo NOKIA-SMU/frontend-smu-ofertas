@@ -6,13 +6,13 @@
     <i (click)="goToEdit()" *ngIf="permissionsView.editar && currentRowSelect >= 0" class="material-icons">mode_edit</i>
     <!-- DELETE REQUEST BTN -->
     <i (click)="deleteRequest()" *ngIf="permissionsView.eliminar && currentRowSelect >= 0" class="material-icons">delete</i>
+    <!-- EXPORT BTN -->
+    <i (click)="export()" class="material-icons">file_download</i>
   </nav>
   <h2 class="title">Solicitudes</h2>
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
 
   <div class="tableContainer mat-elevation-z3 requests">
     <div class="example-loading-shade" *ngIf="isLoadingResults">

@@ -30,6 +30,7 @@ export class RequestsComponent implements OnInit {
   currentRowSelect: any;
   currentRowSelectData: any = {};
   currentUser: any;
+  requests: any;
 
   permissionsView = {
     crear: null,
@@ -69,6 +70,7 @@ export class RequestsComponent implements OnInit {
         this.currentUser = res;
         this.requestsService.getRequests()
           .subscribe(res => {
+            this.requests = res.data.solicitudes;
             // Filter requests by rol
             let filteredRequests = [];
             if (this.currentUser.roles.Administrador) {
@@ -128,6 +130,10 @@ export class RequestsComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar solicitud', error);
       })
+  }
+
+  export() {
+    this.router.navigate(['dashboard/exportar']);
   }
 
   isArray(obj: any) {

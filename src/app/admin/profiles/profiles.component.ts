@@ -40,11 +40,6 @@ export class ProfilesComponent implements OnInit {
   showMoreProfile: boolean = false;
   roleSelected: any[] = [];
   showPerfilRoles: any[] = [];
-  regions = [
-    'NOROCCIDENTE',
-    'SUROCCIDENTE',
-    'COSTA'
-  ]
 
   constructor(
     private adminService: AdminService,

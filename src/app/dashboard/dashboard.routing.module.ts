@@ -21,6 +21,8 @@ import { OfferOperateComponent } from './offers/offer-operate.component';
 import { ServicesComponent } from './services/services.component';
 import { ServiceOperateComponent } from './services/service-operate.component';
 
+import { ExportComponent } from './export/export.component';
+
 const dashboardRoutes: Routes = [
 	{
 		path: '',
@@ -41,6 +43,7 @@ const dashboardRoutes: Routes = [
 					{ path: 'servicios/:id', component: ServiceOperateComponent },
 					{ path: 'ofertas', component: OffersComponent },
 					{ path: 'ofertas/:id', component: OfferOperateComponent },
+					{ path: 'exportar', component: ExportComponent }
 				]
 			}
 		]

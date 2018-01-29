@@ -1,0 +1,13 @@
+<div class="wrapper">
+
+  <h2 class="title">Exportar solicitudes</h2>
+  <br>
+  <mat-selection-list #exportRequest>
+    <mat-list-option *ngFor="let item of columnsRequest" [selected]="item.checked" (click)="selectColRequest(item)">
+      {{item.name}}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <button mat-raised-button color="primary" (click)="exportRequests()">Exportar</button>
+
+</div>

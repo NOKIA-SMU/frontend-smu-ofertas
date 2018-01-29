@@ -34,7 +34,7 @@ import { OffersService } from './offers/offers.service';
 
 import { TruncateModule } from 'ng2-truncate';
 import { Pipe, PipeTransform } from '@angular/core';
-
+import { ExportComponent } from './export/export.component';
 
 @Pipe({ name: 'replaceLineBreaks' })
 export class ReplaceLineBreaks implements PipeTransform {
@@ -143,7 +143,8 @@ export class Dictionary implements PipeTransform {
     OffersComponent,
     ReplaceLineBreaks,
     Dictionary,
-    OfferOperateComponent],
+    OfferOperateComponent,
+    ExportComponent],
   providers: [
     DashboardService,
     StationsService,

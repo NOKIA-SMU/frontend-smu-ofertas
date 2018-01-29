@@ -1,0 +1,17 @@
+mat-selection-list {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	border-radius: 8px;
+	border: 1px solid #cec8c8;
+	margin-bottom: 18px;
+	mat-list-option {
+		width: 33.3%;
+	}
+}
+
+h2.title {
+	color: #124191;
+	margin-top: 0;
+	width: 100%;
+}
