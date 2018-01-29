@@ -97,9 +97,9 @@ export class RequestsComponent implements OnInit {
             this.isLoadingResults = false;
             this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);
           });
-      }, error => {
-        debugger
-      })
+        }, error => {
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de usuario actual', error);
+        })
 
   }
 
@@ -133,7 +133,8 @@ export class RequestsComponent implements OnInit {
   }
 
   export() {
-    this.router.navigate(['dashboard/exportar']);
+    localStorage.setItem('currentExport', 'requests');
+    this.router.navigate(['dashboard/exportar'], { queryParams: this.currentUser.roles, skipLocationChange: true });
   }
 
   isArray(obj: any) {
