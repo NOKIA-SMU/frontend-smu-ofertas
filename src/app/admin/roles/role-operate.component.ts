@@ -21,6 +21,84 @@ export class RoleOperateComponent implements OnInit {
 
   role: Role;
 
+  colOffers = [
+    'id',
+    'solicitudId',
+    'solicitudSupervisor',
+    'solicitudAnalista',
+    'solicitudEstacionNombre',
+    'solicitudEstacionRegion',
+    'solicitudEstacionDepartamento',
+    'solicitudEstacionCiudad',
+    'suministroServicioId',
+    'suministroServicioNombre',
+    'suministroServicioDescripcion',
+    'suministroServicioCodigoLpu',
+    'suministroServicioDescripcionLpu',
+    'suministroServicioValorLpu',
+    'suministroServicioUnidad',
+    'suministroServicioQty',
+    'suministroServicioComentario',
+    'tipoSitio',
+    'tipoAcceso',
+    'naturalezaServicio',
+    'descripcionOds',
+    'fechaRecibidoOds',
+    'semanaRecibidoOds',
+    'tipoOferta',
+    'workOrder',
+    'descripcionTarea',
+    'encargadoCliente',
+    'fechaEjecucion',
+    'confirmacionRecibido',
+    'comentarioSupervisor',
+    'numeroOferta',
+    'modalidad',
+    'precioUnidadProveedor',
+    'precioTotalProveedor',
+    'precioUnidadVenta',
+    'precioTotalVenta',
+    'precioUnidadCliente',
+    'precioTotalCliente',
+    'margen',
+    'tipoAdquisicion',
+    'proveedor',
+    'tasOfertaAnterior',
+    'fechaDespachoSupervisor',
+    'semanaDespachoSupervisor',
+    'fechaDespachoCompras',
+    'semanaDespachoCompras',
+    'fechaRespuestaCompras',
+    'semanaRespuestaCompras',
+    'fechaEnvioOfertaCliente',
+    'semanaEnvioOfertaCliente',
+    'fechaEnvioOfertaClienteNegociada',
+    'semanaEnvioOfertaClienteNegociada',
+    'fechaRespuestaCliente',
+    'semanaRespuestaCliente',
+    'fechaRespuestaClienteNegociada',
+    'semanaRespuestaClienteNegociada',
+    'tipoRespuestaCliente',
+    'tipoRespuestaClienteNegociada',
+    'po',
+    'fechaPo',
+    'valorPo',
+    'comentarioAnalista',
+    'subestadoOferta',
+    'estadoOferta',
+    'fechaEntregaAlmacen',
+    'comentarioAlmacenista',
+    'comentarioCoordinador',
+    'tipoElemento',
+    'valorConciliadoCliente',
+    'fechaConciliadoCliente',
+    'comentarioFacturador',
+    'fechaEnvioActaSmu',
+    'comentarioActa',
+    'fechaFirmaActaSmu',
+    'fechaGrSmu',
+  ];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -88,7 +166,6 @@ export class RoleOperateComponent implements OnInit {
               permissions.push(this.permissions[i])
             }
           }
-          debugger
           this.adminService.assignPermissionToRole(res.id, permissions)
             .then(res => {
               this.router.navigate(['/admin/roles']);
@@ -117,6 +194,11 @@ export class RoleOperateComponent implements OnInit {
             this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Actualizar nombre role', error);
           });
     }
+  }
+
+  // Permissions filed offers
+  selectOfferField(field) {
+    debugger
   }
 
 }
