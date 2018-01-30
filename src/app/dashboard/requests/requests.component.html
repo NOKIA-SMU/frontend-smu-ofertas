@@ -7,7 +7,7 @@
     <!-- DELETE REQUEST BTN -->
     <i (click)="deleteRequest()" *ngIf="permissionsView.eliminar && currentRowSelect >= 0" class="material-icons">delete</i>
     <!-- EXPORT BTN -->
-    <i (click)="export()" class="material-icons">file_download</i>
+    <i *ngIf="permissionsView.exportar" (click)="export()" class="material-icons">file_download</i>
   </nav>
   <h2 class="title">Solicitudes</h2>
   <mat-form-field>

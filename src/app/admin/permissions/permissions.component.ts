@@ -17,7 +17,7 @@ export class PermissionsComponent implements OnInit {
   listPermissions: Permission[];
   isShowFormUpdatePermission: boolean = false;
   permissionToEdit: Permission;
-  crud: string[] = ['crear', 'leer', 'editar', 'eliminar'];
+  crud: string[] = ['crear', 'leer', 'editar', 'eliminar', 'exportar'];
   selectedTab = 0;
 
   constructor(

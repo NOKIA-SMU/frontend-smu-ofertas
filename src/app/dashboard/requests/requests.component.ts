@@ -37,6 +37,7 @@ export class RequestsComponent implements OnInit {
     leer: null,
     editar: null,
     eliminar: null,
+    exportar: null,
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -55,7 +56,8 @@ export class RequestsComponent implements OnInit {
           crear: res['crear'],
           leer: res['leer'],
           editar: res['editar'],
-          eliminar: res['eliminar']
+          eliminar: res['eliminar'],
+          exportar: res['exportar']
         }
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
