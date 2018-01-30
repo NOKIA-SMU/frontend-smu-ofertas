@@ -32,12 +32,12 @@ export class ExportComponent implements OnInit {
   columnsOffer = [
     {name: 'id', checked: false},
     {name: 'solicitudId', checked: false},
-    {name: 'solicitudSupervisor', checked: false},
-    {name: 'solicitudAnalista', checked: false},
-    {name: 'solicitudEstacionNombre', checked: false},
-    {name: 'solicitudEstacionRegion', checked: false},
-    {name: 'solicitudEstacionDepartamento', checked: false},
-    {name: 'solicitudEstacionCiudad', checked: false},
+    {name: 'supervisor', checked: false},
+    {name: 'analista', checked: false},
+    {name: 'estacionNombre', checked: false},
+    {name: 'estacionRegion', checked: false},
+    {name: 'estacionDepartamento', checked: false},
+    {name: 'estacionCiudad', checked: false},
     {name: 'suministroServicioId', checked: false},
     {name: 'suministroServicioNombre', checked: false},
     {name: 'suministroServicioDescripcion', checked: false},
@@ -116,6 +116,7 @@ export class ExportComponent implements OnInit {
   ) {
     this.currentUser = this.route.snapshot.queryParams;
     this.modelToExport = localStorage.getItem('currentExport');
+    // Requests logic
     if (this.modelToExport === 'requests') {
       this.requestsService.getRequests()
         .subscribe(res => {
@@ -141,7 +142,9 @@ export class ExportComponent implements OnInit {
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);
         });
-    } else if (this.modelToExport === 'offers') {
+    }
+    // Offer logic
+    else if (this.modelToExport === 'offers') {
       this.offersService.getOffers()
         .subscribe(res => {
           // Filter offers by rol
@@ -190,7 +193,7 @@ export class ExportComponent implements OnInit {
   fieldsModeltSelected: any[] = [];
   dataBuildModel: any = [];
 
-  exportRequests() {
+  requestsExport() {
     this.dataBuildModel = [];
     // Extract columns selected for request
     for (let i = 0; i < this.columnsRequest.length; i++) {
@@ -212,7 +215,7 @@ export class ExportComponent implements OnInit {
     this.appService.exportAsExcelFile(this.dataBuildModel, 'solicitudes');
   }
 
-  exportOffers() {
+  offersExport() {
     this.dataBuildModel = [];
     // Extract columns selected for offers
     for (let i = 0; i < this.columnsOffer.length; i++) {
@@ -224,14 +227,46 @@ export class ExportComponent implements OnInit {
     for (let j = 0; j < this.offers.length; j++) {
       let tempData = {};
       for (let k = 0; k < this.fieldsModeltSelected.length; k++) {
-        if (this.fieldsModeltSelected[k] === 'estacion' || this.fieldsModeltSelected[k] === 'subsistema')
-          tempData[this.fieldsModeltSelected[k]] = this.offers[j][this.fieldsModeltSelected[k]].nombre;
+        if (this.fieldsModeltSelected[k] === 'solicitudId')
+          tempData[this.fieldsModeltSelected[k]] = this.offers[j].idSolicitud;
+        else if (this.fieldsModeltSelected[k] === 'supervisor')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.supervisor : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.supervisor;
+        else if (this.fieldsModeltSelected[k] === 'analista')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.analista : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.analista;
+        else if (this.fieldsModeltSelected[k] === 'estacionNombre')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.nombre : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.nombre;
+        else if (this.fieldsModeltSelected[k] === 'estacionRegion')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.region : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.region;
+        else if (this.fieldsModeltSelected[k] === 'estacionDepartamento')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.departamento : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.departamento;
+        else if (this.fieldsModeltSelected[k] === 'estacionCiudad')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.ciudad : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.ciudad;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioId')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.id : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.id;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioNombre')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.nombre : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.nombre;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioDescripcion')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.descripcion : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.descripcion;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioCodigoLpu')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.codigoLpu : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.codigoLpu;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioDescripcionLpu')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.descripcionLpu : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.descripcionLpu;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioValorLpu')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.valorLpu : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.valorLpu;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioUnidad')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.unidad : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.unidad;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioQty')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.cantidad : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.cantidad;
+        else if (this.fieldsModeltSelected[k] === 'suministroServicioComentario')
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.comentario : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.comentario;
         else
           tempData[this.fieldsModeltSelected[k]] = this.offers[j][this.fieldsModeltSelected[k]];
       }
       this.dataBuildModel.push(tempData);
     }
-    this.appService.exportAsExcelFile(this.dataBuildModel, 'solicitudes');
+    this.appService.exportAsExcelFile(this.dataBuildModel, 'ofertas');
   }
 
 }
+
+// { name: 'suministroServicioComentario', checked: false },

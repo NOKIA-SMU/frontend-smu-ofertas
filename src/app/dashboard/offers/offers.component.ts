@@ -185,6 +185,7 @@ export class OffersComponent implements OnInit {
     leer: null,
     editar: null,
     eliminar: null,
+    exportar: null
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -203,7 +204,8 @@ export class OffersComponent implements OnInit {
           crear: res['crear'],
           leer: res['leer'],
           editar: res['editar'],
-          eliminar: res['eliminar']
+          eliminar: res['eliminar'],
+          exportar: res['exportar']
         }
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
@@ -284,6 +286,11 @@ export class OffersComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar oferta', error);
       })
+  }
+
+  export() {
+    localStorage.setItem('currentExport', 'offers');
+    this.router.navigate(['dashboard/exportar'], { queryParams: this.currentUser.roles, skipLocationChange: true });
   }
 
   isArray(obj: any) {

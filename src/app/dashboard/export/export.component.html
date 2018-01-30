@@ -9,23 +9,23 @@
     </mat-selection-list>
 
     <div class="footer-buttom">
-      <button mat-raised-button color="primary" (click)="exportRequests()">Exportar</button>
+      <button mat-raised-button color="primary" (click)="requestsExport()">Exportar</button>
       <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
     </div>
   </ng-container>
+
   <ng-container *ngIf="modelToExport === 'offers'">
     <h2 class="title">Exportar ofertas</h2>
     <br>
     <mat-selection-list #exportOffers>
-      <mat-list-option *ngFor="let item of columnsOffers" [selected]="item.checked" (click)="selectColRow(item)">
+      <mat-list-option *ngFor="let item of columnsOffer" [selected]="item.checked" (click)="selectColRow(item)">
         {{item.name}}
       </mat-list-option>
     </mat-selection-list>
 
     <div class="footer-buttom">
-      <button mat-raised-button color="primary" (click)="exportOfferss()">Exportar</button>
+      <button mat-raised-button color="primary" (click)="offersExport()">Exportar</button>
       <button mat-raised-button color="danger" routerLink="/ofertas">Cancelar</button>
     </div>
   </ng-container>
-
 </div>

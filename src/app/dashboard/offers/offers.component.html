@@ -1,7 +1,11 @@
 <div class="wrapper">
 	<nav class="wrapper__nav">
+		<!-- UPDATE OFFER -->
 		<i *ngIf="permissionsView.editar && currentRowSelect >= 0" (click)="goToEdit()" class="material-icons">mode_edit</i>
+		<!-- DELETE OFFER -->
 		<i *ngIf="permissionsView.eliminar && currentRowSelect >= 0" (click)="deleteOffer()" class="material-icons">delete</i>
+		<!-- EXPORT BTN -->
+		<i *ngIf="permissionsView.exportar" (click)="export()" class="material-icons">file_download</i>
 	</nav>
 	<h2 class="title">Ofertas</h2>
 	<mat-form-field>
