@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Profile, Role, Permission } from '../../models/auth.models';
+import { Profile, Role } from '../../models/auth.models';
 import { AdminService } from '../admin.service';
 import { AppService } from "../../app.service";
 
@@ -62,13 +62,10 @@ export class ProfileOperateComponent implements OnInit {
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de roles', error);
       });
-    } else {
-
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   selectRole(role: Role) {
     role.checked = !role.checked;
@@ -85,7 +82,7 @@ export class ProfileOperateComponent implements OnInit {
       .then(res => {
         this.router.navigate(['/perfiles']);
       }, error => {
-        debugger
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualizar perfil', error);
       })
   }
 

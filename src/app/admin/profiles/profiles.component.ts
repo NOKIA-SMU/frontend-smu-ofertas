@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { Profile } from '../../models/auth.models';
 import { AdminService } from '../admin.service';
-import { Profile, Role, Permission } from '../../models/auth.models';
-import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
 
 @Component({
@@ -15,6 +14,7 @@ import { AppService } from "../../app.service";
 
 export class ProfilesComponent implements OnInit {
 
+  // Config profiles table
   profileColumns = [
     'nombre',
     'apellido',
@@ -24,28 +24,18 @@ export class ProfilesComponent implements OnInit {
     'email',
     'id'
   ];
-
   dataSourceProfiles = new MatTableDataSource();
   isLoadingProfiles = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   profiles: Profile[];
-  editState: boolean = false;
-  profileToEdit: Profile;
-  profileToAssignRole: Profile;
-  showMoreProfile: boolean = false;
-  roleSelected: any[] = [];
-  showPerfilRoles: any[] = [];
 
   constructor(
     private adminService: AdminService,
     private router: Router,
-    private route: ActivatedRoute,
-    private authService: AuthService,
     private appService: AppService
   ) { }
 
