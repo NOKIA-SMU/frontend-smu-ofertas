@@ -17,6 +17,7 @@ export class ExportComponent implements OnInit {
   offers: any;
   modelToExport: string;
   currentUser: any;
+  isSelectAll: boolean = false;
 
   columnsRequest = [
     {name: 'id', checked: false},
@@ -185,6 +186,33 @@ export class ExportComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  selectAll() {
+    this.isSelectAll = !this.isSelectAll;
+    if (this.isSelectAll) {
+      if (this.modelToExport === 'requests') {
+        for (let i = 0; i < this.columnsRequest.length; i++) {
+          this.columnsRequest[i].checked = true;
+        }
+      }
+      else if (this.modelToExport === 'offers') {
+        for (let i = 0; i < this.columnsOffer.length; i++) {
+          this.columnsOffer[i].checked = true;
+        }
+      }
+    } else {
+      if (this.modelToExport === 'requests') {
+        for (let i = 0; i < this.columnsRequest.length; i++) {
+          this.columnsRequest[i].checked = false;
+        }
+      }
+      else if (this.modelToExport === 'offers') {
+        for (let i = 0; i < this.columnsOffer.length; i++) {
+          this.columnsOffer[i].checked = false;
+        }
+      }
+    }
+  }
 
   selectColRow(item) {
     item.checked = !item.checked;

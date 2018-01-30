@@ -2,6 +2,11 @@
   <ng-container *ngIf="modelToExport === 'requests'">
     <h2 class="title">Exportar solicitudes</h2>
     <br>
+    <mat-selection-list class="off">
+      <mat-list-option (click)="selectAll()">
+        Seleccionar todo
+      </mat-list-option>
+    </mat-selection-list>
     <mat-selection-list #exportRequest>
       <mat-list-option *ngFor="let item of columnsRequest" [selected]="item.checked" (click)="selectColRow(item)">
         {{item.name}}
@@ -17,6 +22,11 @@
   <ng-container *ngIf="modelToExport === 'offers'">
     <h2 class="title">Exportar ofertas</h2>
     <br>
+    <mat-selection-list class="off">
+      <mat-list-option (click)="selectAll()">
+        Seleccionar todo
+      </mat-list-option>
+    </mat-selection-list>
     <mat-selection-list #exportOffers>
       <mat-list-option *ngFor="let item of columnsOffer" [selected]="item.checked" (click)="selectColRow(item)">
         {{item.name}}

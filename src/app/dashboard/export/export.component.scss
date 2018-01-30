@@ -8,6 +8,12 @@ mat-selection-list {
 	mat-list-option {
 		width: 33.3%;
 	}
+	&.off {
+		border: 0;
+		mat-list-option {
+			width: 50%;
+		}
+	}
 }
 
 h2.title {
