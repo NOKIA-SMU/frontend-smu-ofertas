@@ -1,64 +1,35 @@
-<h2 class="title">Roles</h2>
-<mat-tab-group>
-  <mat-tab label="Roles">
-    <ul class="listItems">
-      <div class="example-loading-shade" *ngIf="loadingRoles">
-        <mat-spinner></mat-spinner>
-      </div>
-      <li *ngFor="let role of roles" class="listItems__item">
-        <div class="data">
-          {{role.name}}
-        </div>
-        <div class="actions">
-          <a (click)="showEditRole($event, role)" class="material-icons blue">mode_edit</a>
-          <a (click)="showEditPermissionsToRole($event, role)" class="material-icons green">assignment</a>
-          <a (click)="deleteRole(role)" class="material-icons red">delete</a>
-        </div>
-        <ng-container *ngIf="isShowEditRole && rolToEdit.id == role.id">
-          <form #createRoleForm="ngForm" (ngSubmit)="updateRole(role)">
-            <mat-form-field>
-              <input matInput type="text" placeholder="Nombre" name="nameRole" [(ngModel)]="role.name" required>
-            </mat-form-field>
+<div class="wrapper">
+  <nav class="wrapper__nav">
+    <i (click)="goToCreate()" class="material-icons">add_circle_outline</i>
+    <i *ngIf="currentRowSelect >= 0" (click)="goToEdit()" class="material-icons">mode_edit</i>
+    <i *ngIf="currentRowSelect >= 0" (click)="deleteRole()" class="material-icons">delete</i>
+  </nav>
+  <h2 class="title">Roles</h2>
+  <mat-form-field style="width: 100%">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  <div class="tableContainer mat-elevation-z3 roles">
+    <div class="example-loading-shade" *ngIf="isLoadingRoles">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-table [dataSource]="dataSourceRoles" matSort>
+      <!-- ID -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
+      <!-- NAME -->
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
 
-            <div class="footer-buttom">
-              <button mat-raised-button type="submit" color="primary">Actualizar role</button>
-            </div>
-          </form>
-        </ng-container>
-        <ng-container *ngIf="isShowEditPermissionsToRole && rolToEditPermissions.id == role.id">
-          <form #createRoleForm="ngForm" (ngSubmit)="updatePermissionsToRole(role)">
-            <mat-selection-list>
-              <mat-list-option *ngFor="let permission of permissions" [selected]="permission.checked" (click)="selectPermission(permission)">
-                {{permission.name}} - {{permission.model}}
-              </mat-list-option>
-            </mat-selection-list>
-            <div class="footer-buttom">
-              <button mat-raised-button type="submit" color="primary">Actualizar role</button>
-            </div>
-          </form>
-        </ng-container>
-      </li>
-    </ul>
-  </mat-tab>
-  <mat-tab label="Crear Roles">
-    <br>
-    <form #createRoleForm="ngForm" (ngSubmit)="createRole(permissionsSelected)">
-      <mat-form-field>
-        <input matInput type="text" placeholder="Nombre" name="nameRole" [(ngModel)]="role.name" required>
-      </mat-form-field>
-      <br>
-      <mat-form-field>
-        <mat-select placeholder="Permiso" [(ngModel)]="permissionsSelected" name="permission" multiple>
-          <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission.name}} - {{permission.model}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="footer-buttom">
-        <button mat-raised-button type="submit" color="primary">Crear role</button>
-      </div>
-    </form>
-  </mat-tab>
-</mat-tab-group>
-
+      <mat-header-row *matHeaderRowDef="roleColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: roleColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 15, 50]"></mat-paginator>
+</div>
 
   <!-- <button class="mat-primary" mat-raised-button (click)="appService.showSwal('auto-close')">Auto close!</button>
   <button class="mat-primary" mat-raised-button (click)="appService.showSwal('custom-html')">sustom html</button>

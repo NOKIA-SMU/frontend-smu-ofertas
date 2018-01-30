@@ -8,10 +8,11 @@ import { MaterialModule } from '../material.module';
 import { AdminRoutingModule } from './admin.routing.module';
 import { AdminComponent } from './admin.component';
 import { RolesComponent } from './roles/roles.component';
+import { RoleOperateComponent } from './roles/role-operate.component';
 import { PermissionsComponent } from './permissions/permissions.component';
-import { AdminService } from './admin.service';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { ProfileOperateComponent } from './profiles/profile-operate.component';
+import { AdminService } from './admin.service';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { ProfileOperateComponent } from './profiles/profile-operate.component';
     AdminRoutingModule,
     MaterialModule
   ],
-  declarations: [AdminComponent, PermissionsComponent, RolesComponent, ProfilesComponent, ProfileOperateComponent],
+  declarations: [AdminComponent, PermissionsComponent, RolesComponent, RoleOperateComponent, ProfilesComponent, ProfileOperateComponent],
   providers: [AdminService]
 })
 

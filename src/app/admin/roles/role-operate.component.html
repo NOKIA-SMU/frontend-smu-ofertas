@@ -1,0 +1,29 @@
+<h2 class="title">Role <span *ngIf="!isNew"> {{data.name}}</span></h2>
+<hr>
+<br>
+<br>
+<ng-container *ngIf="role">
+  <!-- UPDATE ROLE -->
+  <form #createRoleFormr="ngForm" (ngSubmit)="saveRole(role)">
+    <h3>Nombre del role</h3>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Nombre" name="nameRole" [(ngModel)]="role.name" required>
+    </mat-form-field>
+    <h3>Permisos del role</h3>
+    <mat-selection-list>
+      <mat-list-option *ngFor="let permission of permissions" [selected]="permission.checked" (click)="selectPermission(permission)">
+        {{permission.name}} - {{permission.model}}
+      </mat-list-option>
+    </mat-selection-list>
+    <div class="footer-buttom">
+      <button mat-raised-button type="submit" color="primary">Guardar</button>
+      <button mat-raised-button color="danger" routerLink="/admin/roles">Cancelar</button>
+    </div>
+  </form>
+
+  <!-- <mat-form-field>
+    <mat-select placeholder="Permiso" [(ngModel)]="permissionsSelected" name="permission" multiple>
+      <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission.name}} - {{permission.model}}</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+</ng-container>

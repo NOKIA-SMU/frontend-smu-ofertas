@@ -33,6 +33,7 @@ h2.title {
 	color: #124191;
 	margin-top: 0;
 	width: 100%;
+	margin-bottom: 0;
 }
 
 h3 {
@@ -58,6 +59,7 @@ mat-selection-list {
 	border-radius: 8px;
 	border: 1px solid #cec8c8;
 	margin-bottom: 18px;
+	min-height: 346px;
 	mat-list-option {
 		width: 33.3%;
 	}
