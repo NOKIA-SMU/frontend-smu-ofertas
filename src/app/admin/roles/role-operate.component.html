@@ -18,7 +18,7 @@
     <h3>Permisos campos oferta</h3>
     <mat-selection-list>
       <mat-list-option *ngFor="let item of colOffers" [selected]="item.checked" (click)="selectOfferField(field)">
-        {{item}}
+        {{item.name}}
       </mat-list-option>
     </mat-selection-list>
     <div class="footer-buttom">
