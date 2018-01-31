@@ -16,11 +16,19 @@
       </mat-list-option>
     </mat-selection-list>
     <h3>Permisos campos oferta</h3>
-    <mat-selection-list>
+    <!-- <mat-selection-list>
       <mat-list-option *ngFor="let item of colOffers" [selected]="item.checked" (click)="selectOfferField(field)">
         {{item.name}}
       </mat-list-option>
-    </mat-selection-list>
+    </mat-selection-list> -->
+    <mat-form-field *ngFor="let col of colsOffer">
+      <mat-select placeholder="{{col.name}}" multiple>
+        <mat-option *ngFor="let item of col.permissions" [value]="item.checked" name="{{item.name}}" [(ngModel)]="item.checked">
+          {{item.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <div class="footer-buttom">
       <button mat-raised-button type="submit" color="primary">Guardar</button>
       <button mat-raised-button color="danger" routerLink="/admin/roles">Cancelar</button>
