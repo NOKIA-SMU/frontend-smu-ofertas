@@ -61,6 +61,11 @@ export class AdminService {
     return this.rolesCol.doc(roleId).collection('permissions').doc(colPermissionsId).update({ list: permissions })
   }
 
+  public assignColsOfferToRole(roleId, colsOffer: any[]) {
+    debugger
+    return this.rolesCol.doc(roleId).collection('colsOffer').add({ list: colsOffer })
+  }
+
   public createRole(role: Role) {
     return this.rolesCol.add(role)
   }

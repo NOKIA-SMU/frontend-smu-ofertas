@@ -1,4 +1,6 @@
-<h2 class="title">Role <span *ngIf="!isNew"> {{data.name}}</span></h2>
+<h2 class="title">Role
+  <span *ngIf="!isNew"> {{data.name}}</span>
+</h2>
 <hr>
 <br>
 <br>
@@ -21,13 +23,26 @@
         {{item.name}}
       </mat-list-option>
     </mat-selection-list> -->
-    <mat-form-field *ngFor="let col of colsOffer">
-      <mat-select placeholder="{{col.name}}" multiple>
-        <mat-option *ngFor="let item of col.permissions" [value]="item.checked" name="{{item.name}}" [(ngModel)]="item.checked">
+
+    <ng-container *ngFor="let col of colsOffer">
+      <div class="wrapperCols">
+        <div class="wrapperCols__left">
+          {{col.name}}
+        </div>
+        <div class="wrapperCols__right">
+          <mat-checkbox *ngFor="let item of col.permissions" name="{{col.id}}" [(ngModel)]="item.checked">{{item.name }}</mat-checkbox>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <!-- <mat-form-field *ngFor="let col of colsOffer;">
+      <mat-select placeholder="{{col.name}}" multiple selected="{{item.checked}}">
+        <mat-option *ngFor="let item of col.permissions" [value]="col">
           {{item.name }}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <div class="footer-buttom">
       <button mat-raised-button type="submit" color="primary">Guardar</button>

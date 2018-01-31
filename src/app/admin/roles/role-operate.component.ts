@@ -22,81 +22,81 @@ export class RoleOperateComponent implements OnInit {
   role: Role;
 
   colsOffer = [
-    { name: 'id', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'solicitud id', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'supervisor', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'analista', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'estacion', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'region', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'departamento', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'ciudad', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'sid', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'nombre', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'descripcion', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'codigo lpu', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'descripcion lpu', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'valor lpu', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'unidad', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'cantidad', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'comentario', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tipo sitio', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tipo acceso', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'naturaleza servicio', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'descripcion ods', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha recibido ods', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana recibido ods', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tipo oferta', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'work order', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'descripcion tarea', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'encargado cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha ejecucion', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'confirmacion recibido', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'comentario supervisor', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'numero oferta', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'modalidad', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'precio unidad proveedor', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'precio total proveedor', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'precio unidad venta', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'precio total venta', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'precio unidad cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'precio total cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'margen', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tipo adquisicion', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'proveedor', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tas oferta anterior', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha despacho supervisor', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana despacho supervisor', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha despacho compras', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana despacho compras', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha respuesta compras', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana respuesta compras', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha envio oferta cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana envio oferta cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha envio oferta cliente negociada', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana envio oferta cliente negociada', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha respuesta cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana respuesta cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha respuesta cliente negociada', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'semana respuesta cliente negociada', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tipo respuesta cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tipo respuesta cliente negociada', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'po', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha po', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'valor po', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'comentario analista', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'subestado oferta', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'estado oferta', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha entrega almacen', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'comentario almacenista', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'comentario coordinador', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'tipo elemento', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'valor conciliado cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha conciliado cliente', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'comentario facturador', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha envio acta smu', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'comentario acta', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha firma acta smu', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
-    { name: 'fecha gr smu', checked: false, permissions: [{ name: 'leer', checked: false}, { name: 'editar', checked: false}] },
+    { id: '0', name: 'id', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '1', name: 'solicitud id', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '2', name: 'supervisor', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '3', name: 'analista', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '4', name: 'estacion', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '5', name: 'region', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '6', name: 'departamento', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '7', name: 'ciudad', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '8', name: 'sid', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '9', name: 'nombre', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '10', name: 'descripcion', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '11', name: 'codigo lpu', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '12', name: 'descripcion lpu', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '13', name: 'valor lpu', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '14', name: 'unidad', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '15', name: 'cantidad', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '16', name: 'comentario', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '17', name: 'tipo sitio', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '18', name: 'tipo acceso', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '19', name: 'naturaleza servicio', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '20', name: 'descripcion ods', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '21', name: 'fecha recibido ods', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '22', name: 'semana recibido ods', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '23', name: 'tipo oferta', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '24', name: 'work order', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '25', name: 'descripcion tarea', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '26', name: 'encargado cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '27', name: 'fecha ejecucion', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '28', name: 'confirmacion recibido', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '29', name: 'comentario supervisor', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '30', name: 'numero oferta', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '31', name: 'modalidad', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '32', name: 'precio unidad proveedor', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '33', name: 'precio total proveedor', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '34', name: 'precio unidad venta', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '35', name: 'precio total venta', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '36', name: 'precio unidad cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '37', name: 'precio total cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '38', name: 'margen', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '39', name: 'tipo adquisicion', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '40', name: 'proveedor', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '41', name: 'tas oferta anterior', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '42', name: 'fecha despacho supervisor', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '43', name: 'semana despacho supervisor', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '44', name: 'fecha despacho compras', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '45', name: 'semana despacho compras', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '46', name: 'fecha respuesta compras', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '47', name: 'semana respuesta compras', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '48', name: 'fecha envio oferta cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '49', name: 'semana envio oferta cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '50', name: 'fecha envio oferta cliente negociada', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '51', name: 'semana envio oferta cliente negociada', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '52', name: 'fecha respuesta cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '53', name: 'semana respuesta cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '54', name: 'fecha respuesta cliente negociada', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '55', name: 'semana respuesta cliente negociada', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '56', name: 'tipo respuesta cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '57', name: 'tipo respuesta cliente negociada', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '58', name: 'po', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '59', name: 'fecha po', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '60', name: 'valor po', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '61', name: 'comentario analista', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '62', name: 'subestado oferta', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '63', name: 'estado oferta', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '64', name: 'fecha entrega almacen', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '65', name: 'comentario almacenista', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '66', name: 'comentario coordinador', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '67', name: 'tipo elemento', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '68', name: 'valor conciliado cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '69', name: 'fecha conciliado cliente', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '70', name: 'comentario facturador', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '71', name: 'fecha envio acta smu', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '72', name: 'comentario acta', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '73', name: 'fecha firma acta smu', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '74', name: 'fecha gr smu', permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
   ];
 
   constructor(
@@ -144,9 +144,9 @@ export class RoleOperateComponent implements OnInit {
             name: ''
           }
         }
-    }, error => {
-      this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta de todos los permisos');
-    });
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta de todos los permisos');
+      });
   }
 
   ngOnInit() { }
@@ -156,55 +156,60 @@ export class RoleOperateComponent implements OnInit {
   }
 
   saveRole(permissions: Permission[]) {
-    debugger
-    // if (permissions == undefined) permissions = [];
-    // if (this.isNew) {
-    //   this.adminService.createRole(this.role)
-    //     .then(res => {
-    //       let permissions = [];
-    //       for (let i = 0; i < this.permissions.length; i++) {
-    //         if (this.permissions[i].checked) {
-    //           permissions.push(this.permissions[i])
-    //         }
-    //       }
-    //       this.adminService.assignPermissionToRole(res.id, permissions)
-    //         .then(res => {
-    //           this.router.navigate(['/admin/roles']);
-    //         }, error => {
-    //           this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de permisos al role');
-    //         })
-    //     }, error => {
-    //       this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Crear role');
-    //     });
-    // } else {
-    //   this.adminService.updateRole(this.role)
-    //     .then(res => {
-    //       let permissions = [];
-    //       for (let i = 0; i < this.permissions.length; i++) {
-    //         if (this.permissions[i].checked) {
-    //           permissions.push(this.permissions[i])
-    //         }
-    //       }
-    //       this.adminService.updatePermissionsToRole(this.role.id, this.actualColPermissions, permissions)
-    //         .then(res => {
-
-
-    //           this.adminService.updatePermissionsToRole(this.role.id, this.actualColPermissions, permissions)
-    //             .then(res => {
-    //               this.router.navigate(['/admin/roles']);
-
-    //             }, error => {
-    //               this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Actualizar permisos de role', error);
-    //             });
-
-
-    //         }, error => {
-    //           this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Actualizar permisos de role', error);
-    //         });
-    //     }, error => {
-    //       this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Actualizar nombre role', error);
-    //     });
+    // let colsSelected = []
+    // for (let i = 0; i < this.colsOffer.length; i++) {
+    //   for (let j = 0; j < this.colsOffer[i].permissions.length; j++) {
+    //     if (this.colsOffer[i].permissions[j].checked) {
+    //       colsSelected.push(this.colsOffer[i])
+    //     }
+    //   }
     // }
+    if (permissions == undefined) permissions = [];
+    if (this.isNew) {
+      this.adminService.createRole(this.role)
+        .then(res => {
+          let permissions = [];
+          for (let i = 0; i < this.permissions.length; i++) {
+            if (this.permissions[i].checked) {
+              permissions.push(this.permissions[i])
+            }
+          }
+          debugger
+          this.adminService.assignPermissionToRole(res.id, permissions)
+            .then(res => {
+              debugger
+              this.adminService.assignColsOfferToRole(res.id, this.colsOffer)
+                .then(res => {
+                  this.router.navigate(['/admin/roles']);
+                }, error => {
+                  this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de campos al role');
+                })
+            }, error => {
+              this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de permisos al role');
+            })
+        }, error => {
+          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Crear role');
+        });
+    } else {
+      this.adminService.updateRole(this.role)
+        .then(res => {
+          let permissions = [];
+          for (let i = 0; i < this.permissions.length; i++) {
+            if (this.permissions[i].checked) {
+              permissions.push(this.permissions[i])
+            }
+          }
+          debugger
+          this.adminService.updatePermissionsToRole(this.role.id, this.actualColPermissions, permissions)
+            .then(res => {
+
+            }, error => {
+              this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Actualizar permisos de role', error);
+            });
+        }, error => {
+          this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Actualizar nombre role', error);
+        });
+    }
   }
 
   // Permissions filed offers

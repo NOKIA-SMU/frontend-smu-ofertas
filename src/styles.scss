@@ -164,3 +164,18 @@ mat-sidenav {
   align-items: center;
   justify-content: center;
 }
+
+.wrapperCols {
+	&__right {
+		mat-checkbox {
+			.mat-checkbox-layout {
+				flex-direction: column-reverse;
+				justify-content: center;
+				align-items: center;
+				> div {
+					margin: 0;
+				}
+			}
+		}
+	}
+}
