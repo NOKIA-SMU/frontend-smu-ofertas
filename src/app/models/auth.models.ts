@@ -32,3 +32,10 @@ export interface RolePermissions {
 	// checked?: boolean;
 }
 
+
+export interface RoleColsOffer {
+	id: string;
+	list: any[];
+	// checked?: boolean;
+}
+
