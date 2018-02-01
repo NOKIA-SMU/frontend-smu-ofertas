@@ -7,7 +7,7 @@ import {
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { Profile, Role, Permission, RolePermissions } from '../models/auth.models';
+import { Profile, Role, Permission, RolePermissions, RoleColsOffer } from '../models/auth.models';
 
 declare var $: any;
 declare var swal: any;
@@ -17,6 +17,7 @@ export class AdminService {
 
   // Instance create list Roles
   rolesColSub: AngularFirestoreCollection<RolePermissions>;
+  rolesColsOffer: AngularFirestoreCollection<RoleColsOffer>;
   rolesCol: AngularFirestoreCollection<Role>;
   roles: Observable<Role[]>;
   rolesDoc: AngularFirestoreDocument<Role>;
@@ -33,9 +34,21 @@ export class AdminService {
 
   constructor(private afs: AngularFirestore) { }
 
-
+  // Permissions
   public createPermission(permission: Permission) {
     return this.permissionsCol.add(permission)
+  }
+
+  public getPermissions() {
+    this.permissionsCol = this.afs.collection<Permission>('permissions')
+    return this.permissionsCol.snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Permission;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
   }
 
   public updatePermission(permission: Permission) {
@@ -44,6 +57,36 @@ export class AdminService {
 
   public deletePermission(permission: Permission) {
     return this.permissionsCol.doc(permission.id).delete()
+  }
+
+  public getRolePermissions(role: Role) {
+    this.rolesColSub = this.afs.collection('roles').doc(role.id).collection<RolePermissions>('permissions');
+    return this.rolesColSub.snapshotChanges()
+      .map(actions => {
+        return actions
+          .map(res => {
+            const data = res.payload.doc.data() as RolePermissions;
+            const id = res.payload.doc.id;
+            return { id, ...data };
+          });
+      });
+  }
+
+  // Roles
+  public createRole(role: Role) {
+    return this.rolesCol.add(role)
+  }
+
+  public getRoles() {
+    this.rolesCol = this.afs.collection<Role>('roles')
+    return this.rolesCol.snapshotChanges()
+      .map(actions => {
+        return actions.map(res => {
+          const data = res.payload.doc.data() as Role;
+          const id = res.payload.doc.id;
+          return { id, ...data };
+        });
+      });
   }
 
   public deleteRole(role: Role) {
@@ -61,27 +104,28 @@ export class AdminService {
     return this.rolesCol.doc(roleId).collection('permissions').doc(colPermissionsId).update({ list: permissions })
   }
 
-  public assignColsOfferToRole(roleId, colsOffer: any[]) {
-    debugger
-    return this.rolesCol.doc(roleId).collection('colsOffer').add({ list: colsOffer })
+  public assignColsOfferToRole(roleId, colsOfferSelected: any[]) {
+    return this.rolesCol.doc(roleId).collection('colsOffer').add({ list: colsOfferSelected })
   }
 
-  public createRole(role: Role) {
-    return this.rolesCol.add(role)
+  public updateColsOfferToRole(roleId, colOffersId: string, colsOfferSelected: any[]) {
+    return this.rolesCol.doc(roleId).collection('colsOffer').doc(colOffersId).update({ list: colsOfferSelected })
   }
 
-  public getPermissions() {
-    this.permissionsCol = this.afs.collection<Permission>('permissions')
-    return this.permissionsCol.snapshotChanges()
+  public getColsOfferRole(role: Role) {
+    this.rolesColsOffer = this.afs.collection('roles').doc(role.id).collection<RoleColsOffer>('colsOffer');
+    return this.rolesColsOffer.snapshotChanges()
       .map(actions => {
-        return actions.map(res => {
-          const data = res.payload.doc.data() as Permission;
-          const id = res.payload.doc.id;
-          return { id, ...data };
-        });
+        return actions
+          .map(res => {
+            const data = res.payload.doc.data() as RoleColsOffer;
+            const id = res.payload.doc.id;
+            return { id, ...data };
+          });
       });
   }
 
+  // Profiles
   public getProfiles() {
     this.profilesCol = this.afs.collection<Profile>('profiles');
     return this.profilesCol.snapshotChanges()
@@ -104,12 +148,6 @@ export class AdminService {
           return { id, ...data };
         });
       });
-    // firebase.firestore().collection('profiles')
-    //   .where('roles.Analista', '==', true)
-    //   .get()
-    //   .then(res => {
-    //     debugger
-    //   })
   }
 
   getProfilesCustomerManager() {
@@ -121,31 +159,6 @@ export class AdminService {
           const id = res.payload.doc.id;
           return { id, ...data };
         });
-      });
-  }
-
-  public getRoles() {
-    this.rolesCol = this.afs.collection<Role>('roles')
-    return  this.rolesCol.snapshotChanges()
-      .map(actions => {
-        return actions.map(res => {
-          const data = res.payload.doc.data() as Role;
-          const id = res.payload.doc.id;
-          return { id, ...data };
-        });
-      });
-  }
-
-  public getRolePermissions(role: Role) {
-    this.rolesColSub = this.afs.collection('roles').doc(role.id).collection<RolePermissions>('permissions');
-    return this.rolesColSub.snapshotChanges()
-      .map(actions => {
-        return actions
-          .map(res => {
-            const data = res.payload.doc.data() as RolePermissions;
-            const id = res.payload.doc.id;
-            return { id, ...data };
-          });
       });
   }
 

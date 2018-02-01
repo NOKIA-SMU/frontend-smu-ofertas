@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Role, Permission } from '../../models/auth.models';
+import { Role, Permission, Profile } from '../../models/auth.models';
 import { AdminService } from '../admin.service';
+import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
 
 @Component({
@@ -16,8 +17,9 @@ export class RoleOperateComponent implements OnInit {
   isNew: boolean;
 
   actualColPermissions: string;
-  rolePermissions: Permission[];
+  actualColOfferRoles: string;
   permissions: Permission[];
+  currentUser: Profile;
 
   role: Role;
 
@@ -103,6 +105,7 @@ export class RoleOperateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private adminService: AdminService,
+    private authService: AuthService,
     private appService: AppService
   ) {
     this.data = this.route.snapshot.queryParams;
@@ -110,7 +113,6 @@ export class RoleOperateComponent implements OnInit {
     this.adminService.getPermissions()
       .subscribe(permissions => {
         this.permissions = permissions;
-
         // Update role
         if (this.route.snapshot.params.id != 'crear') {
           this.isNew = false;
@@ -118,24 +120,32 @@ export class RoleOperateComponent implements OnInit {
             id: this.data.id,
             name: this.data.name
           }
-
           // Get permissions from role
           this.adminService.getRolePermissions(this.role).subscribe(res => {
             res.map(res => {
               this.actualColPermissions = res.id;
-              this.rolePermissions = res.list;
-              for (let i = 0; i < this.rolePermissions.length; i++) {
+              for (let i = 0; i < res.list.length; i++) {
                 for (let j = 0; j < this.permissions.length; j++) {
-                  if (this.rolePermissions[i].id == this.permissions[j].id) {
+                  if (res.list[i].id == this.permissions[j].id) {
                     this.permissions[j].checked = true;
                   }
                 }
               }
             })
           }, error => {
-            this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol');
+            this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol', error);
           })
-
+          // Get columns offer by rol
+          this.adminService.getColsOfferRole(this.role)
+            .subscribe(res => {
+              res.map(res => {
+                this.actualColOfferRoles = res.id;
+                for (let i = 0; i < res.list.length; i++)
+                  this.colsOffer[res.list[i].id].permissions = res.list[i].permissions;
+              })
+            }, error => {
+              this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta columnas de oferta para rol', error);
+            })
         }
         // Create role
         if (this.route.snapshot.params.id == 'crear') {
@@ -145,7 +155,7 @@ export class RoleOperateComponent implements OnInit {
           }
         }
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta de todos los permisos');
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta de todos los permisos', error);
       });
   }
 
@@ -156,53 +166,60 @@ export class RoleOperateComponent implements OnInit {
   }
 
   saveRole(permissions: Permission[]) {
-    // let colsSelected = []
-    // for (let i = 0; i < this.colsOffer.length; i++) {
-    //   for (let j = 0; j < this.colsOffer[i].permissions.length; j++) {
-    //     if (this.colsOffer[i].permissions[j].checked) {
-    //       colsSelected.push(this.colsOffer[i])
-    //     }
-    //   }
-    // }
+    // build permissions selected
+    let permissionsSelected = [];
+    for (let i = 0; i < this.permissions.length; i++) {
+      if (this.permissions[i].checked) {
+        permissionsSelected.push(this.permissions[i])
+      }
+    }
+    // build columns offer selected
+    let colsSelected = [];
+    for (let i = 0; i < this.colsOffer.length; i++) {
+      for (let j = 0; j < this.colsOffer[i].permissions.length; j++) {
+        if (this.colsOffer[i].permissions[j].checked) {
+          colsSelected.push(this.colsOffer[i]);
+          j = this.colsOffer[i].permissions.length;
+        }
+      }
+    }
     if (permissions == undefined) permissions = [];
+    // Create role
     if (this.isNew) {
       this.adminService.createRole(this.role)
         .then(res => {
-          let permissions = [];
-          for (let i = 0; i < this.permissions.length; i++) {
-            if (this.permissions[i].checked) {
-              permissions.push(this.permissions[i])
-            }
-          }
-          debugger
-          this.adminService.assignPermissionToRole(res.id, permissions)
+          let roleId = res.id;
+          // Asign permissions to role
+          this.adminService.assignPermissionToRole(res.id, permissionsSelected)
             .then(res => {
-              debugger
-              this.adminService.assignColsOfferToRole(res.id, this.colsOffer)
+              // Asign columns offer to role
+              this.adminService.assignColsOfferToRole(roleId, colsSelected)
                 .then(res => {
                   this.router.navigate(['/admin/roles']);
                 }, error => {
-                  this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de campos al role');
+                  this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de campos al role', error);
                 })
             }, error => {
-              this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de permisos al role');
+              this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de permisos al role', error);
             })
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Crear role');
         });
-    } else {
+    }
+    // Update role
+    else {
       this.adminService.updateRole(this.role)
         .then(res => {
-          let permissions = [];
-          for (let i = 0; i < this.permissions.length; i++) {
-            if (this.permissions[i].checked) {
-              permissions.push(this.permissions[i])
-            }
-          }
-          debugger
-          this.adminService.updatePermissionsToRole(this.role.id, this.actualColPermissions, permissions)
-            .then(res => {
-
+          // Update permissions to role
+          this.adminService.updatePermissionsToRole(this.role.id, this.actualColPermissions, permissionsSelected)
+          .then(res => {
+              // Update columns offer to role
+              this.adminService.updateColsOfferToRole(this.role.id, this.actualColOfferRoles, colsSelected)
+                .then(res => {
+                  this.router.navigate(['/admin/roles']);
+                }, error => {
+                  this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Asignación de campos al role', error);
+                })
             }, error => {
               this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Actualizar permisos de role', error);
             });
@@ -211,10 +228,4 @@ export class RoleOperateComponent implements OnInit {
         });
     }
   }
-
-  // Permissions filed offers
-  selectOfferField(field) {
-    debugger
-  }
-
 }
