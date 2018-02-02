@@ -98,7 +98,7 @@ export class RoleOperateComponent implements OnInit {
     { id: '71', name: 'fecha envio acta smu', db: 'fechaEnvioActaSmu', own: true, permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
     { id: '72', name: 'comentario acta', db: 'comentarioActa', own: true, permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
     { id: '73', name: 'fecha firma acta smu', db: 'fechaFirmaActaSmu', own: true, permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
-    { id: '74', name: 'fecha gr smu', db: 'fechaGrSm', own: true, permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
+    { id: '74', name: 'fecha gr smu', db: 'fechaGrSmu', own: true, permissions: [{ name: 'leer', checked: false }, { name: 'editar', checked: false }] },
   ];
 
   constructor(

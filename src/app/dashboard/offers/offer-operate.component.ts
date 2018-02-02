@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PermissionsFields } from './offer.data';
 import { OffersService } from './offers.service';
 import { AuthService } from "../../auth/auth.service";
 import { AppService } from "../../app.service";
@@ -33,14 +34,35 @@ export class OfferOperateComponent implements OnInit {
 
   currentUser: any;
 
+  permissionsFields = PermissionsFields;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private offersService: OffersService,
     private authService: AuthService,
     private appService: AppService,
-    private adminService: AdminService
+    private adminService: AdminService,
   ) {
+
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path, true)
+      .then(res => {
+        // Get cols offer
+        let data = res[1].colsOffer;
+        // Loop cols offer from server
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].permissions.length; j++) {
+            // Update permissionsFields object
+            if (this.permissionsFields[data[i].db] === undefined) {
+              debugger
+            }
+            this.permissionsFields[data[i].db][data[i].permissions[j].name] = data[i].permissions[j].checked;
+          }
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
+
     this.authService.currentUser()
       .subscribe(res => {
         this.currentUser = res;
