@@ -65,7 +65,6 @@ export class OffersComponent implements OnInit, AfterViewInit {
               this.offersAllColumns.push(data[i].db);
               if (data[i].own === true) this.offersColumnsDynamics.push(data[i].db)
             }
-
           }
         }
         // Refactor pending on future

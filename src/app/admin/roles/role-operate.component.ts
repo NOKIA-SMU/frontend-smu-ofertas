@@ -112,6 +112,7 @@ export class RoleOperateComponent implements OnInit {
     // Get permisisons all
     this.adminService.getPermissions()
       .subscribe(permissions => {
+        permissions.sort(function (a, b) { return (a.model > b.model) ? 1 : ((b.model > a.model) ? -1 : 0); });
         this.permissions = permissions;
         // Update role
         if (this.route.snapshot.params.id != 'crear') {
