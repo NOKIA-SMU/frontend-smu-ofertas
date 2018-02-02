@@ -57,10 +57,12 @@ export class ProfilesComponent implements OnInit {
         this.isLoadingProfiles = false;
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de perfiles', error);
       });
-  }
+    }
 
   goToEdit() {
-    this.currentRowSelectData.roles = Object.keys(this.currentRowSelectData.roles);
+    if (this.currentRowSelectData.roles) {
+      this.currentRowSelectData.roles = Object.keys(this.currentRowSelectData.roles);
+    }
     this.router.navigate([`admin/perfiles/${this.currentRowSelectData.id}`], { queryParams: this.currentRowSelectData, skipLocationChange: true });
   }
 
@@ -73,6 +75,15 @@ export class ProfilesComponent implements OnInit {
   selectRow(index, data) {
     this.currentRowSelect = index;
     this.currentRowSelectData = data;
+  }
+
+  deleteProfile() {
+    this.adminService.deleteProfile(this.currentRowSelectData)
+      .then(res => {
+        this.router.navigate([`admin/perfiles`]);
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Eliminar perfil', error);
+      });
   }
 
 }

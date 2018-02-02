@@ -8,6 +8,7 @@
 		<i *ngIf="permissionsView.exportar" (click)="export()" class="material-icons">file_download</i>
 	</nav>
 	<h2 class="title">Ofertas</h2>
+	<!-- FILTER INPUT -->
 	<mat-form-field>
 		<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 	</mat-form-field>

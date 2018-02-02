@@ -18,10 +18,14 @@ export class AppService {
   toAction: any;
   currentUser: Profile;
 
+  // Initialize vars for permissions view validate
   rolesGeneral: Role[];
   userPermissions: Permission[] = [];
   rolesUserParsed: any[] = [];
   permissionsView = {};
+
+  // Initialize vars for cols offer validate
+  userColsOffer: any = [];
 
   constructor(
     private router: Router,
@@ -74,6 +78,16 @@ export class AppService {
                 })
             })
         }
+        else if (error.message === 'Current user does not have assigned roles') {
+          title = "Usted no tiene roles asignados";
+          text = "Por favor contacte al administrador del sistema";
+          this.toAction = "dashboard";
+        }
+        else if (error.message === 'Current user does not have assigned permission for columns offer') {
+          title = "Usted no tiene permisos asignados para los campos de oferta";
+          text = "Por favor contacte al administrador del sistema";
+          this.toAction = "dashboard";
+        }
       }
       swal({
         type,
@@ -83,6 +97,8 @@ export class AppService {
         confirmButtonClass: 'mat-primary'
       }).then(res => {
         if (this.toAction == "login") this.router.navigate(['/']);
+        else if (this.toAction == "dashboard") this.router.navigate(['/dashboard']);
+
       })
     } else if (mod === 'custom-html') {
       swal({
@@ -125,7 +141,8 @@ export class AppService {
     }
   }
 
-  public validateSecurity(queryPath) {
+  // receives 2 parameters: 1 - view , 2 - boolean optional validate columns
+  public validateSecurity(queryPath, validateColumns?: boolean) {
     return new Promise((resolve, reject) => {
       this.adminService.getRoles().subscribe(roles => {
         this.rolesGeneral = roles;
@@ -133,35 +150,108 @@ export class AppService {
         this.authService.currentUser()
           .subscribe(res => {
             this.currentUser = res
-            // Get all roles parsed (id - name)
-            this.rolesUserParsed = [];
-            for (let i = 0; i < this.rolesGeneral.length; i++) {
-              if (this.currentUser.roles[this.rolesGeneral[i].name]) {
-                this.rolesUserParsed.push({ name: this.rolesGeneral[i].name, id: this.rolesGeneral[i].id })
+            // If current user has assigned roles
+            if (this.currentUser.roles) {
+              // Get all roles parsed (id - name)
+              this.rolesUserParsed = [];
+              for (let i = 0; i < this.rolesGeneral.length; i++) {
+                if (this.currentUser.roles[this.rolesGeneral[i].name]) {
+                  this.rolesUserParsed.push({ name: this.rolesGeneral[i].name, id: this.rolesGeneral[i].id })
+                }
               }
+
+              if (validateColumns) {
+                for (let i = 0; i < this.rolesUserParsed.length; i++) {
+                  this.adminService.getColsOfferRole(this.rolesUserParsed[i])
+                    .subscribe(res => {
+                      res.map(res => {
+                        // Current user does not have assigned permission for offer columns
+                        if (res.list.length === 0) {
+                          reject({
+                            message: 'Current user does not have assigned permission for columns offer'
+                          })
+                        }
+                        // Current user have assigned permissions for offer columns
+                        else {
+
+                          this.userColsOffer = [];
+                          // Build user cols offer
+                          for (let k = 0; k < res.list.length; k++) {
+                            this.userColsOffer.push(res.list[k]);
+                          }
+
+
+                          // Get permissions by role
+                          for (let i = 0; i < this.rolesUserParsed.length; i++) {
+                            this.adminService.getRolePermissions(this.rolesUserParsed[i])
+                              .subscribe(res => {
+                                res.map(res => {
+                                  this.userPermissions = [];
+                                  this.permissionsView = {};
+                                  // Build user permissions
+                                  for (let k = 0; k < res.list.length; k++) {
+                                    this.userPermissions.push(res.list[k]);
+                                  }
+                                  // Build permissions object for view (queryPath)
+                                  for (let m = 0; m < this.userPermissions.length; m++) {
+                                    if (queryPath === this.userPermissions[m].model) {
+                                      this.permissionsView[this.userPermissions[m].name] = true;
+                                    }
+                                  }
+                                  // console.log(this.permissionsView)
+                                  resolve([{
+                                    permissionsView: this.permissionsView
+                                  },
+                                    {colsOffer: this.userColsOffer
+                                  }]);
+                                })
+                              }, error => {
+                                this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol', error);
+                              })
+                          }
+
+
+                        }
+                      })
+                    }, error => {
+                      debugger
+                    })
+
+                }
+              }
+              else {
+                // Get permissions by role
+                for (let i = 0; i < this.rolesUserParsed.length; i++) {
+                  this.adminService.getRolePermissions(this.rolesUserParsed[i])
+                    .subscribe(res => {
+                      res.map(res => {
+                        this.userPermissions = [];
+                        this.permissionsView = {};
+                        // Build user permissions
+                        for (let k = 0; k < res.list.length; k++) {
+                          this.userPermissions.push(res.list[k]);
+                        }
+                        // Build permissions object for view (queryPath)
+                        for (let m = 0; m < this.userPermissions.length; m++) {
+                          if (queryPath === this.userPermissions[m].model) {
+                            this.permissionsView[this.userPermissions[m].name] = true;
+                          }
+                        }
+                        // console.log(this.permissionsView)
+                        resolve(this.permissionsView);
+                      })
+                    }, error => {
+                      this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol', error);
+                    })
+                }
+              }
+
             }
-            // Get permissions by role
-            for (let i = 0; i < this.rolesUserParsed.length; i++) {
-              this.adminService.getRolePermissions(this.rolesUserParsed[i])
-                .subscribe(res => {
-                  res.map(res => {
-                    this.userPermissions = [];
-                    this.permissionsView = {};
-                    for (let k = 0; k < res.list.length; k++) {
-                      this.userPermissions.push(res.list[k]);
-                      // console.log(res.list[k])
-                    }
-                    for (let m = 0; m < this.userPermissions.length; m++) {
-                      if (queryPath === this.userPermissions[m].model) {
-                        this.permissionsView[this.userPermissions[m].name] = true;
-                      }
-                    }
-                    console.log(this.permissionsView)
-                    resolve(this.permissionsView);
-                  })
-                }, error => {
-                  this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta permisos del rol', error);
-                })
+            // Current user does not have assigned roles
+            else {
+              reject({
+                message: 'Current user does not have assigned roles'
+              })
             }
           }, error => {
             this.showSwal('cancel', 'error', 'Operación sin exito', 'Consulta usuario actual', error);
