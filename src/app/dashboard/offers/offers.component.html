@@ -20,127 +20,126 @@
 
 		<mat-table #table [dataSource]="dataSourceOffers" matSort>
 			<!-- ID -->
-			<ng-container matColumnDef="id">
-				<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-				<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-			</ng-container>
-			<!-- REQUEST ID -->
-			<ng-container matColumnDef="solicitudId">
-				<mat-header-cell *matHeaderCellDef> Id solicitud </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.idSolicitud}}
-				</mat-cell>
-			</ng-container>
-			<!-- REQUEST SUPERVISOR -->
-			<ng-container matColumnDef="solicitudSupervisor">
-				<mat-header-cell *matHeaderCellDef> Supervisor </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.supervisor : row.ordenServicio?.solicitud?.supervisor}}
-				</mat-cell>
-			</ng-container>
-			<!-- REQUEST ANALYST -->
-			<ng-container matColumnDef="solicitudAnalista">
-				<mat-header-cell *matHeaderCellDef> Analista </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.analista : row.ordenServicio?.solicitud?.analista}}
-				</mat-cell>
-			</ng-container>
-			<!-- REQUEST ESTATION -->
-			<ng-container matColumnDef="solicitudEstacionNombre">
-				<mat-header-cell *matHeaderCellDef> Estación nombre </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.nombre : row.ordenServicio?.solicitud?.estacion?.nombre}}
-				</mat-cell>
-			</ng-container>
-			<!-- REQUEST ESTATION REGION -->
-			<ng-container matColumnDef="solicitudEstacionRegion">
-				<mat-header-cell *matHeaderCellDef> Estación region </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.region : row.ordenServicio?.solicitud?.estacion?.region}}
-				</mat-cell>
-			</ng-container>
-			<!-- REQUEST ESTATION DEPARTAMENT -->
-			<ng-container matColumnDef="solicitudEstacionDepartamento">
-				<mat-header-cell *matHeaderCellDef> Estación departamento</mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.departamento : row.ordenServicio?.solicitud?.estacion?.departamento}}
-				</mat-cell>
-			</ng-container>
-			<!-- REQUEST ESTATION CITY -->
-			<ng-container matColumnDef="solicitudEstacionCiudad">
-				<mat-header-cell *matHeaderCellDef> Estación ciudad </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.ciudad : row.ordenServicio?.solicitud?.estacion?.ciudad}}
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE ID -->
-			<ng-container matColumnDef="suministroServicioId">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser id </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.id : row.ordenServicio?.servicio?.id}}
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE NOMBRE -->
-			<ng-container matColumnDef="suministroServicioNombre">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser nombre </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.nombre : row.ordenServicio?.servicio?.nombre}}
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE DESCRIPTION -->
-			<ng-container matColumnDef="suministroServicioDescripcion">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser descripción</mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.descripcion : row.ordenServicio?.servicio?.descripcion}}
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE LPU CODE -->
-			<ng-container matColumnDef="suministroServicioCodigoLpu">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser codigo lpu</mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.codigoLpu : row.ordenServicio?.servicio?.codigoLpu}}
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE LPU DESCRIPTION -->
-			<ng-container matColumnDef="suministroServicioDescripcionLpu">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser descripción lpu</mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.descripcionLpu : row.ordenServicio?.servicio?.descripcionLpu}}
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE LPU VALUE -->
-			<ng-container matColumnDef="suministroServicioValorLpu">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser valor lpu</mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.valorLpu : row.ordenServicio?.servicio?.valorLpu}}
-				</mat-cell>
-			</ng-container>
+				<ng-container matColumnDef="id" *ngIf="permissionsFields.id.leer">
+					<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+					<mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+				</ng-container>
+				<!-- REQUEST ID -->
+				<ng-container matColumnDef="solicitudId" *ngIf="permissionsFields.solicitudId.leer">
+					<mat-header-cell *matHeaderCellDef> Id solicitud </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.idSolicitud}}
+					</mat-cell>
+				</ng-container>
+				<!-- REQUEST SUPERVISOR -->
+				<ng-container matColumnDef="solicitudSupervisor" *ngIf="permissionsFields.solicitudSupervisor.leer">
+					<mat-header-cell *matHeaderCellDef> Supervisor </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.supervisor : row.ordenServicio?.solicitud?.supervisor}}
+					</mat-cell>
+				</ng-container>
+				<!-- REQUEST ANALYST -->
+				<ng-container matColumnDef="solicitudAnalista" *ngIf="permissionsFields.solicitudAnalista.leer">
+					<mat-header-cell *matHeaderCellDef> Analista </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.solicitud ? row.ordenSuministro?.solicitud?.analista : row.ordenServicio?.solicitud?.analista}}
+					</mat-cell>
+				</ng-container>
+				<!-- REQUEST ESTATION -->
+				<ng-container matColumnDef="solicitudEstacionNombre" *ngIf="permissionsFields.solicitudEstacionNombre.leer">
+					<mat-header-cell *matHeaderCellDef> Estación nombre </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.nombre : row.ordenServicio?.solicitud?.estacion?.nombre}}
+					</mat-cell>
+				</ng-container>
+				<!-- REQUEST ESTATION REGION -->
+				<ng-container matColumnDef="solicitudEstacionRegion" *ngIf="permissionsFields.solicitudEstacionRegion.leer">
+					<mat-header-cell *matHeaderCellDef> Estación region </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.region : row.ordenServicio?.solicitud?.estacion?.region}}
+					</mat-cell>
+				</ng-container>
+				<!-- REQUEST ESTATION DEPARTAMENT -->
+				<ng-container matColumnDef="solicitudEstacionDepartamento" *ngIf="permissionsFields.solicitudEstacionDepartamento.leer">
+					<mat-header-cell *matHeaderCellDef> Estación departamento</mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.departamento : row.ordenServicio?.solicitud?.estacion?.departamento}}
+					</mat-cell>
+				</ng-container>
+				<!-- REQUEST ESTATION CITY -->
+				<ng-container matColumnDef="solicitudEstacionCiudad" *ngIf="permissionsFields.solicitudEstacionCiudad.leer">
+					<mat-header-cell *matHeaderCellDef> Estación ciudad </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.solicitud?.estacion ? row.ordenSuministro?.solicitud?.estacion?.ciudad : row.ordenServicio?.solicitud?.estacion?.ciudad}}
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE ID -->
+				<ng-container matColumnDef="suministroServicioId" *ngIf="permissionsFields.suministroServicioId.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser id </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.id : row.ordenServicio?.servicio?.id}}
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE NOMBRE -->
+				<ng-container matColumnDef="suministroServicioNombre" *ngIf="permissionsFields.suministroServicioNombre.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser nombre </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.nombre : row.ordenServicio?.servicio?.nombre}}
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE DESCRIPTION -->
+				<ng-container matColumnDef="suministroServicioDescripcion" *ngIf="permissionsFields.suministroServicioDescripcion.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser descripción</mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.descripcion : row.ordenServicio?.servicio?.descripcion}}
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE LPU CODE -->
+				<ng-container matColumnDef="suministroServicioCodigoLpu" *ngIf="permissionsFields.suministroServicioCodigoLpu.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser codigo lpu</mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.codigoLpu : row.ordenServicio?.servicio?.codigoLpu}}
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE LPU DESCRIPTION -->
+				<ng-container matColumnDef="suministroServicioDescripcionLpu" *ngIf="permissionsFields.suministroServicioDescripcionLpu.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser descripción lpu</mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.descripcionLpu : row.ordenServicio?.servicio?.descripcionLpu}}
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE LPU VALUE -->
+				<ng-container matColumnDef="suministroServicioValorLpu" *ngIf="permissionsFields.suministroServicioValorLpu.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser valor lpu</mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro?.suministro ? row.ordenSuministro?.suministro?.valorLpu : row.ordenServicio?.servicio?.valorLpu}}
+					</mat-cell>
+				</ng-container>
 
 
-			<!-- SUPPLIE OR SERVICE UNITY -->
-			<ng-container matColumnDef="suministroServicioUnidad">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser unidad </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro ? row.ordenSuministro?.suministro.unidad : row.ordenServicio?.servicio.unidad}}
-					<!-- {{row.ordenSuministro| json}} -->
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE QTY -->
-			<ng-container matColumnDef="suministroServicioQty">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser cantidad </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro ? row.ordenSuministro?.cantidad : row.ordenServicio?.cantidad}}
-					<!-- {{row.ordenSuministro| json}} -->
-				</mat-cell>
-			</ng-container>
-			<!-- SUPPLIE OR SERVICE COMMENT -->
-			<ng-container matColumnDef="suministroServicioComentario">
-				<mat-header-cell *matHeaderCellDef> Sum/Ser comentario </mat-header-cell>
-				<mat-cell *matCellDef="let row">
-					{{row.ordenSuministro ? (row.ordenSuministro?.comentario | truncate : 160) : (row.ordenServicio?.comentario | truncate : 160)}}
-				</mat-cell>
-			</ng-container>
-
+				<!-- SUPPLIE OR SERVICE UNITY -->
+				<ng-container matColumnDef="suministroServicioUnidad" *ngIf="permissionsFields.suministroServicioUnidad.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser unidad </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro ? row.ordenSuministro?.suministro.unidad : row.ordenServicio?.servicio.unidad}}
+						<!-- {{row.ordenSuministro| json}} -->
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE QTY -->
+				<ng-container matColumnDef="suministroServicioQty" *ngIf="permissionsFields.suministroServicioQty.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser cantidad </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro ? row.ordenSuministro?.cantidad : row.ordenServicio?.cantidad}}
+						<!-- {{row.ordenSuministro| json}} -->
+					</mat-cell>
+				</ng-container>
+				<!-- SUPPLIE OR SERVICE COMMENT -->
+				<ng-container matColumnDef="suministroServicioComentario" *ngIf="permissionsFields.suministroServicioComentario.leer">
+					<mat-header-cell *matHeaderCellDef> Sum/Ser comentario </mat-header-cell>
+					<mat-cell *matCellDef="let row">
+						{{row.ordenSuministro ? (row.ordenSuministro?.comentario | truncate : 160) : (row.ordenServicio?.comentario | truncate : 160)}}
+					</mat-cell>
+				</ng-container>
 			<!-- DYNAMICS ROWS -->
 			<ng-container *ngFor="let item of offersColumnsDynamics" matColumnDef="{{item}}">
 				<mat-header-cell *matHeaderCellDef> {{item | dictionary}} </mat-header-cell>
@@ -162,4 +161,5 @@
 	<br>
 	<br>
 	<br>
+	<h1>{{permissionsView | json}}</h1>
 </div>

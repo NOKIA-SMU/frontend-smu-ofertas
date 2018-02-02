@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OffersService } from "./offers.service";
@@ -13,171 +13,20 @@ import { AppService } from "../../app.service";
   styleUrls: ['../dashboard.component.scss', 'offers.component.scss']
 })
 
-export class OffersComponent implements OnInit {
+export class OffersComponent implements OnInit, AfterViewInit {
 
-  // offersColumns = [
-  //   'id',
-  //   'solicitudId',
-  //   'solicitudSupervisor',
-  //   'solicitudAnalista',
-  //   'solicitudEstacionNombre',
-  //   'solicitudEstacionRegion',
-  //   'solicitudEstacionDepartamento',
-  //   'solicitudEstacionCiudad',
-  //   'suministroServicioId',
-  //   'suministroServicioNombre',
-  //   'suministroServicioDescripcion',
-  //   'suministroServicioCodigoLpu',
-  //   'suministroServicioDescripcionLpu',
-  //   'suministroServicioValorLpu',
-  //   'suministroServicioUnidad',
-  //   'suministroServicioQty',
-  //   'suministroServicioComentario'
-  // ];
+  offersColumnsDynamics: any = [];
+  offersAllColumns: any = [];
 
-  offersColumnsDynamics = [
-    'tipoSitio',
-    'tipoAcceso',
-    'naturalezaServicio',
-    'descripcionOds',
-    'fechaRecibidoOds',
-    'semanaRecibidoOds',
-    'tipoOferta',
-    'workOrder',
-    'descripcionTarea',
-    'encargadoCliente',
-    'fechaEjecucion',
-    'confirmacionRecibido',
-    'comentarioSupervisor',
-    'numeroOferta',
-    'modalidad',
-    'precioUnidadProveedor',
-    'precioTotalProveedor',
-    'precioUnidadVenta',
-    'precioTotalVenta',
-    'precioUnidadCliente',
-    'precioTotalCliente',
-    'margen',
-    'tipoAdquisicion',
-    'proveedor',
-    'tasOfertaAnterior',
-    'fechaDespachoSupervisor',
-    'semanaDespachoSupervisor',
-    'fechaDespachoCompras',
-    'semanaDespachoCompras',
-    'fechaRespuestaCompras',
-    'semanaRespuestaCompras',
-    'fechaEnvioOfertaCliente',
-    'semanaEnvioOfertaCliente',
-    'fechaEnvioOfertaClienteNegociada',
-    'semanaEnvioOfertaClienteNegociada',
-    'fechaRespuestaCliente',
-    'semanaRespuestaCliente',
-    'fechaRespuestaClienteNegociada',
-    'semanaRespuestaClienteNegociada',
-    'tipoRespuestaCliente',
-    'tipoRespuestaClienteNegociada',
-    'po',
-    'fechaPo',
-    'valorPo',
-    'comentarioAnalista',
-    'subestadoOferta',
-    'estadoOferta',
-    'fechaEntregaAlmacen',
-    'comentarioAlmacenista',
-    'comentarioCoordinador',
-    'tipoElemento',
-    'valorConciliadoCliente',
-    'fechaConciliadoCliente',
-    'comentarioFacturador',
-    'fechaEnvioActaSmu',
-    'comentarioActa',
-    'fechaFirmaActaSmu',
-    'fechaGrSmu',
-  ];
-
-  offersAllColumns = [
-    'id',
-    'solicitudId',
-    'solicitudSupervisor',
-    'solicitudAnalista',
-    'solicitudEstacionNombre',
-    'solicitudEstacionRegion',
-    'solicitudEstacionDepartamento',
-    'solicitudEstacionCiudad',
-    'suministroServicioId',
-    'suministroServicioNombre',
-    'suministroServicioDescripcion',
-    'suministroServicioCodigoLpu',
-    'suministroServicioDescripcionLpu',
-    'suministroServicioValorLpu',
-    'suministroServicioUnidad',
-    'suministroServicioQty',
-    'suministroServicioComentario',
-    'tipoSitio',
-    'tipoAcceso',
-    'naturalezaServicio',
-    'descripcionOds',
-    'fechaRecibidoOds',
-    'semanaRecibidoOds',
-    'tipoOferta',
-    'workOrder',
-    'descripcionTarea',
-    'encargadoCliente',
-    'fechaEjecucion',
-    'confirmacionRecibido',
-    'comentarioSupervisor',
-    'numeroOferta',
-    'modalidad',
-    'precioUnidadProveedor',
-    'precioTotalProveedor',
-    'precioUnidadVenta',
-    'precioTotalVenta',
-    'precioUnidadCliente',
-    'precioTotalCliente',
-    'margen',
-    'tipoAdquisicion',
-    'proveedor',
-    'tasOfertaAnterior',
-    'fechaDespachoSupervisor',
-    'semanaDespachoSupervisor',
-    'fechaDespachoCompras',
-    'semanaDespachoCompras',
-    'fechaRespuestaCompras',
-    'semanaRespuestaCompras',
-    'fechaEnvioOfertaCliente',
-    'semanaEnvioOfertaCliente',
-    'fechaEnvioOfertaClienteNegociada',
-    'semanaEnvioOfertaClienteNegociada',
-    'fechaRespuestaCliente',
-    'semanaRespuestaCliente',
-    'fechaRespuestaClienteNegociada',
-    'semanaRespuestaClienteNegociada',
-    'tipoRespuestaCliente',
-    'tipoRespuestaClienteNegociada',
-    'po',
-    'fechaPo',
-    'valorPo',
-    'comentarioAnalista',
-    'subestadoOferta',
-    'estadoOferta',
-    'fechaEntregaAlmacen',
-    'comentarioAlmacenista',
-    'comentarioCoordinador',
-    'tipoElemento',
-    'valorConciliadoCliente',
-    'fechaConciliadoCliente',
-    'comentarioFacturador',
-    'fechaEnvioActaSmu',
-    'comentarioActa',
-    'fechaFirmaActaSmu',
-    'fechaGrSmu',
-  ];
-
+  // Initialize table offers
   dataSourceOffers = new MatTableDataSource();
   isLoadingResultsOffers = true;
   currentRowSelect: any;
   currentRowSelectData: any = {};
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+
   currentUser: any;
 
   permissionsView: any = { };
@@ -260,9 +109,6 @@ export class OffersComponent implements OnInit {
     fechaGrSm: {leer: null, editar: null}
   };
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
   constructor(
     private offersService: OffersService,
     private router: Router,
@@ -270,72 +116,85 @@ export class OffersComponent implements OnInit {
     private authService: AuthService,
     private adminService: AdminService,
     private appService: AppService
-  ) {
-    this.appService.validateSecurity(this.route.snapshot.routeConfig.path, true)
-      .then(res => {
-        this.permissionsView = res[0].permissionsView;
-        let data = res[1].colsOffer;
-        for (let i = 0; i < data.length; i++) {
-          for (let j = 0; j < data[i].permissions.length; j++) {
-            this.permissionsFields[data[i].db][data[i].permissions[j].name] = data[i].permissions[j].checked;
-          }
-        }
-      }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
-      })
-  }
+  ) { }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
-    this.authService.currentUser()
-      .subscribe(res => {
-        this.currentUser = res;
-        if (this.currentUser.roles) {
-          this.offersService.getOffers()
-            .subscribe(res => {
-              // Filter offers by rol
-              let filteredOffers = [];
-              if (this.currentUser.roles.Administrador) {
-                this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
-              } else if (this.currentUser.roles.Supervisor) {
-                for (let i = 0; i < res.data.ofertas.length; i++) {
-                  if (res.data.ofertas[i].ordenSuministro) {
-                    if (res.data.ofertas[i].ordenSuministro.solicitud.supervisorId == this.currentUser.id) {
-                      filteredOffers.push(res.data.ofertas[i]);
-                    }
-                  } else if (res.data.ofertas[i].ordenServicio) {
-                    if (res.data.ofertas[i].ordenServicio.solicitud.supervisorId == this.currentUser.id) {
-                      filteredOffers.push(res.data.ofertas[i]);
-                    }
-                  }
-                }
-                this.dataSourceOffers = new MatTableDataSource(filteredOffers)
-              } else if (this.currentUser.roles.Analista) {
-                for (let i = 0; i < res.data.ofertas.length; i++) {
-                  if (res.data.ofertas[i].ordenSuministro) {
-                    if (res.data.ofertas[i].ordenSuministro.solicitud.analistaId == this.currentUser.id) {
-                      filteredOffers.push(res.data.ofertas[i]);
-                    }
-                  } else if (res.data.ofertas[i].ordenServicio) {
-                    if (res.data.ofertas[i].ordenServicio.solicitud.analistaId == this.currentUser.id) {
-                      filteredOffers.push(res.data.ofertas[i]);
-                    }
-                  }
-                }
-                this.dataSourceOffers = new MatTableDataSource(filteredOffers)
-              }
-              this.dataSourceOffers.paginator = this.paginator;
-              this.dataSourceOffers.sort = this.sort;
-              this.isLoadingResultsOffers = false;
-            }, error => {
-              this.isLoadingResultsOffers = false;
-              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
-            });
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path, true)
+      .then(res => {
+        // Get permissions view
+        this.permissionsView = res[0].permissionsView;
+        // Get cols offer
+        let data = res[1].colsOffer;
+        // Loop cols offer from server
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].permissions.length; j++) {
+            // Update permissionsFields object
+            this.permissionsFields[data[i].db][data[i].permissions[j].name] = data[i].permissions[j].checked;
+            // Build columns array general for read
+            if (data[i].permissions[j].name === 'leer' && data[i].permissions[j].checked) {
+              this.offersAllColumns.push(data[i].db);
+              if (data[i].own === true) this.offersColumnsDynamics.push(data[i].db)
+            }
+
+          }
         }
+        // Refactor pending on future
+        this.authService.currentUser()
+          .subscribe(res => {
+            this.currentUser = res;
+            if (this.currentUser.roles) {
+              this.offersService.getOffers()
+                .subscribe(res => {
+                  // Filter offers by rol
+                  let filteredOffers = [];
+                  if (this.currentUser.roles.Administrador) {
+                    this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
+                  } else if (this.currentUser.roles.Supervisor) {
+                    for (let i = 0; i < res.data.ofertas.length; i++) {
+                      if (res.data.ofertas[i].ordenSuministro) {
+                        if (res.data.ofertas[i].ordenSuministro.solicitud.supervisorId == this.currentUser.id) {
+                          filteredOffers.push(res.data.ofertas[i]);
+                        }
+                      } else if (res.data.ofertas[i].ordenServicio) {
+                        if (res.data.ofertas[i].ordenServicio.solicitud.supervisorId == this.currentUser.id) {
+                          filteredOffers.push(res.data.ofertas[i]);
+                        }
+                      }
+                    }
+                    this.dataSourceOffers = new MatTableDataSource(filteredOffers);
+                  } else if (this.currentUser.roles.Analista) {
+                    for (let i = 0; i < res.data.ofertas.length; i++) {
+                      if (res.data.ofertas[i].ordenSuministro) {
+                        if (res.data.ofertas[i].ordenSuministro.solicitud.analistaId == this.currentUser.id) {
+                          filteredOffers.push(res.data.ofertas[i]);
+                        }
+                      } else if (res.data.ofertas[i].ordenServicio) {
+                        if (res.data.ofertas[i].ordenServicio.solicitud.analistaId == this.currentUser.id) {
+                          filteredOffers.push(res.data.ofertas[i]);
+                        }
+                      }
+                    }
+                    this.dataSourceOffers = new MatTableDataSource(filteredOffers);
+                  } else {
+                    this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
+                  }
+                  this.dataSourceOffers.paginator = this.paginator;
+                  this.dataSourceOffers.sort = this.sort;
+                  this.isLoadingResultsOffers = false;
+                }, error => {
+                  this.isLoadingResultsOffers = false;
+                  this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
+                });
+            }
+          }, error => {
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de usuario actual', error);
+          })
       }, error => {
-        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de usuario actual', error);
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
       })
+
   }
 
   applyFilter(filterValue: string) {

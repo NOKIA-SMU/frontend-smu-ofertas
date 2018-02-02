@@ -159,27 +159,25 @@ export class AppService {
                   this.rolesUserParsed.push({ name: this.rolesGeneral[i].name, id: this.rolesGeneral[i].id })
                 }
               }
-
               if (validateColumns) {
                 for (let i = 0; i < this.rolesUserParsed.length; i++) {
                   this.adminService.getColsOfferRole(this.rolesUserParsed[i])
                     .subscribe(res => {
-                      res.map(res => {
-                        // Current user does not have assigned permission for offer columns
-                        if (res.list.length === 0) {
-                          reject({
-                            message: 'Current user does not have assigned permission for columns offer'
-                          })
-                        }
-                        // Current user have assigned permissions for offer columns
-                        else {
+                      // Current user does not have assigned permission for offer columns
+                      if (res.length === 0) {
+                        reject({
+                          message: 'Current user does not have assigned permission for columns offer'
+                        })
+                      }
+                      // Current user have assigned permissions for offer columns
+                      else {
+                        res.map(res => {
 
                           this.userColsOffer = [];
                           // Build user cols offer
                           for (let k = 0; k < res.list.length; k++) {
                             this.userColsOffer.push(res.list[k]);
                           }
-
 
                           // Get permissions by role
                           for (let i = 0; i < this.rolesUserParsed.length; i++) {
@@ -210,9 +208,8 @@ export class AppService {
                               })
                           }
 
-
-                        }
-                      })
+                        })
+                      }
                     }, error => {
                       debugger
                     })

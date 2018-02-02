@@ -23,33 +23,32 @@ form {
       }
       > .mat-header-cell, > .mat-cell {
         flex: 0 0 150px;
-        &:nth-child(1),
-        &:nth-child(2),
-        &:nth-child(9),
-        &:nth-child(16){
+        &.mat-column-id,
+        &.mat-column-solicitudId,
+        &.mat-column-suministroServicioId,
+        &.mat-column-suministroServicioQty {
           flex: 0 0 70px;
         }
-        &:nth-child(5),
-        &:nth-child(10),
-        &:nth-child(11),
-        &:nth-child(13) {
+        &.mat-column-solicitudEstacionNombre,
+        &.mat-column-suministroServicioNombre,
+        &.mat-column-suministroServicioDescripcion,
+        &.mat-column-suministroServicioDescripcionLpu {
           flex: 0 0 400px;
         }
-        &:nth-child(17){
+        &.mat-column-suministroServicioComentario {
           flex: 0 0 500px;
         }
-        &:nth-child(26){
+        &.mat-column-descripcionTarea {
           flex: 0 0 600px;
         }
-        &:nth-child(27){
+        &.mat-column-encargadoCliente {
           flex: 0 0 300px;
         }
         &.mat-column-fechaDespachoSupervisor,
         &.mat-column-semanaDespachoSupervisor,
         &.mat-column-semanaDespachoCompras,
         &.mat-column-semanaRespuestaCompras,
-        &.mat-column-semanaEnvioOfertaCliente,
-        {
+        &.mat-column-semanaEnvioOfertaCliente {
           flex: 0 0 200px;
         }
         &.mat-column-fechaEnvioOfertaClienteNegociada,
