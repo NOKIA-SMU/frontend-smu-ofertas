@@ -67,11 +67,11 @@ export class RolesComponent implements OnInit {
 
   deleteRole() {
     this.adminService.deleteRole(this.currentRowSelectData)
-    .then(res => {
-      this.router.navigate([`admin/roles`]);
-    }, error => {
-      this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Eliminar role', error);
-    });
+      .then(res => {
+        this.router.navigate([`admin/roles`]);
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación sin exito', 'Eliminar role', error);
+      });
   }
 
 }

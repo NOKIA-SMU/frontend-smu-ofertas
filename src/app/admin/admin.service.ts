@@ -166,4 +166,8 @@ export class AdminService {
     return this.profilesCol.doc(profile.id).update(profile)
   }
 
+  public deleteProfile(profile: Profile) {
+    return this.profilesCol.doc(profile.id).delete()
+  }
+
 }
