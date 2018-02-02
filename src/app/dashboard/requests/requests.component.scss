@@ -8,7 +8,9 @@ form {
 	justify-content: space-between;
 	flex-wrap: wrap;
 	border: 1px solid #c7c5c5;
-	padding: 40px;
+  padding: 40px;
+  position: relative;
+  margin-bottom: 40px;
 	.mat-form-field {
 		width: 47%;
 		min-width: 250px;
@@ -37,6 +39,11 @@ form {
       margin: 0 6px;
       font-size: 1.3rem;
     }
+  }
+  .formLoading {
+    position: absolute;
+    right: 40px;
+    bottom: 45px;
   }
 }
 

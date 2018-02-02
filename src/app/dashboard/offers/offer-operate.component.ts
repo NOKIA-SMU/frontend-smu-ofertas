@@ -31,6 +31,7 @@ export class OfferOperateComponent implements OnInit {
   confirmationsReceived: string[];
   substatesOffer: string[];
   statesOffer: string[];
+  isSendOffer: boolean = false;
 
   currentUser: any;
 
@@ -239,6 +240,7 @@ export class OfferOperateComponent implements OnInit {
   }
 
   saveOffert() {
+    this.isSendOffer = true;
     let statesOffer = true;
     if (this.offer.workOrder) {
       if (this.offer.workOrder.length != 16) {
@@ -279,10 +281,12 @@ export class OfferOperateComponent implements OnInit {
       this.offer.fechaGrSmu == null ? null : this.normalizeDate(this.offer.fechaGrSmu);
       this.offersService.updateOffer(this.route.snapshot.params.id, this.offer)
         .subscribe(res => {
+          this.isSendOffer = false;
           this.router.navigate(['/ofertas']);
         }, error => {
+          this.isSendOffer = false;
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualización de oferta', error)
-              })
+        })
     }
 
   }

@@ -34,6 +34,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   selectedAnalyst: any = {};
   analysts: any;
   isSelectionSubsystem: boolean = false;
+  isSendRequest: boolean = false;
 
   // Tables initialize
 
@@ -405,6 +406,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   }
   // Save and send request
   saveRequest() {
+    this.isSendRequest = true;
     let statesRequest = false;
     if (this.request.tas) {
       if (this.request.tas.length != 15) {
@@ -430,20 +432,24 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
         this.requestsService.createRequest(this.request)
           .subscribe(res => {
             if (res.data.createSolicitud.status == 200) {
+              this.isSendRequest = false;
               this.router.navigate(['/solicitudes']);
             }
           }, error => {
+            this.isSendRequest = false;
             this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Crear solicitud', error);
           })
       } else {
         this.requestsService.updateRequest(this.route.snapshot.params.id, this.request)
         .subscribe(res => {
           if (res.data.updateSolicitud.status == 200) {
+            this.isSendRequest = false;
             this.router.navigate(['/solicitudes']);
           }
-        }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualizar solicitud', error);
-        })
+          }, error => {
+            this.isSendRequest = false;
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Actualizar solicitud', error);
+          })
       }
     }
   }

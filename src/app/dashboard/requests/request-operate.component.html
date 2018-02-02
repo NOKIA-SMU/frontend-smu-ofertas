@@ -278,4 +278,7 @@
     <button mat-raised-button color="primary" type="submit" [disabled]="!requestForm.form.valid">Guardar</button>
     <button mat-raised-button color="danger" routerLink="/solicitudes">Cancelar</button>
   </div>
+  <div class="formLoading" *ngIf="isSendRequest">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
 </form>

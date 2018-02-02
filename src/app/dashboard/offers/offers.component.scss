@@ -1,4 +1,5 @@
 form {
+  position: relative;
 	display: flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
@@ -7,7 +8,12 @@ form {
 	.mat-form-field {
 		width: 30%;
 		min-width: 250px;
-	}
+  }
+  .formLoading {
+    position: absolute;
+    right: 40px;
+    bottom: 45px;
+  }
 }
 
 .offers {
