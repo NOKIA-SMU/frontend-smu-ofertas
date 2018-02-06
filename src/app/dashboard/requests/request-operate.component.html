@@ -28,7 +28,7 @@
       <ng-container>
         <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
           <mat-option *ngFor="let analyst of analysts" [value]="analyst">
-            {{analyst.firstName}} {{analyst.lastName}}
+            {{analyst.fullName}}
           </mat-option>
         </mat-select>
       </ng-container>

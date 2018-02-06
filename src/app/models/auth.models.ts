@@ -2,6 +2,7 @@
 export interface Profile {
 	uid?: string
 	id?: string;
+	fullName?: string;
 	firstName: string;
 	lastName: string;
 	phoneNumber: number;

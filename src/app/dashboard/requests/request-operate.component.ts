@@ -128,6 +128,9 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
     // Get profiles filter by analysts
     this.adminService.getProfilesAnalysts()
       .subscribe(res => {
+        for (let i = 0; i < res.length; i++) {
+          res[i].fullName = res[i].firstName + ' ' + res[i].lastName;
+        }
         this.analysts = res;
       }, error => {
         this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de analistas', error)
@@ -199,7 +202,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
             prioridad: res.data.solicitud.prioridad,
             estadoSolicitud: res.data.solicitud.estadoSolicitud
           }
-          this.selectedAnalyst = { id: res.data.solicitud.analistaId, firstName: res.data.solicitud.analista };
+          // this.selectedAnalyst = { id: res.data.solicitud.analistaId, firstName: res.data.solicitud.analista };
           // Get all supplies by subsystem
           this.supplies = [];
           this.isLoadingResultsSupplies = true;
@@ -388,10 +391,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   }
   // Select analyst from selecty input
   selectAnalyst(event, analyst) {
-    if (analyst.lastName)
-      this.request.analista = `${analyst.firstName} ${analyst.lastName}`;
-    else
-      this.request.analista = analyst.firstName;
+    this.request.analista = analyst.fullName;
     this.request.analistaId = analyst.id;
   }
   // Normalize list for send request
