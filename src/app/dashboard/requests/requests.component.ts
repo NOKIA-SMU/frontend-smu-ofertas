@@ -91,6 +91,8 @@ export class RequestsComponent implements OnInit {
                 }
               }
               this.dataSource = new MatTableDataSource(filteredRequests);
+            } else {
+              this.dataSource = new MatTableDataSource(res.data.solicitudes);
             }
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;

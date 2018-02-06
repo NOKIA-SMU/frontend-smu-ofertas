@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PermissionsFields } from '../offers/offer.data';
 import { RequestsService } from '../requests/requests.service';
 import { OffersService } from '../offers/offers.service';
+import { AuthService } from '../../auth/auth.service';
 import { AppService } from "../../app.service";
 
 @Component({
@@ -19,6 +21,8 @@ export class ExportComponent implements OnInit {
   currentUser: any;
   isSelectAll: boolean = false;
 
+  permissionsFields = PermissionsFields;
+
   columnsRequest = [
     {name: 'id', checked: false},
     {name: 'supervisor', checked: false},
@@ -31,81 +35,81 @@ export class ExportComponent implements OnInit {
   ];
 
   columnsOffer = [
-    {name: 'id', checked: false},
-    {name: 'solicitudId', checked: false},
-    {name: 'supervisor', checked: false},
-    {name: 'analista', checked: false},
-    {name: 'estacionNombre', checked: false},
-    {name: 'estacionRegion', checked: false},
-    {name: 'estacionDepartamento', checked: false},
-    {name: 'estacionCiudad', checked: false},
-    {name: 'suministroServicioId', checked: false},
-    {name: 'suministroServicioNombre', checked: false},
-    {name: 'suministroServicioDescripcion', checked: false},
-    {name: 'suministroServicioCodigoLpu', checked: false},
-    {name: 'suministroServicioDescripcionLpu', checked: false},
-    {name: 'suministroServicioValorLpu', checked: false},
-    {name: 'suministroServicioUnidad', checked: false},
-    {name: 'suministroServicioQty', checked: false},
-    {name: 'suministroServicioComentario', checked: false},
-    {name: 'tipoSitio', checked: false},
-    {name: 'tipoAcceso', checked: false},
-    {name: 'naturalezaServicio', checked: false},
-    {name: 'descripcionOds', checked: false},
-    {name: 'fechaRecibidoOds', checked: false},
-    {name: 'semanaRecibidoOds', checked: false},
-    {name: 'tipoOferta', checked: false},
-    {name: 'workOrder', checked: false},
-    {name: 'descripcionTarea', checked: false},
-    {name: 'encargadoCliente', checked: false},
-    {name: 'fechaEjecucion', checked: false},
-    {name: 'confirmacionRecibido', checked: false},
-    {name: 'comentarioSupervisor', checked: false},
-    {name: 'numeroOferta', checked: false},
-    {name: 'modalidad', checked: false},
-    {name: 'precioUnidadProveedor', checked: false},
-    {name: 'precioTotalProveedor', checked: false},
-    {name: 'precioUnidadVenta', checked: false},
-    {name: 'precioTotalVenta', checked: false},
-    {name: 'precioUnidadCliente', checked: false},
-    {name: 'precioTotalCliente', checked: false},
-    {name: 'margen', checked: false},
-    {name: 'tipoAdquisicion', checked: false},
-    {name: 'proveedor', checked: false},
-    {name: 'tasOfertaAnterior', checked: false},
-    {name: 'fechaDespachoSupervisor', checked: false},
-    {name: 'semanaDespachoSupervisor', checked: false},
-    {name: 'fechaDespachoCompras', checked: false},
-    {name: 'semanaDespachoCompras', checked: false},
-    {name: 'fechaRespuestaCompras', checked: false},
-    {name: 'semanaRespuestaCompras', checked: false},
-    {name: 'fechaEnvioOfertaCliente', checked: false},
-    {name: 'semanaEnvioOfertaCliente', checked: false},
-    {name: 'fechaEnvioOfertaClienteNegociada', checked: false},
-    {name: 'semanaEnvioOfertaClienteNegociada', checked: false},
-    {name: 'fechaRespuestaCliente', checked: false},
-    {name: 'semanaRespuestaCliente', checked: false},
-    {name: 'fechaRespuestaClienteNegociada', checked: false},
-    {name: 'semanaRespuestaClienteNegociada', checked: false},
-    {name: 'tipoRespuestaCliente', checked: false},
-    {name: 'tipoRespuestaClienteNegociada', checked: false},
-    {name: 'po', checked: false},
-    {name: 'fechaPo', checked: false},
-    {name: 'valorPo', checked: false},
-    {name: 'comentarioAnalista', checked: false},
-    {name: 'subestadoOferta', checked: false},
-    {name: 'estadoOferta', checked: false},
-    {name: 'fechaEntregaAlmacen', checked: false},
-    {name: 'comentarioAlmacenista', checked: false},
-    {name: 'comentarioCoordinador', checked: false},
-    {name: 'tipoElemento', checked: false},
-    {name: 'valorConciliadoCliente', checked: false},
-    {name: 'fechaConciliadoCliente', checked: false},
-    {name: 'comentarioFacturador', checked: false},
-    {name: 'fechaEnvioActaSmu', checked: false},
-    {name: 'comentarioActa', checked: false},
-    {name: 'fechaFirmaActaSmu', checked: false},
-    {name: 'fechaGrSmu', checked: false},
+    {name: 'id', db: 'id', checked: false},
+    {name: 'solicitudId', db: 'solicitudId', checked: false},
+    {name: 'supervisor', db: 'solicitudSupervisor', checked: false},
+    {name: 'analista', db: 'solicitudAnalista', checked: false},
+    {name: 'estacionNombre', db: 'solicitudEstacionNombre', checked: false},
+    {name: 'estacionRegion', db: 'solicitudEstacionRegion', checked: false},
+    {name: 'estacionDepartamento', db: 'solicitudEstacionDepartamento', checked: false},
+    {name: 'estacionCiudad', db: 'solicitudEstacionCiudad', checked: false},
+    {name: 'suministroServicioId', db: 'suministroServicioId', checked: false},
+    {name: 'suministroServicioNombre', db: 'suministroServicioNombre', checked: false},
+    {name: 'suministroServicioDescripcion', db: 'suministroServicioDescripcion', checked: false},
+    {name: 'suministroServicioCodigoLpu', db: 'suministroServicioCodigoLpu', checked: false},
+    {name: 'suministroServicioDescripcionLpu', db: 'suministroServicioDescripcionLpu', checked: false},
+    {name: 'suministroServicioValorLpu', db: 'suministroServicioValorLpu', checked: false},
+    {name: 'suministroServicioUnidad', db: 'suministroServicioUnidad', checked: false},
+    {name: 'suministroServicioQty', db: 'suministroServicioQty', checked: false},
+    {name: 'suministroServicioComentario', db: 'suministroServicioComentario', checked: false},
+    {name: 'tipoSitio', db: 'tipoSitio', checked: false},
+    {name: 'tipoAcceso', db: 'tipoAcceso', checked: false},
+    {name: 'naturalezaServicio', db: 'naturalezaServicio', checked: false},
+    {name: 'descripcionOds', db: 'descripcionOds', checked: false},
+    {name: 'fechaRecibidoOds', db: 'fechaRecibidoOds', checked: false},
+    {name: 'semanaRecibidoOds', db: 'semanaRecibidoOds', checked: false},
+    {name: 'tipoOferta', db: 'tipoOferta', checked: false},
+    {name: 'workOrder', db: 'workOrder', checked: false},
+    {name: 'descripcionTarea', db: 'descripcionTarea', checked: false},
+    {name: 'encargadoCliente', db: 'encargadoCliente', checked: false},
+    {name: 'fechaEjecucion', db: 'fechaEjecucion', checked: false},
+    {name: 'confirmacionRecibido', db: 'confirmacionRecibido', checked: false},
+    {name: 'comentarioSupervisor', db: 'comentarioSupervisor', checked: false},
+    {name: 'numeroOferta', db: 'numeroOferta', checked: false},
+    {name: 'modalidad', db: 'modalidad', checked: false},
+    {name: 'precioUnidadProveedor', db: 'precioUnidadProveedor', checked: false},
+    {name: 'precioTotalProveedor', db: 'precioTotalProveedor', checked: false},
+    {name: 'precioUnidadVenta', db: 'precioUnidadVenta', checked: false},
+    {name: 'precioTotalVenta', db: 'precioTotalVenta', checked: false},
+    {name: 'precioUnidadCliente', db: 'precioUnidadCliente', checked: false},
+    {name: 'precioTotalCliente', db: 'precioTotalCliente', checked: false},
+    {name: 'margen', db: 'margen', checked: false},
+    {name: 'tipoAdquisicion', db: 'tipoAdquisicion', checked: false},
+    {name: 'proveedor', db: 'proveedor', checked: false},
+    {name: 'tasOfertaAnterior', db: 'tasOfertaAnterior', checked: false},
+    {name: 'fechaDespachoSupervisor', db: 'fechaDespachoSupervisor', checked: false},
+    {name: 'semanaDespachoSupervisor', db: 'semanaDespachoSupervisor', checked: false},
+    {name: 'fechaDespachoCompras', db: 'fechaDespachoCompras', checked: false},
+    {name: 'semanaDespachoCompras', db: 'semanaDespachoCompras', checked: false},
+    {name: 'fechaRespuestaCompras', db: 'fechaRespuestaCompras', checked: false},
+    {name: 'semanaRespuestaCompras', db: 'semanaRespuestaCompras', checked: false},
+    {name: 'fechaEnvioOfertaCliente', db: 'fechaEnvioOfertaCliente', checked: false},
+    {name: 'semanaEnvioOfertaCliente', db: 'semanaEnvioOfertaCliente', checked: false},
+    {name: 'fechaEnvioOfertaClienteNegociada', db: 'fechaEnvioOfertaClienteNegociada', checked: false},
+    {name: 'semanaEnvioOfertaClienteNegociada', db: 'semanaEnvioOfertaClienteNegociada', checked: false},
+    {name: 'fechaRespuestaCliente', db: 'fechaRespuestaCliente', checked: false},
+    {name: 'semanaRespuestaCliente', db: 'semanaRespuestaCliente', checked: false},
+    {name: 'fechaRespuestaClienteNegociada', db: 'fechaRespuestaClienteNegociada', checked: false},
+    {name: 'semanaRespuestaClienteNegociada', db: 'semanaRespuestaClienteNegociada', checked: false},
+    {name: 'tipoRespuestaCliente', db: 'tipoRespuestaCliente', checked: false},
+    {name: 'tipoRespuestaClienteNegociada', db: 'tipoRespuestaClienteNegociada', checked: false},
+    {name: 'po', db: 'po', checked: false},
+    {name: 'fechaPo', db: 'fechaPo', checked: false},
+    {name: 'valorPo', db: 'valorPo', checked: false},
+    {name: 'comentarioAnalista', db: 'comentarioAnalista', checked: false},
+    {name: 'subestadoOferta', db: 'subestadoOferta', checked: false},
+    {name: 'estadoOferta', db: 'estadoOferta', checked: false},
+    {name: 'fechaEntregaAlmacen', db: 'fechaEntregaAlmacen', checked: false},
+    {name: 'comentarioAlmacenista', db: 'comentarioAlmacenista', checked: false},
+    {name: 'comentarioCoordinador', db: 'comentarioCoordinador', checked: false},
+    {name: 'tipoElemento', db: 'tipoElemento', checked: false},
+    {name: 'valorConciliadoCliente', db: 'valorConciliadoCliente', checked: false},
+    {name: 'fechaConciliadoCliente', db: 'fechaConciliadoCliente', checked: false},
+    {name: 'comentarioFacturador', db: 'comentarioFacturador', checked: false},
+    {name: 'fechaEnvioActaSmu', db: 'fechaEnvioActaSmu', checked: false},
+    {name: 'comentarioActa', db: 'comentarioActa', checked: false},
+    {name: 'fechaFirmaActaSmu', db: 'fechaFirmaActaSmu', checked: false},
+    {name: 'fechaGrSmu', db: 'fechaGrSmu', checked: false},
   ];
 
   constructor(
@@ -113,76 +117,105 @@ export class ExportComponent implements OnInit {
     private route: ActivatedRoute,
     private requestsService: RequestsService,
     private offersService: OffersService,
+    private authService: AuthService,
     private appService: AppService
   ) {
-    this.currentUser = this.route.snapshot.queryParams;
-    this.modelToExport = localStorage.getItem('currentExport');
-    // Requests logic
-    if (this.modelToExport === 'requests') {
-      this.requestsService.getRequests()
-        .subscribe(res => {
-          // Filter requests by rol
-          let filteredRequests = [];
-          if (this.currentUser.Administrador) {
-            this.requests = res.data.solicitudes;
-          } else if (this.currentUser.Supervisor) {
-            for (let i = 0; i < res.data.solicitudes.length; i++) {
-              if (res.data.solicitudes[i].supervisorId == this.currentUser.id) {
-                filteredRequests.push(res.data.solicitudes[i]);
-              }
+
+    this.appService.validateSecurity(this.route.snapshot.routeConfig.path, true)
+      .then(res => {
+        // Get cols offer
+        let data = res[1].colsOffer;
+        // Loop cols offer from server
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].permissions.length; j++) {
+            // Update permissionsFields object
+            if (this.permissionsFields[data[i].db] === undefined) {
+              debugger
             }
-            this.requests = filteredRequests;
-          } else if (this.currentUser.Analista) {
-            for (let i = 0; i < res.data.solicitudes.length; i++) {
-              if (res.data.solicitudes[i].analistaId === this.currentUser.id) {
-                filteredRequests.push(res.data.solicitudes[i]);
-              }
-            }
-            this.requests = filteredRequests;
+            this.permissionsFields[data[i].db][data[i].permissions[j].name] = data[i].permissions[j].checked;
           }
-        }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);
-        });
-    }
-    // Offer logic
-    else if (this.modelToExport === 'offers') {
-      this.offersService.getOffers()
-        .subscribe(res => {
-          // Filter offers by rol
-          let filteredOffers = [];
-          if (this.currentUser.Administrador) {
-            this.offers = res.data.ofertas;
-          } else if (this.currentUser.Supervisor) {
-            for (let i = 0; i < res.data.ofertas.length; i++) {
-              if (res.data.ofertas[i].ordenSuministro) {
-                if (res.data.ofertas[i].ordenSuministro.solicitud.supervisorId == this.currentUser.id) {
-                  filteredOffers.push(res.data.ofertas[i]);
+        }
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Validación de seguridad', error);
+      })
+
+    this.authService.currentUser()
+      .subscribe(res => {
+        this.currentUser = res;
+        this.modelToExport = localStorage.getItem('currentExport');
+        // Requests logic
+        if (this.modelToExport === 'requests') {
+          this.requestsService.getRequests()
+            .subscribe(res => {
+              // Filter requests by rol
+              let filteredRequests = [];
+              if (this.currentUser.roles.Administrador) {
+                this.requests = res.data.solicitudes;
+              } else if (this.currentUser.roles.Supervisor) {
+                for (let i = 0; i < res.data.solicitudes.length; i++) {
+                  if (res.data.solicitudes[i].supervisorId == this.currentUser.id) {
+                    filteredRequests.push(res.data.solicitudes[i]);
+                  }
                 }
-              } else if (res.data.ofertas[i].ordenServicio) {
-                if (res.data.ofertas[i].ordenServicio.solicitud.supervisorId == this.currentUser.id) {
-                  filteredOffers.push(res.data.ofertas[i]);
+                this.requests = filteredRequests;
+              } else if (this.currentUser.roles.Analista) {
+                for (let i = 0; i < res.data.solicitudes.length; i++) {
+                  if (res.data.solicitudes[i].analistaId === this.currentUser.id) {
+                    filteredRequests.push(res.data.solicitudes[i]);
+                  }
                 }
+                this.requests = filteredRequests;
               }
-            }
-            this.offers = filteredOffers;
-          } else if (this.currentUser.Analista) {
-            for (let i = 0; i < res.data.ofertas.length; i++) {
-              if (res.data.ofertas[i].ordenSuministro) {
-                if (res.data.ofertas[i].ordenSuministro.solicitud.analistaId == this.currentUser.id) {
-                  filteredOffers.push(res.data.ofertas[i]);
+            }, error => {
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);
+            });
+        }
+        // Offer logic
+        else if (this.modelToExport === 'offers') {
+          this.offersService.getOffers()
+            .subscribe(res => {
+              // Filter offers by rol
+              let filteredOffers = [];
+              if (this.currentUser.roles.Administrador) {
+                this.offers = res.data.ofertas;
+              } else if (this.currentUser.roles.Supervisor) {
+                for (let i = 0; i < res.data.ofertas.length; i++) {
+                  if (res.data.ofertas[i].ordenSuministro) {
+                    if (res.data.ofertas[i].ordenSuministro.solicitud.supervisorId == this.currentUser.id) {
+                      filteredOffers.push(res.data.ofertas[i]);
+                    }
+                  } else if (res.data.ofertas[i].ordenServicio) {
+                    if (res.data.ofertas[i].ordenServicio.solicitud.supervisorId == this.currentUser.id) {
+                      filteredOffers.push(res.data.ofertas[i]);
+                    }
+                  }
                 }
-              } else if (res.data.ofertas[i].ordenServicio) {
-                if (res.data.ofertas[i].ordenServicio.solicitud.analistaId == this.currentUser.id) {
-                  filteredOffers.push(res.data.ofertas[i]);
+                this.offers = filteredOffers;
+              } else if (this.currentUser.roles.Analista) {
+                for (let i = 0; i < res.data.ofertas.length; i++) {
+                  if (res.data.ofertas[i].ordenSuministro) {
+                    if (res.data.ofertas[i].ordenSuministro.solicitud.analistaId == this.currentUser.id) {
+                      filteredOffers.push(res.data.ofertas[i]);
+                    }
+                  } else if (res.data.ofertas[i].ordenServicio) {
+                    if (res.data.ofertas[i].ordenServicio.solicitud.analistaId == this.currentUser.id) {
+                      filteredOffers.push(res.data.ofertas[i]);
+                    }
+                  }
                 }
+                this.offers = filteredOffers;
+              } else {
+                this.offers = res.data.ofertas;
               }
-            }
-            this.offers = filteredOffers;
-          }
-        }, error => {
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
-        });
-    }
+            }, error => {
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
+            });
+        }
+      }, error => {
+        debugger
+      })
+
+
   }
 
   ngOnInit() { }
@@ -197,7 +230,8 @@ export class ExportComponent implements OnInit {
       }
       else if (this.modelToExport === 'offers') {
         for (let i = 0; i < this.columnsOffer.length; i++) {
-          this.columnsOffer[i].checked = true;
+          if (this.permissionsFields[this.columnsOffer[i].db].leer)
+            this.columnsOffer[i].checked = true;
         }
       }
     } else {
@@ -251,7 +285,7 @@ export class ExportComponent implements OnInit {
         this.fieldsModeltSelected.push(this.columnsOffer[i].name);
       }
     }
-    // Build offerss array filtering by selected columns
+    // Build offers array filtering by selected columns
     for (let j = 0; j < this.offers.length; j++) {
       let tempData = {};
       for (let k = 0; k < this.fieldsModeltSelected.length; k++) {
@@ -295,6 +329,9 @@ export class ExportComponent implements OnInit {
     this.appService.exportAsExcelFile(this.dataBuildModel, 'ofertas');
   }
 
-}
+  validateFieldShow(field: string) {
+    if (this.permissionsFields[field].leer) return true
+    else return false
+  }
 
-// { name: 'suministroServicioComentario', checked: false },
+}

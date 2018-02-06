@@ -151,7 +151,7 @@ export class OffersComponent implements OnInit, AfterViewInit {
 
   export() {
     localStorage.setItem('currentExport', 'offers');
-    this.router.navigate(['dashboard/exportar'], { queryParams: this.currentUser.roles, skipLocationChange: true });
+    this.router.navigate(['dashboard/exportar']);
   }
 
   isArray(obj: any) {

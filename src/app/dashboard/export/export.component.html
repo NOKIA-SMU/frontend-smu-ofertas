@@ -28,9 +28,11 @@
       </mat-list-option>
     </mat-selection-list>
     <mat-selection-list #exportOffers>
-      <mat-list-option *ngFor="let item of columnsOffer" [selected]="item.checked" (click)="selectColRow(item)">
-        {{item.name}}
-      </mat-list-option>
+      <ng-container *ngFor="let item of columnsOffer">
+        <mat-list-option *ngIf="validateFieldShow(item.db)" [selected]="item.checked" (click)="selectColRow(item)">
+          {{item.name}}
+        </mat-list-option>
+      </ng-container>
     </mat-selection-list>
 
     <div class="footer-buttom">
