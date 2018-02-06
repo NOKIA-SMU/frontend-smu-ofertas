@@ -151,7 +151,7 @@ export class AdminService {
   }
 
   getProfilesCustomerManager() {
-    this.profilesCol = this.afs.collection<Profile>('profiles', ref => ref.where('roles.Encargado cliente', '==', true) );
+    this.profilesCol = this.afs.collection<Profile>('profiles', ref => ref.where('roles.Encargado Cliente', '==', true) );
     return this.profilesCol.snapshotChanges()
       .map(actions => {
         return actions.map(res => {
