@@ -22,7 +22,9 @@ export class RequestsComponent implements OnInit {
     'estacion',
     'subsistema',
     'prioridad',
-    'estadoSolicitud'
+    'estadoSolicitud',
+    'creado',
+    'actualizado'
   ];
 
   dataSource = new MatTableDataSource();
@@ -104,7 +106,6 @@ export class RequestsComponent implements OnInit {
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de usuario actual', error);
         })
-
   }
 
   applyFilter(filterValue: string) {

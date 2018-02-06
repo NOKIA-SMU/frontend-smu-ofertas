@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DashboardRoutingModule } from './dashboard.routing.module'
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -146,6 +146,7 @@ export class Dictionary implements PipeTransform {
     OfferOperateComponent,
     ExportComponent],
   providers: [
+    DatePipe,
     DashboardService,
     StationsService,
     SubsystemsService,

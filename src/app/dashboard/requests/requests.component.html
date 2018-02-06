@@ -60,6 +60,16 @@
         <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.estadoSolicitud}} </mat-cell>
       </ng-container>
+      <!-- CREATE DATE -->
+      <ng-container matColumnDef="creado">
+        <mat-header-cell *matHeaderCellDef> Creado </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.creado | date:'medium'}} </mat-cell>
+      </ng-container>
+      <!-- UPDATE DATE -->
+      <ng-container matColumnDef="actualizado">
+        <mat-header-cell *matHeaderCellDef> Actualizado </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.actualizado | date:'medium'}} </mat-cell>
+      </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row);" [ngClass]="{ active : i == currentRowSelect}"></mat-row>

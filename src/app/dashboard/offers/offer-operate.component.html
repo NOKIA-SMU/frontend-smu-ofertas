@@ -192,7 +192,7 @@
   </mat-form-field>
   <!-- RECONCILED VALUE CLIENT-->
   <mat-form-field *ngIf="permissionsFields.valorPo.editar">
-    <input matInput type="number" placeholder="Valor PO" name="valorPo" [(ngModel)]="offer.valorPo">
+    <input matInput type="number" placeholder="Valor PO {{offer.valorPo | number}}" name="valorPo" [(ngModel)]="offer.valorPo">
   </mat-form-field>
   <!-- COMMENT ANALYST -->
   <mat-form-field *ngIf="permissionsFields.comentarioAnalista.editar">
@@ -245,7 +245,7 @@
   </mat-form-field>
   <!-- RECONCILED VALUE CLIENT-->
   <mat-form-field *ngIf="permissionsFields.valorConciliadoCliente.editar">
-    <input matInput type="number" placeholder="Valor conciliado cliente" name="valorConciliadoCliente" [(ngModel)]="offer.valorConciliadoCliente">
+    <input matInput type="number" placeholder="Valor conciliado cliente {{offer.valorConciliadoCliente | number}}" name="valorConciliadoCliente" [(ngModel)]="offer.valorConciliadoCliente">
   </mat-form-field>
   <!-- DATE RECONCILED CLIENTE -->
   <mat-form-field *ngIf="permissionsFields.fechaConciliadoCliente.editar">

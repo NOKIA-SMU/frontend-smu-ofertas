@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { PermissionsFields } from '../offers/offer.data';
 import { RequestsService } from '../requests/requests.service';
 import { OffersService } from '../offers/offers.service';
@@ -31,7 +32,9 @@ export class ExportComponent implements OnInit {
     {name: 'estacion', checked: false},
     {name: 'subsistema', checked: false},
     {name: 'prioridad', checked: false},
-    {name: 'estadoSolicitud', checked: false}
+    {name: 'estadoSolicitud', checked: false},
+    {name: 'creado', checked: false},
+    {name: 'actualizado', checked: false}
   ];
 
   columnsOffer = [
@@ -115,6 +118,7 @@ export class ExportComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private datePipe: DatePipe,
     private requestsService: RequestsService,
     private offersService: OffersService,
     private authService: AuthService,
@@ -269,6 +273,8 @@ export class ExportComponent implements OnInit {
       for (let k = 0; k < this.fieldsModeltSelected.length; k++) {
         if (this.fieldsModeltSelected[k] === 'estacion' || this.fieldsModeltSelected[k] === 'subsistema')
           tempData[this.fieldsModeltSelected[k]] = this.requests[j][this.fieldsModeltSelected[k]].nombre;
+        else if (this.fieldsModeltSelected[k] === 'creado' || this.fieldsModeltSelected[k] === 'actualizado')
+          tempData[this.fieldsModeltSelected[k]] = this.datePipe.transform(this.requests[j][this.fieldsModeltSelected[k]], 'MMM d, y, h:mm:ss a');
         else
           tempData[this.fieldsModeltSelected[k]] = this.requests[j][this.fieldsModeltSelected[k]];
       }

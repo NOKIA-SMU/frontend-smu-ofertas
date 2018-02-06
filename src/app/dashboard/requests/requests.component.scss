@@ -64,28 +64,22 @@ form {
         > .mat-header-cell, > .mat-cell {
           flex: 0 0 150px;
           flex-wrap: wrap;
-          &:nth-child(1) {
+          &:nth-child(1),
+          &:nth-child(8) {
             flex: 0 0 70px;
           }
           &:nth-child(5),{
             flex: 0 0 300px;
           }
-          &:nth-child(8),{
-            flex: 0 0 100px;
+          &:nth-child(9),
+          &:nth-child(10) {
+            flex: 0 0 200px;
           }
           // &:nth-child(9),{
           //   flex: 0 0 450px;
           // }
           // &:nth-child(10),{
           //   flex: 0 0 100px;
-          // }
-          // .array {
-          //   // border: 1px solid red;
-          //   border-left: 1px solid rgba(0, 0, 0, 0.12);
-          //   border-right: 1px solid rgba(0, 0, 0, 0.12);
-          //   padding: 5px;
-          //   width: 100%;
-          //   overflow: auto;
           // }
         }
       }
