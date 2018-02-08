@@ -39,80 +39,80 @@ export class ExportComponent implements OnInit {
 
   columnsOffer = [
     {name: 'id', db: 'id', checked: false},
-    {name: 'solicitudId', db: 'solicitudId', checked: false},
+    {name: 'solicitud id', db: 'solicitudId', checked: false},
     {name: 'supervisor', db: 'solicitudSupervisor', checked: false},
     {name: 'analista', db: 'solicitudAnalista', checked: false},
-    {name: 'estacionNombre', db: 'solicitudEstacionNombre', checked: false},
-    {name: 'estacionRegion', db: 'solicitudEstacionRegion', checked: false},
-    {name: 'estacionDepartamento', db: 'solicitudEstacionDepartamento', checked: false},
-    {name: 'estacionCiudad', db: 'solicitudEstacionCiudad', checked: false},
-    {name: 'suministroServicioId', db: 'suministroServicioId', checked: false},
-    {name: 'suministroServicioNombre', db: 'suministroServicioNombre', checked: false},
-    {name: 'suministroServicioDescripcion', db: 'suministroServicioDescripcion', checked: false},
-    {name: 'suministroServicioCodigoLpu', db: 'suministroServicioCodigoLpu', checked: false},
-    {name: 'suministroServicioDescripcionLpu', db: 'suministroServicioDescripcionLpu', checked: false},
-    {name: 'suministroServicioValorLpu', db: 'suministroServicioValorLpu', checked: false},
-    {name: 'suministroServicioUnidad', db: 'suministroServicioUnidad', checked: false},
-    {name: 'suministroServicioQty', db: 'suministroServicioQty', checked: false},
-    {name: 'suministroServicioComentario', db: 'suministroServicioComentario', checked: false},
-    {name: 'tipoSitio', db: 'tipoSitio', checked: false},
-    {name: 'tipoAcceso', db: 'tipoAcceso', checked: false},
-    {name: 'naturalezaServicio', db: 'naturalezaServicio', checked: false},
-    {name: 'descripcionOds', db: 'descripcionOds', checked: false},
-    {name: 'fechaRecibidoOds', db: 'fechaRecibidoOds', checked: false},
-    {name: 'semanaRecibidoOds', db: 'semanaRecibidoOds', checked: false},
-    {name: 'tipoOferta', db: 'tipoOferta', checked: false},
-    {name: 'workOrder', db: 'workOrder', checked: false},
-    {name: 'descripcionTarea', db: 'descripcionTarea', checked: false},
-    {name: 'encargadoCliente', db: 'encargadoCliente', checked: false},
-    {name: 'fechaEjecucion', db: 'fechaEjecucion', checked: false},
-    {name: 'confirmacionRecibido', db: 'confirmacionRecibido', checked: false},
-    {name: 'comentarioSupervisor', db: 'comentarioSupervisor', checked: false},
-    {name: 'numeroOferta', db: 'numeroOferta', checked: false},
+    {name: 'estacion nombre', db: 'solicitudEstacionNombre', checked: false},
+    {name: 'estacion region', db: 'solicitudEstacionRegion', checked: false},
+    {name: 'estacion departamento', db: 'solicitudEstacionDepartamento', checked: false},
+    {name: 'estacion ciudad', db: 'solicitudEstacionCiudad', checked: false},
+    {name: 'suministro servicio id', db: 'suministroServicioId', checked: false},
+    {name: 'suministro servicio nombre', db: 'suministroServicioNombre', checked: false},
+    {name: 'suministro servicio descripcion', db: 'suministroServicioDescripcion', checked: false},
+    {name: 'suministro servicio codigo lpu', db: 'suministroServicioCodigoLpu', checked: false},
+    {name: 'suministro servicio descripcion lpu', db: 'suministroServicioDescripcionLpu', checked: false},
+    {name: 'suministro servicio valor lpu', db: 'suministroServicioValorLpu', checked: false},
+    {name: 'suministro servicio unidad', db: 'suministroServicioUnidad', checked: false},
+    {name: 'suministro servicio qty', db: 'suministroServicioQty', checked: false},
+    {name: 'suministro servicio comentario', db: 'suministroServicioComentario', checked: false},
+    {name: 'tipo sitio', db: 'tipoSitio', checked: false},
+    {name: 'tipo acceso', db: 'tipoAcceso', checked: false},
+    {name: 'naturaleza servicio', db: 'naturalezaServicio', checked: false},
+    {name: 'descripcion ods', db: 'descripcionOds', checked: false},
+    {name: 'fecha recibido ods', db: 'fechaRecibidoOds', checked: false},
+    {name: 'semana recibido ods', db: 'semanaRecibidoOds', checked: false},
+    {name: 'tipo oferta', db: 'tipoOferta', checked: false},
+    {name: 'work order', db: 'workOrder', checked: false},
+    {name: 'descripcion tarea', db: 'descripcionTarea', checked: false},
+    {name: 'encargado cliente', db: 'encargadoCliente', checked: false},
+    {name: 'fecha ejecucion', db: 'fechaEjecucion', checked: false},
+    {name: 'confirmacion recibido', db: 'confirmacionRecibido', checked: false},
+    {name: 'comentario supervisor', db: 'comentarioSupervisor', checked: false},
+    {name: 'numero oferta', db: 'numeroOferta', checked: false},
     {name: 'modalidad', db: 'modalidad', checked: false},
-    {name: 'precioUnidadProveedor', db: 'precioUnidadProveedor', checked: false},
-    {name: 'precioTotalProveedor', db: 'precioTotalProveedor', checked: false},
-    {name: 'precioUnidadVenta', db: 'precioUnidadVenta', checked: false},
-    {name: 'precioTotalVenta', db: 'precioTotalVenta', checked: false},
-    {name: 'precioUnidadCliente', db: 'precioUnidadCliente', checked: false},
-    {name: 'precioTotalCliente', db: 'precioTotalCliente', checked: false},
+    {name: 'precio unidad proveedor', db: 'precioUnidadProveedor', checked: false},
+    {name: 'precio total proveedor', db: 'precioTotalProveedor', checked: false},
+    {name: 'precio unidad venta', db: 'precioUnidadVenta', checked: false},
+    {name: 'precio total venta', db: 'precioTotalVenta', checked: false},
+    {name: 'precio unidad cliente', db: 'precioUnidadCliente', checked: false},
+    {name: 'precio total cliente', db: 'precioTotalCliente', checked: false},
     {name: 'margen', db: 'margen', checked: false},
-    {name: 'tipoAdquisicion', db: 'tipoAdquisicion', checked: false},
+    {name: 'tipo adquisicion', db: 'tipoAdquisicion', checked: false},
     {name: 'proveedor', db: 'proveedor', checked: false},
     {name: 'tasOfertaAnterior', db: 'tasOfertaAnterior', checked: false},
-    {name: 'fechaDespachoSupervisor', db: 'fechaDespachoSupervisor', checked: false},
-    {name: 'semanaDespachoSupervisor', db: 'semanaDespachoSupervisor', checked: false},
-    {name: 'fechaDespachoCompras', db: 'fechaDespachoCompras', checked: false},
-    {name: 'semanaDespachoCompras', db: 'semanaDespachoCompras', checked: false},
-    {name: 'fechaRespuestaCompras', db: 'fechaRespuestaCompras', checked: false},
-    {name: 'semanaRespuestaCompras', db: 'semanaRespuestaCompras', checked: false},
-    {name: 'fechaEnvioOfertaCliente', db: 'fechaEnvioOfertaCliente', checked: false},
-    {name: 'semanaEnvioOfertaCliente', db: 'semanaEnvioOfertaCliente', checked: false},
-    {name: 'fechaEnvioOfertaClienteNegociada', db: 'fechaEnvioOfertaClienteNegociada', checked: false},
-    {name: 'semanaEnvioOfertaClienteNegociada', db: 'semanaEnvioOfertaClienteNegociada', checked: false},
-    {name: 'fechaRespuestaCliente', db: 'fechaRespuestaCliente', checked: false},
-    {name: 'semanaRespuestaCliente', db: 'semanaRespuestaCliente', checked: false},
-    {name: 'fechaRespuestaClienteNegociada', db: 'fechaRespuestaClienteNegociada', checked: false},
-    {name: 'semanaRespuestaClienteNegociada', db: 'semanaRespuestaClienteNegociada', checked: false},
-    {name: 'tipoRespuestaCliente', db: 'tipoRespuestaCliente', checked: false},
-    {name: 'tipoRespuestaClienteNegociada', db: 'tipoRespuestaClienteNegociada', checked: false},
+    {name: 'fecha despacho supervisor', db: 'fechaDespachoSupervisor', checked: false},
+    {name: 'semana despacho supervisor', db: 'semanaDespachoSupervisor', checked: false},
+    {name: 'fecha despacho compras', db: 'fechaDespachoCompras', checked: false},
+    {name: 'semana despacho compras', db: 'semanaDespachoCompras', checked: false},
+    {name: 'fecha respuesta compras', db: 'fechaRespuestaCompras', checked: false},
+    {name: 'semana respuesta compras', db: 'semanaRespuestaCompras', checked: false},
+    {name: 'fecha envio oferta cliente', db: 'fechaEnvioOfertaCliente', checked: false},
+    {name: 'semana envio oferta cliente', db: 'semanaEnvioOfertaCliente', checked: false},
+    {name: 'fecha envio oferta cliente negociada', db: 'fechaEnvioOfertaClienteNegociada', checked: false},
+    {name: 'semana envio oferta cliente negociada', db: 'semanaEnvioOfertaClienteNegociada', checked: false},
+    {name: 'fecha respuesta cliente', db: 'fechaRespuestaCliente', checked: false},
+    {name: 'semana respuesta cliente', db: 'semanaRespuestaCliente', checked: false},
+    {name: 'fecha respuesta cliente negociada', db: 'fechaRespuestaClienteNegociada', checked: false},
+    {name: 'semana respuesta cliente negociada', db: 'semanaRespuestaClienteNegociada', checked: false},
+    {name: 'tipo respuesta cliente', db: 'tipoRespuestaCliente', checked: false},
+    {name: 'tipo respuesta cliente negociada', db: 'tipoRespuestaClienteNegociada', checked: false},
     {name: 'po', db: 'po', checked: false},
-    {name: 'fechaPo', db: 'fechaPo', checked: false},
-    {name: 'valorPo', db: 'valorPo', checked: false},
-    {name: 'comentarioAnalista', db: 'comentarioAnalista', checked: false},
-    {name: 'subestadoOferta', db: 'subestadoOferta', checked: false},
-    {name: 'estadoOferta', db: 'estadoOferta', checked: false},
-    {name: 'fechaEntregaAlmacen', db: 'fechaEntregaAlmacen', checked: false},
-    {name: 'comentarioAlmacenista', db: 'comentarioAlmacenista', checked: false},
-    {name: 'comentarioCoordinador', db: 'comentarioCoordinador', checked: false},
-    {name: 'tipoElemento', db: 'tipoElemento', checked: false},
-    {name: 'valorConciliadoCliente', db: 'valorConciliadoCliente', checked: false},
-    {name: 'fechaConciliadoCliente', db: 'fechaConciliadoCliente', checked: false},
-    {name: 'comentarioFacturador', db: 'comentarioFacturador', checked: false},
-    {name: 'fechaEnvioActaSmu', db: 'fechaEnvioActaSmu', checked: false},
-    {name: 'comentarioActa', db: 'comentarioActa', checked: false},
-    {name: 'fechaFirmaActaSmu', db: 'fechaFirmaActaSmu', checked: false},
-    {name: 'fechaGrSmu', db: 'fechaGrSmu', checked: false},
+    {name: 'fecha po', db: 'fechaPo', checked: false},
+    {name: 'valor po', db: 'valorPo', checked: false},
+    {name: 'comentario analista', db: 'comentarioAnalista', checked: false},
+    {name: 'subestado oferta', db: 'subestadoOferta', checked: false},
+    {name: 'estado oferta', db: 'estadoOferta', checked: false},
+    {name: 'fecha entrega almacen', db: 'fechaEntregaAlmacen', checked: false},
+    {name: 'comentario almacenista', db: 'comentarioAlmacenista', checked: false},
+    {name: 'comentario coordinador', db: 'comentarioCoordinador', checked: false},
+    {name: 'tipo elemento', db: 'tipoElemento', checked: false},
+    {name: 'valor conciliado cliente', db: 'valorConciliadoCliente', checked: false},
+    {name: 'fecha conciliado cliente', db: 'fechaConciliadoCliente', checked: false},
+    {name: 'comentario facturador', db: 'comentarioFacturador', checked: false},
+    {name: 'fecha envio acta smu', db: 'fechaEnvioActaSmu', checked: false},
+    {name: 'comentario acta', db: 'comentarioActa', checked: false},
+    {name: 'fecha firma acta smu', db: 'fechaFirmaActaSmu', checked: false},
+    {name: 'fecha gr smu', db: 'fechaGrSmu', checked: false},
   ];
 
   constructor(
@@ -288,7 +288,7 @@ export class ExportComponent implements OnInit {
     // Extract columns selected for offers
     for (let i = 0; i < this.columnsOffer.length; i++) {
       if (this.columnsOffer[i].checked) {
-        this.fieldsModeltSelected.push(this.columnsOffer[i].name);
+        this.fieldsModeltSelected.push(this.columnsOffer[i].db);
       }
     }
     // Build offers array filtering by selected columns
@@ -297,17 +297,17 @@ export class ExportComponent implements OnInit {
       for (let k = 0; k < this.fieldsModeltSelected.length; k++) {
         if (this.fieldsModeltSelected[k] === 'solicitudId')
           tempData[this.fieldsModeltSelected[k]] = this.offers[j].idSolicitud;
-        else if (this.fieldsModeltSelected[k] === 'supervisor')
+        else if (this.fieldsModeltSelected[k] === 'solicitudSupervisor')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.supervisor : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.supervisor;
-        else if (this.fieldsModeltSelected[k] === 'analista')
+        else if (this.fieldsModeltSelected[k] === 'solicitudAnalista')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.analista : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.analista;
-        else if (this.fieldsModeltSelected[k] === 'estacionNombre')
+        else if (this.fieldsModeltSelected[k] === 'solicitudEstacionNombre')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.nombre : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.nombre;
-        else if (this.fieldsModeltSelected[k] === 'estacionRegion')
+        else if (this.fieldsModeltSelected[k] === 'solicitudEstacionRegion')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.region : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.region;
-        else if (this.fieldsModeltSelected[k] === 'estacionDepartamento')
+        else if (this.fieldsModeltSelected[k] === 'solicitudEstacionDepartamento')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.departamento : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.departamento;
-        else if (this.fieldsModeltSelected[k] === 'estacionCiudad')
+        else if (this.fieldsModeltSelected[k] === 'solicitudEstacionCiudad')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.solicitud.estacion.ciudad : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.solicitud.estacion.ciudad;
         else if (this.fieldsModeltSelected[k] === 'suministroServicioId')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.id : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.id;
@@ -324,9 +324,9 @@ export class ExportComponent implements OnInit {
         else if (this.fieldsModeltSelected[k] === 'suministroServicioUnidad')
           this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.unidad : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.unidad;
         else if (this.fieldsModeltSelected[k] === 'suministroServicioQty')
-          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.cantidad : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.cantidad;
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.cantidad : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.cantidad;
         else if (this.fieldsModeltSelected[k] === 'suministroServicioComentario')
-          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.suministro.comentario : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.servicio.comentario;
+          this.offers[j].ordenSuministro ? tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenSuministro.comentario : tempData[this.fieldsModeltSelected[k]] = this.offers[j].ordenServicio.comentario;
         else
           tempData[this.fieldsModeltSelected[k]] = this.offers[j][this.fieldsModeltSelected[k]];
       }
