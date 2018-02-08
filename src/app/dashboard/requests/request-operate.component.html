@@ -26,7 +26,7 @@
     <!-- ANALYST -->
     <mat-form-field>
       <ng-container>
-        <mat-select placeholder="Analista" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
+        <mat-select placeholder="Analista - {{selectedAnalyst.fullName}}" name="analista" [(ngModel)]="selectedAnalyst" (selectionChange)="selectAnalyst($event, selectedAnalyst)" required>
           <mat-option *ngFor="let analyst of analysts" [value]="analyst">
             {{analyst.fullName}}
           </mat-option>

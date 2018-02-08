@@ -202,7 +202,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
             prioridad: res.data.solicitud.prioridad,
             estadoSolicitud: res.data.solicitud.estadoSolicitud
           }
-          // this.selectedAnalyst = { id: res.data.solicitud.analistaId, firstName: res.data.solicitud.analista };
+          this.selectedAnalyst = { id: res.data.solicitud.analistaId, fullName: res.data.solicitud.analista };
           // Get all supplies by subsystem
           this.supplies = [];
           this.isLoadingResultsSupplies = true;
@@ -424,11 +424,10 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
         this.request.servicios = this.normalizeList(this.selectionServices.selected);
       else
         this.request.servicios = []
+
       if (this.isNew) {
         this.request.supervisorId = this.currentUser.id;
-        this.request.supervisor = `${this.currentUser.firstName} ${this.currentUser.lastName}`;
-      }
-      if (this.isNew) {
+        this.request.supervisor = this.currentUser.fullName;
         this.requestsService.createRequest(this.request)
           .subscribe(res => {
             if (res.data.createSolicitud.status == 200) {
