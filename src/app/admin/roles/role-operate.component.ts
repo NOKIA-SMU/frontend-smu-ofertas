@@ -215,7 +215,6 @@ export class RoleOperateComponent implements OnInit {
           this.adminService.updatePermissionsToRole(this.role.id, this.actualColPermissions, permissionsSelected)
           .then(res => {
               // Update columns offer to role
-              debugger
               this.adminService.updateColsOfferToRole(this.role.id, this.actualColOfferRoles, colsSelected)
                 .then(res => {
                   this.router.navigate(['/admin/roles']);

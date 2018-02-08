@@ -10,6 +10,7 @@ import { AdminComponent } from './admin.component';
 import { RolesComponent } from './roles/roles.component';
 import { RoleOperateComponent } from './roles/role-operate.component';
 import { PermissionsComponent } from './permissions/permissions.component';
+import { PermissionOperateComponent } from './permissions/permission-operate.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { ProfileOperateComponent } from './profiles/profile-operate.component';
 import { AdminService } from './admin.service';
@@ -21,7 +22,7 @@ import { AdminService } from './admin.service';
     AdminRoutingModule,
     MaterialModule
   ],
-  declarations: [AdminComponent, PermissionsComponent, RolesComponent, RoleOperateComponent, ProfilesComponent, ProfileOperateComponent],
+  declarations: [AdminComponent, PermissionsComponent, PermissionOperateComponent, RolesComponent, RoleOperateComponent, ProfilesComponent, ProfileOperateComponent],
   providers: [AdminService]
 })
 

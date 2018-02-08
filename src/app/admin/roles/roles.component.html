@@ -28,7 +28,7 @@
       <mat-row *matRowDef="let row; columns: roleColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
     </mat-table>
   </div>
-  <mat-paginator [pageSizeOptions]="[5, 15, 50]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
 </div>
 
   <!-- <button class="mat-primary" mat-raised-button (click)="appService.showSwal('auto-close')">Auto close!</button>

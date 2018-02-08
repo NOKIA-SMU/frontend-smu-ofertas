@@ -21,7 +21,7 @@ export interface Role {
 }
 
 export interface Permission {
-	id: string;
+	id?: string;
 	name: string;
 	model: string;
 	checked?: boolean;

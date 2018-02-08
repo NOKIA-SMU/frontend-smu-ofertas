@@ -1,0 +1,27 @@
+.tableContainer.permissions {
+	min-height: initial;
+}
+
+.mat-table {
+  > .mat-header-row, > .mat-row {
+    > .mat-header-cell, > .mat-cell {
+      flex: 0 0 33.333%;
+    }
+	}
+	ul {
+		list-style: none;
+		display: flex;
+		li {
+			margin: 0 5px;
+		}
+	}
+}
+
+h2.title, h4 {
+	color: #124191;
+}
+
+h3 {
+	font-size: 1.2rem;
+	color: #1a4999;
+}

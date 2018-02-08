@@ -1,0 +1,24 @@
+<h2 class="title">Permiso
+  <span *ngIf="!isNew"> {{data.name}}</span>
+</h2>
+<hr>
+<br>
+<br>
+<ng-container *ngIf="permission">
+  <form #permissionForm="ngForm" (ngSubmit)="savePermission(permission)">
+    <mat-form-field>
+      <mat-select placeholder="Nombre" name="name" [(ngModel)]="permission.name">
+        <mat-option *ngFor="let item of crud" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Modelo" name="model" [(ngModel)]="permission.model" required>
+    </mat-form-field>
+    <div class="footer-buttom">
+      <button mat-raised-button type="submit" color="primary">Guardar permiso</button>
+      <button mat-raised-button color="danger" routerLink="/admin/permisos">Cancelar</button>
+    </div>
+  </form>
+</ng-container>

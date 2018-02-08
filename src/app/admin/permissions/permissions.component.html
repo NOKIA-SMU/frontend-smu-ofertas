@@ -1,57 +1,37 @@
-<h2 class="title">Permisos</h2>
-<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="changeTab($event)">
-  <mat-tab label="Permisos">
-    <ul *ngIf="listPermissions?.length > 0" class="listItems">
-      <li *ngFor="let permission of listPermissions" class="listItems__item">
-        <div class="data">
-          {{permission.name}} - {{permission.model}}
-        </div>
-        <div class="actions">
-          <a (click)="toggleFormUpdatePermission($event, permission)" class="material-icons blue">mode_edit</a>
-          <a (click)="deletePermission(permission)" class="material-icons red">delete</a>
-        </div>
-        <div *ngIf="isShowFormUpdatePermission && permissionToEdit.id == permission.id" class="editProfile">
-          <form #permissionForm="ngForm" (ngSubmit)="updatePermission(permission)">
-            <mat-form-field>
-              <mat-select placeholder="Nombre" name="namePermission" [(ngModel)]="permission.name">
-                <mat-option *ngFor="let item of crud" [value]="item">
-                  {{item}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-              <input matInput type="text" placeholder="Modelo" name="model" [(ngModel)]="permission.model" required>
-            </mat-form-field>
-            <div class="footer-buttom">
-              <button mat-raised-button type="submit" color="primary">Actualizar permiso</button>
-            </div>
-          </form>
-        </div>
-      </li>
-    </ul>
-  </mat-tab>
-  <mat-tab label="Crear permisos">
-    <br>
-    <div>
-      <form #permissionForm="ngForm" (ngSubmit)="createPermission(permission)">
-        <mat-form-field>
-          <mat-select placeholder="Nombre" name="name" [(ngModel)]="permission.name">
-            <mat-option *ngFor="let item of crud" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input matInput type="text" placeholder="Modelo" name="model" [(ngModel)]="permission.model" required>
-        </mat-form-field>
-        <div class="footer-buttom">
-          <button mat-raised-button type="submit" color="primary">Crear permiso</button>
-        </div>
-      </form>
+<div class="wrapper">
+  <nav class="wrapper__nav">
+    <i (click)="goToCreate()" class="material-icons">add_circle_outline</i>
+    <i *ngIf="currentRowSelect >= 0" (click)="goToEdit()" class="material-icons">mode_edit</i>
+    <i *ngIf="currentRowSelect >= 0" (click)="deletePermission()" class="material-icons">delete</i>
+  </nav>
+  <h2 class="title">Permisos</h2>
+  <mat-form-field style="width: 100%">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+  <div class="tableContainer mat-elevation-z3 roles">
+    <div class="example-loading-shade" *ngIf="isLoadingPermissions">
+      <mat-spinner></mat-spinner>
     </div>
-  </mat-tab>
-</mat-tab-group>
+    <mat-table [dataSource]="dataSourcePermissions" matSort>
+      <!-- MODEL -->
+      <ng-container matColumnDef="modelo">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.model}} </mat-cell>
+      </ng-container>
+      <!-- PERMISSION NAME -->
+      <ng-container matColumnDef="permiso">
+        <mat-header-cell *matHeaderCellDef> Permiso </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+      <!-- PERMISSION ID -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
 
-
+      <mat-header-row *matHeaderRowDef="permissionColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: permissionColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+</div>

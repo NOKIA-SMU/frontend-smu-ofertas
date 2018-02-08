@@ -5,8 +5,7 @@
 <br>
 <br>
 <ng-container *ngIf="role">
-  <!-- UPDATE ROLE -->
-  <form #createRoleFormr="ngForm" (ngSubmit)="saveRole(role)">
+  <form #createRoleForm="ngForm" (ngSubmit)="saveRole(role)">
     <h3>Nombre del role</h3>
     <mat-form-field>
       <input matInput type="text" placeholder="Nombre" name="nameRole" [(ngModel)]="role.name" required>
