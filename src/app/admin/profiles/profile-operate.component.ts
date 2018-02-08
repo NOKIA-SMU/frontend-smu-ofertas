@@ -17,9 +17,9 @@ export class ProfileOperateComponent implements OnInit {
   profile: Profile;
   roles: Role[];
   regions = [
-    'NOROCCIDENTE',
-    'SUROCCIDENTE',
-    'COSTA'
+    { name: 'NOROCCIDENTE', checked: false },
+    { name: 'SUROCCIDENTE', checked: false },
+    { name: 'COSTA', checked: false }
   ];
 
   constructor(
@@ -38,7 +38,7 @@ export class ProfileOperateComponent implements OnInit {
         lastName: this.data.lastName,
         email: this.data.email,
         phoneNumber: this.data.phoneNumber,
-        region: this.data.region,
+        regions: this.data.region,
         roles: this.data.roles
       }
       // Get all roles
@@ -72,6 +72,11 @@ export class ProfileOperateComponent implements OnInit {
   }
 
   updateProfile(event, profile: Profile) {
+    let userRegions = [];
+    for (let i = 0; i < this.regions.length; i++) {
+      if (this.regions[i].checked) userRegions.push(this.regions[i].name);
+    }
+    profile.regions = userRegions;
     profile.roles = {};
     let actualRoles = {}
     for (let i = 0; i < this.roles.length; i++) {

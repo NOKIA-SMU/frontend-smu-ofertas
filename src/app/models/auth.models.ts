@@ -8,7 +8,7 @@ export interface Profile {
 	phoneNumber: number;
 	email: string;
 	userId?: string;
-	region?: string;
+	regions?: string[];
 	roles?: any;
 	rolesParsed?: any;
 }

@@ -152,18 +152,19 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         this.currentUser = res
         // Filter stations by region
-        if (this.currentUser.region || this.currentUser.roles.Administrador) {
-          this.stationService.getStations(this.currentUser.region)
-            .subscribe(res => {
-              this.dataSource = new MatTableDataSource(res.data.estaciones);
+        if (this.currentUser.regions.length > 0) {
+          this.filterStationsByRegions(this.currentUser.regions)
+            .then(res => {
+              debugger
+              this.dataSource = new MatTableDataSource(res);
               this.dataSource.paginator = this.PagStations;
               this.dataSource.sort = this.sort;
               this.isLoadingResults = false;
             }, error => {
-              debugger
               this.isLoadingResults = false;
-              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones', error)
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones por región', error)
             })
+
         }
         else {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Este usuario no tiene asignada una región')
@@ -317,6 +318,27 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       this.isNew = true;
     }
   }
+
+  // Filter stations by regions
+  filterStationsByRegions(regions: any[]) {
+    return new Promise((resolve, reject) => {
+      let stationsFilteredByRegion = [];
+      for (let i = 0; i < regions.length; i++) {
+        this.stationService.getStations(regions[i])
+          .subscribe(res => {
+            for (let k = 0; k < res.data.estaciones.length; k++) {
+              stationsFilteredByRegion.push(res.data.estaciones[k])
+            }
+            resolve(stationsFilteredByRegion)
+          }, error => {
+            reject({
+              message: 'Error filter stations by regions'
+            })
+          })
+      }
+    })
+  }
+
   // Select row list stations
   selectRow(index, data) {
     this.request.estacion = {id: data.id, name: data.nombre}

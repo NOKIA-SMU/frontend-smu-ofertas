@@ -21,7 +21,7 @@ export class StationsService {
     this.userAuth = JSON.parse(localStorage.getItem('userAuth'));
   }
 
-  public getStations(filter) {
+  public getStations(filter?) {
     return this.apollo.watchQuery<any>({
       query: queryStations,
       variables: {
