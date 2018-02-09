@@ -155,19 +155,18 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
         if (this.currentUser.regions.length > 0) {
           this.filterStationsByRegions(this.currentUser.regions)
             .then(res => {
-              debugger
-              this.dataSource = new MatTableDataSource(res);
+              this.dataSource = new MatTableDataSource(res[0].data);
               this.dataSource.paginator = this.PagStations;
               this.dataSource.sort = this.sort;
               this.isLoadingResults = false;
             }, error => {
               this.isLoadingResults = false;
-              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones por región', error)
+              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones por región', error);
             })
-
         }
         else {
-          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Este usuario no tiene asignada una región')
+          let error = { message: 'User not found regions' };
+          this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Este usuario no tiene asignada una región', error);
         }
       })
     // Update request
@@ -329,7 +328,7 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
             for (let k = 0; k < res.data.estaciones.length; k++) {
               stationsFilteredByRegion.push(res.data.estaciones[k])
             }
-            resolve(stationsFilteredByRegion)
+            resolve([{ data: stationsFilteredByRegion }])
           }, error => {
             reject({
               message: 'Error filter stations by regions'

@@ -32,13 +32,19 @@ export class ProfileOperateComponent implements OnInit {
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
       this.data = this.route.snapshot.queryParams;
+      // Checked regions by default
+      for (let i = 0; i < this.data.regions.length; i++) {
+        for (let j = 0; j < this.regions.length; j++) {
+          if (this.data.regions[i] === this.regions[j].name) this.regions[j].checked = true;
+        }
+      }
       this.profile = {
         id: this.data.id,
         firstName: this.data.firstName,
         lastName: this.data.lastName,
         email: this.data.email,
         phoneNumber: this.data.phoneNumber,
-        regions: this.data.region,
+        regions: this.data.regions,
         roles: this.data.roles
       }
       // Get all roles

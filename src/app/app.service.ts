@@ -88,6 +88,11 @@ export class AppService {
           text = "Por favor contacte al administrador del sistema";
           this.toAction = "dashboard";
         }
+        else if (error.message === 'User not found regions') {
+          title = "Usted no tiene regiones asignada";
+          text = "Por favor contacte al administrador del sistema";
+          this.toAction = "requests";
+        }
       }
       swal({
         type,
@@ -98,6 +103,7 @@ export class AppService {
       }).then(res => {
         if (this.toAction == "login") this.router.navigate(['/']);
         else if (this.toAction == "dashboard") this.router.navigate(['/dashboard']);
+        else if (this.toAction == "requests") this.router.navigate(['/solicitudes']);
 
       })
     } else if (mod === 'custom-html') {
