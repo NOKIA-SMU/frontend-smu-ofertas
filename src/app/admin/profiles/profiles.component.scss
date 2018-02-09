@@ -6,6 +6,9 @@
       &:nth-child(2) {
         flex: 0 0 280px;
       }
+      &:nth-child(3) {
+        flex: 0 0 350px;
+      }
 			&:nth-child(4) {
 				flex: 0 0 400px;
 			}
@@ -17,7 +20,8 @@
 	}
 	ul {
 		list-style: none;
-		display: flex;
+    display: flex;
+    padding: 0;
 		li {
 			margin: 0 5px;
 		}

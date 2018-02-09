@@ -21,12 +21,17 @@
       <!-- LASTNAME -->
       <ng-container matColumnDef="apellido">
         <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.lastName}} </mat-cell>
+        <mat-cell *matCellDef="let row">{{row.lastName}} </mat-cell>
       </ng-container>
       <!-- REGION -->
       <ng-container matColumnDef="region">
-        <mat-header-cell *matHeaderCellDef> Región </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.region}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Regiónes </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <ul>
+            <li *ngFor="let item of row.regions">{{item}} / </li>
+          </ul>
+            <!-- {{row.regions | json}} -->
+        </mat-cell>
       </ng-container>
       <!-- ROLES -->
       <ng-container matColumnDef="roles">

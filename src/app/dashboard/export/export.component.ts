@@ -25,16 +25,16 @@ export class ExportComponent implements OnInit {
   permissionsFields = PermissionsFields;
 
   columnsRequest = [
-    {name: 'id', checked: false},
-    {name: 'supervisor', checked: false},
-    {name: 'analista', checked: false},
-    {name: 'tas', checked: false},
-    {name: 'estacion', checked: false},
-    {name: 'subsistema', checked: false},
-    {name: 'prioridad', checked: false},
-    {name: 'estadoSolicitud', checked: false},
-    {name: 'creado', checked: false},
-    {name: 'actualizado', checked: false}
+    {name: 'id', db: 'id', checked: false},
+    {name: 'supervisor', db: 'supervisor', checked: false},
+    {name: 'analista', db: 'analista', checked: false},
+    {name: 'tas', db: 'tas', checked: false},
+    {name: 'estacion', db: 'estacion', checked: false},
+    {name: 'subsistema', db: 'subsistema', checked: false},
+    {name: 'prioridad', db: 'prioridad', checked: false},
+    {name: 'estado solicitud', db: 'estadoSolicitud', checked: false},
+    {name: 'creado', db: 'creado', checked: false},
+    {name: 'actualizado', db: 'actualizado', checked: false}
   ];
 
   columnsOffer = [
@@ -261,10 +261,11 @@ export class ExportComponent implements OnInit {
 
   requestsExport() {
     this.dataBuildModel = [];
+    this.fieldsModeltSelected = [];
     // Extract columns selected for request
     for (let i = 0; i < this.columnsRequest.length; i++) {
       if (this.columnsRequest[i].checked) {
-        this.fieldsModeltSelected.push(this.columnsRequest[i].name);
+        this.fieldsModeltSelected.push(this.columnsRequest[i].db);
       }
     }
     // Build requests array filtering by selected columns
@@ -285,6 +286,7 @@ export class ExportComponent implements OnInit {
 
   offersExport() {
     this.dataBuildModel = [];
+    this.fieldsModeltSelected = [];
     // Extract columns selected for offers
     for (let i = 0; i < this.columnsOffer.length; i++) {
       if (this.columnsOffer[i].checked) {

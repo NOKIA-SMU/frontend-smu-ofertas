@@ -152,17 +152,23 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         this.currentUser = res
         // Filter stations by region
-        if (this.currentUser.regions.length > 0) {
-          this.filterStationsByRegions(this.currentUser.regions)
-            .then(res => {
-              this.dataSource = new MatTableDataSource(res[0].data);
-              this.dataSource.paginator = this.PagStations;
-              this.dataSource.sort = this.sort;
-              this.isLoadingResults = false;
-            }, error => {
-              this.isLoadingResults = false;
-              this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones por región', error);
-            })
+        if (this.currentUser.regions) {
+          if (this.currentUser.regions.length > 0) {
+            this.filterStationsByRegions(this.currentUser.regions)
+              .then(res => {
+                this.dataSource = new MatTableDataSource(res[0].data);
+                this.dataSource.paginator = this.PagStations;
+                this.dataSource.sort = this.sort;
+                this.isLoadingResults = false;
+              }, error => {
+                this.isLoadingResults = false;
+                this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de estaciones por región', error);
+              })
+          }
+          else {
+            let error = { message: 'User not found regions' };
+            this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Este usuario no tiene asignada una región', error);
+          }
         }
         else {
           let error = { message: 'User not found regions' };
