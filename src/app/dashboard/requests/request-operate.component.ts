@@ -453,8 +453,9 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
         this.request.servicios = []
 
       if (this.isNew) {
+        debugger
         this.request.supervisorId = this.currentUser.id;
-        this.request.supervisor = this.currentUser.fullName;
+        this.request.supervisor = this.currentUser.fullName || `${this.currentUser.firstName} ${this.currentUser.lastName}`;
         this.requestsService.createRequest(this.request)
           .subscribe(res => {
             if (res.data.createSolicitud.status == 200) {
