@@ -71,49 +71,51 @@ export class OffersComponent implements OnInit, AfterViewInit {
         this.authService.currentUser()
           .subscribe(res => {
             this.currentUser = res;
-            if (this.currentUser.roles) {
-              this.offersService.getOffers()
-                .subscribe(res => {
-                  // Filter offers by rol
-                  let filteredOffers = [];
-                  if (this.currentUser.roles.Administrador) {
-                    this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
-                  } else if (this.currentUser.roles.Supervisor) {
-                    for (let i = 0; i < res.data.ofertas.length; i++) {
-                      if (res.data.ofertas[i].ordenSuministro) {
-                        if (res.data.ofertas[i].ordenSuministro.solicitud.supervisorId == this.currentUser.id) {
-                          filteredOffers.push(res.data.ofertas[i]);
-                        }
-                      } else if (res.data.ofertas[i].ordenServicio) {
-                        if (res.data.ofertas[i].ordenServicio.solicitud.supervisorId == this.currentUser.id) {
-                          filteredOffers.push(res.data.ofertas[i]);
-                        }
-                      }
-                    }
-                    this.dataSourceOffers = new MatTableDataSource(filteredOffers);
-                  } else if (this.currentUser.roles.Analista) {
-                    for (let i = 0; i < res.data.ofertas.length; i++) {
-                      if (res.data.ofertas[i].ordenSuministro) {
-                        if (res.data.ofertas[i].ordenSuministro.solicitud.analistaId == this.currentUser.id) {
-                          filteredOffers.push(res.data.ofertas[i]);
-                        }
-                      } else if (res.data.ofertas[i].ordenServicio) {
-                        if (res.data.ofertas[i].ordenServicio.solicitud.analistaId == this.currentUser.id) {
-                          filteredOffers.push(res.data.ofertas[i]);
+            if (this.currentUser) {
+              if (this.currentUser.roles) {
+                this.offersService.getOffers()
+                  .subscribe(res => {
+                    // Filter offers by rol
+                    let filteredOffers = [];
+                    if (this.currentUser.roles.Administrador) {
+                      this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
+                    } else if (this.currentUser.roles.Supervisor) {
+                      for (let i = 0; i < res.data.ofertas.length; i++) {
+                        if (res.data.ofertas[i].ordenSuministro) {
+                          if (res.data.ofertas[i].ordenSuministro.solicitud.supervisorId == this.currentUser.id) {
+                            filteredOffers.push(res.data.ofertas[i]);
+                          }
+                        } else if (res.data.ofertas[i].ordenServicio) {
+                          if (res.data.ofertas[i].ordenServicio.solicitud.supervisorId == this.currentUser.id) {
+                            filteredOffers.push(res.data.ofertas[i]);
+                          }
                         }
                       }
+                      this.dataSourceOffers = new MatTableDataSource(filteredOffers);
+                    } else if (this.currentUser.roles.Analista) {
+                      for (let i = 0; i < res.data.ofertas.length; i++) {
+                        if (res.data.ofertas[i].ordenSuministro) {
+                          if (res.data.ofertas[i].ordenSuministro.solicitud.analistaId == this.currentUser.id) {
+                            filteredOffers.push(res.data.ofertas[i]);
+                          }
+                        } else if (res.data.ofertas[i].ordenServicio) {
+                          if (res.data.ofertas[i].ordenServicio.solicitud.analistaId == this.currentUser.id) {
+                            filteredOffers.push(res.data.ofertas[i]);
+                          }
+                        }
+                      }
+                      this.dataSourceOffers = new MatTableDataSource(filteredOffers);
+                    } else {
+                      this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
                     }
-                    this.dataSourceOffers = new MatTableDataSource(filteredOffers);
-                  } else {
-                    this.dataSourceOffers = new MatTableDataSource(res.data.ofertas);
-                  }
-                  this.dataSourceOffers.paginator = this.paginator;
-                  this.dataSourceOffers.sort = this.sort;
-                  this.isLoadingResultsOffers = false;
-                }, error => {
-                  this.isLoadingResultsOffers = false;
-                  this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
-                });
+                    this.dataSourceOffers.paginator = this.paginator;
+                    this.dataSourceOffers.sort = this.sort;
+                    this.isLoadingResultsOffers = false;
+                  }, error => {
+                    this.isLoadingResultsOffers = false;
+                    this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de ofertas', error);
+                  });
+              }
             }
           }, error => {
             this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de usuario actual', error);

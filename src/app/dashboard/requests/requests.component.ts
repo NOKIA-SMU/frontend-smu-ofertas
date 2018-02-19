@@ -77,28 +77,30 @@ export class RequestsComponent implements OnInit {
             this.requests = res.data.solicitudes;
             // Filter requests by rol
             let filteredRequests = [];
-            if (this.currentUser.roles.Administrador) {
-              this.dataSource = new MatTableDataSource(res.data.solicitudes);
-            } else if (this.currentUser.roles.Supervisor) {
-              for (let i = 0; i < res.data.solicitudes.length; i++) {
-                if (res.data.solicitudes[i].supervisorId == this.currentUser.id) {
-                  filteredRequests.push(res.data.solicitudes[i]);
+            if (this.currentUser) {
+              if (this.currentUser.roles.Administrador) {
+                this.dataSource = new MatTableDataSource(res.data.solicitudes);
+              } else if (this.currentUser.roles.Supervisor) {
+                for (let i = 0; i < res.data.solicitudes.length; i++) {
+                  if (res.data.solicitudes[i].supervisorId == this.currentUser.id) {
+                    filteredRequests.push(res.data.solicitudes[i]);
+                  }
                 }
-              }
-              this.dataSource = new MatTableDataSource(filteredRequests);
-            } else if (this.currentUser.roles.Analista) {
-              for (let i = 0; i < res.data.solicitudes.length; i++) {
-                if (res.data.solicitudes[i].analistaId === this.currentUser.id) {
-                  filteredRequests.push(res.data.solicitudes[i]);
+                this.dataSource = new MatTableDataSource(filteredRequests);
+              } else if (this.currentUser.roles.Analista) {
+                for (let i = 0; i < res.data.solicitudes.length; i++) {
+                  if (res.data.solicitudes[i].analistaId === this.currentUser.id) {
+                    filteredRequests.push(res.data.solicitudes[i]);
+                  }
                 }
+                this.dataSource = new MatTableDataSource(filteredRequests);
+              } else {
+                this.dataSource = new MatTableDataSource(res.data.solicitudes);
               }
-              this.dataSource = new MatTableDataSource(filteredRequests);
-            } else {
-              this.dataSource = new MatTableDataSource(res.data.solicitudes);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+              this.isLoadingResults = false;
             }
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.isLoadingResults = false;
           }, error => {
             this.isLoadingResults = false;
             this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de solicitudes', error);

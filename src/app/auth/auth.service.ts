@@ -66,10 +66,6 @@ export class AuthService {
     return this.afAuth.auth.signOut();
   }
 
-  public getToken() {
-    return this.afAuth.auth.currentUser.getIdToken();
-  }
-
   public sendToken(uid: string, token: string) {
     const postToken = gql`
       mutation {
@@ -83,6 +79,7 @@ export class AuthService {
             credential
           }
           status
+          __typename
         }
       }
     `;
@@ -103,6 +100,7 @@ export class AuthService {
             credential
           }
           status
+          __typename
         }
       }
     `;
@@ -119,6 +117,7 @@ export class AuthService {
             uid
           }
           status
+          __typename
         }
       }
     `;
