@@ -328,21 +328,23 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
   filterStationsByRegions(regions: any[]) {
     return new Promise((resolve, reject) => {
       let stationsFilteredByRegion = [];
-      for (let i = 0; i < regions.length; i++) {
-        this.stationService.getStations(regions[i])
-          .subscribe(res => {
-            for (let k = 0; k < res.data.estaciones.length; k++) {
-              stationsFilteredByRegion.push(res.data.estaciones[k])
+
+      this.stationService.getStations()
+        .subscribe(res => {
+          // Filter stations by regions user
+          for (let i = 0; i < res.data.estaciones.length; i++) {
+            for (let j = 0; j < regions.length; j++) {
+              if (res.data.estaciones[i].region === regions[j]) {
+                stationsFilteredByRegion.push(res.data.estaciones[i])
+              }
             }
-            if (i + 1 === regions.length) {
-              resolve([{ data: stationsFilteredByRegion }])
-            }
-          }, error => {
-            reject({
-              message: 'Error filter stations by regions'
-            })
+          }
+          resolve([{ data: stationsFilteredByRegion }])
+        }, error => {
+          reject({
+            message: 'Error filter stations by regions'
           })
-      }
+        })
     })
   }
 
