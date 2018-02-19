@@ -79,6 +79,7 @@ export class AuthService {
             credential
           }
           status
+          __typename
         }
       }
     `;
@@ -99,6 +100,7 @@ export class AuthService {
             credential
           }
           status
+          __typename
         }
       }
     `;
@@ -115,6 +117,7 @@ export class AuthService {
             uid
           }
           status
+          __typename
         }
       }
     `;

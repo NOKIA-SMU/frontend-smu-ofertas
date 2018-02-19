@@ -334,7 +334,9 @@ export class RequestOperateComponent implements OnInit, AfterViewInit {
             for (let k = 0; k < res.data.estaciones.length; k++) {
               stationsFilteredByRegion.push(res.data.estaciones[k])
             }
-            resolve([{ data: stationsFilteredByRegion }])
+            if (i + 1 === regions.length) {
+              resolve([{ data: stationsFilteredByRegion }])
+            }
           }, error => {
             reject({
               message: 'Error filter stations by regions'
