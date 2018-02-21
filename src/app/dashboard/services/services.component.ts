@@ -97,4 +97,14 @@ export class ServicesComponent implements OnInit {
     this.router.navigate([`dashboard/servicios/${this.currentRowSelectData.id}`]);
   }
 
+  deleteService() {
+    this.servicesService.deleteService(this.currentRowSelectData.id)
+      .subscribe(res => {
+        if (res.data.deleteServicio.status === 200)
+          this.router.navigate(['/servicios']);
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar servicio', error);
+      })
+  }
+
 }

@@ -21,11 +21,11 @@ export class ServiceOperateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private serviceService: ServicesService,
-    private subsystemService: SubsystemsService,
+    private subsystemsService: SubsystemsService,
     private appService: AppService
   ) {
     // Get subsystems
-    this.subsystemService.getSubsystems()
+    this.subsystemsService.getSubsystems()
       .subscribe(({ data }) => {
         this.subsystems = data.subsistemas
       }, error => {
@@ -39,7 +39,18 @@ export class ServiceOperateComponent implements OnInit {
           this.service = {
             id: res.data.servicio.id,
             nombre: res.data.servicio.nombre,
-            subsistema: res.data.servicio.subsistema.id
+            descripcion: res.data.servicio.descripcion,
+            codigoLpu: res.data.servicio.codigoLpu,
+            unidad: res.data.servicio.unidad,
+            subsistema: {
+              id: res.data.servicio.subsistema.id,
+              nombre: res.data.servicio.subsistema.nombre,
+            },
+            distancia: res.data.servicio.distancia,
+            peso: res.data.servicio.peso,
+            tiempo: res.data.servicio.tiempo,
+            valorLpu: res.data.servicio.valorLpu,
+            descripcionLpu: res.data.servicio.descripcionLpu
           }
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Subsistema por Id', error);
@@ -47,10 +58,17 @@ export class ServiceOperateComponent implements OnInit {
     } else {
       this.service = {
         nombre: '',
+        codigoLpu: '',
+        unidad: '',
+        distancia: '',
+        peso: '',
+        tiempo: '',
         subsistema: {
           id: '',
           nombre: '',
-        }
+        },
+        valorLpu: null,
+        descripcionLpu: ''
       }
       this.isNew = true;
     }

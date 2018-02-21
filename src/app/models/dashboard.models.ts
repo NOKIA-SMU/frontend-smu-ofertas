@@ -58,5 +58,13 @@ export interface Supplie {
 export interface Service {
 	id?: string,
 	nombre: string,
-	subsistema: any
+	descripcion?: string
+	codigoLpu: string,
+	unidad: string,
+	distancia: string,
+	peso: string,
+	tiempo: string,
+	subsistema: any,
+	valorLpu?: number,
+	descripcionLpu?: string,
 }

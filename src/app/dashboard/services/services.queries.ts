@@ -52,8 +52,8 @@ export const queryServicesById = gql`
 
 export const mutationCreateService = gql`
 	mutation (
-		$codigoLpu: String,
-		$nombre: String,
+		$codigoLpu: String!,
+		$nombre: String!,
 		$descripcion: String,
 		$distancia: String,
 		$peso: String,
@@ -65,7 +65,7 @@ export const mutationCreateService = gql`
 		$uid: String!,
 		$credential: String!
 	) {
-		servicios (
+		createServicio (
 			codigoLpu: $codigoLpu,
 			nombre: $nombre,
 			descripcion: $descripcion,
@@ -91,8 +91,8 @@ export const mutationCreateService = gql`
 export const mutationUpdateService = gql`
 	mutation (
 		$pk: ID!,
-		$codigoLpu: String,
-		$nombre: String,
+		$codigoLpu: String!,
+		$nombre: String!,
 		$descripcion: String,
 		$distancia: String,
 		$peso: String,
@@ -130,7 +130,7 @@ export const mutationDeleteService = gql`
 		$uid: String!,
 		$credential: String!
 	) {
-		updateServicio (
+		deleteServicio (
 			pk: $pk,
 			uid: $uid,
 			credential: $credential

@@ -75,12 +75,6 @@ form {
           &:nth-child(10) {
             flex: 0 0 200px;
           }
-          // &:nth-child(9),{
-          //   flex: 0 0 450px;
-          // }
-          // &:nth-child(10),{
-          //   flex: 0 0 100px;
-          // }
         }
       }
     }
@@ -91,7 +85,6 @@ form {
         > .mat-header-cell, > .mat-cell {
           flex: 0 0 150px;
           &:nth-child(1) {
-            // flex: 0 0 70px;
             max-width: 70px;
           }
           &:nth-child(2),{

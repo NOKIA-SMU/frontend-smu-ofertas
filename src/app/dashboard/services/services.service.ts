@@ -46,9 +46,22 @@ export class ServicesService {
       mutation: mutationCreateService,
       variables: {
         nombre: supplie.nombre,
+        descripcion: supplie.descripcion,
+        codigoLpu: supplie.codigoLpu,
+        unidad: supplie.unidad,
+        distancia: supplie.distancia,
+        peso: supplie.peso,
+        tiempo: supplie.tiempo,
+        subsistema: supplie.subsistema,
+        valorLpu: supplie.valorLpu,
+        descripcionLpu: supplie.descripcionLpu,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [{
+        query: queryServices,
+        variables: { uid: this.userAuth.uid, credential: this.userAuth.token }
+      }]
     })
   }
 
@@ -57,10 +70,23 @@ export class ServicesService {
       mutation: mutationUpdateService,
       variables: {
         pk: id,
-        name: supplie.nombre,
+        nombre: supplie.nombre,
+        descripcion: supplie.descripcion,
+        codigoLpu: supplie.codigoLpu,
+        unidad: supplie.unidad,
+        distancia: supplie.distancia,
+        peso: supplie.peso,
+        tiempo: supplie.tiempo,
+        subsistema: supplie.subsistema,
+        valorLpu: supplie.valorLpu,
+        descripcionLpu: supplie.descripcionLpu,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [{
+        query: queryServices,
+        variables: { uid: this.userAuth.uid, credential: this.userAuth.token }
+      }]
     })
   }
 
@@ -71,7 +97,11 @@ export class ServicesService {
         pk: id,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [{
+        query: queryServices,
+        variables: { uid: this.userAuth.uid, credential: this.userAuth.token }
+      }]
     })
   }
 

@@ -34,10 +34,14 @@ form {
           }
           &:nth-child(2),
           &:nth-child(3) {
-            flex: 0 0 200px;
+            flex: 0 0 400px;
           }
           &:nth-child(11), {
-            flex: 0 0 300px;
+            flex: 0 0 800px;
+          }
+          &:nth-child(12),
+          &:nth-child(13) {
+            flex: 0 0 70px;
           }
         }
       }

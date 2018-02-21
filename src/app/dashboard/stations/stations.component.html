@@ -23,7 +23,7 @@
       <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="selectRow(i, row)" [ngClass]="{ active : i == currentRowSelect}"></mat-row>
     </mat-table>
   </div>
-  <mat-paginator [pageSizeOptions]="[15, 50, 100]"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 50, 100]"></mat-paginator>
   <br>
   <br>
   <br>
