@@ -7,7 +7,8 @@ import {
   querySuppliesBySubsystem,
   querySuppliesById,
   mutationCreateSupplie,
-  mutationUpdateSupplie
+  mutationUpdateSupplie,
+  deleteSupplie
 } from './supplies.queries'
 
 @Injectable()
@@ -67,7 +68,11 @@ export class SuppliesService {
         descripcionLpu: supplie.descripcionLpu,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [{
+        query: querySupplies,
+        variables: { uid: this.userAuth.uid, credential: this.userAuth.token }
+      }]
     })
   }
 
@@ -76,13 +81,42 @@ export class SuppliesService {
       mutation: mutationUpdateSupplie,
       variables: {
         pk: id,
-        name: supplie.nombre,
-        // brand: supplie.marca,
-        // reference: supplie.referencia,
-        // unity: supplie.unidad,
+        codigoLpu: supplie.codigoLpu,
+        codigoMm: supplie.codigoMm,
+        nombre: supplie.nombre,
+        descripcion: supplie.descripcion,
+        marca: supplie.marca,
+        referencia: supplie.referencia,
+        subsistema: supplie.subsistema,
+        unidad: supplie.unidad,
+        valorLpu: supplie.valorLpu,
+        descripcionLpu: supplie.descripcionLpu,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [{
+        query: querySupplies,
+        variables: { uid: this.userAuth.uid, credential: this.userAuth.token }
+      }]
+    })
+  }
+
+  public deleteSupplie(supplieId) {
+    let id = parseInt(supplieId);
+    return this.apollo.mutate({
+      mutation: deleteSupplie,
+      variables: {
+        pk: id,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      },
+      refetchQueries: [{
+        query: querySupplies,
+        variables: {
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
+      }]
     })
   }
 

@@ -21,9 +21,16 @@ export class SupplieOperateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private suppliesService: SuppliesService,
-    private subsystemsServive: SubsystemsService,
+    private subsystemsService: SubsystemsService,
     private appService: AppService
   ) {
+    // Get subsystems
+    this.subsystemsService.getSubsystems()
+      .subscribe(({ data }) => {
+        this.subsystems = data.subsistemas
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de subsistemas', error);
+      })
     if (this.route.snapshot.params.id != 'crear') {
       this.isNew = false;
       this.suppliesService.getSupplieById(this.route.snapshot.params.id)
@@ -34,6 +41,7 @@ export class SupplieOperateComponent implements OnInit {
             codigoMm: res.data.suministro.codigoMm,
             nombre: res.data.suministro.nombre,
             marca: res.data.suministro.marca,
+            descripcion: res.data.suministro.descripcion,
             referencia: res.data.suministro.referencia,
             unidad: res.data.suministro.unidad,
             subsistema: {
@@ -47,12 +55,6 @@ export class SupplieOperateComponent implements OnInit {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de suministro por Id', error)
         })
     } else {
-      this.subsystemsServive.getSubsystems()
-        .subscribe(res => {
-          this.subsystems = res.data.subsistemas;
-        }, error => {
-          debugger
-        })
 
       this.supplie = {
         id: '',

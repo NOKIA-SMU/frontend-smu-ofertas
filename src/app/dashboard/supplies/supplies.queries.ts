@@ -106,7 +106,7 @@ export const mutationUpdateSupplie = gql`
 		$pk: ID!,
 		$codigoLpu: String!,
 		$codigoMm: String!,
-		$name: String,
+		$nombre: String!,
 		$descripcion: String,
 		$marca: String,
 		$referencia: String,
@@ -121,7 +121,7 @@ export const mutationUpdateSupplie = gql`
 			pk: $pk,
 			codigoLpu: $codigoLpu,
 			codigoMm: $codigoMm,
-			nombre: $name,
+			nombre: $nombre,
 			descripcion: $descripcion,
 			marca: $marca,
 			referencia: $referencia,
@@ -133,6 +133,23 @@ export const mutationUpdateSupplie = gql`
 			credential: $credential
 		) {
 			status
+		}
+	}
+`;
+
+export const deleteSupplie = gql`
+	mutation (
+		$pk: ID!,
+		$uid: String!,
+		$credential: String!,
+	) {
+		deleteSuministro(
+			pk: $pk,
+			uid: $uid,
+			credential: $credential
+		) {
+			status
+			__typename
 		}
 	}
 `;

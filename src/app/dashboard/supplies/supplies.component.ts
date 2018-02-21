@@ -98,4 +98,14 @@ export class SuppliesComponent implements OnInit {
     this.router.navigate([`dashboard/suministros/${this.currentRowSelectData.id}`]);
   }
 
+  deleteSupplie() {
+    this.suppliesService.deleteSupplie(this.currentRowSelectData.id)
+      .subscribe(res => {
+        if (res.data.deleteSuministro.status === 200)
+          this.router.navigate(['/suministros']);
+      }, error => {
+        this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Eliminar suministro', error);
+      })
+  }
+
 }

@@ -1,12 +1,12 @@
-<h2>Suministro</h2>
+<h2 class="title">Suministro</h2>
 <form #createSupplieForm="ngForm" (ngSubmit)="saveSupplie()" *ngIf="supplie">
   <!-- CODE LPU -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Codigo Lpu" name="codigoLpu" [(ngModel)]="supplie.codigoLpu" required>
+    <input matInput type="text" placeholder="Codigo Lpu" name="codigoLpu" [(ngModel)]="supplie.codigoLpu">
   </mat-form-field>
   <!-- CODE MM -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Codigo Mm" name="codigoMm" [(ngModel)]="supplie.codigoMm" required>
+    <input matInput type="text" placeholder="Codigo Mm" name="codigoMm" [(ngModel)]="supplie.codigoMm">
   </mat-form-field>
   <!-- NAME -->
   <mat-form-field>
@@ -18,21 +18,21 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput type="text" placeholder="Marca" name="marca" [(ngModel)]="supplie.marca" required>
+    <input matInput type="text" placeholder="Marca" name="marca" [(ngModel)]="supplie.marca">
   </mat-form-field>
   <!-- REFERENCE -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Referencia" name="referencia" [(ngModel)]="supplie.referencia" required>
+    <input matInput type="text" placeholder="Referencia" name="referencia" [(ngModel)]="supplie.referencia">
   </mat-form-field>
   <!-- UNITY -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Unidad" name="unidad" [(ngModel)]="supplie.unidad" required>
+    <input matInput type="text" placeholder="Unidad" name="unidad" [(ngModel)]="supplie.unidad">
   </mat-form-field>
   <!-- SUBSYSTEM -->
   <mat-form-field>
-    <mat-select placeholder="Subsistema" name="subsistema" [(ngModel)]="supplie.subsistema">
-      <mat-option *ngFor="let item of subsystems" [value]="item.id">
-        {{item.nombre}}
+    <mat-select placeholder="Subsistema {{supplie.subsistema.nombre}}" name="subsistema" [(ngModel)]="supplie.subsistema">
+      <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
+        {{subsystem.nombre}}
       </mat-option>
     </mat-select>
   </mat-form-field>
