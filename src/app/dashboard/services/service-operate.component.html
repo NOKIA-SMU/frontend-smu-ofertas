@@ -6,11 +6,11 @@
   </mat-form-field>
   <!-- NAME -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="service.nombre">
+    <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="service.nombre" required>
   </mat-form-field>
   <!-- DESCRIPTION -->
   <mat-form-field>
-    <textarea matInput placeholder="Descripción" name="descripcion" [(ngModel)]="service.descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8"></textarea>
+    <textarea matInput placeholder="Descripción" name="descripcion" [(ngModel)]="service.descripcion" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="8" required></textarea>
   </mat-form-field>
   <!-- DISTANCE -->
   <mat-form-field>
@@ -26,7 +26,7 @@
   </mat-form-field>
   <!-- SUBSYSTEM -->
   <mat-form-field>
-    <mat-select placeholder="Subsistema {{service.subsistema.nombre}}" name="subsystem" [(ngModel)]="service.subsistema">
+    <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="service.subsistema">
       <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
         {{subsystem.nombre}}
       </mat-option>
@@ -38,7 +38,7 @@
   </mat-form-field>
   <!-- LPU VALUE -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Valor Lpu" name="valorLpu" [(ngModel)]="service.valorLpu">
+    <input matInput type="number" placeholder="Valor Lpu" name="valorLpu" [(ngModel)]="service.valorLpu" required>
   </mat-form-field>
   <!-- DESCRIPTION LPU -->
   <mat-form-field>

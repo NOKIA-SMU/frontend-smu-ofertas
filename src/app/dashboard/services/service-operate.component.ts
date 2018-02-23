@@ -42,10 +42,7 @@ export class ServiceOperateComponent implements OnInit {
             descripcion: res.data.servicio.descripcion,
             codigoLpu: res.data.servicio.codigoLpu,
             unidad: res.data.servicio.unidad,
-            subsistema: {
-              id: res.data.servicio.subsistema.id,
-              nombre: res.data.servicio.subsistema.nombre,
-            },
+            subsistema: res.data.servicio.subsistema.id,
             distancia: res.data.servicio.distancia,
             peso: res.data.servicio.peso,
             tiempo: res.data.servicio.tiempo,

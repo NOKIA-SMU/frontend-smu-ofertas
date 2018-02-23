@@ -6,7 +6,7 @@
   </mat-form-field>
   <!-- CODE MM -->
   <mat-form-field>
-    <input matInput type="text" placeholder="Codigo Mm" name="codigoMm" [(ngModel)]="supplie.codigoMm">
+    <input matInput type="text" placeholder="Codigo Mm" name="codigoMm" [(ngModel)]="supplie.codigoMm" required>
   </mat-form-field>
   <!-- NAME -->
   <mat-form-field>
@@ -30,7 +30,7 @@
   </mat-form-field>
   <!-- SUBSYSTEM -->
   <mat-form-field>
-    <mat-select placeholder="Subsistema {{supplie.subsistema.nombre}}" name="subsistema" [(ngModel)]="supplie.subsistema">
+    <mat-select placeholder="Subsistema" name="subsistema" [(ngModel)]="supplie.subsistema" required>
       <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
         {{subsystem.nombre}}
       </mat-option>
@@ -38,7 +38,7 @@
   </mat-form-field>
   <!-- LPU VALUE -->
   <mat-form-field>
-    <input matInput type="number" placeholder="Valor Lpu" name="valorLpu" [(ngModel)]="supplie.valorLpu">
+    <input matInput type="number" placeholder="Valor Lpu" name="valorLpu" [(ngModel)]="supplie.valorLpu" required>
   </mat-form-field>
   <!-- DESCRIPTION LPU -->
   <mat-form-field>
