@@ -47,8 +47,8 @@ export class StationOperateComponent implements OnInit {
         departamento: '',
         ciudad: '',
         direccion: '',
-        latitud: null,
-        longitud: null,
+        latitud: 0,
+        longitud: 0,
         estructura: '',
         categoria: ''
       }
