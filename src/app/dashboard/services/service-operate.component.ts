@@ -38,16 +38,16 @@ export class ServiceOperateComponent implements OnInit {
         .subscribe(res => {
           this.service = {
             id: res.data.servicio.id,
-            nombre: res.data.servicio.nombre,
-            descripcion: res.data.servicio.descripcion,
-            codigoLpu: res.data.servicio.codigoLpu,
-            unidad: res.data.servicio.unidad,
+            nombre: res.data.servicio.nombre || '',
+            descripcion: res.data.servicio.descripcion || '',
+            codigoLpu: res.data.servicio.codigoLpu || '',
+            unidad: res.data.servicio.unidad || '',
             subsistema: res.data.servicio.subsistema.id,
-            distancia: res.data.servicio.distancia,
-            peso: res.data.servicio.peso,
-            tiempo: res.data.servicio.tiempo,
-            valorLpu: res.data.servicio.valorLpu,
-            descripcionLpu: res.data.servicio.descripcionLpu
+            distancia: res.data.servicio.distancia || '',
+            peso: res.data.servicio.peso || '',
+            tiempo: res.data.servicio.tiempo || '',
+            valorLpu: res.data.servicio.valorLpu || 0,
+            descripcionLpu: res.data.servicio.descripcionLpu || ''
           }
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Subsistema por Id', error);
@@ -58,13 +58,14 @@ export class ServiceOperateComponent implements OnInit {
         codigoLpu: '',
         unidad: '',
         distancia: '',
+        descripcion: '',
         peso: '',
         tiempo: '',
         subsistema: {
           id: '',
           nombre: '',
         },
-        valorLpu: null,
+        valorLpu: 0,
         descripcionLpu: ''
       }
       this.isNew = true;

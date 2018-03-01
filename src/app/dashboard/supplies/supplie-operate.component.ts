@@ -38,16 +38,16 @@ export class SupplieOperateComponent implements OnInit {
         .subscribe(res => {
           this.supplie = {
             id: res.data.suministro.id,
-            codigoLpu: res.data.suministro.codigoLpu,
-            codigoMm: res.data.suministro.codigoMm,
-            nombre: res.data.suministro.nombre,
-            marca: res.data.suministro.marca,
-            descripcion: res.data.suministro.descripcion,
-            referencia: res.data.suministro.referencia,
-            unidad: res.data.suministro.unidad,
+            codigoLpu: res.data.suministro.codigoLpu || '',
+            codigoMm: res.data.suministro.codigoMm || '',
+            nombre: res.data.suministro.nombre || '',
+            marca: res.data.suministro.marca || '',
+            descripcion: res.data.suministro.descripcion || '',
+            referencia: res.data.suministro.referencia || '',
+            unidad: res.data.suministro.unidad || '',
             subsistema: res.data.suministro.subsistema.id,
-            valorLpu: res.data.suministro.valorLpu,
-            descripcionLpu: res.data.suministro.descripcionLpu
+            valorLpu: res.data.suministro.valorLpu || 0,
+            descripcionLpu: res.data.suministro.descripcionLpu || ''
           }
         }, error => {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Consulta de suministro por Id', error)
@@ -67,7 +67,7 @@ export class SupplieOperateComponent implements OnInit {
           nombre: '',
         },
         unidad: '',
-        valorLpu: null,
+        valorLpu: 0,
         descripcionLpu: '',
         estado: null,
         subestado: null
@@ -80,7 +80,6 @@ export class SupplieOperateComponent implements OnInit {
 
   saveSupplie() {
     if (this.isNew) {
-      debugger
       this.suppliesService.createSupplie(this.supplie)
         .subscribe(res => {
           this.router.navigate(['/suministros']);
@@ -88,7 +87,6 @@ export class SupplieOperateComponent implements OnInit {
           this.appService.showSwal('cancel', 'error', 'Operación no exitosa', 'Crear suministro', error)
         })
     } else {
-      debugger
       this.suppliesService.updateSupplie(this.route.snapshot.params.id, this.supplie)
         .subscribe(res => {
           this.router.navigate(['/suministros']);
