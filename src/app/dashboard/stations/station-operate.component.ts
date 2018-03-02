@@ -40,7 +40,6 @@ export class StationOperateComponent implements OnInit {
       }
     } else {
       this.station = {
-        id: null,
         nombre: '',
         ubicacion: '',
         region: '',

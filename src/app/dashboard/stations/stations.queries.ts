@@ -41,11 +41,10 @@ export const mutationCreateStation = gql`
 		$address: String,
 		$lat: Float,
 		$lon: Float,
-		$structure: String,
+		$estructura: String,
 		$category: String,
 		$uid: String!,
 		$credential: String!
-
 	) {
 		createEstacion(
 			nombre: $name,
@@ -56,7 +55,7 @@ export const mutationCreateStation = gql`
 			direccion: $address,
 			latitud: $lat,
 			longitud: $lon,
-			estructura: $structure,
+			estructura: $estructura,
 			categoria: $category,
 			uid: $uid,
 			credential: $credential

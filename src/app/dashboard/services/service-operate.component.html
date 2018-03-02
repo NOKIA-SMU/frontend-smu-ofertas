@@ -26,7 +26,7 @@
   </mat-form-field>
   <!-- SUBSYSTEM -->
   <mat-form-field>
-    <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="service.subsistema">
+    <mat-select placeholder="Subsistema" name="subsystem" [(ngModel)]="service.subsistema" required>
       <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
         {{subsystem.nombre}}
       </mat-option>

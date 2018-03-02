@@ -35,19 +35,23 @@ export class StationsService {
   public createStation(station) {
     return this.apollo.mutate({
       mutation: mutationCreateStation,
+      variables: {
+        name: station.nombre,
+        ubication: station.ubicacion,
+        region: station.region,
+        departament: station.departamento,
+        city: station.ciudad,
+        address: station.direccion,
+        lat: station.latitud,
+        lon: station.longitud,
+        estructura: station.estructura,
+        category: station.categoria,
+        uid: this.userAuth.uid,
+        credential: this.userAuth.token
+      },
       refetchQueries: [{
         query: queryStations,
         variables: {
-          name: station.nombre,
-          ubication: station.ubicacion,
-          region: station.region,
-          departament: station.departamento,
-          city: station.ciudad,
-          address: station.direccion,
-          lat: station.latitud,
-          lon: station.longitud,
-          estructure: station.estructura,
-          category: station.categoria,
           uid: this.userAuth.uid,
           credential: this.userAuth.token
         }
