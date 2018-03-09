@@ -80,7 +80,14 @@ export class StationsService {
         category: station.categoria,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [{
+        query: queryStations,
+        variables: {
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
+      }]
     })
   }
 
@@ -92,7 +99,14 @@ export class StationsService {
         pk: id,
         uid: this.userAuth.uid,
         credential: this.userAuth.token
-      }
+      },
+      refetchQueries: [{
+        query: queryStations,
+        variables: {
+          uid: this.userAuth.uid,
+          credential: this.userAuth.token
+        }
+      }]
     })
   }
 
